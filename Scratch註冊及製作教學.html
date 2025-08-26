@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch註冊及製作教學</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #ff6b35;
+            text-align: center;
+            border-bottom: 3px solid #ff6b35;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #4a90e2;
+            border-left: 5px solid #4a90e2;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: #7b68ee;
+            margin-top: 25px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .success {
+            background-color: #d1edff;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .step {
+            background-color: #e7f3ff;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        ul, ol {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .link-box {
+            background-color: #f0f8ff;
+            border: 2px solid #4a90e2;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .link-box a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        
+        .account-format {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            font-family: monospace;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .annotation {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .click-indicator {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .step-image {
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Scratch註冊及製作教學</h1>
+        
+        <h2>📖 什麼是Scratch？</h2>
+        <div class="highlight">
+            <p><strong>Scratch</strong>是由<strong>麻省理工媒體實驗室</strong>開發的一套電腦程式開發平台，目前已在150多個國家/地區使用，並提供60多種語言版本。</p>
+            
+            <p>Scratch讓程式設計語言初學者<strong>不需先學習語言語法便能設計專案</strong>。開發者期望通過學習製作Scratch，啟發和激勵使用者在愉快的環境下經由操作（如設計互動故事、多人遊戲）去學習程式設計、數學和計算知識，同時獲得創造性的思考，邏輯編程，和協同工作的體驗。</p>
+        </div>
+        
+        <h2>🌐 在哪裡使用Scratch？</h2>
+        <div class="step">
+            <h3>方法一：線上使用（推薦）</h3>
+            <div class="link-box">
+                <p>直接在Scratch官方網站寫程式：</p>
+                <a href="https://scratch.mit.edu/" target="_blank">https://scratch.mit.edu/</a>
+            </div>
+            
+            <h3>方法二：離線使用</h3>
+            <p>下載單機版安裝在你的電腦裡，可以離線使用。</p>
+        </div>
+        
+        <h2>📝 Scratch網站註冊流程</h2>
+        
+        <h3>步驟一：進入Scratch官網</h3>
+        <div class="step">
+            <ol>
+                <li>開啟瀏覽器，前往 <strong>https://scratch.mit.edu/</strong></li>
+                <li>點擊右上角的<strong>「加入Scratch」</strong>按鈕</li>
+                <li>如果網站是英文，可以在頁面底部更改語言為<strong>「繁體中文」</strong></li>
+            </ol>
+            
+            <div class="step-image">
+                <div class="image-container">
+                    <!-- 請在此處放入Scratch首頁截圖 -->
+                    <div style="background-color: #f0f0f0; padding: 60px; text-align: center; border: 2px dashed #ccc; color: #666;">
+                        📷 請放入：Scratch官方網站首頁截圖<br>
+                        <small>建議尺寸：800x450像素</small>
+                    </div>
+                    <div class="image-caption">Scratch官方網站首頁</div>
+                </div>
+                <div class="annotation">
+                    <strong>重點提示：</strong><br>
+                    1. 右上角的 <span class="click-indicator">「加入Scratch」</span> 按鈕是橘色的，很容易找到<br>
+                    2. 如果網站顯示英文，請捲動到頁面最底部找到語言選擇
+                </div>
+            </div>
+        </div>
+        
+        <h3>步驟二：填寫註冊資料</h3>
+        <div class="step">
+                         <div class="step-image">
+                 <div class="image-container">
+                     <!-- 請在此處放入註冊表單截圖 -->
+                     <div style="background-color: #f0f0f0; padding: 60px; text-align: center; border: 2px dashed #ccc; color: #666;">
+                         📷 請放入：Scratch註冊表單截圖<br>
+                         <small>建議尺寸：600x500像素</small>
+                     </div>
+                     <div class="image-caption">Scratch註冊表單</div>
+                 </div>
+                 <div class="annotation">
+                     <strong>填寫重點：</strong><br>
+                     1. <span class="click-indicator">使用者名稱</span>：建議用「s+學號」格式<br>
+                     2. <span class="click-indicator">密碼</span>：建議與學校信箱密碼相同，方便記憶<br>
+                     3. <span class="click-indicator">電子郵件</span>：一定要用學校信箱，才能收到驗證信
+                 </div>
+             </div>
+            
+            <table>
+                <tr>
+                    <th>欄位</th>
+                    <th>建議填寫方式</th>
+                    <th>範例</th>
+                </tr>
+                <tr>
+                    <td>使用者名稱</td>
+                    <td>學號格式：s + 學號</td>
+                    <td class="account-format">s12345</td>
+                </tr>
+                <tr>
+                    <td>密碼</td>
+                    <td>使用學校信箱密碼</td>
+                    <td>（與openid信箱相同密碼）</td>
+                </tr>
+                <tr>
+                    <td>電子郵件</td>
+                    <td>學校信箱</td>
+                    <td class="account-format">s12345@gm.kl.edu.tw</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="warning">
+            <h4>⚠️ 帳號已被註冊怎麼辦？</h4>
+            <p>如果顯示帳號已被註冊，可以嘗試以下方法：</p>
+            <ul>
+                <li><strong>方法一：</strong>在原帳號後加字母，例如：s12345s 或 s12345a</li>
+                <li><strong>方法二：</strong>檢查是否之前已註冊過，可嘗試「忘記密碼」功能</li>
+                <li><strong>方法三：</strong>使用其他代號註冊</li>
+            </ul>
+        </div>
+        
+        <h3>步驟三：信箱驗證（重要！）</h3>
+        <div class="success">
+            <h4>🔐 為什麼要驗證信箱？</h4>
+            <ul>
+                <li>保護帳號安全</li>
+                <li>日後忘記密碼時可以重設</li>
+                <li>可以分享程式作品給老師</li>
+                <li>可以參與Scratch社群活動</li>
+            </ul>
+        </div>
+        
+        <div class="step">
+            <h4>驗證步驟：</h4>
+            <ol>
+                <li>註冊完成後，前往你的信箱</li>
+                <li>找到來自Scratch的驗證郵件</li>
+                <li>點擊郵件中的驗證連結</li>
+                <li>完成驗證後，回到Scratch網站登入</li>
+            </ol>
+            
+                         <div class="step-image">
+                 <div class="image-container">
+                     <!-- 請在此處放入信箱驗證郵件截圖 -->
+                     <div style="background-color: #f0f0f0; padding: 60px; text-align: center; border: 2px dashed #ccc; color: #666;">
+                         📷 請放入：信箱驗證郵件截圖<br>
+                         <small>建議尺寸：700x400像素</small>
+                     </div>
+                     <div class="image-caption">信箱中的Scratch驗證郵件</div>
+                 </div>
+                 <div class="annotation">
+                     <strong>驗證信重點：</strong><br>
+                     1. 檢查 <span class="click-indicator">收件匣</span> 和 <span class="click-indicator">垃圾郵件</span> 資料夾<br>
+                     2. 點擊 <span class="click-indicator">「驗證信箱」</span> 橘色按鈕<br>
+                     3. 如果沒收到，等5-10分鐘後再檢查
+                 </div>
+             </div>
+        </div>
+        
+        <h2>🎯 登入與基本使用</h2>
+        
+        <h3>登入帳號</h3>
+        <div class="step">
+            <ol>
+                <li>前往 https://scratch.mit.edu/</li>
+                <li>點擊右上角<strong>「登入」</strong></li>
+                <li>輸入使用者名稱和密碼</li>
+                <li>點擊<strong>「登入」</strong>按鈕</li>
+            </ol>
+        </div>
+        
+        <div class="highlight">
+            <h4>💡 登入的好處：</h4>
+            <ul>
+                <li>程式作品會自動保存在雲端</li>
+                <li>可以隨時隨地存取你的作品</li>
+                <li>不會因為關閉瀏覽器而遺失作品</li>
+                <li>可以分享作品給其他人</li>
+            </ul>
+        </div>
+        
+        <h3>開始製作第一個程式</h3>
+        <div class="step">
+            <ol>
+                <li>登入後，點擊<strong>「創作」</strong>按鈕</li>
+                <li>進入Scratch編輯器</li>
+                <li>從左側的積木區拖拉積木到中間的程式區</li>
+                <li>點擊綠旗開始執行程式</li>
+                <li>完成後記得<strong>「儲存」</strong>你的作品</li>
+            </ol>
+            
+                         <div class="step-image">
+                 <div class="image-container">
+                     <!-- 請在此處放入Scratch編輯器介面截圖 -->
+                     <div style="background-color: #f0f0f0; padding: 60px; text-align: center; border: 2px dashed #ccc; color: #666;">
+                         📷 請放入：Scratch編輯器介面截圖<br>
+                         <small>建議尺寸：900x600像素</small>
+                     </div>
+                     <div class="image-caption">Scratch程式編輯器介面</div>
+                 </div>
+                 <div class="annotation">
+                     <strong>編輯器重點功能：</strong><br>
+                     1. <span class="click-indicator">「創作」</span>：開始新專案<br>
+                     2. <span class="click-indicator">積木區</span>：左側有各種功能積木<br>
+                     3. <span class="click-indicator">程式區</span>：拖拉積木到中間組合<br>
+                     4. <span class="click-indicator">舞台區</span>：右側顯示執行結果<br>
+                     5. <span class="click-indicator">綠旗</span>：開始執行程式<br>
+                     6. <span class="click-indicator">儲存</span>：記得保存作品
+                 </div>
+             </div>
+        </div>
+        
+        <h2>💾 儲存與管理作品</h2>
+        
+        <h3>線上儲存</h3>
+        <div class="step">
+            <ul>
+                <li>登入狀態下，作品會自動儲存到你的帳號</li>
+                <li>可以在<strong>「我的東西」</strong>中查看所有作品</li>
+                <li>可以為作品命名和添加說明</li>
+            </ul>
+        </div>
+        
+        <h3>下載到電腦</h3>
+        <div class="step">
+            <ol>
+                <li>在編輯器中，點擊<strong>「檔案」</strong>選單</li>
+                <li>選擇<strong>「儲存到您的電腦」</strong></li>
+                <li>檔案會以 .sb3 格式下載</li>
+                <li>建議檔名格式：<span class="account-format">學號_作業名稱.sb3</span></li>
+            </ol>
+        </div>
+        
+        <h2>📱 截圖交作業</h2>
+        <div class="step">
+            <h4>方法一：使用Scratch內建截圖功能</h4>
+            <ol>
+                <li>在作品頁面點擊<strong>「截圖」</strong>按鈕</li>
+                <li>系統會自動產生作品截圖</li>
+            </ol>
+            
+            <h4>方法二：手動截圖</h4>
+            <ol>
+                <li>使用電腦截圖功能（Windows：Win+Shift+S，Mac：Cmd+Shift+4）</li>
+                <li>開啟小畫家或其他圖片編輯軟體</li>
+                <li>貼上截圖並儲存</li>
+                <li>檔名建議：<span class="account-format">學號.png</span>（例如：s12345.png）</li>
+            </ol>
+            
+                         <div class="step-image">
+                 <div class="image-container">
+                     <!-- 請在此處放入截圖作業範例 -->
+                     <div style="background-color: #f0f0f0; padding: 60px; text-align: center; border: 2px dashed #ccc; color: #666;">
+                         📷 請放入：截圖作業範例<br>
+                         <small>建議尺寸：800x400像素</small>
+                     </div>
+                     <div class="image-caption">截圖作業範例</div>
+                 </div>
+                 <div class="annotation">
+                     <strong>截圖重點：</strong><br>
+                     1. 確保 <span class="click-indicator">程式積木</span> 和 <span class="click-indicator">執行結果</span> 都清楚可見<br>
+                     2. 檔名格式：<span class="click-indicator">學號.png</span>（例如：s12345.png）<br>
+                     3. 截圖要包含完整的作品內容，方便老師檢查
+                 </div>
+             </div>
+        </div>
+        
+        <h2>❓ 常見問題解決</h2>
+        
+        <div class="warning">
+            <h4>問題1：忘記密碼怎麼辦？</h4>
+            <p><strong>解決方法：</strong></p>
+            <ul>
+                <li>在登入頁面點擊<strong>「忘記密碼？」</strong></li>
+                <li>輸入註冊時使用的信箱</li>
+                <li>檢查信箱中的密碼重設郵件</li>
+                <li>按照指示設定新密碼</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <h4>問題2：沒有收到驗證郵件？</h4>
+            <p><strong>解決方法：</strong></p>
+            <ul>
+                <li>檢查垃圾郵件資料夾</li>
+                <li>確認信箱地址輸入正確</li>
+                <li>等待幾分鐘後再檢查</li>
+                <li>可以要求重新發送驗證郵件</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <h4>問題3：作品突然消失了？</h4>
+            <p><strong>可能原因與解決方法：</strong></p>
+            <ul>
+                <li><strong>未登入狀態：</strong>沒登入就製作程式，關閉瀏覽器後會遺失</li>
+                <li><strong>解決方法：</strong>務必先登入再開始製作，或及時下載作品到電腦</li>
+                <li><strong>預防措施：</strong>定期備份重要作品到電腦</li>
+            </ul>
+        </div>
+        
+        <h2>🏆 學習建議</h2>
+        <div class="success">
+            <h4>給初學者的建議：</h4>
+            <ul>
+                <li><strong>從簡單開始：</strong>先學會讓角色移動、說話</li>
+                <li><strong>多看範例：</strong>觀摩其他人的作品，學習不同技巧</li>
+                <li><strong>勤加練習：</strong>多動手實作，熟悉各種積木的功能</li>
+                <li><strong>發揮創意：</strong>不要害怕嘗試，創造屬於自己的作品</li>
+                <li><strong>分享交流：</strong>與同學分享作品，互相學習</li>
+            </ul>
+        </div>
+        
+        <h2>📚 進階學習資源</h2>
+        <div class="step">
+            <h4>官方資源：</h4>
+            <ul>
+                <li><strong>Scratch官方教學：</strong>網站內建的逐步教學</li>
+                <li><strong>創意計算指南：</strong>哈佛大學提供的教學資源</li>
+                <li><strong>Scratch社群：</strong>與全世界的創作者交流</li>
+            </ul>
+            
+            <h4>學習主題建議順序：</h4>
+            <ol>
+                <li>基礎移動與造型變換</li>
+                <li>重複結構與迴圈</li>
+                <li>條件判斷與選擇結構</li>
+                <li>變數與清單使用</li>
+                <li>函式與副程式設計</li>
+                <li>遊戲設計與互動</li>
+            </ol>
+        </div>
+        
+        <div class="footer">
+            <p>🎉 準備好開始你的Scratch程式設計之旅了嗎？</p>
+            <p><strong>記住：程式設計是一門實作的藝術，多練習就會進步！</strong></p>
+            <p><em>最後更新：2024年</em></p>
+        </div>
+    </div>
+</body>
+</html> 
