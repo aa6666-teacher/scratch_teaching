@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C04 迷宮遊戲-選擇結構2 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chapter h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .chapter h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-block::before {
+            content: "點擊複製";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .code-block:hover::before {
+            opacity: 1;
+        }
+
+        .block-category {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin: 2px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #CF63CF; }
+        .events { background: #FFBF00; }
+        .control { background: #FFAB19; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; }
+        .variables { background: #FF8C1A; }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: #cce7ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .game-demo {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .game-demo h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: #6c757d;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .homework h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .homework-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .maze-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 40px);
+            gap: 2px;
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        .maze-cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .wall { background: #333; }
+        .path { background: #fff; }
+        .start { background: #4CAF50; color: white; }
+        .end { background: #f44336; color: white; }
+        .player { background: #2196F3; color: white; }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 C04 迷宮遊戲-選擇結構2</h1>
+            <p>進階條件判斷與迷宮遊戲開發完整教學</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="#intro">課程介紹</a>
+            <a href="#preparation">準備工作</a>
+            <a href="#advanced-conditions">進階條件判斷</a>
+            <a href="#maze-development">迷宮遊戲開發</a>
+            <a href="#enhancement">功能強化</a>
+            <a href="#homework">作業與評量</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>📚 第一章：課程介紹與學習目標</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 學習目標</h4>
+                <ul>
+                    <li>掌握進階選擇結構的應用</li>
+                    <li>學習複合條件判斷</li>
+                    <li>開發完整的迷宮遊戲</li>
+                    <li>實作碰撞檢測系統</li>
+                    <li>設計遊戲關卡機制</li>
+                </ul>
+            </div>
+
+            <h3>🎮 迷宮遊戲概念</h3>
+            <p>迷宮遊戲是一個經典的程式設計專案，需要運用多種程式概念：</p>
+            
+            <div class="step">
+                <h4>遊戲核心元素</h4>
+                <ul>
+                    <li><strong>玩家角色：</strong>可控制的遊戲角色</li>
+                    <li><strong>迷宮地圖：</strong>由牆壁和通道組成</li>
+                    <li><strong>碰撞檢測：</strong>判斷是否撞到牆壁</li>
+                    <li><strong>勝利條件：</strong>到達終點的判斷</li>
+                    <li><strong>關卡系統：</strong>多個不同難度的迷宮</li>
+                </ul>
+            </div>
+
+            <div class="game-demo">
+                <h4>迷宮遊戲示意圖</h4>
+                <div class="maze-grid">
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell start">S</div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell path"></div>
+                    <div class="maze-cell end">E</div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                    <div class="maze-cell wall"></div>
+                </div>
+                <p>S = 起點, E = 終點, 黑色 = 牆壁, 白色 = 通道</p>
+            </div>
+
+            <div class="info">
+                <strong>💡 程式設計重點：</strong>本課程將深入學習「選擇結構2」，包括複合條件判斷、巢狀條件結構，以及如何將這些概念應用到實際遊戲開發中。
+            </div>
+        </div>
+
+        <div id="preparation" class="chapter">
+            <h2>🛠️ 第二章：準備工作與遊戲設計</h2>
+
+            <h3>📋 遊戲企劃書</h3>
+            <div class="step">
+                <h4>遊戲基本設定</h4>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>內容</th>
+                        <th>說明</th>
+                    </tr>
+                    <tr>
+                        <td>遊戲名稱</td>
+                        <td>超級迷宮大冒險</td>
+                        <td>吸引人的遊戲標題</td>
+                    </tr>
+                    <tr>
+                        <td>主角</td>
+                        <td>小貓咪</td>
+                        <td>玩家控制的角色</td>
+                    </tr>
+                    <tr>
+                        <td>目標</td>
+                        <td>找到出口</td>
+                        <td>遊戲勝利條件</td>
+                    </tr>
+                    <tr>
+                        <td>操作</td>
+                        <td>方向鍵移動</td>
+                        <td>簡單直覺的控制</td>
+                    </tr>
+                    <tr>
+                        <td>難度</td>
+                        <td>三個關卡</td>
+                        <td>逐漸增加挑戰性</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>🎨 角色與場景設計</h3>
+            <div class="step">
+                <h4>步驟一：建立新專案</h4>
+                <ol>
+                    <li>開啟Scratch，點選「建立」</li>
+                    <li>刪除預設的貓咪角色</li>
+                    <li>設定專案名稱為「迷宮遊戲」</li>
+                </ol>
+                
+                <div class="image-placeholder">
+                    📷 新專案建立截圖
+                    <br>建議尺寸：800x450像素
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>步驟二：設計玩家角色</h4>
+                <ol>
+                    <li>點選「選擇一個角色」</li>
+                    <li>選擇喜歡的角色（建議：小貓、小狗或球）</li>
+                    <li>調整角色大小為適中</li>
+                    <li>設定角色初始位置</li>
+                </ol>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category motion">定位到 x: (-200) y: (150)</span>
+<span class="block-category looks">造型換成 (costume1)</span>
+<span class="block-category variables">設定 [關卡 v] 為 (1)</span>
+<span class="block-category variables">設定 [分數 v] 為 (0)</span>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>步驟三：建立迷宮背景</h4>
+                <ol>
+                    <li>點選舞台區域</li>
+                    <li>點選「選擇一個背景」</li>
+                    <li>選擇或繪製迷宮背景</li>
+                    <li>確保有清楚的牆壁和通道區分</li>
+                </ol>
+
+                <div class="image-placeholder">
+                    📷 迷宮背景設計截圖
+                    <br>建議尺寸：480x360像素
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 設計提醒：</strong>
+                <ul>
+                    <li>迷宮通道寬度要適中，讓角色可以通過</li>
+                    <li>牆壁顏色要與通道明顯區分</li>
+                    <li>起點和終點要清楚標示</li>
+                    <li>避免設計過於複雜的迷宮</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="advanced-conditions" class="chapter">
+            <h2>🧠 第三章：進階選擇結構與條件判斷</h2>
+
+            <div class="concept-box">
+                <h4>🎯 本章重點</h4>
+                <p>學習複合條件判斷、巢狀選擇結構，以及如何在遊戲中應用這些概念進行碰撞檢測和狀態判斷。</p>
+            </div>
+
+            <h3>🔍 複合條件判斷</h3>
+            <div class="step">
+                <h4>什麼是複合條件？</h4>
+                <p>複合條件是指同時檢查多個條件的判斷方式，使用邏輯運算子來組合多個條件。</p>
+                
+                <table>
+                    <tr>
+                        <th>邏輯運算子</th>
+                        <th>功能</th>
+                        <th>範例</th>
+                    </tr>
+                    <tr>
+                        <td>且 (AND)</td>
+                        <td>所有條件都成立</td>
+                        <td>按下右鍵 且 沒有碰到牆壁</td>
+                    </tr>
+                    <tr>
+                        <td>或 (OR)</td>
+                        <td>至少一個條件成立</td>
+                        <td>碰到紅色 或 碰到黑色</td>
+                    </tr>
+                    <tr>
+                        <td>非 (NOT)</td>
+                        <td>條件不成立</td>
+                        <td>不是 碰到牆壁</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="step">
+                <h4>實作範例：安全移動檢測</h4>
+                <p>在迷宮遊戲中，我們需要檢查玩家是否可以安全移動：</p>
+
+                <div class="code-block">
+<span class="block-category control">如果 <</span><span class="block-category operators">< 按鍵 [右鍵 v] 被按下？ > 且 < 不是 < 碰到顏色 (#000000)？ > ></span><span class="block-category control"> 那麼</span>
+    <span class="block-category motion">x 改變 (5)</span>
+<span class="block-category control">結束</span>
+                </div>
+
+                <div class="info">
+                    <strong>💡 程式邏輯解析：</strong>
+                    <ul>
+                        <li>條件1：按鍵 [右鍵] 被按下？</li>
+                        <li>條件2：不是 碰到顏色 (黑色)？</li>
+                        <li>結果：兩個條件都成立時，角色才會向右移動</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🏗️ 巢狀選擇結構</h3>
+            <div class="step">
+                <h4>什麼是巢狀結構？</h4>
+                <p>巢狀選擇結構是指在一個條件判斷內部，再包含另一個條件判斷的結構。</p>
+
+                <div class="code-block">
+<span class="block-category control">如果 < 按鍵 [上鍵 v] 被按下？ > 那麼</span>
+    <span class="block-category control">如果 < 不是 < 碰到顏色 (#000000)？ > > 那麼</span>
+        <span class="block-category motion">y 改變 (5)</span>
+    <span class="block-category control">否則</span>
+        <span class="block-category sound">播放音效 [碰撞 v]</span>
+        <span class="block-category looks">說出 [撞到牆了！] (1) 秒</span>
+    <span class="block-category control">結束</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>實作：完整的移動控制系統</h4>
+                <p>結合複合條件和巢狀結構，建立完整的角色移動控制：</p>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category control">重複無限次</span>
+    <span class="block-category control">如果 < 按鍵 [上鍵 v] 被按下？ > 那麼</span>
+        <span class="block-category motion">y 改變 (3)</span>
+        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
+            <span class="block-category motion">y 改變 (-3)</span>
+        <span class="block-category control">結束</span>
+    <span class="block-category control">結束</span>
+    
+    <span class="block-category control">如果 < 按鍵 [下鍵 v] 被按下？ > 那麼</span>
+        <span class="block-category motion">y 改變 (-3)</span>
+        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
+            <span class="block-category motion">y 改變 (3)</span>
+        <span class="block-category control">結束</span>
+    <span class="block-category control">結束</span>
+    
+    <span class="block-category control">如果 < 按鍵 [左鍵 v] 被按下？ > 那麼</span>
+        <span class="block-category motion">x 改變 (-3)</span>
+        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
+            <span class="block-category motion">x 改變 (3)</span>
+        <span class="block-category control">結束</span>
+    <span class="block-category control">結束</span>
+    
+    <span class="block-category control">如果 < 按鍵 [右鍵 v] 被按下？ > 那麼</span>
+        <span class="block-category motion">x 改變 (3)</span>
+        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
+            <span class="block-category motion">x 改變 (-3)</span>
+        <span class="block-category control">結束</span>
+    <span class="block-category control">結束</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>✅ 程式設計技巧：</strong>
+                <ul>
+                    <li>先移動，再檢查碰撞，如果碰撞就退回</li>
+                    <li>這種方式可以確保角色不會卡在牆壁裡</li>
+                    <li>移動距離要適中，太大會不流暢，太小會太慢</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="maze-development" class="chapter">
+            <h2>🎮 第四章：完整迷宮遊戲開發</h2>
+
+            <h3>🎯 勝利條件檢測</h3>
+            <div class="step">
+                <h4>設計終點檢測系統</h4>
+                <p>當玩家到達迷宮終點時，需要檢測並觸發勝利事件：</p>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category control">重複無限次</span>
+    <span class="block-category control">如果 < 碰到顏色 (#00ff00)？ > 那麼</span>
+        <span class="block-category sound">播放音效 [勝利 v]</span>
+        <span class="block-category looks">說出 [恭喜過關！] (2) 秒</span>
+        <span class="block-category variables">分數 改變 (100)</span>
+        <span class="block-category control">如果 < (關卡) < (3) > 那麼</span>
+            <span class="block-category variables">關卡 改變 (1)</span>
+            <span class="block-category looks">背景換成 [迷宮2 v]</span>
+            <span class="block-category motion">定位到 x: (-200) y: (150)</span>
+        <span class="block-category control">否則</span>
+            <span class="block-category looks">說出 [遊戲全破！] (3) 秒</span>
+            <span class="block-category control">停止 [全部 v]</span>
+        <span class="block-category control">結束</span>
+        <span class="block-category control">等待 (1) 秒</span>
+    <span class="block-category control">結束</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>建立多關卡系統</h4>
+                <p>設計三個不同難度的迷宮關卡：</p>
+                
+                <table>
+                    <tr>
+                        <th>關卡</th>
+                        <th>特色</th>
+                        <th>難度</th>
+                        <th>獎勵分數</th>
+                    </tr>
+                    <tr>
+                        <td>第一關</td>
+                        <td>簡單直線迷宮</td>
+                        <td>⭐</td>
+                        <td>100分</td>
+                    </tr>
+                    <tr>
+                        <td>第二關</td>
+                        <td>分岔路徑迷宮</td>
+                        <td>⭐⭐</td>
+                        <td>200分</td>
+                    </tr>
+                    <tr>
+                        <td>第三關</td>
+                        <td>複雜多層迷宮</td>
+                        <td>⭐⭐⭐</td>
+                        <td>300分</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>⏱️ 計時與計分系統</h3>
+            <div class="step">
+                <h4>建立遊戲變數</h4>
+                <p>在「變數」區塊中建立以下變數：</p>
+                <ul>
+                    <li><strong>分數</strong>：記錄玩家得分</li>
+                    <li><strong>關卡</strong>：記錄目前關卡</li>
+                    <li><strong>時間</strong>：記錄遊戲時間</li>
+                    <li><strong>生命</strong>：記錄剩餘生命數</li>
+                </ul>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category variables">設定 [分數 v] 為 (0)</span>
+<span class="block-category variables">設定 [關卡 v] 為 (1)</span>
+<span class="block-category variables">設定 [時間 v] 為 (0)</span>
+<span class="block-category variables">設定 [生命 v] 為 (3)</span>
+<span class="block-category control">重複無限次</span>
+    <span class="block-category control">等待 (1) 秒</span>
+    <span class="block-category variables">時間 改變 (1)</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <h3>💀 生命系統與重新開始</h3>
+            <div class="step">
+                <h4>實作生命系統</h4>
+                <p>當玩家碰到陷阱或敵人時，減少生命值：</p>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category control">重複無限次</span>
+    <span class="block-category control">如果 < 碰到顏色 (#ff0000)？ > 那麼</span>
+        <span class="block-category sound">播放音效 [受傷 v]</span>
+        <span class="block-category variables">生命 改變 (-1)</span>
+        <span class="block-category control">如果 < (生命) > (0) > 那麼</span>
+            <span class="block-category looks">說出 [小心陷阱！] (1) 秒</span>
+            <span class="block-category motion">定位到 x: (-200) y: (150)</span>
+        <span class="block-category control">否則</span>
+            <span class="block-category looks">說出 [遊戲結束！] (2) 秒</span>
+            <span class="block-category control">停止 [全部 v]</span>
+        <span class="block-category control">結束</span>
+        <span class="block-category control">等待 (1) 秒</span>
+    <span class="block-category control">結束</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <div class="image-placeholder">
+                📷 完整遊戲運行截圖
+                <br>建議尺寸：800x600像素
+                <br>包含：角色、迷宮、分數顯示、關卡資訊
+            </div>
+        </div>
+
+        <div id="enhancement" class="chapter">
+            <h2>⚡ 第五章：遊戲功能強化與優化</h2>
+
+            <h3>🎵 音效與視覺效果</h3>
+            <div class="step">
+                <h4>添加遊戲音效</h4>
+                <p>為不同的遊戲事件添加適當的音效：</p>
+                <ul>
+                    <li><strong>移動音效：</strong>腳步聲或移動音</li>
+                    <li><strong>碰撞音效：</strong>撞擊或錯誤音</li>
+                    <li><strong>勝利音效：</strong>成功或慶祝音</li>
+                    <li><strong>背景音樂：</strong>循環播放的背景音</li>
+                </ul>
+
+                <div class="code-block">
+<span class="block-category events">當 🏁 被點擊</span>
+<span class="block-category sound">重複播放音效 [背景音樂 v]</span>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>視覺特效設計</h4>
+                <p>增加遊戲的視覺吸引力：</p>
+
+                <div class="code-block">
+<span class="block-category events">當收到訊息 [過關 v]</span>
+<span class="block-category looks">特效 [彩色 v] (0.5) 秒</span>
+<span class="block-category looks">大小改變 (20)</span>
+<span class="block-category control">等待 (0.2) 秒</span>
+<span class="block-category looks">大小改變 (-20)</span>
+                </div>
+            </div>
+
+            <h3>🤖 智能提示系統</h3>
+            <div class="step">
+                <h4>實作提示功能</h4>
+                <p>當玩家卡關時，提供智能提示：</p>
+
+                <div class="code-block">
+<span class="block-category events">當按鍵 [h v] 被按下</span>
+<span class="block-category control">如果 < (關卡) = (1) > 那麼</span>
+    <span class="block-category looks">說出 [試試往右走！] (2) 秒</span>
+<span class="block-category control">結束</span>
+<span class="block-category control">如果 < (關卡) = (2) > 那麼</span>
+    <span class="block-category looks">說出 [注意分岔路！] (2) 秒</span>
+<span class="block-category control">結束</span>
+<span class="block-category control">如果 < (關卡) = (3) > 那麼</span>
+    <span class="block-category looks">說出 [仔細觀察地圖！] (2) 秒</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <h3>📊 遊戲數據統計</h3>
+            <div class="step">
+                <h4>建立成績記錄系統</h4>
+                <p>記錄玩家的遊戲表現：</p>
+
+                <div class="code-block">
+<span class="block-category events">當收到訊息 [遊戲結束 v]</span>
+<span class="block-category variables">設定 [最終分數 v] 為 (分數)</span>
+<span class="block-category variables">設定 [完成時間 v] 為 (時間)</span>
+<span class="block-category control">如果 < (最終分數) > (最高分數) > 那麼</span>
+    <span class="block-category variables">設定 [最高分數 v] 為 (最終分數)</span>
+    <span class="block-category looks">說出 [新紀錄！] (2) 秒</span>
+<span class="block-category control">結束</span>
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>🎉 遊戲完成檢核表：</strong>
+                <ul>
+                    <li>✅ 角色可以用方向鍵控制移動</li>
+                    <li>✅ 碰到牆壁時無法通過</li>
+                    <li>✅ 到達終點時顯示過關訊息</li>
+                    <li>✅ 有多個關卡可以挑戰</li>
+                    <li>✅ 分數和時間正確計算</li>
+                    <li>✅ 音效和視覺效果正常</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="homework" class="homework">
+            <h2>📝 第六章：作業設計與學習評量</h2>
+
+            <h3>🎯 基礎作業</h3>
+            <div class="homework-item">
+                <h4>作業一：基本迷宮遊戲 (70分)</h4>
+                <p><strong>要求：</strong></p>
+                <ul>
+                    <li>建立一個簡單的迷宮遊戲</li>
+                    <li>玩家可以用方向鍵控制角色移動</li>
+                    <li>實作基本的碰撞檢測</li>
+                    <li>設計起點和終點</li>
+                    <li>到達終點時顯示勝利訊息</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>作業二：進階功能實作 (85分)</h4>
+                <p><strong>在基礎作業基礎上增加：</strong></p>
+                <ul>
+                    <li>設計至少3個不同的關卡</li>
+                    <li>加入計分系統</li>
+                    <li>實作生命系統</li>
+                    <li>添加音效和視覺效果</li>
+                    <li>設計遊戲開始和結束畫面</li>
+                </ul>
+            </div>
+
+            <h3>🌟 創意挑戰</h3>
+            <div class="homework-item">
+                <h4>挑戰一：智能迷宮 (100分)</h4>
+                <p><strong>創新功能：</strong></p>
+                <ul>
+                    <li>隨機生成迷宮地圖</li>
+                    <li>加入移動的敵人或障礙</li>
+                    <li>設計道具系統（加速、無敵等）</li>
+                    <li>實作小地圖顯示功能</li>
+                    <li>建立排行榜系統</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>挑戰二：多人迷宮競賽</h4>
+                <p><strong>進階挑戰：</strong></p>
+                <ul>
+                    <li>支援兩個玩家同時遊戲</li>
+                    <li>設計競速或對戰模式</li>
+                    <li>加入特殊技能或道具</li>
+                    <li>實作即時計分比較</li>
+                </ul>
+            </div>
+
+            <h3>📤 作業繳交方式</h3>
+            <div class="step">
+                <h4>繳交檔案要求</h4>
+                <ol>
+                    <li><strong>Scratch專案檔：</strong>儲存為 .sb3 格式</li>
+                    <li><strong>遊戲截圖：</strong>至少3張不同關卡的截圖</li>
+                    <li><strong>設計說明：</strong>簡述遊戲特色和創意點</li>
+                    <li><strong>檔名格式：</strong>學號_姓名_迷宮遊戲</li>
+                </ol>
+            </div>
+
+            <div class="image-placeholder">
+                📷 作業繳交截圖範例
+                <br>建議尺寸：800x400像素
+                <br>包含：遊戲畫面、程式碼片段、創意功能展示
+            </div>
+
+            <h3>🏆 評分標準</h3>
+            <table>
+                <tr>
+                    <th>評分項目</th>
+                    <th>配分</th>
+                    <th>評分重點</th>
+                </tr>
+                <tr>
+                    <td>程式功能</td>
+                    <td>40%</td>
+                    <td>基本功能完整性、程式邏輯正確性</td>
+                </tr>
+                <tr>
+                    <td>選擇結構應用</td>
+                    <td>25%</td>
+                    <td>條件判斷使用恰當、複合條件運用</td>
+                </tr>
+                <tr>
+                    <td>遊戲設計</td>
+                    <td>20%</td>
+                    <td>關卡設計合理、難度漸進、遊戲性</td>
+                </tr>
+                <tr>
+                    <td>創意表現</td>
+                    <td>15%</td>
+                    <td>獨特功能、視覺設計、音效運用</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Scratch程式設計教學 | C04 迷宮遊戲-選擇結構2</p>
+            <p>💡 記住：程式設計是一個不斷學習和創新的過程，享受創作的樂趣！</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop(); return false;">⬆️ 回到頂部</a>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 程式碼複製功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.innerText;
+                navigator.clipboard.writeText(text).then(function() {
+                    // 暫時改變樣式表示複製成功
+                    block.style.backgroundColor = '#4CAF50';
+                    setTimeout(() => {
+                        block.style.backgroundColor = '#2d3748';
+                    }, 500);
+                });
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

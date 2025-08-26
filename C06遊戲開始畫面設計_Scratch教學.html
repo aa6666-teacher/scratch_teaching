@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C06 遊戲開始畫面設計 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            margin: -20px -20px 30px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: #495057;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #007bff;
+        }
+
+        .section h2 {
+            color: #007bff;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #495057;
+            font-size: 1.4rem;
+            margin: 20px 0 15px 0;
+            padding-left: 10px;
+            border-left: 3px solid #28a745;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .intro h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .feature-card h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 1px solid #4a5568;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "Scratch 積木組合";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #4a5568;
+            color: #e2e8f0;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        .block-category {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .motion { background-color: #4C97FF; color: white; }
+        .looks { background-color: #9966FF; color: white; }
+        .sound { background-color: #CF63CF; color: white; }
+        .events { background-color: #FFBF00; color: black; }
+        .control { background-color: #FFAB19; color: black; }
+        .sensing { background-color: #5CB1D6; color: white; }
+        .operators { background-color: #59C059; color: white; }
+        .variables { background-color: #FF8C1A; color: white; }
+
+        .step {
+            background: #e8f4f8;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .step h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+        }
+
+        .homework {
+            background: #f0f8ff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .homework h3 {
+            color: #007bff;
+            border: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+
+        .ui-element {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .ui-button {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .ui-button:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 0 0 15px 15px;
+            margin: 30px -20px -20px -20px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎮 C06 遊戲開始畫面設計</h1>
+            <p>打造專業遊戲介面 | 提升使用者體驗 | Scratch進階應用</p>
+        </header>
+
+        <nav class="nav">
+            <ul>
+                <li><a href="#intro">課程介紹</a></li>
+                <li><a href="#preparation">準備工作</a></li>
+                <li><a href="#ui-design">介面設計</a></li>
+                <li><a href="#interactive">互動功能</a></li>
+                <li><a href="#advanced">進階技巧</a></li>
+                <li><a href="#homework">作業設計</a></li>
+            </ul>
+        </nav>
+
+        <div class="intro" id="intro">
+            <h2>🌟 課程介紹</h2>
+            <p>學習設計專業的遊戲開始畫面，包含標題、按鈕、背景音樂等元素，讓你的遊戲更具吸引力！</p>
+        </div>
+
+        <section class="section" id="preparation">
+            <h2>📋 第一章：課程介紹與準備工作</h2>
+            
+            <h3>🎯 學習目標</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🎨 介面設計</h4>
+                    <p>學習設計美觀的遊戲開始畫面，包含背景、標題、按鈕等元素</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ 互動功能</h4>
+                    <p>實作按鈕點擊、場景切換、音效播放等互動功能</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔧 程式邏輯</h4>
+                    <p>掌握遊戲狀態管理、事件處理、條件判斷等程式概念</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎵 多媒體整合</h4>
+                    <p>整合背景音樂、音效、動畫效果，提升遊戲體驗</p>
+                </div>
+            </div>
+
+            <h3>🛠️ 需要的素材</h3>
+            <div class="step">
+                <h4>準備以下素材：</h4>
+                <ul>
+                    <li><strong>背景圖片：</strong>遊戲主題相關的背景圖（建議尺寸：480x360）</li>
+                    <li><strong>按鈕圖片：</strong>開始遊戲、設定、說明等按鈕圖片</li>
+                    <li><strong>標題文字：</strong>遊戲名稱的藝術字體或圖片</li>
+                    <li><strong>背景音樂：</strong>適合的背景音樂檔案（建議使用.mp3或.wav）</li>
+                    <li><strong>音效：</strong>按鈕點擊音效、切換音效等</li>
+                </ul>
+            </div>
+
+            <div class="image-placeholder">
+                📷 [素材準備示意圖]
+                <br>展示各種遊戲開始畫面需要的素材類型
+            </div>
+        </section>
+
+        <section class="section" id="ui-design">
+            <h2>🎨 第二章：遊戲介面設計基礎</h2>
+
+            <h3>📐 畫面佈局原則</h3>
+            <div class="step">
+                <h4>1. 黃金比例佈局</h4>
+                <p>將畫面分為三等分，重要元素放在交叉點上，創造視覺平衡</p>
+                
+                <div class="code-block">
+<span class="looks">外觀</span> 將背景切換成 [主選單背景]
+<span class="looks">外觀</span> 將 x 座標設為 (0) y 座標設為 (0)
+<span class="looks">外觀</span> 將大小設為 (100) %
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>2. 色彩搭配</h4>
+                <p>選擇符合遊戲主題的配色方案，注意對比度和可讀性</p>
+                
+                <div class="tip">
+                    <strong>💡 配色建議：</strong>
+                    <ul>
+                        <li>主色調：選擇1-2個主要顏色</li>
+                        <li>輔助色：用於強調重要元素</li>
+                        <li>背景色：選擇不搶眼的中性色調</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🖼️ 背景設計</h3>
+            <div class="step">
+                <h4>建立背景角色</h4>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="looks">外觀</span> 將背景切換成 [遊戲主背景]
+<span class="sound">音效</span> 播放音效 [背景音樂] 到結束
+<span class="sound">音效</span> 將音量設為 (50) %
+                </div>
+
+                <div class="image-placeholder">
+                    📷 [背景設計範例]
+                    <br>展示不同風格的遊戲背景設計
+                </div>
+            </div>
+
+            <h3>📝 標題設計</h3>
+            <div class="step">
+                <h4>建立遊戲標題</h4>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="looks">外觀</span> 說出 [遊戲名稱] (2) 秒
+<span class="looks">外觀</span> 將 x 座標設為 (0) y 座標設為 (100)
+<span class="looks">外觀</span> 將大小設為 (150) %
+<span class="looks">外觀</span> 設定 [顏色] 特效為 (25)
+重複 (10) 次
+    <span class="looks">外觀</span> 將 [亮度] 特效改變 (10)
+    <span class="control">控制</span> 等待 (0.1) 秒
+                </div>
+
+                <div class="success">
+                    <strong>✅ 效果說明：</strong>這段程式碼會讓標題出現閃爍效果，吸引玩家注意力
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="interactive">
+            <h2>⚡ 第三章：互動功能實作</h2>
+
+            <h3>🔘 按鈕設計與功能</h3>
+            <div class="step">
+                <h4>1. 開始遊戲按鈕</h4>
+                
+                <div class="ui-element">
+                    <div class="ui-button">🎮 開始遊戲</div>
+                </div>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="looks">外觀</span> 切換造型為 [開始按鈕-正常]
+<span class="looks">外觀</span> 將 x 座標設為 (0) y 座標設為 (-50)
+<span class="looks">外觀</span> 顯示
+
+當這個角色被點擊
+<span class="looks">外觀</span> 切換造型為 [開始按鈕-按下]
+<span class="sound">音效</span> 播放音效 [按鈕點擊音]
+<span class="control">控制</span> 等待 (0.2) 秒
+<span class="control">控制</span> 廣播訊息 [開始遊戲]
+<span class="looks">外觀</span> 隱藏
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>2. 設定按鈕</h4>
+                
+                <div class="ui-element">
+                    <div class="ui-button">⚙️ 設定</div>
+                </div>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="looks">外觀</span> 切換造型為 [設定按鈕]
+<span class="looks">外觀</span> 將 x 座標設為 (-100) y 座標設為 (-100)
+<span class="looks">外觀</span> 顯示
+
+當這個角色被點擊
+<span class="sound">音效</span> 播放音效 [按鈕點擊音]
+<span class="control">控制</span> 廣播訊息 [開啟設定選單]
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>3. 說明按鈕</h4>
+                
+                <div class="ui-element">
+                    <div class="ui-button">❓ 遊戲說明</div>
+                </div>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="looks">外觀</span> 切換造型為 [說明按鈕]
+<span class="looks">外觀</span> 將 x 座標設為 (100) y 座標設為 (-100)
+<span class="looks">外觀</span> 顯示
+
+當這個角色被點擊
+<span class="sound">音效</span> 播放音效 [按鈕點擊音]
+<span class="control">控制</span> 廣播訊息 [顯示說明]
+                </div>
+            </div>
+
+            <h3>🔄 場景切換系統</h3>
+            <div class="step">
+                <h4>主控制器設計</h4>
+                
+                <div class="code-block">
+當收到訊息 [開始遊戲]
+<span class="looks">外觀</span> 將背景切換成 [遊戲場景]
+<span class="sound">音效</span> 停止所有音效
+<span class="sound">音效</span> 播放音效 [遊戲音樂] 到結束
+<span class="control">控制</span> 廣播訊息 [隱藏選單]
+<span class="control">控制</span> 廣播訊息 [開始遊戲邏輯]
+
+當收到訊息 [回到主選單]
+<span class="looks">外觀</span> 將背景切換成 [主選單背景]
+<span class="sound">音效</span> 停止所有音效
+<span class="sound">音效</span> 播放音效 [背景音樂] 到結束
+<span class="control">控制</span> 廣播訊息 [顯示選單]
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ 注意事項：</strong>
+                    <ul>
+                        <li>確保音效檔案大小適中，避免載入過慢</li>
+                        <li>測試不同裝置上的音效播放效果</li>
+                        <li>提供音效開關選項給玩家</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="image-placeholder">
+                📷 [場景切換流程圖]
+                <br>展示從主選單到遊戲場景的切換過程
+            </div>
+        </section>
+
+        <section class="section" id="advanced">
+            <h2>🚀 第四章：進階功能與特效</h2>
+
+            <h3>✨ 動畫效果</h3>
+            <div class="step">
+                <h4>1. 淡入淡出效果</h4>
+                
+                <div class="code-block">
+定義 [淡入效果]
+<span class="looks">外觀</span> 將 [透明] 特效設為 (100)
+<span class="looks">外觀</span> 顯示
+重複 (10) 次
+    <span class="looks">外觀</span> 將 [透明] 特效改變 (-10)
+    <span class="control">控制</span> 等待 (0.05) 秒
+
+定義 [淡出效果]
+重複 (10) 次
+    <span class="looks">外觀</span> 將 [透明] 特效改變 (10)
+    <span class="control">控制</span> 等待 (0.05) 秒
+<span class="looks">外觀</span> 隱藏
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>2. 按鈕懸停效果</h4>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+重複無限次
+    如果 <觸碰到 [滑鼠游標] ?> 那麼
+        <span class="looks">外觀</span> 將大小設為 (110) %
+        <span class="looks">外觀</span> 設定 [亮度] 特效為 (20)
+    否則
+        <span class="looks">外觀</span> 將大小設為 (100) %
+        <span class="looks">外觀</span> 將 [亮度] 特效設為 (0)
+                </div>
+            </div>
+
+            <h3>🎵 音效管理系統</h3>
+            <div class="step">
+                <h4>音效控制器</h4>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+<span class="variables">變數</span> 將 [音效開關] 設為 [開啟]
+<span class="variables">變數</span> 將 [音樂音量] 設為 (70)
+<span class="variables">變數</span> 將 [音效音量] 設為 (80)
+
+定義 [播放背景音樂] (音樂名稱)
+如果 <(音效開關) = [開啟]> 那麼
+    <span class="sound">音效</span> 將音量設為 (音樂音量) %
+    <span class="sound">音效</span> 播放音效 (音樂名稱) 到結束
+
+定義 [播放音效] (音效名稱)
+如果 <(音效開關) = [開啟]> 那麼
+    <span class="sound">音效</span> 將音量設為 (音效音量) %
+    <span class="sound">音效</span> 播放音效 (音效名稱)
+                </div>
+            </div>
+
+            <h3>💾 遊戲資料儲存</h3>
+            <div class="step">
+                <h4>最高分記錄系統</h4>
+                
+                <div class="code-block">
+當 <span class="events">綠旗</span> 被點擊
+如果 <不是 <(最高分) = []>> 那麼
+    <span class="variables">變數</span> 將 [最高分] 設為 (0)
+
+當收到訊息 [遊戲結束]
+如果 <(目前分數) > (最高分)> 那麼
+    <span class="variables">變數</span> 將 [最高分] 設為 (目前分數)
+    <span class="looks">外觀</span> 說出 [恭喜！新紀錄！] (3) 秒
+                </div>
+
+                <div class="tip">
+                    <strong>💡 進階技巧：</strong>
+                    <ul>
+                        <li>使用雲端變數儲存全域排行榜</li>
+                        <li>設計成就系統激勵玩家</li>
+                        <li>記錄玩家遊戲偏好設定</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="image-placeholder">
+                📷 [進階功能展示]
+                <br>展示各種動畫效果和特殊功能的實際效果
+            </div>
+        </section>
+
+        <section class="section" id="optimization">
+            <h2>⚙️ 第五章：效能優化與除錯</h2>
+
+            <h3>🔧 效能優化技巧</h3>
+            <div class="step">
+                <h4>1. 圖片資源優化</h4>
+                <ul>
+                    <li><strong>檔案大小：</strong>控制圖片檔案大小，避免載入過慢</li>
+                    <li><strong>圖片格式：</strong>選擇適合的圖片格式（PNG透明背景，JPG照片）</li>
+                    <li><strong>解析度：</strong>根據Scratch舞台大小調整圖片解析度</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>2. 程式碼優化</h4>
+                
+                <div class="code-block">
+// 避免過多的重複迴圈
+❌ 不好的寫法：
+重複無限次
+    重複無限次
+        如果 <按下 [空白鍵] ?> 那麼
+            // 處理邏輯
+
+✅ 好的寫法：
+重複無限次
+    如果 <按下 [空白鍵] ?> 那麼
+        // 處理邏輯
+                </div>
+            </div>
+
+            <h3>🐛 常見問題除錯</h3>
+            <div class="step">
+                <h4>問題診斷清單</h4>
+                
+                <div class="warning">
+                    <strong>常見問題：</strong>
+                    <ul>
+                        <li><strong>按鈕無反應：</strong>檢查角色是否隱藏或被其他角色遮擋</li>
+                        <li><strong>音效不播放：</strong>確認音效檔案格式和大小</li>
+                        <li><strong>畫面閃爍：</strong>檢查是否有衝突的外觀設定</li>
+                        <li><strong>切換卡頓：</strong>減少同時執行的程式數量</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section homework" id="homework">
+            <h2>📝 第六章：作業設計與學習評量</h2>
+
+            <h3>📋 基礎作業</h3>
+            <div class="step">
+                <h4>作業一：設計簡單開始畫面</h4>
+                <p><strong>要求：</strong></p>
+                <ul>
+                    <li>包含遊戲標題</li>
+                    <li>至少3個功能按鈕（開始、設定、說明）</li>
+                    <li>背景音樂播放</li>
+                    <li>按鈕點擊音效</li>
+                </ul>
+                
+                <p><strong>評分標準：</strong></p>
+                <ul>
+                    <li>介面美觀度 (30%)</li>
+                    <li>功能完整性 (40%)</li>
+                    <li>創意表現 (20%)</li>
+                    <li>程式碼品質 (10%)</li>
+                </ul>
+            </div>
+
+            <h3>🌟 進階挑戰</h3>
+            <div class="step">
+                <h4>挑戰一：多層選單系統</h4>
+                <p>設計包含子選單的複雜介面系統，如角色選擇、關卡選擇等</p>
+            </div>
+
+            <div class="step">
+                <h4>挑戰二：動態背景效果</h4>
+                <p>製作會動的背景，如飄動的雲朵、閃爍的星星等</p>
+            </div>
+
+            <div class="step">
+                <h4>挑戰三：自適應介面</h4>
+                <p>設計能根據不同情況改變的介面，如日夜模式切換</p>
+            </div>
+
+            <h3>🎯 學習檢核</h3>
+            <div class="success">
+                <strong>完成本課程後，你應該能夠：</strong>
+                <ul>
+                    <li>✅ 設計美觀的遊戲開始畫面</li>
+                    <li>✅ 實作互動按鈕和場景切換</li>
+                    <li>✅ 整合音效和背景音樂</li>
+                    <li>✅ 運用動畫效果提升體驗</li>
+                    <li>✅ 管理遊戲狀態和資料儲存</li>
+                    <li>✅ 優化程式效能和除錯</li>
+                </ul>
+            </div>
+
+            <div class="image-placeholder">
+                📷 [作業範例展示]
+                <br>展示不同學生作品的優秀範例
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2024 Scratch遊戲開始畫面設計教學 | 讓每個遊戲都有完美的第一印象 🎮</p>
+            <p>持續學習，創造更多精彩作品！</p>
+        </footer>
+    </div>
+
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <script>
+        // 平滑滾動導航
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // 程式碼複製功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // 顯示複製成功提示
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = '#28a745';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+        });
+
+        // 返回頂部按鈕顯示/隱藏
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

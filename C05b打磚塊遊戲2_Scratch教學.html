@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C05b 打磚塊遊戲2（進階版）- Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            margin: -20px -20px 30px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chapter h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chapter h2::before {
+            content: '🎮';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .chapter h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #667eea10, #764ba220);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .concept-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .code-block:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        .code-block::before {
+            content: '點擊複製';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .code-block:hover::before {
+            opacity: 1;
+        }
+
+        .scratch-block {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 3px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #CF63CF; }
+        .events { background: #FFBF00; }
+        .control { background: #FFAB19; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; }
+        .variables { background: #FF8C1A; }
+
+        .step-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .step-list li {
+            margin: 10px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -15px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning::before {
+            content: '⚠️ ';
+            font-weight: bold;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success::before {
+            content: '✅ ';
+            font-weight: bold;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+        }
+
+        .image-placeholder h4 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .game-feature {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .game-feature h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .difficulty-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .beginner { background: #28a745; }
+        .intermediate { background: #ffc107; color: #333; }
+        .advanced { background: #dc3545; }
+
+        .homework-section {
+            background: linear-gradient(135deg, #667eea20, #764ba240);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 2px solid #667eea;
+        }
+
+        .homework-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #343a40;
+            color: white;
+            border-radius: 0 0 15px 15px;
+            margin: 40px -20px -20px -20px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>C05b 打磚塊遊戲2（進階版）</h1>
+            <p>Scratch進階遊戲開發 - 多關卡系統與特殊功能實作</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="#intro">課程介紹</a>
+            <a href="#preparation">準備工作</a>
+            <a href="#advanced-features">進階功能</a>
+            <a href="#multi-level">多關卡系統</a>
+            <a href="#special-effects">特殊效果</a>
+            <a href="#optimization">遊戲優化</a>
+            <a href="#homework">作業設計</a>
+        </nav>
+
+        <section id="intro" class="chapter">
+            <h2>第一章：課程介紹與學習目標</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 本課程學習目標</h4>
+                <ul>
+                    <li>掌握進階打磚塊遊戲開發技巧</li>
+                    <li>學會設計多關卡遊戲系統</li>
+                    <li>實作特殊道具和效果系統</li>
+                    <li>優化遊戲性能和用戶體驗</li>
+                    <li>建立完整的遊戲架構</li>
+                </ul>
+            </div>
+
+            <h3>進階打磚塊遊戲特色</h3>
+            <div class="game-feature">
+                <h4>🎮 多關卡系統</h4>
+                <p>設計多個不同難度的關卡，每關有獨特的磚塊排列和挑戰。</p>
+            </div>
+
+            <div class="game-feature">
+                <h4>⚡ 特殊道具系統</h4>
+                <p>包含火球、大擋板、多球、慢動作等豐富的道具效果。</p>
+            </div>
+
+            <div class="game-feature">
+                <h4>💎 計分與生命系統</h4>
+                <p>完整的遊戲進度記錄，包含分數、生命值、關卡進度等。</p>
+            </div>
+
+            <div class="game-feature">
+                <h4>🎨 視覺效果強化</h4>
+                <p>粒子效果、動畫轉場、音效配合等提升遊戲體驗。</p>
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 進階打磚塊遊戲完整介面截圖</h4>
+                <p>建議尺寸：900x600像素</p>
+                <p>展示多關卡選單、道具系統、計分介面等完整功能</p>
+            </div>
+        </section>
+
+        <section id="preparation" class="chapter">
+            <h2>第二章：準備工作與遊戲企劃</h2>
+
+            <h3>遊戲架構規劃</h3>
+            <div class="concept-box">
+                <h4>📋 完整遊戲流程</h4>
+                <ol>
+                    <li><strong>開始畫面</strong>：標題、開始按鈕、設定選項</li>
+                    <li><strong>關卡選擇</strong>：顯示可用關卡和進度</li>
+                    <li><strong>遊戲進行</strong>：主要遊戲畫面</li>
+                    <li><strong>暫停功能</strong>：遊戲中途暫停</li>
+                    <li><strong>結果畫面</strong>：勝利/失敗結果顯示</li>
+                    <li><strong>分數統計</strong>：總分和最佳記錄</li>
+                </ol>
+            </div>
+
+            <h3>角色和背景設計</h3>
+            <div class="step-list">
+                <li><strong>球</strong>：主角色，具備多種狀態（普通、火球、慢動作）</li>
+                <li><strong>擋板</strong>：玩家控制，可變大變小</li>
+                <li><strong>磚塊</strong>：多種類型（普通、堅硬、特殊、道具磚塊）</li>
+                <li><strong>道具</strong>：各種增益效果的道具物件</li>
+                <li><strong>粒子效果</strong>：爆炸、閃光等視覺效果</li>
+                <li><strong>UI元素</strong>：分數、生命、關卡資訊顯示</li>
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 遊戲角色設計圖</h4>
+                <p>建議尺寸：800x400像素</p>
+                <p>展示所有遊戲角色的設計和狀態變化</p>
+            </div>
+
+            <h3>變數系統設計</h3>
+            <div class="code-block">
+/* 遊戲狀態變數 */
+<span class="variables">遊戲狀態</span> = "選單"  // 選單、遊戲中、暫停、結束
+<span class="variables">目前關卡</span> = 1
+<span class="variables">玩家分數</span> = 0
+<span class="variables">玩家生命</span> = 3
+<span class="variables">最高分數</span> = 0
+
+/* 球的狀態變數 */
+<span class="variables">球X速度</span> = 3
+<span class="variables">球Y速度</span> = 3
+<span class="variables">球狀態</span> = "普通"  // 普通、火球、慢動作
+<span class="variables">球數量</span> = 1
+
+/* 擋板狀態變數 */
+<span class="variables">擋板大小</span> = 100  // 擋板寬度
+<span class="variables">擋板速度</span> = 8
+
+/* 道具系統變數 */
+<span class="variables">道具效果時間</span> = 0
+<span class="variables">道具類型</span> = "無"
+            </div>
+        </section>
+
+        <section id="advanced-features" class="chapter">
+            <h2>第三章：進階功能實作</h2>
+
+            <h3>多球系統</h3>
+            <div class="concept-box">
+                <h4>🎾 多球機制設計</h4>
+                <p>當玩家獲得多球道具時，創造多個球同時在場上運動，增加遊戲的刺激感。</p>
+            </div>
+
+            <div class="code-block">
+/* 多球系統實作 */
+當 <span class="events">獲得多球道具</span>
+    重複 <span class="operators">2</span> 次
+        <span class="control">建立球的分身</span>
+        將 <span class="variables">球X速度</span> 設為 <span class="operators">隨機取數 -5 到 5</span>
+        將 <span class="variables">球Y速度</span> 設為 <span class="operators">隨機取數 3 到 5</span>
+    結束
+
+當 <span class="events">作為分身啟動時</span>
+    重複無限次
+        <span class="motion">移動</span> <span class="variables">球X速度</span> <span class="motion">步</span>
+        <span class="motion">移動</span> <span class="variables">球Y速度</span> <span class="motion">步</span>
+        如果 <span class="sensing">碰到邊緣</span> 那麼
+            <span class="motion">碰到邊緣就反彈</span>
+        結束
+        執行 <span class="control">碰撞檢測</span>
+    結束
+            </div>
+
+            <h3>火球模式</h3>
+            <div class="concept-box">
+                <h4>🔥 火球特殊能力</h4>
+                <p>火球可以穿透磚塊而不反彈，造成更大的破壞力。</p>
+            </div>
+
+            <div class="code-block">
+/* 火球模式實作 */
+當 <span class="events">獲得火球道具</span>
+    將 <span class="variables">球狀態</span> 設為 <span class="operators">"火球"</span>
+    將 <span class="variables">道具效果時間</span> 設為 <span class="operators">300</span>  // 5秒效果
+    <span class="looks">換成造型</span> <span class="operators">"火球"</span>
+
+重複無限次
+    如果 <span class="variables">球狀態</span> = <span class="operators">"火球"</span> 那麼
+        如果 <span class="sensing">碰到</span> <span class="operators">"磚塊"</span> 那麼
+            廣播 <span class="events">磚塊被擊中</span> 並等待
+            // 火球不反彈，繼續穿透
+        結束
+        將 <span class="variables">道具效果時間</span> 改變 <span class="operators">-1</span>
+        如果 <span class="variables">道具效果時間</span> ≤ <span class="operators">0</span> 那麼
+            將 <span class="variables">球狀態</span> 設為 <span class="operators">"普通"</span>
+            <span class="looks">換成造型</span> <span class="operators">"普通球"</span>
+        結束
+    結束
+結束
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 火球效果演示</h4>
+                <p>建議尺寸：600x400像素</p>
+                <p>展示火球穿透磚塊的特殊效果和視覺表現</p>
+            </div>
+
+            <h3>擋板大小變化</h3>
+            <div class="concept-box">
+                <h4>📏 動態擋板系統</h4>
+                <p>擋板可以根據道具效果變大或變小，影響遊戲難度。</p>
+            </div>
+
+            <div class="code-block">
+/* 擋板大小控制 */
+當 <span class="events">獲得大擋板道具</span>
+    將 <span class="variables">擋板大小</span> 設為 <span class="operators">150</span>
+    <span class="looks">將大小設為</span> <span class="operators">150</span> %
+    將 <span class="variables">道具效果時間</span> 設為 <span class="operators">600</span>  // 10秒效果
+
+當 <span class="events">獲得小擋板道具</span>
+    將 <span class="variables">擋板大小</span> 設為 <span class="operators">50</span>
+    <span class="looks">將大小設為</span> <span class="operators">50</span> %
+    將 <span class="variables">道具效果時間</span> 設為 <span class="operators">300</span>  // 5秒效果
+
+重複無限次
+    如果 <span class="variables">道具效果時間</span> > <span class="operators">0</span> 那麼
+        將 <span class="variables">道具效果時間</span> 改變 <span class="operators">-1</span>
+    否則
+        將 <span class="variables">擋板大小</span> 設為 <span class="operators">100</span>
+        <span class="looks">將大小設為</span> <span class="operators">100</span> %
+    結束
+結束
+            </div>
+
+            <h3>慢動作效果</h3>
+            <div class="concept-box">
+                <h4>⏰ 時間控制系統</h4>
+                <p>讓球的移動變慢，給玩家更多反應時間。</p>
+            </div>
+
+            <div class="code-block">
+/* 慢動作效果實作 */
+當 <span class="events">獲得慢動作道具</span>
+    將 <span class="variables">球狀態</span> 設為 <span class="operators">"慢動作"</span>
+    將 <span class="variables">原始X速度</span> 設為 <span class="variables">球X速度</span>
+    將 <span class="variables">原始Y速度</span> 設為 <span class="variables">球Y速度</span>
+    將 <span class="variables">球X速度</span> 設為 <span class="operators"><span class="variables">球X速度</span> / 3</span>
+    將 <span class="variables">球Y速度</span> 設為 <span class="operators"><span class="variables">球Y速度</span> / 3</span>
+    將 <span class="variables">道具效果時間</span> 設為 <span class="operators">300</span>
+
+重複無限次
+    如果 <span class="variables">球狀態</span> = <span class="operators">"慢動作"</span> 那麼
+        將 <span class="variables">道具效果時間</span> 改變 <span class="operators">-1</span>
+        如果 <span class="variables">道具效果時間</span> ≤ <span class="operators">0</span> 那麼
+            將 <span class="variables">球狀態</span> 設為 <span class="operators">"普通"</span>
+            將 <span class="variables">球X速度</span> 設為 <span class="variables">原始X速度</span>
+            將 <span class="variables">球Y速度</span> 設為 <span class="variables">原始Y速度</span>
+        結束
+    結束
+結束
+            </div>
+        </section>
+
+        <section id="multi-level" class="chapter">
+            <h2>第四章：多關卡系統設計</h2>
+
+            <h3>關卡資料結構</h3>
+            <div class="concept-box">
+                <h4>🗂️ 關卡資訊管理</h4>
+                <p>每個關卡包含磚塊排列、難度設定、目標分數等資訊。</p>
+            </div>
+
+            <div class="code-block">
+/* 關卡資料設計 */
+<span class="variables">關卡1磚塊</span> = "111111111"  // 9個普通磚塊一排
+<span class="variables">關卡1目標</span> = 900  // 目標分數
+<span class="variables">關卡1球速</span> = 3   // 球的初始速度
+
+<span class="variables">關卡2磚塊</span> = "121212121"  // 混合普通和堅硬磚塊
+<span class="variables">關卡2目標</span> = 1500
+<span class="variables">關卡2球速</span> = 4
+
+<span class="variables">關卡3磚塊</span> = "123454321"  // 包含特殊磚塊
+<span class="variables">關卡3目標</span> = 2500
+<span class="variables">關卡3球速</span> = 5
+
+/* 磚塊類型說明 */
+// 1: 普通磚塊 (100分)
+// 2: 堅硬磚塊 (200分，需要2次擊中)
+// 3: 特殊磚塊 (300分，掉落道具)
+// 4: 金磚塊 (500分，不可破壞)
+// 5: 爆炸磚塊 (400分，爆炸影響周圍)
+            </div>
+
+            <h3>關卡生成系統</h3>
+            <div class="code-block">
+/* 關卡生成程式 */
+定義 <span class="control">生成關卡</span> <span class="operators">(關卡編號)</span>
+    將 <span class="variables">磚塊資料</span> 設為 <span class="operators">項目 <span class="variables">關卡編號</span> 在清單 <span class="variables">所有關卡磚塊</span></span>
+    將 <span class="variables">目標分數</span> 設為 <span class="operators">項目 <span class="variables">關卡編號</span> 在清單 <span class="variables">所有關卡目標</span></span>
+    將 <span class="variables">球初始速度</span> 設為 <span class="operators">項目 <span class="variables">關卡編號</span> 在清單 <span class="variables">所有關卡球速</span></span>
+    
+    將 <span class="variables">X位置</span> 設為 <span class="operators">-200</span>
+    將 <span class="variables">Y位置</span> 設為 <span class="operators">100</span>
+    
+    重複 <span class="operators">字串<span class="variables">磚塊資料</span>的長度</span> 次
+        將 <span class="variables">磚塊類型</span> 設為 <span class="operators">字串<span class="variables">磚塊資料</span>的第<span class="variables">計數器</span>個字元</span>
+        如果 <span class="variables">磚塊類型</span> ≠ <span class="operators">"0"</span> 那麼
+            <span class="control">建立磚塊分身</span>
+            <span class="motion">定位到</span> x: <span class="variables">X位置</span> y: <span class="variables">Y位置</span>
+            執行 <span class="control">設定磚塊類型</span> <span class="operators">(<span class="variables">磚塊類型</span>)</span>
+        結束
+        將 <span class="variables">X位置</span> 改變 <span class="operators">50</span>
+        如果 <span class="variables">計數器</span> mod <span class="operators">9</span> = <span class="operators">0</span> 那麼
+            將 <span class="variables">X位置</span> 設為 <span class="operators">-200</span>
+            將 <span class="variables">Y位置</span> 改變 <span class="operators">-40</span>
+        結束
+    結束
+結束
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 多關卡選擇畫面</h4>
+                <p>建議尺寸：800x500像素</p>
+                <p>展示關卡選擇介面，顯示關卡預覽、難度星級、最佳成績等</p>
+            </div>
+
+            <h3>關卡進度系統</h3>
+            <div class="concept-box">
+                <h4>📊 進度追蹤機制</h4>
+                <p>記錄玩家在每個關卡的最佳成績和完成狀態。</p>
+            </div>
+
+            <div class="code-block">
+/* 關卡進度管理 */
+當 <span class="events">關卡完成</span>
+    如果 <span class="variables">玩家分數</span> > <span class="operators">項目 <span class="variables">目前關卡</span> 在清單 <span class="variables">關卡最佳分數</span></span> 那麼
+        將項目 <span class="variables">目前關卡</span> 在清單 <span class="variables">關卡最佳分數</span> 替換成 <span class="variables">玩家分數</span>
+        廣播 <span class="events">新記錄</span>
+    結束
+    
+    將項目 <span class="variables">目前關卡</span> 在清單 <span class="variables">關卡完成狀態</span> 替換成 <span class="operators">"已完成"</span>
+    
+    如果 <span class="variables">目前關卡</span> < <span class="operators">清單 <span class="variables">所有關卡</span> 的長度</span> 那麼
+        將項目 <span class="operators"><span class="variables">目前關卡</span> + 1</span> 在清單 <span class="variables">關卡解鎖狀態</span> 替換成 <span class="operators">"已解鎖"</span>
+    結束
+    
+    <span class="looks">說出</span> <span class="operators">關卡 <span class="variables">目前關卡</span> 完成！</span> 持續 <span class="operators">3</span> 秒
+結束
+            </div>
+
+            <h3>難度漸進設計</h3>
+            <div class="step-list">
+                <li><strong>關卡1-3</strong>：基礎教學，簡單磚塊排列 <span class="difficulty-level beginner">初級</span></li>
+                <li><strong>關卡4-6</strong>：引入堅硬磚塊和道具 <span class="difficulty-level intermediate">中級</span></li>
+                <li><strong>關卡7-9</strong>：複雜排列和多種磚塊 <span class="difficulty-level intermediate">中級</span></li>
+                <li><strong>關卡10-12</strong>：高速球和特殊挑戰 <span class="difficulty-level advanced">高級</span></li>
+                <li><strong>關卡13-15</strong>：終極挑戰關卡 <span class="difficulty-level advanced">高級</span></li>
+            </div>
+        </section>
+
+        <section id="special-effects" class="chapter">
+            <h2>第五章：特殊效果與視覺強化</h2>
+
+            <h3>粒子效果系統</h3>
+            <div class="concept-box">
+                <h4>✨ 爆炸粒子效果</h4>
+                <p>當磚塊被擊中時產生粒子爆炸效果，增加視覺衝擊力。</p>
+            </div>
+
+            <div class="code-block">
+/* 粒子效果實作 */
+當收到訊息 <span class="events">磚塊爆炸</span>
+    重複 <span class="operators">10</span> 次
+        <span class="control">建立粒子分身</span>
+        <span class="motion">定位到</span> x: <span class="variables">爆炸X</span> y: <span class="variables">爆炸Y</span>
+        將 <span class="variables">粒子X速度</span> 設為 <span class="operators">隨機取數 -8 到 8</span>
+        將 <span class="variables">粒子Y速度</span> 設為 <span class="operators">隨機取數 -8 到 8</span>
+        <span class="looks">將顏色效果設為</span> <span class="operators">隨機取數 0 到 200</span>
+    結束
+
+當 <span class="events">作為分身啟動時</span>
+    <span class="looks">將大小設為</span> <span class="operators">隨機取數 50 到 150</span> %
+    重複 <span class="operators">30</span> 次
+        <span class="motion">移動</span> <span class="variables">粒子X速度</span> <span class="motion">步</span>
+        <span class="motion">移動</span> <span class="variables">粒子Y速度</span> <span class="motion">步</span>
+        <span class="looks">將透明效果改變</span> <span class="operators">10</span>
+        將 <span class="variables">粒子Y速度</span> 改變 <span class="operators">0.3</span>  // 重力效果
+    結束
+    <span class="control">刪除此分身</span>
+結束
+            </div>
+
+            <h3>螢幕震動效果</h3>
+            <div class="concept-box">
+                <h4>📳 震動回饋系統</h4>
+                <p>在重要事件發生時（如生命減少、特殊磚塊擊中）產生震動效果。</p>
+            </div>
+
+            <div class="code-block">
+/* 螢幕震動效果 */
+定義 <span class="control">螢幕震動</span> <span class="operators">(強度)</span>
+    重複 <span class="operators">10</span> 次
+        將 <span class="variables">原始X</span> 設為 <span class="motion">x座標</span>
+        將 <span class="variables">原始Y</span> 設為 <span class="motion">y座標</span>
+        <span class="motion">移動到</span> x: <span class="operators"><span class="variables">原始X</span> + 隨機取數 -<span class="variables">強度</span> 到 <span class="variables">強度</span></span> y: <span class="operators"><span class="variables">原始Y</span> + 隨機取數 -<span class="variables">強度</span> 到 <span class="variables">強度</span></span>
+        <span class="control">等待</span> <span class="operators">0.05</span> 秒
+    結束
+    <span class="motion">移動到</span> x: <span class="variables">原始X</span> y: <span class="variables">原始Y</span>
+結束
+
+當收到訊息 <span class="events">生命減少</span>
+    執行 <span class="control">螢幕震動</span> <span class="operators">(15)</span>
+
+當收到訊息 <span class="events">爆炸磚塊擊中</span>
+    執行 <span class="control">螢幕震動</span> <span class="operators">(8)</span>
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 特殊效果展示</h4>
+                <p>建議尺寸：700x400像素</p>
+                <p>展示粒子爆炸、螢幕震動、光影效果等視覺強化</p>
+            </div>
+
+            <h3>音效系統設計</h3>
+            <div class="concept-box">
+                <h4>🔊 完整音效配置</h4>
+                <p>為遊戲的各種事件配置合適的音效，提升沉浸感。</p>
+            </div>
+
+            <div class="code-block">
+/* 音效系統實作 */
+當收到訊息 <span class="events">球擊中擋板</span>
+    <span class="sound">播放音效</span> <span class="operators">"彈跳音效"</span>
+
+當收到訊息 <span class="events">磚塊被擊中</span>
+    <span class="sound">播放音效</span> <span class="operators">"破碎音效"</span>
+    將 <span class="variables">分數</span> 改變 <span class="operators">100</span>
+
+當收到訊息 <span class="events">獲得道具</span>
+    <span class="sound">播放音效</span> <span class="operators">"道具音效"</span>
+
+當收到訊息 <span class="events">生命減少</span>
+    <span class="sound">播放音效</span> <span class="operators">"失敗音效"</span>
+
+當收到訊息 <span class="events">關卡完成</span>
+    <span class="sound">播放音效</span> <span class="operators">"勝利音效"</span>
+
+當收到訊息 <span class="events">遊戲開始</span>
+    <span class="sound">播放音效</span> <span class="operators">"背景音樂"</span> 直到結束
+結束
+            </div>
+
+            <h3>動畫轉場效果</h3>
+            <div class="code-block">
+/* 關卡轉場動畫 */
+定義 <span class="control">關卡轉場</span>
+    <span class="looks">說出</span> <span class="operators">準備進入關卡 <span class="variables">目前關卡</span></span> 持續 <span class="operators">2</span> 秒
+    
+    // 淡入效果
+    <span class="looks">將透明效果設為</span> <span class="operators">100</span>
+    重複 <span class="operators">20</span> 次
+        <span class="looks">將透明效果改變</span> <span class="operators">-5</span>
+        <span class="control">等待</span> <span class="operators">0.05</span> 秒
+    結束
+    
+    // 縮放效果
+    <span class="looks">將大小設為</span> <span class="operators">50</span> %
+    重複 <span class="operators">10</span> 次
+        <span class="looks">將大小改變</span> <span class="operators">5</span>
+        <span class="control">等待</span> <span class="operators">0.03</span> 秒
+    結束
+結束
+            </div>
+        </section>
+
+        <section id="optimization" class="chapter">
+            <h2>第六章：遊戲優化與性能提升</h2>
+
+            <h3>記憶體管理</h3>
+            <div class="concept-box">
+                <h4>🧹 分身清理機制</h4>
+                <p>適時清理不需要的分身，避免遊戲變慢。</p>
+            </div>
+
+            <div class="code-block">
+/* 分身管理系統 */
+當收到訊息 <span class="events">清理分身</span>
+    如果 <span class="operators">角色名稱 = "粒子"</span> 那麼
+        <span class="control">刪除此分身</span>
+    結束
+    如果 <span class="operators">角色名稱 = "道具"</span> 且 <span class="motion">y座標</span> < <span class="operators">-200</span> 那麼
+        <span class="control">刪除此分身</span>
+    結束
+
+/* 定期清理機制 */
+重複無限次
+    <span class="control">等待</span> <span class="operators">5</span> 秒
+    廣播 <span class="events">清理分身</span>
+結束
+            </div>
+
+            <h3>碰撞檢測優化</h3>
+            <div class="concept-box">
+                <h4>⚡ 高效碰撞系統</h4>
+                <p>優化碰撞檢測邏輯，提升遊戲流暢度。</p>
+            </div>
+
+            <div class="code-block">
+/* 優化的碰撞檢測 */
+定義 <span class="control">檢測磚塊碰撞</span>
+    如果 <span class="sensing">碰到顏色</span> <span class="operators">[紅色]</span> 那麼  // 普通磚塊
+        執行 <span class="control">處理普通磚塊碰撞</span>
+        回傳 <span class="operators">真</span>
+    結束
+    如果 <span class="sensing">碰到顏色</span> <span class="operators">[藍色]</span> 那麼  // 堅硬磚塊
+        執行 <span class="control">處理堅硬磚塊碰撞</span>
+        回傳 <span class="operators">真</span>
+    結束
+    如果 <span class="sensing">碰到顏色</span> <span class="operators">[綠色]</span> 那麼  // 特殊磚塊
+        執行 <span class="control">處理特殊磚塊碰撞</span>
+        回傳 <span class="operators">真</span>
+    結束
+    回傳 <span class="operators">假</span>
+結束
+
+// 在主迴圈中使用
+重複無限次
+    <span class="motion">移動</span> <span class="variables">球X速度</span> <span class="motion">步</span>
+    如果 執行 <span class="control">檢測磚塊碰撞</span> = <span class="operators">真</span> 那麼
+        將 <span class="variables">球Y速度</span> 設為 <span class="operators">-<span class="variables">球Y速度</span></span>
+    結束
+    <span class="motion">移動</span> <span class="variables">球Y速度</span> <span class="motion">步</span>
+結束
+            </div>
+
+            <h3>資料儲存系統</h3>
+            <div class="concept-box">
+                <h4>💾 遊戲進度儲存</h4>
+                <p>使用雲端變數儲存玩家的遊戲進度和最佳成績。</p>
+            </div>
+
+            <div class="code-block">
+/* 進度儲存系統 */
+定義 <span class="control">儲存遊戲進度</span>
+    將 <span class="variables">☁ 玩家最高分</span> 設為 <span class="variables">最高分數</span>
+    將 <span class="variables">☁ 最高關卡</span> 設為 <span class="variables">目前關卡</span>
+    將 <span class="variables">☁ 總遊戲時間</span> 設為 <span class="variables">總遊戲時間</span>
+
+定義 <span class="control">載入遊戲進度</span>
+    將 <span class="variables">最高分數</span> 設為 <span class="variables">☁ 玩家最高分</span>
+    將 <span class="variables">解鎖關卡</span> 設為 <span class="variables">☁ 最高關卡</span>
+    將 <span class="variables">總遊戲時間</span> 設為 <span class="variables">☁ 總遊戲時間</span>
+
+當 <span class="events">綠旗被點擊</span>
+    執行 <span class="control">載入遊戲進度</span>
+
+當收到訊息 <span class="events">遊戲結束</span>
+    執行 <span class="control">儲存遊戲進度</span>
+            </div>
+
+            <div class="warning">
+                <strong>性能優化建議</strong><br>
+                • 限制同時存在的分身數量（建議不超過50個）<br>
+                • 使用顏色碰撞而非角色碰撞以提升效率<br>
+                • 定期清理不需要的變數和清單<br>
+                • 避免在重複迴圈中進行複雜計算
+            </div>
+        </section>
+
+        <section id="homework" class="chapter">
+            <h2>第七章：作業設計與學習評量</h2>
+
+            <div class="homework-section">
+                <h3>📝 基礎作業</h3>
+                <div class="step-list">
+                    <li>完成基本的多關卡打磚塊遊戲（至少5關）</li>
+                    <li>實作至少3種不同的道具效果</li>
+                    <li>加入計分和生命系統</li>
+                    <li>設計關卡選擇畫面</li>
+                    <li>加入基本的音效和視覺效果</li>
+                </ul>
+                
+                <div class="success">
+                    <strong>評分標準：</strong><br>
+                    • 遊戲完整性（30分）<br>
+                    • 功能實作（25分）<br>
+                    • 視覺設計（20分）<br>
+                    • 創意表現（15分）<br>
+                    • 程式架構（10分）
+                </div>
+            </div>
+
+            <div class="homework-section">
+                <h3>🌟 進階挑戰</h3>
+                <div class="step-list">
+                    <li>設計10個以上的關卡，包含不同的磚塊排列模式</li>
+                    <li>實作完整的道具系統（至少6種道具）</li>
+                    <li>加入Boss關卡（特殊的巨型磚塊）</li>
+                    <li>設計粒子效果和螢幕震動</li>
+                    <li>實作遊戲進度儲存功能</li>
+                    <li>加入排行榜系統</li>
+                </ul>
+                
+                <div class="success">
+                    <strong>加分項目：</strong><br>
+                    • 創新的遊戲機制設計<br>
+                    • 優秀的視覺和音效設計<br>
+                    • 完整的遊戲平衡調整<br>
+                    • 良好的程式碼結構和註解
+                </div>
+            </div>
+
+            <div class="homework-section">
+                <h3>🏆 創意競賽</h3>
+                <p><strong>主題：</strong>設計一個具有獨特創意的打磚塊變化遊戲</p>
+                
+                <div class="concept-box">
+                    <h4>💡 創意方向建議</h4>
+                    <ul>
+                        <li><strong>重力打磚塊</strong>：磚塊會受重力影響掉落</li>
+                        <li><strong>旋轉世界</strong>：整個遊戲場景會旋轉</li>
+                        <li><strong>磚塊反擊</strong>：某些磚塊會發射子彈</li>
+                        <li><strong>合作模式</strong>：兩個玩家同時控制不同的擋板</li>
+                        <li><strong>時間倒流</strong>：可以倒轉時間重新來過</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <strong>提交要求：</strong><br>
+                    • 遊戲作品連結<br>
+                    • 創意說明文件（包含設計理念和特色功能）<br>
+                    • 遊戲操作說明<br>
+                    • 製作過程心得分享
+                </div>
+            </div>
+
+            <h3>學習檢核清單</h3>
+            <div class="step-list">
+                <li>能夠設計完整的多關卡遊戲系統</li>
+                <li>熟練使用變數管理複雜的遊戲狀態</li>
+                <li>掌握分身系統的進階應用</li>
+                <li>能夠實作各種特殊效果和道具系統</li>
+                <li>理解遊戲優化的重要性和方法</li>
+                <li>具備完整遊戲開發的思維和能力</li>
+            </div>
+
+            <div class="image-placeholder">
+                <h4>📷 作業範例展示</h4>
+                <p>建議尺寸：800x500像素</p>
+                <p>展示優秀作業的遊戲畫面、功能特色、創意設計等</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 Scratch進階遊戲開發教學 | 設計by AI助教</p>
+            <p>讓我們一起創造更精彩的遊戲世界！🎮✨</p>
+        </footer>
+    </div>
+
+    <button class="back-to-top" onclick="scrollToTop()" title="回到頂部">↑</button>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // 程式碼區塊點擊複製功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.innerText;
+                navigator.clipboard.writeText(text).then(function() {
+                    // 顯示複製成功提示
+                    const originalBefore = block.style.setProperty('--before-content', '"已複製！"');
+                    setTimeout(() => {
+                        block.style.removeProperty('--before-content');
+                    }, 2000);
+                });
+            });
+        });
+
+        // 初始化隱藏回到頂部按鈕
+        document.querySelector('.back-to-top').style.display = 'none';
+    </script>
+</body>
+</html> 

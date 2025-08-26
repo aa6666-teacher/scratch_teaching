@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C02 重複結構與幾何圖形 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #2c3e50;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 15px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .chapter h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter-icon {
+            width: 40px;
+            height: 40px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            color: #e74c3c;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e74c3c;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+        }
+
+        .concept-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            position: relative;
+            overflow-x: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-block::before {
+            content: "點擊複製程式碼";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #4299e1;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .code-block:hover::before {
+            opacity: 1;
+        }
+
+        .scratch-block {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 3px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #CF63CF; }
+        .pen { background: #0FBD8C; }
+        .data { background: #FF8C1A; }
+        .events { background: #FFBF00; }
+        .control { background: #FFAB19; }
+        .sensing { background: #5CB3F7; }
+        .operators { background: #59C059; }
+        .variables { background: #FF8C1A; }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -20px;
+            top: 15px;
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #6c757d;
+        }
+
+        .image-placeholder::before {
+            content: "📷";
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, #55efc4 0%, #81ecec 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #00b894;
+        }
+
+        .exercise-box h4 {
+            color: #00b894;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #d63031;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #5f3dc4;
+        }
+
+        .homework-section {
+            background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .homework-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border: none;
+            color: white;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #3498db;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(52, 152, 219, 0.6);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .geometry-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .shape-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .shape-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .shape-visual {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .angle-calculator {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .chapter {
+                padding: 20px;
+            }
+        }
+
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.05);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 C02 重複結構與幾何圖形</h1>
+            <p>透過Scratch學習迴圈概念，創造美麗的幾何圖形</p>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#chapter1">🎯 迴圈基礎</a></li>
+                <li><a href="#chapter2">📐 幾何圖形</a></li>
+                <li><a href="#chapter3">🔢 角度計算</a></li>
+                <li><a href="#chapter4">🎨 進階應用</a></li>
+                <li><a href="#homework">📝 作業練習</a></li>
+            </ul>
+        </nav>
+
+        <div id="chapter1" class="chapter">
+            <h2><span class="chapter-icon">1</span>重複結構（迴圈）基礎概念</h2>
+            
+            <div class="section">
+                <h3>🔄 什麼是重複結構？</h3>
+                
+                <div class="concept-box">
+                    <h4>💡 核心概念</h4>
+                    <p>重複結構（迴圈）是程式設計中的重要概念，讓我們可以重複執行相同的動作，而不需要寫很多重複的程式碼。</p>
+                </div>
+
+                <div class="tip-box">
+                    <strong>生活中的迴圈例子：</strong><br>
+                    • 刷牙：重複「上下刷動」的動作<br>
+                    • 走樓梯：重複「抬腳→踏階」的動作<br>
+                    • 畫虛線：重複「畫線→空白」的動作
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>迴圈概念圖解</strong><br>
+                    請在此放入展示迴圈概念的圖片
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🎮 Scratch中的重複積木</h3>
+                
+                <p>在Scratch中，我們使用<span class="scratch-block control">重複執行</span>積木來建立迴圈：</p>
+
+                <div class="code-block" onclick="copyCode(this)">
+重複執行 (10) 次
+    前進 (50) 步
+    右轉 (36) 度
+                </div>
+
+                <div class="geometry-demo">
+                    <div class="shape-card">
+                        <div class="shape-visual">🔄</div>
+                        <h4>重複執行</h4>
+                        <p>指定重複次數</p>
+                    </div>
+                    <div class="shape-card">
+                        <div class="shape-visual">♾️</div>
+                        <h4>重複無限次</h4>
+                        <p>持續執行直到停止</p>
+                    </div>
+                    <div class="shape-card">
+                        <div class="shape-visual">❓</div>
+                        <h4>重複直到</h4>
+                        <p>滿足條件才停止</p>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🏃‍♂️ 練習活動：人體迴圈</h4>
+                    <ol class="step-list">
+                        <li>全班起立，準備做「重複執行3次」的動作</li>
+                        <li>動作內容：向前走一步 → 拍手一次</li>
+                        <li>一起數「1、2、3」並執行動作</li>
+                        <li>體驗迴圈的重複執行概念</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="chapter2" class="chapter">
+            <h2><span class="chapter-icon">2</span>用迴圈繪製幾何圖形</h2>
+            
+            <div class="section">
+                <h3>📐 基本幾何圖形</h3>
+                
+                <div class="concept-box">
+                    <h4>🎯 學習目標</h4>
+                    <p>學會使用重複結構繪製正多邊形，理解邊數與轉向角度的關係。</p>
+                </div>
+
+                <div class="geometry-demo">
+                    <div class="shape-card">
+                        <div class="shape-visual">🔺</div>
+                        <h4>正三角形</h4>
+                        <p>3邊，轉120度</p>
+                    </div>
+                    <div class="shape-card">
+                        <div class="shape-visual">🟦</div>
+                        <h4>正方形</h4>
+                        <p>4邊，轉90度</p>
+                    </div>
+                    <div class="shape-card">
+                        <div class="shape-visual">⬟</div>
+                        <h4>正五邊形</h4>
+                        <p>5邊，轉72度</p>
+                    </div>
+                    <div class="shape-card">
+                        <div class="shape-visual">⬡</div>
+                        <h4>正六邊形</h4>
+                        <p>6邊，轉60度</p>
+                    </div>
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>正方形繪製過程示意圖</strong><br>
+                    請在此放入展示正方形繪製步驟的圖片
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🖊️ 繪製正方形</h3>
+                
+                <p>讓我們從最簡單的正方形開始：</p>
+
+                <ol class="step-list">
+                    <li>新增角色，選擇「畫筆」分類中的角色</li>
+                    <li>添加<span class="scratch-block events">當綠旗被點擊</span>積木</li>
+                    <li>使用<span class="scratch-block pen">畫筆落下</span>開始繪圖</li>
+                    <li>建立重複結構來畫正方形</li>
+                </ol>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+畫筆落下
+重複執行 (4) 次
+    前進 (100) 步
+    右轉 (90) 度
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 注意事項：</strong><br>
+                    • 確保使用「畫筆落下」才能看到軌跡<br>
+                    • 正方形有4個邊，所以重複4次<br>
+                    • 每個角都是90度
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>Scratch正方形程式碼截圖</strong><br>
+                    請在此放入Scratch程式碼的實際截圖
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🔺 挑戰：繪製正三角形</h3>
+                
+                <div class="exercise-box">
+                    <h4>🎯 思考時間</h4>
+                    <p>正三角形有幾個邊？每次要轉幾度？</p>
+                    <p><strong>提示：</strong>三角形有3個邊，外角和是360度</p>
+                </div>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+畫筆落下
+重複執行 (3) 次
+    前進 (100) 步
+    右轉 (120) 度
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 角度計算公式：</strong><br>
+                    正n邊形的外角 = 360° ÷ n<br>
+                    • 正三角形：360° ÷ 3 = 120°<br>
+                    • 正方形：360° ÷ 4 = 90°
+                </div>
+            </div>
+        </div>
+
+        <div id="chapter3" class="chapter">
+            <h2><span class="chapter-icon">3</span>角度計算與多邊形探索</h2>
+            
+            <div class="section">
+                <h3>🧮 角度計算原理</h3>
+                
+                <div class="concept-box">
+                    <h4>📐 幾何原理</h4>
+                    <p>任何多邊形的外角和都是360度。因此，正n邊形的每個外角 = 360° ÷ n</p>
+                </div>
+
+                <div class="angle-calculator">
+                    <h4>🔢 常見多邊形角度表</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <tr style="background: #3498db; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">形狀</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">邊數</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">外角</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">計算</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">正三角形</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">3</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">120°</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">360° ÷ 3</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 10px; border: 1px solid #ddd;">正方形</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">4</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">90°</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">360° ÷ 4</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">正五邊形</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">5</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">72°</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">360° ÷ 5</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 10px; border: 1px solid #ddd;">正六邊形</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">6</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">60°</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">360° ÷ 6</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>多邊形外角示意圖</strong><br>
+                    請在此放入展示外角概念的幾何圖形
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🔍 形狀探索器程式</h3>
+                
+                <p>讓我們建立一個可以繪製任意正多邊形的程式：</p>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+詢問 "你要畫幾邊形？" 並等待
+將 [邊數 v] 設為 (詢問的答案)
+將 [角度 v] 設為 ((360) / (邊數))
+畫筆落下
+重複執行 (邊數) 次
+    前進 (80) 步
+    右轉 (角度) 度
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🧪 實驗活動</h4>
+                    <ol class="step-list">
+                        <li>建立上面的程式</li>
+                        <li>測試不同的邊數：3, 4, 5, 6, 8, 10</li>
+                        <li>觀察每種形狀的特點</li>
+                        <li>記錄你的發現</li>
+                    </ol>
+                </div>
+
+                <div class="warning-box">
+                    <strong>🔧 程式設計技巧：</strong><br>
+                    • 使用變數儲存邊數和角度<br>
+                    • 利用數學運算自動計算角度<br>
+                    • 讓程式具有互動性
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🌟 進階：圓形近似</h3>
+                
+                <div class="concept-box">
+                    <h4>🤔 思考問題</h4>
+                    <p>如果邊數越來越多，會發生什麼事？當邊數達到360時，會變成什麼形狀？</p>
+                </div>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+畫筆落下
+重複執行 (360) 次
+    前進 (2) 步
+    右轉 (1) 度
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 數學連結：</strong><br>
+                    當多邊形的邊數趨近無窮大時，它會越來越接近圓形。這就是微積分中「極限」概念的直觀展示！
+                </div>
+            </div>
+        </div>
+
+        <div id="chapter4" class="chapter">
+            <h2><span class="chapter-icon">4</span>進階應用與創意設計</h2>
+            
+            <div class="section">
+                <h3>🎨 彩色幾何圖案</h3>
+                
+                <p>結合顏色變化，讓圖形更加精彩：</p>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+畫筆落下
+重複執行 (36) 次
+    將畫筆顏色改變 (10)
+    重複執行 (4) 次
+        前進 (100) 步
+        右轉 (90) 度
+    右轉 (10) 度
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>彩色正方形萬花筒效果</strong><br>
+                    請在此放入程式執行結果的截圖
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🌸 螺旋圖案設計</h3>
+                
+                <div class="concept-box">
+                    <h4>🌀 螺旋原理</h4>
+                    <p>通過逐漸增加前進的步數，可以創造出美麗的螺旋效果。</p>
+                </div>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+將 [步數 v] 設為 (1)
+畫筆落下
+重複執行 (100) 次
+    前進 (步數) 步
+    右轉 (91) 度
+    將 [步數 v] 改變 (2)
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🎭 創意挑戰</h4>
+                    <p>嘗試修改以下參數，看看會產生什麼不同的效果：</p>
+                    <ul>
+                        <li>改變轉向角度（試試89度、93度）</li>
+                        <li>改變步數增量（試試1、3、5）</li>
+                        <li>加入顏色變化</li>
+                        <li>改變重複次數</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🏠 組合圖形：房子設計</h3>
+                
+                <p>結合不同的基本圖形，創造複雜的圖案：</p>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+畫筆落下
+// 畫房子底部（正方形）
+重複執行 (4) 次
+    前進 (100) 步
+    右轉 (90) 度
+// 移動到屋頂位置
+畫筆抬起
+前進 (100) 步
+右轉 (90) 度
+前進 (100) 步
+右轉 (90) 度
+畫筆落下
+// 畫屋頂（三角形）
+重複執行 (3) 次
+    前進 (100) 步
+    右轉 (120) 度
+                </div>
+
+                <div class="tip-box">
+                    <strong>🏗️ 程式設計思維：</strong><br>
+                    • 將複雜圖形分解成基本形狀<br>
+                    • 規劃繪製順序和路徑<br>
+                    • 善用「畫筆抬起」和「畫筆落下」控制軌跡
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🔄 巢狀迴圈：圖案陣列</h3>
+                
+                <div class="concept-box">
+                    <h4>🎯 進階概念</h4>
+                    <p>巢狀迴圈是指在一個迴圈內部再放入另一個迴圈，可以創造出規律的圖案陣列。</p>
+                </div>
+
+                <div class="code-block" onclick="copyCode(this)">
+當 🏁 被點擊
+定位到 x:(-200) y:(150)
+重複執行 (3) 次  // 外層迴圈：行數
+    重複執行 (4) 次  // 內層迴圈：每行的圖形數
+        畫筆落下
+        重複執行 (4) 次  // 畫正方形
+            前進 (30) 步
+            右轉 (90) 度
+        畫筆抬起
+        x改變 (80)  // 移動到下一個位置
+    將 x 設為 (-200)  // 回到行首
+    y改變 (-80)  // 移動到下一行
+                </div>
+
+                <div class="image-placeholder">
+                    <strong>3×4正方形陣列效果圖</strong><br>
+                    請在此放入巢狀迴圈執行結果的截圖
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🧩 進階挑戰</h4>
+                    <ol class="step-list">
+                        <li>修改程式，創造5×5的三角形陣列</li>
+                        <li>讓每個圖形都有不同的顏色</li>
+                        <li>嘗試創造棋盤格效果</li>
+                        <li>設計你專屬的圖案陣列</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="homework" class="homework-section">
+            <h3>📝 作業與練習</h3>
+            
+            <div style="text-align: left; margin-top: 20px;">
+                <h4>🎯 基礎作業（必做）</h4>
+                <ol class="step-list" style="color: white;">
+                    <li>建立一個程式，能夠繪製正三角形、正方形、正五邊形、正六邊形</li>
+                    <li>為每個圖形使用不同的顏色</li>
+                    <li>在每個圖形旁邊加上文字說明（使用「說」積木）</li>
+                    <li>截圖並標註每個圖形的邊數和轉向角度</li>
+                </ol>
+
+                <h4>🌟 進階挑戰（選做）</h4>
+                <ol class="step-list" style="color: white;">
+                    <li>設計一個「形狀計算器」，輸入邊數自動計算並繪製對應圖形</li>
+                    <li>創造一個螺旋圖案，並嘗試不同的參數組合</li>
+                    <li>使用巢狀迴圈設計一個美麗的圖案陣列</li>
+                    <li>結合多個基本圖形，設計一個完整的場景（如房子、花園等）</li>
+                </ol>
+
+                <h4>📤 繳交方式</h4>
+                <div class="tip-box" style="margin-top: 15px;">
+                    <strong>檔案命名格式：</strong> 班級座號姓名_C02重複結構作業.sb3<br>
+                    <strong>截圖命名格式：</strong> 班級座號姓名_C02作業截圖.png<br>
+                    <strong>繳交期限：</strong> 下週上課前
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎓 C02 重複結構與幾何圖形 - Scratch程式設計教學</p>
+            <p>💡 透過程式設計學習數學概念，培養邏輯思維與創造力</p>
+            <p>📚 適用對象：國中資訊科技課程</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // 程式碼複製功能
+        function copyCode(element) {
+            const code = element.innerText;
+            navigator.clipboard.writeText(code).then(function() {
+                // 顯示複製成功提示
+                const originalBefore = element.style.setProperty('--before-content', '"已複製！"');
+                setTimeout(() => {
+                    element.style.removeProperty('--before-content');
+                }, 2000);
+            }).catch(function() {
+                alert('複製失敗，請手動選取文字複製');
+            });
+        }
+
+        // 平滑滾動到頂部
+        document.querySelector('.back-to-top').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 導航選單平滑滾動
+        document.querySelectorAll('.nav-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 互動元素點擊效果
+        document.querySelectorAll('.interactive-element').forEach(element => {
+            element.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                }, 100);
+            });
+        });
+
+        // 頁面載入完成後的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加載入動畫
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html> 

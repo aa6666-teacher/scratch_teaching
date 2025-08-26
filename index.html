@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>銘傳國中 Scratch程式設計課程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #3498db;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .course-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+
+        .course-card h3::before {
+            content: "🎮";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .course-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .course-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .course-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(45deg, #2980b9, #1f5f8b);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            position: relative;
+        }
+
+        .rules-list li::before {
+            content: "⚠️";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 5px;
+            border-radius: 50%;
+            font-size: 0.8em;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .grading-table th {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            font-weight: bold;
+        }
+
+        .grading-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .grading-table tr:hover {
+            background: #e8f6f3;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .important-note::before {
+            content: "📢";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            border: 2px solid #ffc107;
+        }
+
+        .important-note h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="header">
+            <h1>🎯 Scratch程式設計課程</h1>
+            <div class="subtitle">銘傳國中 資訊科技課程</div>
+            <p style="margin-top: 15px; font-size: 1.1em; opacity: 0.9;">
+                透過Scratch學習程式設計，培養邏輯思考與創意能力
+            </p>
+        </div>
+
+        <!-- 課程導覽 -->
+        <div class="section">
+            <div class="section-header">📚 課程單元導覽</div>
+            <div class="section-content">
+                <p style="margin-bottom: 20px; font-size: 1.1em; color: #666;">
+                    點擊下方課程卡片，進入對應的教學內容。建議按照順序學習，逐步掌握Scratch程式設計技巧。
+                </p>
+                
+                <div class="course-grid">
+                    <div class="course-card">
+                        <h3>C01 程式寫字與幾何圖形</h3>
+                        <p>學習Scratch基礎操作，使用畫筆功能繪製簡單的幾何圖形和中文字。</p>
+                        <a href="C01程式寫字與幾何圖形_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+
+                    <div class="course-card">
+                        <h3>C02 重複結構與幾何圖形</h3>
+                        <p>學習迴圈概念，運用重複結構繪製複雜的幾何圖案。</p>
+                        <a href="C02重複結構與幾何圖形_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+
+                    <div class="course-card">
+                        <h3>C03 貓咪過馬路-選擇結構</h3>
+                        <p>學習條件判斷，製作簡單的過馬路遊戲。</p>
+                        <a href="C03貓咪過馬路-選擇結構_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+
+                    <div class="course-card">
+                        <h3>C04 迷宮遊戲-選擇結構2</h3>
+                        <p>進階條件判斷，製作迷宮遊戲。</p>
+                        <a href="C04迷宮遊戲-選擇結構2_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+
+                    <div class="course-card">
+                        <h3>C05 打磚塊遊戲</h3>
+                        <p>學習遊戲設計，製作經典的打磚塊遊戲。</p>
+                        <a href="C05打磚塊遊戲_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+
+                    <div class="course-card">
+                        <h3>C06 遊戲開始畫面設計</h3>
+                        <p>學習UI設計，製作遊戲的開始畫面和使用者介面。</p>
+                        <a href="C06遊戲開始畫面設計_Scratch教學.html" class="course-link">開始學習 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 電腦教室使用規則 -->
+        <div class="section">
+            <div class="section-header">💻 電腦教室使用規則</div>
+            <div class="section-content">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">設備使用規範</h3>
+                <ul class="rules-list">
+                    <li><strong>愛護設備：</strong>請輕拿輕放，不要敲打鍵盤或滑鼠</li>
+                    <li><strong>保持清潔：</strong>不要在電腦旁飲食，保持桌面整潔</li>
+                    <li><strong>正確關機：</strong>下課前請按照老師指示正確關閉電腦</li>
+                    <li><strong>網路使用：</strong>僅限於課程相關的網站，禁止瀏覽不當內容</li>
+                    <li><strong>檔案管理：</strong>請將作業儲存在指定資料夾，不要隨意刪除他人檔案</li>
+                </ul>
+
+                <h3 style="color: #2c3e50; margin: 20px 0;">安全注意事項</h3>
+                <ul class="rules-list">
+                    <li><strong>電源安全：</strong>不要拉扯電線，發現問題立即報告老師</li>
+                    <li><strong>個人衛生：</strong>使用前後請用酒精消毒手部</li>
+                    <li><strong>緊急情況：</strong>遇到設備故障或異常，請舉手告知老師</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 成績評比方式 -->
+        <div class="section">
+            <div class="section-header">📊 成績評比方式</div>
+            <div class="section-content">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">評分標準</h3>
+                
+                <table class="grading-table">
+                    <thead>
+                        <tr>
+                            <th>評分項目</th>
+                            <th>配分比例</th>
+                            <th>評分標準</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>課堂參與度</strong></td>
+                            <td>20%</td>
+                            <td>積極參與討論、回答問題、協助同學</td>
+                        </tr>
+                        <tr>
+                            <td><strong>作業完成度</strong></td>
+                            <td>40%</td>
+                            <td>按時完成作業、程式功能正常、創意表現</td>
+                        </tr>
+                        <tr>
+                            <td><strong>期末專案</strong></td>
+                            <td>30%</td>
+                            <td>綜合運用所學、程式邏輯清晰、作品完整</td>
+                        </tr>
+                        <tr>
+                            <td><strong>課堂秩序</strong></td>
+                            <td>10%</td>
+                            <td>遵守教室規則、專心聽講、不影響他人</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #2c3e50; margin: 20px 0;">作業要求</h3>
+                <ul class="rules-list">
+                    <li><strong>準時繳交：</strong>作業請在指定時間內完成並繳交</li>
+                    <li><strong>原創性：</strong>作業必須是個人原創，禁止抄襲他人作品</li>
+                    <li><strong>功能完整：</strong>程式必須能正常執行，達到預期效果</li>
+                    <li><strong>程式註解：</strong>重要程式碼請加上註解說明</li>
+                </ul>
+
+                <h3 style="color: #2c3e50; margin: 20px 0;">加分機會</h3>
+                <ul class="rules-list">
+                    <li><strong>創意表現：</strong>作品具有獨特創意和美感</li>
+                    <li><strong>功能進階：</strong>超出基本要求，加入進階功能</li>
+                    <li><strong>協助同學：</strong>主動幫助其他同學解決問題</li>
+                    <li><strong>課外學習：</strong>自主學習相關技術並分享</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 上課規則與秩序 -->
+        <div class="section">
+            <div class="section-header">📋 上課規則與秩序</div>
+            <div class="section-content">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">課堂紀律</h3>
+                <ul class="rules-list">
+                    <li><strong>準時到課：</strong>請在上課鈴響前進入教室，遲到將影響成績</li>
+                    <li><strong>專心聽講：</strong>上課期間請專心聽講，不要做與課程無關的事情</li>
+                    <li><strong>舉手發言：</strong>有問題請舉手發言，不要隨意打斷老師講課</li>
+                    <li><strong>保持安靜：</strong>討論時請控制音量，不要影響其他同學</li>
+                    <li><strong>尊重他人：</strong>尊重老師和同學，營造良好的學習環境</li>
+                </ul>
+
+                <h3 style="color: #2c3e50; margin: 20px 0;">學習態度</h3>
+                <ul class="rules-list">
+                    <li><strong>積極參與：</strong>主動參與課堂活動，提出問題和想法</li>
+                    <li><strong>認真練習：</strong>課堂練習時間請認真操作，不要浪費時間</li>
+                    <li><strong>互相幫助：</strong>同學之間互相協助，共同進步</li>
+                    <li><strong>持續學習：</strong>保持學習熱情，課後可以繼續練習</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="section">
+            <div class="section-header">⚠️ 重要注意事項</div>
+            <div class="section-content">
+                <div class="important-note">
+                    <h4>課程準備</h4>
+                    <ul style="margin-left: 20px; color: #856404;">
+                        <li>每次上課請攜帶筆記本和筆，記錄重要概念</li>
+                        <li>課前請預習相關內容，課後請複習和練習</li>
+                        <li>如有疑問，可以透過學校信箱或課堂時間詢問</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h4>作業繳交</h4>
+                    <ul style="margin-left: 20px; color: #856404;">
+                        <li>作業請準時繳交，遲交將扣分</li>
+                        <li>繳交前請檢查程式是否正常執行</li>
+                        <li>作業檔案請用清楚的名稱命名</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h4>學習資源</h4>
+                    <ul style="margin-left: 20px; color: #856404;">
+                        <li>Scratch官方網站：https://scratch.mit.edu/</li>
+                        <li>課程相關檔案會上傳到學校平台</li>
+                        <li>建議課後多練習，熟能生巧</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h4>聯絡方式</h4>
+                    <ul style="margin-left: 20px; color: #856404;">
+                        <li>課程相關問題：請在課堂時間詢問</li>
+                        <li>技術問題：可以透過學校信箱聯絡</li>
+                        <li>緊急情況：請直接聯絡班導師或教務處</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁尾 -->
+        <div class="footer">
+            <p><strong>銘傳國中 Scratch程式設計課程</strong></p>
+            <p>培養邏輯思考 • 激發創意潛能 • 迎接數位未來</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                © 2024 銘傳國中 資訊科技課程組
+            </p>
+        </div>
+    </div>
+</body>
+</html>
