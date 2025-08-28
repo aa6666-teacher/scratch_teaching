@@ -313,6 +313,80 @@
             margin: 20px 0;
         }
 
+        .code-toggle {
+            background: #e8f4fd;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-toggle:hover {
+            background: #d1ecf1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .code-toggle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .code-toggle-header::before {
+            content: "🔍";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            opacity: 0;
+        }
+
+        .code-toggle-content.show {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .code-toggle-content.hide {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .toggle-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .toggle-button.hidden {
+            background: #e74c3c;
+        }
+
+        .toggle-button.hidden:hover {
+            background: #c0392b;
+        }
+
         .nav-menu {
             background: #34495e;
             padding: 15px 0;
@@ -544,9 +618,13 @@
                                 <li>中間直線：將正方形分成左右兩部分</li>
                             </ul>
                         </div>
-                        <div class="step-container">
-                            <div class="step-title">程式設計步驟</div>
-                            <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看「田」字的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -613,6 +691,7 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -649,7 +728,13 @@
                             </ul>
                         </div>
 
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看「王」字的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -723,6 +808,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -750,9 +837,13 @@
                             <p>在學會畫字之後，我們來練習畫一些基礎的幾何圖形。這些圖形會在下一章詳細學習。</p>
                         </div>
 
-                        <div class="step-container">
-                            <div class="step-title">正方形</div>
-                            <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看正方形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -790,12 +881,17 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="step-container">
-                            <div class="step-title">三角形</div>
-                            <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看三角形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -830,6 +926,7 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -867,7 +964,13 @@
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：繪製大正方形</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看大正方形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -905,6 +1008,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -922,7 +1027,13 @@
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：繪製橫長方形</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看橫長方形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -960,12 +1071,20 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：繪製直長方形</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看直長方形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1003,6 +1122,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1028,7 +1149,13 @@
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：繪製十字</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看十字的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1073,12 +1200,20 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：繪製米字</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看米字的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1155,11 +1290,14 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="image-placeholder">
-                        📷 請放入：十字和米字的繪製結果截圖
+                    <div class="image-container">
+                        <img src="米字.png" alt="十字和米字的繪製結果截圖" style="max-width: 100%; height: auto;">
+                        <div class="image-caption">十字和米字的繪製結果截圖</div>
                     </div>
                 </div>
             </div>
@@ -1178,7 +1316,13 @@
 
                     <div class="exercise-box">
                         <div class="exercise-title">練習：畫一個簡單的房子</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看房子的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1269,6 +1413,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1291,7 +1437,13 @@
                     <h3>4.2 練習畫簡單的臉</h3>
                     <div class="exercise-box">
                         <div class="exercise-title">挑戰：畫一個笑臉</div>
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看笑臉的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1383,6 +1535,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1410,7 +1564,13 @@
                             </ul>
                         </div>
 
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看「人」字的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1461,6 +1621,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1478,7 +1640,13 @@
                             <p>這是一個加分題！六邊形有六個邊和六個角，我們用座標定位的方式來挑戰畫出六邊形。</p>
                         </div>
 
-                        <div class="code-example">
+                        <div class="code-toggle" onclick="toggleCode(this)">
+                            <div class="code-toggle-header">
+                                <span>點擊查看六邊形的完整程式步驟</span>
+                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
+                            </div>
+                            <div class="code-toggle-content">
+                                <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1522,6 +1690,8 @@
 <div class="block-line">
     <span class="scratch-block block-pen">停筆</span>
 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1646,6 +1816,26 @@
     </div>
 
     <script>
+        // 程式碼顯示/隱藏切換功能
+        function toggleCode(element) {
+            const content = element.querySelector('.code-toggle-content');
+            const button = element.querySelector('.toggle-button');
+            
+            if (content.classList.contains('show')) {
+                // 隱藏程式碼
+                content.classList.remove('show');
+                content.classList.add('hide');
+                button.textContent = '顯示程式碼';
+                button.classList.remove('hidden');
+            } else {
+                // 顯示程式碼
+                content.classList.remove('hide');
+                content.classList.add('show');
+                button.textContent = '隱藏程式碼';
+                button.classList.add('hidden');
+            }
+        }
+
         // 平滑捲動效果
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
