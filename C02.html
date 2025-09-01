@@ -275,6 +275,127 @@
             margin-left: 10px;
         }
 
+        /* 程式碼切換功能樣式 */
+        .code-toggle {
+            background: #e8f4fd;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-toggle:hover {
+            background: #d1ecf1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .code-toggle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .code-toggle-header::before {
+            content: "🔍";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            opacity: 0;
+        }
+
+        .code-toggle-content.show {
+            max-height: none;
+            opacity: 1;
+        }
+
+        .code-toggle-content.hide {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .toggle-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .toggle-button.hidden {
+            background: #e74c3c;
+        }
+
+        .toggle-button.hidden:hover {
+            background: #c0392b;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .code-example {
+                padding: 15px;
+                font-size: 12px;
+                line-height: 1.8;
+            }
+
+            .code-example .scratch-block {
+                font-size: 11px;
+                padding: 6px 8px;
+                margin: 1px;
+            }
+
+            .code-toggle {
+                padding: 15px;
+            }
+
+            .code-toggle-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .toggle-button {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-example {
+                padding: 10px;
+                font-size: 11px;
+                line-height: 1.6;
+            }
+
+            .code-example .scratch-block {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+
+            .block-value {
+                font-size: 10px;
+                padding: 2px 4px;
+            }
+        }
+
         .step-list {
             counter-reset: step-counter;
             list-style: none;
@@ -529,7 +650,13 @@
                 
                 <p>在Scratch中，我們使用<span class="scratch-block control">重複執行</span>積木來建立迴圈：</p>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>基本迴圈範例程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-control">重複執行 <span class="block-value">10</span> 次</span>
 </div>
@@ -539,6 +666,8 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="block-value">36</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="geometry-demo">
@@ -623,7 +752,13 @@
                     <li>建立重複結構來畫正方形</li>
                 </ol>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>正方形繪製程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -639,6 +774,8 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="warning-box">
@@ -663,7 +800,13 @@
                     <p><strong>提示：</strong>三角形有3個邊，外角和是360度</p>
                 </div>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>正三角形繪製程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -679,6 +822,8 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="block-value">120</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tip-box">
@@ -737,9 +882,9 @@
                     </table>
                 </div>
 
-                <div class="image-placeholder">
-                    <strong>多邊形外角示意圖</strong><br>
-                    請在此放入展示外角概念的幾何圖形
+                <div class="image-container">
+                    <img src="多邊形外角示意圖.png" alt="多邊形外角示意圖" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">多邊形外角示意圖</div>
                 </div>
             </div>
 
@@ -748,7 +893,13 @@
                 
                 <p>讓我們建立一個可以繪製任意正多邊形的程式：</p>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>形狀探索器程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -773,6 +924,8 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="scratch-block block-variables">(角度)</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="exercise-box">
@@ -801,7 +954,13 @@
                     <p>如果邊數越來越多，會發生什麼事？當邊數達到360時，會變成什麼形狀？</p>
                 </div>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>圓形近似程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -817,6 +976,8 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="block-value">1</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tip-box">
@@ -834,7 +995,13 @@
                 
                 <p>結合顏色變化，讓圖形更加精彩：</p>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>彩色幾何圖案程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -859,11 +1026,13 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">右轉 <span class="block-value">10</span> 度</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="image-placeholder">
-                    <strong>彩色正方形萬花筒效果</strong><br>
-                    請在此放入程式執行結果的截圖
+                <div class="image-container">
+                    <img src="萬花筒.png" alt="彩色正方形萬花筒效果" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">彩色正方形萬花筒效果</div>
                 </div>
             </div>
 
@@ -875,7 +1044,13 @@
                     <p>通過逐漸增加前進的步數，可以創造出美麗的螺旋效果。</p>
                 </div>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>螺旋圖案程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -897,6 +1072,13 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-variables">將 <span class="block-value">[步數 v]</span> 改變 <span class="block-value">2</span></span>
 </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="螺旋.png" alt="螺旋圖案效果" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">螺旋圖案效果</div>
                 </div>
 
                 <div class="exercise-box">
@@ -912,73 +1094,6 @@
             </div>
 
             <div class="section">
-                <h3>🏠 組合圖形：房子設計</h3>
-                
-                <p>結合不同的基本圖形，創造複雜的圖案：</p>
-
-                <div class="code-example">
-<div class="block-line">
-    <span class="scratch-block block-events">當 🏁 被點擊</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">畫筆落下</span>
-</div>
-<div class="block-line">
-    <span class="comment">// 畫房子底部（正方形）</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
-</div>
-<div class="block-line block-indent">
-    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line block-indent">
-    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
-</div>
-<div class="block-line">
-    <span class="comment">// 移動到屋頂位置</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">畫筆抬起</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">畫筆落下</span>
-</div>
-<div class="block-line">
-    <span class="comment">// 畫屋頂（三角形）</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-control">重複執行 <span class="block-value">3</span> 次</span>
-</div>
-<div class="block-line block-indent">
-    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line block-indent">
-    <span class="scratch-block block-motion">右轉 <span class="block-value">120</span> 度</span>
-</div>
-                </div>
-
-                <div class="tip-box">
-                    <strong>🏗️ 程式設計思維：</strong><br>
-                    • 將複雜圖形分解成基本形狀<br>
-                    • 規劃繪製順序和路徑<br>
-                    • 善用「畫筆抬起」和「畫筆落下」控制軌跡
-                </div>
-            </div>
-
-            <div class="section">
                 <h3>🔄 巢狀迴圈：圖案陣列</h3>
                 
                 <div class="concept-box">
@@ -986,7 +1101,13 @@
                     <p>巢狀迴圈是指在一個迴圈內部再放入另一個迴圈，可以創造出規律的圖案陣列。</p>
                 </div>
 
-                <div class="code-example">
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>巢狀迴圈陣列程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1023,11 +1144,13 @@
 <div class="block-line block-indent">
     <span class="scratch-block block-motion">y改變 <span class="block-value">-80</span></span> <span class="comment">// 移動到下一行</span>
 </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="image-placeholder">
-                    <strong>3×4正方形陣列效果圖</strong><br>
-                    請在此放入巢狀迴圈執行結果的截圖
+                <div class="image-container">
+                    <img src="3x4正方形.png" alt="3×4正方形陣列效果圖" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">3×4正方形陣列效果圖</div>
                 </div>
 
                 <div class="exercise-box">
@@ -1042,31 +1165,147 @@
             </div>
         </div>
 
-        <div id="homework" class="homework-section">
-            <h3>📝 作業與練習</h3>
+        <div id="homework" class="chapter">
+            <h2><span class="chapter-icon">5</span>進階挑戰題</h2>
             
-            <div style="text-align: left; margin-top: 20px;">
-                <h4>🎯 基礎作業（必做）</h4>
-                <ol class="step-list" style="color: white;">
-                    <li>建立一個程式，能夠繪製正三角形、正方形、正五邊形、正六邊形</li>
-                    <li>為每個圖形使用不同的顏色</li>
-                    <li>在每個圖形旁邊加上文字說明（使用「說」積木）</li>
-                    <li>截圖並標註每個圖形的邊數和轉向角度</li>
-                </ol>
+            <div class="section">
+                <h3>🎨 進階題一：雙圓形萬花筒</h3>
+                
+                <div class="concept-box">
+                    <h4>🎯 挑戰要求</h4>
+                    <p>畫出雙圓形萬花筒，要求中心均在原點，分別在畫出半徑40及半徑80的萬花筒。</p>
+                </div>
 
-                <h4>🌟 進階挑戰（選做）</h4>
-                <ol class="step-list" style="color: white;">
-                    <li>設計一個「形狀計算器」，輸入邊數自動計算並繪製對應圖形</li>
-                    <li>創造一個螺旋圖案，並嘗試不同的參數組合</li>
-                    <li>使用巢狀迴圈設計一個美麗的圖案陣列</li>
-                    <li>結合多個基本圖形，設計一個完整的場景（如房子、花園等）</li>
-                </ol>
+                <div class="image-container">
+                    <img src="雙萬花筒.png" alt="雙圓形萬花筒效果" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">雙圓形萬花筒效果</div>
+                </div>
 
-                <h4>📤 繳交方式</h4>
-                <div class="tip-box" style="margin-top: 15px;">
-                    <strong>檔案命名格式：</strong> 班級座號姓名_C02重複結構作業.sb3<br>
-                    <strong>截圖命名格式：</strong> 班級座號姓名_C02作業截圖.png<br>
-                    <strong>繳交期限：</strong> 下週上課前
+                <div class="exercise-box">
+                    <h4>💡 思考提示</h4>
+                    <ul>
+                        <li>使用兩個不同的迴圈來畫兩個圓形</li>
+                        <li>第一個圓形：半徑40，可以調整步數和角度</li>
+                        <li>第二個圓形：半徑80，使用相同的角度但不同的步數</li>
+                        <li>可以加入顏色變化讓效果更豐富</li>
+                    </ul>
+                </div>
+
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>雙圓形萬花筒程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">將畫筆顏色設為 <span class="block-value">紅色</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">36</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-pen">將畫筆顏色改變 <span class="block-value">10</span></span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">40</span> 步</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">10</span> 度</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">將畫筆顏色設為 <span class="block-value">藍色</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">36</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-pen">將畫筆顏色改變 <span class="block-value">10</span></span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">80</span> 步</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">10</span> 度</span>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>⭐ 進階題二：畫出一個星星</h3>
+                
+                <div class="concept-box">
+                    <h4>🎯 挑戰要求</h4>
+                    <p>思考星星內部為正五邊形，判斷畫完一個邊之後，應該要轉動幾度？</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="星星.png" alt="五角星效果" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">五角星效果</div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>💡 思考提示</h4>
+                    <p>面朝90度，重複5次，移動?步，旋轉?度。</p>
+                    <div style="background: #f0f0f0; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <p style="color: #666; font-size: 0.9em; margin: 0;">
+                            <strong>答案提示：</strong><br>
+                            轉動角度：<span style="color: transparent;">60/n度</span><br>
+                            旋轉角度：<span style="color: transparent;">360/n度</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-toggle" onclick="toggleCode(this)">
+                    <div class="code-toggle-header">
+                        <span>星星繪製程式碼</span>
+                        <button class="toggle-button">顯示程式碼</button>
+                    </div>
+                    <div class="code-toggle-content">
+                        <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">面朝 <span class="block-value">90</span> 度方向</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">將畫筆顏色設為 <span class="block-value">黃色</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">5</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">144</span> 度</span>
+</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1081,6 +1320,26 @@
     <a href="#" class="back-to-top">↑</a>
 
     <script>
+        // 程式碼顯示/隱藏切換功能
+        function toggleCode(element) {
+            const content = element.querySelector('.code-toggle-content');
+            const button = element.querySelector('.toggle-button');
+            
+            if (content.classList.contains('show')) {
+                // 隱藏程式碼
+                content.classList.remove('show');
+                content.classList.add('hide');
+                button.textContent = '顯示程式碼';
+                button.classList.remove('hidden');
+            } else {
+                // 顯示程式碼
+                content.classList.remove('hide');
+                content.classList.add('show');
+                button.textContent = '隱藏程式碼';
+                button.classList.add('hidden');
+            }
+        }
+
         // 程式碼複製功能
         function copyCode(element) {
             const code = element.innerText;
