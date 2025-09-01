@@ -354,13 +354,50 @@
         }
 
         .code-toggle-content.show {
-            max-height: 1000px;
+            max-height: none;
             opacity: 1;
         }
 
         .code-toggle-content.hide {
             max-height: 0;
             opacity: 0;
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            max-width: 100%;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .code-example .block-line {
+            display: block;
+            margin: 6px 0;
+            padding-left: 0px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .code-example .scratch-block {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 2px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .toggle-button {
@@ -438,6 +475,49 @@
             
             .info-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .code-example {
+                padding: 15px;
+                font-size: 12px;
+                line-height: 1.8;
+            }
+
+            .code-example .scratch-block {
+                font-size: 11px;
+                padding: 6px 8px;
+                margin: 1px;
+            }
+
+            .code-toggle {
+                padding: 15px;
+            }
+
+            .code-toggle-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .toggle-button {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-example {
+                padding: 10px;
+                font-size: 11px;
+                line-height: 1.6;
+            }
+
+            .code-example .scratch-block {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+
+            .block-value {
+                font-size: 10px;
+                padding: 2px 4px;
             }
         }
     </style>
@@ -528,7 +608,41 @@
                 </div>
 
                 <div class="section">
-                    <h3>1.3 程式積木分類</h3>
+                    <h3>1.3 程式積木分類與座標系統</h3>
+                    
+                    <div class="concept-box">
+                        <h4>🎯 Scratch座標系統介紹</h4>
+                        <p>在Scratch中，舞台是一個座標系統，用來精確定位角色和繪製圖形。了解座標系統對於程式寫字和繪圖非常重要！</p>
+                        
+                        <div class="image-container">
+                            <img src="座標.png" alt="Scratch座標系統圖" style="max-width: 100%; height: auto;">
+                            <div class="image-caption">Scratch舞台座標系統 - 中心點為(0,0)，X軸控制左右，Y軸控制上下</div>
+                        </div>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0;">座標範圍說明：</h5>
+                        <ul style="margin-left: 20px; color: #2c3e50;">
+                            <li><strong>X座標（左右位置）</strong>：-240 到 +240
+                                <ul>
+                                    <li>-240：舞台最左邊</li>
+                                    <li>0：舞台正中央</li>
+                                    <li>+240：舞台最右邊</li>
+                                </ul>
+                            </li>
+                            <li><strong>Y座標（上下位置）</strong>：-180 到 +180
+                                <ul>
+                                    <li>-180：舞台最下邊</li>
+                                    <li>0：舞台正中央</li>
+                                    <li>+180：舞台最上邊</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <div class="tips">
+                            <strong>記憶口訣：</strong>「負數向左下，正數向右上，0在正中央」
+                        </div>
+                    </div>
+
+                    <h4 style="color: #2c3e50; margin: 20px 0;">程式積木分類</h4>
                     <div class="block-list">
                         <div class="block-item">
                             <div class="block-color motion"></div>
@@ -569,7 +683,7 @@
                     </div>
 
                     <div class="tips">
-                        在本課程中，我們主要會使用「動作」、「外觀」、「事件」、「控制」和「畫筆」積木來完成程式寫字和幾何圖形的創作。
+                        在本課程中，我們主要會使用「動作」、「外觀」、「事件」、「控制」和「畫筆」積木來完成程式寫字和幾何圖形的創作。記住座標系統，你就能精確控制角色位置和繪製圖形了！
                     </div>
                 </div>
             </div>
@@ -602,6 +716,53 @@
                             <li><strong>筆的顏色設為</strong>：改變筆的顏色</li>
                             <li><strong>筆的粗細設為</strong>：改變線條粗細</li>
                         </ul>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-title">步驟2：儲存專案</div>
+                        <p>完成程式設計後，記得要儲存你的專案：</p>
+                        <ol>
+                            <li>點選左上角的「<span class="highlight">檔案</span>」選單</li>
+                            <li>選擇「<span class="highlight">儲存到你的電腦</span>」</li>
+                            <li>為你的專案取一個有意義的名稱</li>
+                            <li>選擇儲存位置（建議存在D磁碟機）</li>
+                            <li>點選「<span class="highlight">儲存</span>」按鈕</li>
+                        </ol>
+                        
+                        <div class="image-container">
+                            <img src="存檔.png" alt="Scratch儲存專案步驟截圖" style="max-width: 100%; height: auto;">
+                            <div class="image-caption">Scratch儲存專案的操作步驟</div>
+                        </div>
+                        
+                        <div class="tips">
+                            <strong>重要提醒：</strong>記得將檔案儲存在D磁碟機，避免因為電腦還原而遺失作品！
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-title">步驟3：認識舞台區域</div>
+                        <p>舞台是我們繪製圖形和文字的地方，了解舞台的結構很重要：</p>
+                        <ul>
+                            <li><strong>舞台中心</strong>：座標(0,0)，是繪圖的參考點</li>
+                            <li><strong>舞台範圍</strong>：X軸-240到+240，Y軸-180到+180</li>
+                            <li><strong>背景顏色</strong>：預設為白色，可以根據需要改變</li>
+                            <li><strong>繪圖區域</strong>：在舞台範圍內都可以進行繪圖</li>
+                        </ul>
+                        
+                        <div class="image-container">
+                            <img src="舞台.png" alt="Scratch舞台區域說明圖" style="max-width: 100%; height: auto;">
+                            <div class="image-caption">Scratch舞台區域 - 繪圖和程式執行的主要區域</div>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h4>舞台使用技巧</h4>
+                            <ul>
+                                <li><strong>規劃繪圖位置</strong>：先在紙上規劃要繪製的圖形位置</li>
+                                <li><strong>使用座標定位</strong>：精確控制每個筆畫的起點和終點</li>
+                                <li><strong>測試繪圖效果</strong>：執行程式後觀察繪圖結果</li>
+                                <li><strong>調整參數</strong>：根據需要調整筆的顏色、粗細等參數</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -1433,211 +1594,17 @@
                     </div>
                 </div>
 
-                <div class="section">
-                    <h3>4.2 練習畫簡單的臉</h3>
-                    <div class="exercise-box">
-                        <div class="exercise-title">挑戰：畫一個笑臉</div>
-                        <div class="code-toggle" onclick="toggleCode(this)">
-                            <div class="code-toggle-header">
-                                <span>點擊查看笑臉的完整程式步驟</span>
-                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
-                            </div>
-                            <div class="code-toggle-content">
-                                <div class="code-example">
-<div class="block-line">
-    <span class="scratch-block block-events">當 🏁 被點擊</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">全部清除</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">筆的粗細設為 <span class="block-value">4</span></span>
-</div>
 
-<div class="block-line">
-    <span class="comment">// 畫臉的輪廓（正方形）</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">筆的顏色設為 <span class="block-value">黃色</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-60</span> y: <span class="block-value">60</span></span> <span class="comment">// 左上角</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">60</span> y: <span class="block-value">60</span></span> <span class="comment">// 右上角</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">60</span> y: <span class="block-value">-60</span></span> <span class="comment">// 右下角</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-60</span> y: <span class="block-value">-60</span></span> <span class="comment">// 左下角</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-60</span> y: <span class="block-value">60</span></span> <span class="comment">// 回到左上角</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
 
-<div class="block-line">
-    <span class="comment">// 畫左眼</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">筆的顏色設為 <span class="block-value">黑色</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-30</span> y: <span class="block-value">20</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-30</span> y: <span class="block-value">10</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
 
-<div class="block-line">
-    <span class="comment">// 畫右眼</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">30</span> y: <span class="block-value">20</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">30</span> y: <span class="block-value">10</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
-
-<div class="block-line">
-    <span class="comment">// 畫嘴巴（笑容）</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-20</span> y: <span class="block-value">-20</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">0</span> y: <span class="block-value">-30</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">20</span> y: <span class="block-value">-20</span></span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="image-placeholder">
-                        📷 請放入：簡單笑臉的繪製結果截圖
-                    </div>
-                </div>
 
                 <div class="section">
-                    <h3>🏆 加分題一：畫中文字「人」</h3>
+                    <h3>📝 作業：畫出六邊形</h3>
                     <div class="exercise-box">
-                        <div class="exercise-title">進階挑戰：畫出中文字「人」</div>
+                        <div class="exercise-title">作業：畫出六邊形</div>
                         <div class="concept-box">
-                            <h4>挑戰說明</h4>
-                            <p>這是一個加分題！如果你已經熟練掌握了基礎內容，可以挑戰畫出更複雜的中文字「人」。</p>
-                        </div>
-
-                        <div class="step-container">
-                            <div class="step-title">分析「人」字結構</div>
-                            <p>中文字「人」由兩個筆畫組成：</p>
-                            <ul>
-                                <li>左撇：從右上到左下的斜線</li>
-                                <li>右捺：從左上到右下的斜線</li>
-                                <li>兩條線在頂部相交</li>
-                            </ul>
-                        </div>
-
-                        <div class="code-toggle" onclick="toggleCode(this)">
-                            <div class="code-toggle-header">
-                                <span>點擊查看「人」字的完整程式步驟</span>
-                                <button class="toggle-button" onclick="event.stopPropagation()">顯示程式碼</button>
-                            </div>
-                            <div class="code-toggle-content">
-                                <div class="code-example">
-<div class="block-line">
-    <span class="scratch-block block-events">當 🏁 被點擊</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">全部清除</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">筆的粗細設為 <span class="block-value">5</span></span> <span class="comment">// 設定較粗的筆觸</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">筆的顏色設為 <span class="block-value">紅色</span></span> <span class="comment">// 設定紅色</span>
-</div>
-
-<div class="block-line">
-    <span class="comment">// 畫左撇</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">0</span> y: <span class="block-value">50</span></span> <span class="comment">// 頂點位置</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">面向 <span class="block-value">225</span> 度方向</span> <span class="comment">// 左下方向</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">移動 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
-
-<div class="block-line">
-    <span class="comment">// 畫右捺</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">定位到 x: <span class="block-value">0</span> y: <span class="block-value">50</span></span> <span class="comment">// 回到頂點</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">面向 <span class="block-value">315</span> 度方向</span> <span class="comment">// 右下方向</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">下筆</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-motion">移動 <span class="block-value">100</span> 步</span>
-</div>
-<div class="block-line">
-    <span class="scratch-block block-pen">停筆</span>
-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="image-placeholder">
-                        📷 請放入：中文字「人」的繪製結果截圖
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>🏆 加分題二：畫六邊形</h3>
-                    <div class="exercise-box">
-                        <div class="exercise-title">挑戰：畫出六邊形</div>
-                        <div class="concept-box">
-                            <h4>挑戰說明</h4>
-                            <p>這是一個加分題！六邊形有六個邊和六個角，我們用座標定位的方式來挑戰畫出六邊形。</p>
+                            <h4>作業說明</h4>
+                            <p>六邊形有六個邊和六個角，我們用座標定位的方式來畫出六邊形。</p>
                         </div>
 
                         <div class="code-toggle" onclick="toggleCode(this)">
@@ -1713,20 +1680,7 @@
                 <div class="section">
                     <h3>📝 基礎作業</h3>
                     
-                    <div class="exercise-box">
-                        <div class="exercise-title">作業1：寫出你的姓名</div>
-                        <p><strong>要求：</strong></p>
-                        <ul>
-                            <li>用Scratch程式寫出你姓名的第一個字</li>
-                            <li>字的顏色要是你喜歡的顏色</li>
-                            <li>字的大小要適中，不能太小或太大</li>
-                            <li>完成後截圖上傳</li>
-                        </ul>
-                        
-                        <div class="tips">
-                            建議先在紙上畫出字的筆畫順序，再轉換成程式碼。
-                        </div>
-                    </div>
+
 
                     <div class="exercise-box">
                         <div class="exercise-title">作業2：幾何圖形組合</div>
@@ -1740,31 +1694,7 @@
                     </div>
                 </div>
 
-                <div class="section">
-                    <h3>🌟 進階挑戰</h3>
-                    
-                    <div class="exercise-box">
-                        <div class="exercise-title">挑戰1：創意圖案設計</div>
-                        <p><strong>要求：</strong></p>
-                        <ul>
-                            <li>使用重複迴圈創造一個美麗的重複圖案</li>
-                            <li>至少使用3種不同的顏色</li>
-                            <li>圖案要有對稱性或規律性</li>
-                            <li>為你的作品取一個創意的名字</li>
-                        </ul>
-                    </div>
 
-                    <div class="exercise-box">
-                        <div class="exercise-title">挑戰2：互動式藝術創作</div>
-                        <p><strong>要求：</strong></p>
-                        <ul>
-                            <li>結合鍵盤控制和自動繪圖</li>
-                            <li>使用者可以改變筆的顏色和粗細</li>
-                            <li>加入清除畫面的功能</li>
-                            <li>程式要有使用說明</li>
-                        </ul>
-                    </div>
-                </div>
 
                 <div class="section">
                     <h3>📤 作業繳交方式</h3>
