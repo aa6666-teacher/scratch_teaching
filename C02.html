@@ -201,6 +201,80 @@
         .operators { background: #59C059; }
         .variables { background: #FF8C1A; }
 
+        /* Scratch積木樣式 */
+        .block-events { background: #ffbf00; color: #333; }
+        .block-pen { background: #0fbd8c; }
+        .block-motion { background: #4a90e2; }
+        .block-looks { background: #9966ff; }
+        .block-control { background: #ff9500; }
+        .block-sensing { background: #5cb3d6; }
+        .block-operators { background: #59c059; }
+        .block-variables { background: #ff8c1a; }
+
+        .block-line {
+            display: block;
+            margin: 6px 0;
+            padding-left: 0px;
+        }
+
+        .block-indent {
+            padding-left: 20px;
+        }
+
+        .block-value {
+            background: white;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: normal;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            margin: 0 2px;
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            max-width: 100%;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .code-example .block-line {
+            display: block;
+            margin: 6px 0;
+            padding-left: 0px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .code-example .scratch-block {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 2px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .code-example .comment {
+            color: #666;
+            font-style: italic;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
         .step-list {
             counter-reset: step-counter;
             list-style: none;
@@ -444,9 +518,9 @@
                     • 畫虛線：重複「畫線→空白」的動作
                 </div>
 
-                <div class="image-placeholder">
-                    <strong>迴圈概念圖解</strong><br>
-                    請在此放入展示迴圈概念的圖片
+                <div class="image-container">
+                    <img src="loop.jpg" alt="迴圈概念圖解" style="max-width: 100%; height: auto;">
+                    <div class="image-caption">迴圈概念圖解</div>
                 </div>
             </div>
 
@@ -455,10 +529,16 @@
                 
                 <p>在Scratch中，我們使用<span class="scratch-block control">重複執行</span>積木來建立迴圈：</p>
 
-                <div class="code-block" onclick="copyCode(this)">
-重複執行 (10) 次
-    前進 (50) 步
-    右轉 (36) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">10</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">50</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">36</span> 度</span>
+</div>
                 </div>
 
                 <div class="geometry-demo">
@@ -543,12 +623,22 @@
                     <li>建立重複結構來畫正方形</li>
                 </ol>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-畫筆落下
-重複執行 (4) 次
-    前進 (100) 步
-    右轉 (90) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
                 </div>
 
                 <div class="warning-box">
@@ -573,12 +663,22 @@
                     <p><strong>提示：</strong>三角形有3個邊，外角和是360度</p>
                 </div>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-畫筆落下
-重複執行 (3) 次
-    前進 (100) 步
-    右轉 (120) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">3</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">120</span> 度</span>
+</div>
                 </div>
 
                 <div class="tip-box">
@@ -648,15 +748,31 @@
                 
                 <p>讓我們建立一個可以繪製任意正多邊形的程式：</p>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-詢問 "你要畫幾邊形？" 並等待
-將 [邊數 v] 設為 (詢問的答案)
-將 [角度 v] 設為 ((360) / (邊數))
-畫筆落下
-重複執行 (邊數) 次
-    前進 (80) 步
-    右轉 (角度) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-sensing">詢問 <span class="block-value">"你要畫幾邊形？"</span> 並等待</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-variables">將 <span class="block-value">[邊數 v]</span> 設為 <span class="scratch-block block-sensing">(詢問的答案)</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-variables">將 <span class="block-value">[角度 v]</span> 設為 <span class="scratch-block block-operators">((360) / (邊數))</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="scratch-block block-variables">(邊數)</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">80</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="scratch-block block-variables">(角度)</span> 度</span>
+</div>
                 </div>
 
                 <div class="exercise-box">
@@ -685,12 +801,22 @@
                     <p>如果邊數越來越多，會發生什麼事？當邊數達到360時，會變成什麼形狀？</p>
                 </div>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-畫筆落下
-重複執行 (360) 次
-    前進 (2) 步
-    右轉 (1) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">360</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">2</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">1</span> 度</span>
+</div>
                 </div>
 
                 <div class="tip-box">
@@ -708,15 +834,31 @@
                 
                 <p>結合顏色變化，讓圖形更加精彩：</p>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-畫筆落下
-重複執行 (36) 次
-    將畫筆顏色改變 (10)
-    重複執行 (4) 次
-        前進 (100) 步
-        右轉 (90) 度
-    右轉 (10) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">36</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-pen">將畫筆顏色改變 <span class="block-value">10</span></span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">10</span> 度</span>
+</div>
                 </div>
 
                 <div class="image-placeholder">
@@ -733,14 +875,28 @@
                     <p>通過逐漸增加前進的步數，可以創造出美麗的螺旋效果。</p>
                 </div>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-將 [步數 v] 設為 (1)
-畫筆落下
-重複執行 (100) 次
-    前進 (步數) 步
-    右轉 (91) 度
-    將 [步數 v] 改變 (2)
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-variables">將 <span class="block-value">[步數 v]</span> 設為 <span class="block-value">1</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">100</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="scratch-block block-variables">(步數)</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">91</span> 度</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-variables">將 <span class="block-value">[步數 v]</span> 改變 <span class="block-value">2</span></span>
+</div>
                 </div>
 
                 <div class="exercise-box">
@@ -760,24 +916,58 @@
                 
                 <p>結合不同的基本圖形，創造複雜的圖案：</p>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-畫筆落下
-// 畫房子底部（正方形）
-重複執行 (4) 次
-    前進 (100) 步
-    右轉 (90) 度
-// 移動到屋頂位置
-畫筆抬起
-前進 (100) 步
-右轉 (90) 度
-前進 (100) 步
-右轉 (90) 度
-畫筆落下
-// 畫屋頂（三角形）
-重複執行 (3) 次
-    前進 (100) 步
-    右轉 (120) 度
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="comment">// 畫房子底部（正方形）</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line">
+    <span class="comment">// 移動到屋頂位置</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆抬起</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line">
+    <span class="comment">// 畫屋頂（三角形）</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">3</span> 次</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">100</span> 步</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">120</span> 度</span>
+</div>
                 </div>
 
                 <div class="tip-box">
@@ -796,19 +986,43 @@
                     <p>巢狀迴圈是指在一個迴圈內部再放入另一個迴圈，可以創造出規律的圖案陣列。</p>
                 </div>
 
-                <div class="code-block" onclick="copyCode(this)">
-當 🏁 被點擊
-定位到 x:(-200) y:(150)
-重複執行 (3) 次  // 外層迴圈：行數
-    重複執行 (4) 次  // 內層迴圈：每行的圖形數
-        畫筆落下
-        重複執行 (4) 次  // 畫正方形
-            前進 (30) 步
-            右轉 (90) 度
-        畫筆抬起
-        x改變 (80)  // 移動到下一個位置
-    將 x 設為 (-200)  // 回到行首
-    y改變 (-80)  // 移動到下一行
+                <div class="code-example">
+<div class="block-line">
+    <span class="scratch-block block-events">當 🏁 被點擊</span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-motion">定位到 x: <span class="block-value">-200</span> y: <span class="block-value">150</span></span>
+</div>
+<div class="block-line">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">3</span> 次</span> <span class="comment">// 外層迴圈：行數</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span> <span class="comment">// 內層迴圈：每行的圖形數</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-pen">畫筆落下</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-control">重複執行 <span class="block-value">4</span> 次</span> <span class="comment">// 畫正方形</span>
+</div>
+<div class="block-line block-indent block-indent block-indent">
+    <span class="scratch-block block-motion">前進 <span class="block-value">30</span> 步</span>
+</div>
+<div class="block-line block-indent block-indent block-indent">
+    <span class="scratch-block block-motion">右轉 <span class="block-value">90</span> 度</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-pen">畫筆抬起</span>
+</div>
+<div class="block-line block-indent block-indent">
+    <span class="scratch-block block-motion">x改變 <span class="block-value">80</span></span> <span class="comment">// 移動到下一個位置</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">將 x 設為 <span class="block-value">-200</span></span> <span class="comment">// 回到行首</span>
+</div>
+<div class="block-line block-indent">
+    <span class="scratch-block block-motion">y改變 <span class="block-value">-80</span></span> <span class="comment">// 移動到下一行</span>
+</div>
                 </div>
 
                 <div class="image-placeholder">
