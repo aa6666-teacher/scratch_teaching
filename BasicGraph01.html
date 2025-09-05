@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生活科技／基本圖學Ⅰ - 完整課程</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', '微軟正黑體', 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-section {
+            background: white;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-content {
+            padding: 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .content-box h3 {
+            color: #2D3748;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .function-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-top: 4px solid #667eea;
+        }
+
+        .function-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .function-card h3 {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2D3748;
+        }
+
+        .function-card p {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4A5568;
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+        }
+
+        .example-tag {
+            background-color: #FDFFAB;
+            border-radius: 12px;
+            padding: 5px 12px;
+            font-size: 0.9em;
+            color: #4A5568;
+            display: inline-block;
+            margin: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .example-tag i {
+            margin-right: 5px;
+        }
+
+
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .function-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5em;
+            }
+            
+            .page-header h2 {
+                font-size: 2em;
+            }
+            
+
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+        <!-- 頁面1：標題頁 -->
+        <div id="page1" class="page-section">
+            <div class="page-header">
+                <h1>生活科技</h1>
+                <h2>基本圖學Ⅰ</h2>
+                <div style="font-size: 1.8em; margin-top: 20px;">
+                    <i class="fas fa-chalkboard-teacher"></i> 吳慶鴻老師
+                </div>
+                <div style="font-size: 1.5em; margin-top: 10px; opacity: 0.8;">
+                    <i class="fas fa-users"></i> 七年級
+                </div>
+            </div>
+            <div class="page-content">
+                <div class="content-box">
+                    <h3>課程概述</h3>
+                    <p>基本圖學是生活科技課程中的重要基礎，透過系統性的學習，讓學生掌握圖形表達的基本原理和方法。本課程將帶領學生認識圖學的奧秘，從基礎概念到實際應用，建立完整的圖學思維。</p>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 15px;">
+                        <h4 style="color: #1976d2; margin-bottom: 15px; text-align: center;">
+                            <i class="fas fa-star"></i> 課程特色
+                        </h4>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 8px 0;"><strong>系統性學習</strong>：從基礎概念到進階應用</li>
+                            <li style="margin: 8px 0;"><strong>實作導向</strong>：大量練習題目與實際繪圖</li>
+                            <li style="margin: 8px 0;"><strong>生活化應用</strong>：結合日常生活中的圖學應用</li>
+                            <li style="margin: 8px 0;"><strong>技能培養</strong>：培養空間思維與繪圖技巧</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面2：圖學初認識 -->
+        <div id="page2" class="page-section">
+            <div class="page-header">
+                <h1>單元一│圖學初認識</h1>
+            </div>
+            <div class="page-content">
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>圖學是什麼？</h3>
+                        <p>圖學是一門<span style="background: linear-gradient(120deg, #FFD3B6 0%, #FDFFAB 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold;">跨越語言與文化障礙</span>的視覺科學，透過系統性的方法將抽象概念與複雜資訊轉化為清晰的圖形。</p>
+                        
+                        <h4 style="margin-top: 20px; color: #667eea;">為什麼圖學重要？</h4>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 10px 0;">
+                                <i class="fas fa-compress-alt text-blue-600"></i>
+                                <strong>化繁為簡</strong>：將複雜的結構、數據或流程，以簡潔直觀的視覺形式呈現
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <i class="fas fa-globe-asia text-green-600"></i>
+                                <strong>世界通用</strong>：圖形符號具有跨越語言和文化隔閡的共通性
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <i class="fas fa-database text-purple-600"></i>
+                                <strong>儲存與查詢</strong>：有效儲存和管理大量空間資訊或結構數據
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h3>圖學的三大核心類別</h3>
+                        <div style="display: flex; justify-content: space-between; margin: 30px 0;">
+                            <div style="text-align: center; flex: 1; margin: 0 15px;">
+                                <div class="icon-container" style="background: #A8E6CF;">
+                                    <i class="fas fa-map-marked-alt text-4xl text-blue-700"></i>
+                                </div>
+                                <h4 style="font-size: 1.3em; font-weight: bold; color: #2D3748;">地圖</h4>
+                            </div>
+                            <div style="text-align: center; flex: 1; margin: 0 15px;">
+                                <div class="icon-container" style="background: #A8E6CF;">
+                                    <i class="fas fa-project-diagram text-4xl text-green-700"></i>
+                                </div>
+                                <h4 style="font-size: 1.3em; font-weight: bold; color: #2D3748;">概念圖</h4>
+                            </div>
+                            <div style="text-align: center; flex: 1; margin: 0 15px;">
+                                <div class="icon-container" style="background: #A8E6CF;">
+                                    <i class="fas fa-drafting-compass text-4xl text-red-700"></i>
+                                </div>
+                                <h4 style="font-size: 1.3em; font-weight: bold; color: #2D3748;">工程圖</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    「圖能傳達千言萬語，是跨越障礙的溝通橋樑」
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面3：用圖用途 -->
+        <div id="page3" class="page-section">
+            <div class="page-header">
+                <h1>1-1 用圖◆用途</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">圖學的四大核心功能與應用實例</p>
+            </div>
+            <div class="page-content">
+                <div class="function-grid">
+                    <!-- 化繁為簡 -->
+                    <div class="function-card">
+                        <div class="icon-container bg-red-100">
+                            <i class="fas fa-compress-alt text-5xl text-red-500"></i>
+                        </div>
+                        <h3>化繁為簡</h3>
+                        <p>將複雜的結構、數據或流程，以簡潔直觀的視覺形式呈現，使觀看者能迅速掌握核心概念。</p>
+                        
+                        <!-- 化繁為簡概念圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-radius: 10px; border: 2px solid #f56565;">
+                            <img src="01/01-1.png" alt="化繁為簡概念圖" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #c53030; font-size: 0.9em; font-weight: bold;">化繁為簡的視覺化過程</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <p style="font-size: 0.9em; font-weight: bold; color: #666; margin-bottom: 8px;">應用實例：</p>
+                            <div>
+                                <span class="example-tag"><i class="fas fa-mountain"></i> 等高線圖</span>
+                                <span class="example-tag"><i class="fas fa-traffic-light"></i> 交通標誌</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 傳遞訊息 -->
+                    <div class="function-card">
+                        <div class="icon-container bg-blue-100">
+                            <i class="fas fa-bullhorn text-5xl text-blue-500"></i>
+                        </div>
+                        <h3>傳遞訊息</h3>
+                        <p>相較於冗長的文字描述，圖形能更快速、準確地傳遞訊息，使接收者迅速理解內容。</p>
+                        
+                        <!-- 傳遞訊息概念圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 10px; border: 2px solid #3b82f6;">
+                            <img src="01/01-2.png" alt="傳遞訊息概念圖" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #1d4ed8; font-size: 0.9em; font-weight: bold;">訊息傳遞的視覺化表達</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <p style="font-size: 0.9em; font-weight: bold; color: #666; margin-bottom: 8px;">應用實例：</p>
+                            <div>
+                                <span class="example-tag"><i class="fas fa-microchip"></i> 電路圖</span>
+                                <span class="example-tag"><i class="fas fa-project-diagram"></i> 組織架構圖</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 世界通用 -->
+                    <div class="function-card">
+                        <div class="icon-container bg-green-100">
+                            <i class="fas fa-globe-asia text-5xl text-green-500"></i>
+                        </div>
+                        <h3>世界通用</h3>
+                        <p>許多圖形符號具有跨越語言和文化隔閡的共通性，成為一種全球通用的溝通語言。</p>
+                        
+                        <!-- 世界通用概念圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #f0fff4 0%, #dcfce7 100%); border-radius: 10px; border: 2px solid #10b981;">
+                            <img src="01/01-3.png" alt="世界通用概念圖" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #047857; font-size: 0.9em; font-weight: bold;">全球通用的圖形符號系統</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <p style="font-size: 0.9em; font-weight: bold; color: #666; margin-bottom: 8px;">應用實例：</p>
+                            <div>
+                                <span class="example-tag"><i class="fas fa-map-marked-alt"></i> 世界地圖</span>
+                                <span class="example-tag"><i class="fas fa-map"></i> 各縣市地圖</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 儲存與查詢 -->
+                    <div class="function-card">
+                        <div class="icon-container bg-purple-100">
+                            <i class="fas fa-database text-5xl text-purple-500"></i>
+                        </div>
+                        <h3>儲存與查詢</h3>
+                        <p>圖是儲存大量空間資訊或結構數據的有效載體，方便使用者隨時查詢特定資訊。</p>
+                        
+                        <!-- 儲存與查詢概念圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 10px; border: 2px solid #8b5cf6;">
+                            <img src="01/01-11.png" alt="儲存與查詢概念圖" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #7c3aed; font-size: 0.9em; font-weight: bold;">資訊儲存與檢索的視覺化</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <p style="font-size: 0.9em; font-weight: bold; color: #666; margin-bottom: 8px;">應用實例：</p>
+                            <div>
+                                <span class="example-tag"><i class="fas fa-search"></i> 查詢圖資</span>
+                                <span class="example-tag"><i class="fas fa-save"></i> 儲存訊息</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面4：三大圖類 -->
+        <div id="page4" class="page-section">
+            <div class="page-header">
+                <h1>三大圖類詳解</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">圖學分類與應用領域</p>
+            </div>
+            
+            <!-- 三大圖類核心概念圖 -->
+            <div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; border: 2px solid #6c757d;">
+                <h3 style="color: #495057; margin-bottom: 20px;">
+                    <i class="fas fa-sitemap"></i> 圖學三大核心類別
+                </h3>
+                <img src="01/01-4.png" alt="圖學三大核心類別" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="margin-top: 15px; color: #6c757d; font-style: italic;">圖學分類的三大核心：地圖、概念圖、工程圖</p>
+            </div>
+            <div class="page-content">
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>圖學分類的重要性</h3>
+                        <p>了解圖學的分類系統有助於我們更好地理解不同類型圖形的特性和應用場景。每種類型都有其獨特的功能和適用範圍。</p>
+                        <p>透過系統性的分類，我們可以：</p>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li>快速識別圖形類型</li>
+                            <li>選擇合適的繪製方法</li>
+                            <li>理解圖形的表達目的</li>
+                            <li>提高圖形閱讀效率</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h3>分類原則</h3>
+                        <p>圖學分類主要基於以下原則：</p>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li><strong>功能導向</strong>：根據圖形的主要功能分類</li>
+                            <li><strong>應用領域</strong>：根據圖形的使用場景分類</li>
+                            <li><strong>表達方式</strong>：根據圖形的呈現形式分類</li>
+                            <li><strong>複雜程度</strong>：根據圖形的結構複雜度分類</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面5：地圖類型 -->
+        <div id="page5" class="page-section">
+            <div class="page-header">
+                <h1>【地圖】類型詳解</h1>
+            </div>
+            <div class="page-content">
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="icon-container bg-blue-100">
+                            <i class="fas fa-map text-4xl text-blue-600"></i>
+                        </div>
+                        <h3>一般地圖</h3>
+                        <p>提供基本的地理資訊，包括行政區劃、主要道路、重要地標等，是日常生活中最常用的地圖類型。</p>
+                        
+                        <!-- 一般地圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 10px; border: 2px solid #3b82f6;">
+                            <img src="01/01-7.png" alt="一般地圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #1d4ed8; font-size: 0.9em; font-weight: bold;">一般地圖的典型樣式</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">城市地圖</span>
+                            <span class="example-tag">旅遊地圖</span>
+                            <span class="example-tag">交通地圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-green-100">
+                            <i class="fas fa-mountain text-4xl text-green-600"></i>
+                        </div>
+                        <h3>地形圖</h3>
+                        <p>詳細顯示地形地貌特徵，包括等高線、坡度、地質構造等，常用於工程規劃和地理研究。</p>
+                        
+                        <!-- 地形圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #f0fff4 0%, #dcfce7 100%); border-radius: 10px; border: 2px solid #10b981;">
+                            <img src="01/01-8.png" alt="地形圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #047857; font-size: 0.9em; font-weight: bold;">地形圖的等高線表現</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">等高線圖</span>
+                            <span class="example-tag">地質圖</span>
+                            <span class="example-tag">水文圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-purple-100">
+                            <i class="fas fa-cloud text-4xl text-purple-600"></i>
+                        </div>
+                        <h3>衛星雲圖</h3>
+                        <p>透過衛星技術獲取的大氣層影像，用於氣象預報、氣候監測和環境研究。</p>
+                        
+                        <!-- 衛星雲圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 10px; border: 2px solid #8b5cf6;">
+                            <img src="01/01-9.png" alt="衛星雲圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #7c3aed; font-size: 0.9em; font-weight: bold;">衛星雲圖的氣象資訊</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">氣象圖</span>
+                            <span class="example-tag">雲層分布圖</span>
+                            <span class="example-tag">溫度分布圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-orange-100">
+                            <i class="fas fa-tint text-4xl text-orange-600"></i>
+                        </div>
+                        <h3>累積雨量圖</h3>
+                        <p>顯示特定時間內降雨量的空間分布，用於水資源管理、防洪規劃和農業灌溉。</p>
+                        
+                        <!-- 累積雨量圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-radius: 10px; border: 2px solid #f97316;">
+                            <img src="01/01-10.png" alt="累積雨量圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #ea580c; font-size: 0.9em; font-weight: bold;">累積雨量的空間分布</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">降雨分布圖</span>
+                            <span class="example-tag">水資源圖</span>
+                            <span class="example-tag">防洪圖</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面6：概念圖類型 -->
+        <div id="page6" class="page-section">
+            <div class="page-header">
+                <h1>【概念圖】類型詳解</h1>
+            </div>
+            <div class="page-content">
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="icon-container bg-red-100">
+                            <i class="fas fa-chart-bar text-4xl text-red-600"></i>
+                        </div>
+                        <h3>統計圖</h3>
+                        <p>將數據以視覺化方式呈現，包括柱狀圖、折線圖、圓餅圖等，用於數據分析和比較。</p>
+                        
+                        <!-- 統計圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-radius: 10px; border: 2px solid #f56565;">
+                            <img src="01/01-11.png" alt="統計圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #c53030; font-size: 0.9em; font-weight: bold;">統計圖的數據視覺化</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">柱狀圖</span>
+                            <span class="example-tag">折線圖</span>
+                            <span class="example-tag">圓餅圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-blue-100">
+                            <i class="fas fa-sitemap text-4xl text-blue-600"></i>
+                        </div>
+                        <h3>組織圖</h3>
+                        <p>展示組織結構、職權關係和人員配置，常用於企業管理和組織規劃。</p>
+                        
+                        <!-- 組織圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 10px; border: 2px solid #3b82f6;">
+                            <img src="01/01-12.png" alt="組織圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #1d4ed8; font-size: 0.9em; font-weight: bold;">組織結構的層級關係</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">組織架構圖</span>
+                            <span class="example-tag">職權圖</span>
+                            <span class="example-tag">流程圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-green-100">
+                            <i class="fas fa-cogs text-4xl text-green-600"></i>
+                        </div>
+                        <h3>構造圖</h3>
+                        <p>描述物體或系統的內部結構和組成部分，用於工程設計和技術說明。</p>
+                        
+                        <!-- 構造圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #f0fff4 0%, #dcfce7 100%); border-radius: 10px; border: 2px solid #10b981;">
+                            <img src="01/01-2.png" alt="構造圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #047857; font-size: 0.9em; font-weight: bold;">系統構造的組成分析</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">機械構造圖</span>
+                            <span class="example-tag">建築構造圖</span>
+                            <span class="example-tag">電路構造圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-purple-100">
+                            <i class="fas fa-route text-4xl text-purple-600"></i>
+                        </div>
+                        <h3>流程圖</h3>
+                        <p>描述工作流程、操作步驟或決策過程，用於程序設計和業務流程優化。</p>
+                        
+                        <!-- 流程圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 10px; border: 2px solid #8b5cf6;">
+                            <img src="01/01-13.png" alt="流程圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #7c3aed; font-size: 0.9em; font-weight: bold;">工作流程的步驟展示</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">工作流程圖</span>
+                            <span class="example-tag">決策樹圖</span>
+                            <span class="example-tag">程序流程圖</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面7：工程圖類型 -->
+        <div id="page7" class="page-section">
+            <div class="page-header">
+                <h1>【工程圖】類型詳解</h1>
+            </div>
+            <div class="page-content">
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="icon-container bg-yellow-100">
+                            <i class="fas fa-lightbulb text-4xl text-yellow-600"></i>
+                        </div>
+                        <h3>構想草圖</h3>
+                        <p>設計初期的快速手繪圖，用於記錄靈感、表達概念和進行初步設計討論。</p>
+                        
+                        <!-- 構想草圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 10px; border: 2px solid #f59e0b;">
+                            <img src="01/01-14.png" alt="構想草圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #d97706; font-size: 0.9em; font-weight: bold;">創意構想的視覺化表達</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">概念草圖</span>
+                            <span class="example-tag">設計草圖</span>
+                            <span class="example-tag">創意草圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-pink-100">
+                            <i class="fas fa-eye text-4xl text-pink-600"></i>
+                        </div>
+                        <h3>產品表現圖</h3>
+                        <p>展示產品外觀、質感和使用情境的圖形，用於產品宣傳和用戶體驗設計。</p>
+                        
+                        <!-- 產品表現圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-radius: 10px; border: 2px solid #ec4899;">
+                            <img src="01/01-15.png" alt="產品表現圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #be185d; font-size: 0.9em; font-weight: bold;">產品外觀與質感表現</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">產品渲染圖</span>
+                            <span class="example-tag">使用情境圖</span>
+                            <span class="example-tag">質感表現圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-indigo-100">
+                            <i class="fas fa-tools text-4xl text-indigo-600"></i>
+                        </div>
+                        <h3>工作圖</h3>
+                        <p>詳細的技術圖紙，包含尺寸、材料、加工要求等，用於實際製造和施工。</p>
+                        
+                        <!-- 工作圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border-radius: 10px; border: 2px solid #6366f1;">
+                            <img src="01/01-16.png" alt="工作圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #4338ca; font-size: 0.9em; font-weight: bold;">詳細的技術規格圖紙</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">製造圖</span>
+                            <span class="example-tag">施工圖</span>
+                            <span class="example-tag">裝配圖</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-teal-100">
+                            <i class="fas fa-expand-arrows-alt text-4xl text-teal-600"></i>
+                        </div>
+                        <h3>展開圖</h3>
+                        <p>將立體物體展開成平面的圖形，用於包裝設計、金屬加工和紙藝製作。</p>
+                        
+                        <!-- 展開圖示例圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-radius: 10px; border: 2px solid #14b8a6;">
+                            <img src="01/01-17.png" alt="展開圖示例" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 10px; color: #0f766e; font-size: 0.9em; font-weight: bold;">立體到平面的展開過程</p>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">包裝展開圖</span>
+                            <span class="example-tag">金屬展開圖</span>
+                            <span class="example-tag">紙藝展開圖</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面8：等角圖基礎 -->
+        <div id="page8" class="page-section">
+            <div class="page-header">
+                <h1>等角圖基礎概念</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">立體圖學的重要基礎</p>
+            </div>
+            <div class="page-content">
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>什麼是等角圖？</h3>
+                        <p>等角圖是一種特殊的軸測投影圖，其中三個軸線（X、Y、Z）之間的夾角均為120度，能夠在二維平面上表現三維物體的立體效果。</p>
+                        
+                        <!-- 等角圖概念圖 -->
+                        <div style="text-align: center; margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%); border-radius: 15px; border: 2px solid #ff9800;">
+                            <img src="01/01-18.png" alt="等角圖概念圖" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 15px; color: #e65100; font-weight: bold;">等角圖的三軸120°夾角示意</p>
+                        </div>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%); border-radius: 15px; text-align: center;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">等角圖的核心特徵</h4>
+                            <div style="font-size: 2em; font-weight: bold; color: #d84315;">
+                                120° + 120° + 120° = 360°
+                            </div>
+                            <p style="margin-top: 10px; color: #bf360c;">長、寬、高三軸的夾角都是120°</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 20px; color: #667eea;">等角圖的特點</h4>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 8px 0;">三個軸線夾角均為120°</li>
+                            <li style="margin: 8px 0;">平行線保持平行關係</li>
+                            <li style="margin: 8px 0;">角度和比例關係保持不變</li>
+                            <li style="margin: 8px 0;">適合表現立方體和長方體</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h3>等角格紙（三角格紙）</h3>
+                        <p>等角格紙是繪製等角圖的重要工具，具有以下特點：</p>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 8px 0;"><strong>正三角形格子</strong>：每個格子都是正三角形</li>
+                            <li style="margin: 8px 0;"><strong>120度夾角</strong>：可以輕易定出夾角120度的三軸</li>
+                            <li style="margin: 8px 0;"><strong>精確定位</strong>：幫助準確繪製等角圖</li>
+                            <li style="margin: 8px 0;"><strong>比例一致</strong>：保持圖形的比例關係</li>
+                        </ul>
+                        
+                        <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #667eea;">
+                            <h5 style="color: #495057; margin-bottom: 10px;">
+                                <i class="fas fa-lightbulb"></i> 使用建議
+                            </h5>
+                            <p style="color: #6c757d; font-size: 0.9em;">在開始繪製等角圖之前，建議先準備好等角格紙，這樣可以更準確地繪製出符合要求的立體圖形。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面9：等角圖繪製 -->
+        <div id="page9" class="page-section">
+            <div class="page-header">
+                <h1>等角圖繪製方法</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">四步驟繪製流程</p>
+            </div>
+            
+            <!-- 等角圖繪製方法概念圖 -->
+            <div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 15px; border: 2px solid #2196f3;">
+                <h3 style="color: #1565c0; margin-bottom: 20px;">
+                    <i class="fas fa-drafting-compass"></i> 等角圖繪製方法總覽
+                </h3>
+                <img src="01/01-23.png" alt="等角圖繪製方法" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="margin-top: 15px; color: #1976d2; font-style: italic;">四步驟繪製流程的視覺化展示</p>
+            </div>
+            
+            <div class="page-content">
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="icon-container bg-red-100">
+                            <span style="font-size: 2em; font-weight: bold; color: #e53e3e;">1</span>
+                        </div>
+                        <h3>畫出三軸</h3>
+                        <p>畫出夾角互為120度的三軸，這是等角圖的基礎框架。</p>
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">120°夾角</span>
+                            <span class="example-tag">三軸定位</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-blue-100">
+                            <span style="font-size: 2em; font-weight: bold; color: #3182ce;">2</span>
+                        </div>
+                        <h3>定出尺寸</h3>
+                        <p>在三軸上定出物體的最大寬高深，順著軸線畫平行線，完成長方體。</p>
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">最大尺寸</span>
+                            <span class="example-tag">平行線</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-green-100">
+                            <span style="font-size: 2em; font-weight: bold; color: #38a169;">3</span>
+                        </div>
+                        <h3>關鍵部位</h3>
+                        <p>在稜線上定出關鍵部位的長度，並順著軸線畫平行線。</p>
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">關鍵長度</span>
+                            <span class="example-tag">軸線平行</span>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="icon-container bg-purple-100">
+                            <span style="font-size: 2em; font-weight: bold; color: #805ad5;">4</span>
+                        </div>
+                        <h3>整飭輪廓</h3>
+                        <p>清除多餘的線條，整飭輪廓，完成最終的等角圖。</p>
+                        <div style="margin-top: 15px;">
+                            <span class="example-tag">清理線條</span>
+                            <span class="example-tag">最終圖形</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); border-radius: 15px; border: 2px solid #4caf50;">
+                    <h3 style="color: #2e7d32; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-pencil-ruler"></i> 繪製要點提醒
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: #388e3c; margin-bottom: 10px;">準備工作</h4>
+                            <ul style="color: #2e7d32;">
+                                <li>準備等角格紙（三角格紙）</li>
+                                <li>準備繪圖工具（鉛筆、橡皮擦）</li>
+                                <li>了解物體的尺寸比例</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #388e3c; margin-bottom: 10px;">注意事項</h4>
+                            <ul style="color: #2e7d32;">
+                                <li>保持120°夾角的準確性</li>
+                                <li>平行線要真正平行</li>
+                                <li>比例關係要正確</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面10：練習與應用 -->
+        <div id="page10" class="page-section">
+            <div class="page-header">
+                <h1>練習與應用</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">實際操作與技能提升</p>
+            </div>
+            <div class="page-content">
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>練習的重要性</h3>
+                        <p>圖學是一門實踐性很強的學科，只有通過大量的練習才能掌握繪圖技巧和空間概念。</p>
+                        
+                        <h4 style="margin-top: 20px; color: #667eea;">練習目標</h4>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 8px 0;">提升手繪技巧</li>
+                            <li style="margin: 8px 0;">培養空間思維</li>
+                            <li style="margin: 8px 0;">理解投影原理</li>
+                            <li style="margin: 8px 0;">掌握比例關係</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h3>練習方法</h3>
+                        <p>建議的練習方法：</p>
+                        <ul style="margin: 15px 0; padding-left: 25px;">
+                            <li style="margin: 8px 0;"><strong>基礎練習</strong>：從簡單的幾何體開始</li>
+                            <li style="margin: 8px 0;"><strong>漸進練習</strong>：逐步增加複雜度</li>
+                            <li style="margin: 8px 0;"><strong>實物練習</strong>：觀察實物進行繪製</li>
+                            <li style="margin: 8px 0;"><strong>創意練習</strong>：設計自己的圖形</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 練習題目區 -->
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-tasks"></i> 基礎練習題目
+                    </h3>
+                    
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <div class="icon-container bg-orange-100">
+                                <span style="font-size: 1.5em; font-weight: bold; color: #f57c00;">練習①</span>
+                            </div>
+                            <h3>長方體練習</h3>
+                            <p>請畫出一長方體：</p>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; border: 2px solid #ff9800;">
+                                    <p style="margin: 5px 0; font-weight: bold; color: #e65100;">寬：3 單位</p>
+                                    <p style="margin: 5px 0; font-weight: bold; color: #e65100;">高：2 單位</p>
+                                    <p style="margin: 5px 0; font-weight: bold; color: #e65100;">深：4 單位</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="function-card">
+                            <div class="icon-container bg-blue-100">
+                                <span style="font-size: 1.5em; font-weight: bold; color: #1976d2;">練習②</span>
+                            </div>
+                            <h3>長方體練習</h3>
+                            <p>請畫出一長方體：</p>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; border: 2px solid #2196f3;">
+                                    <p style="margin: 5px 0; font-weight: bold; color: #1565c0;">寬：5 單位</p>
+                                    <p style="margin: 5px 0; font-weight: bold; color: #1565c0;">高：7 單位</p>
+                                    <p style="margin: 5px 0; font-weight: bold; color: #1565c0;">深：1 單位</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%); border-radius: 15px; border: 2px solid #e91e63;">
+                        <h4 style="color: #c2185b; margin-bottom: 15px; text-align: center;">
+                            <i class="fas fa-exclamation-triangle"></i> 作答注意事項
+                        </h4>
+                        <div style="text-align: center; color: #ad1457;">
+                            <p style="font-size: 1.1em; margin-bottom: 10px;"><strong>我們來開始吧！:D</strong></p>
+                            <p>畫的時候要注意下筆的位置，會不會讓圖超出框外喔！</p>
+                            <p>如果會，就擦掉重畫😊</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    持續練習，掌握圖學精髓
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面11：進階練習題目 -->
+        <div id="page11" class="page-section">
+            <div class="page-header">
+                <h1>進階練習題目</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">更多立體圖繪製挑戰</p>
+            </div>
+            <div class="page-content">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-graduation-cap"></i> 系列練習題目
+                    </h3>
+                    <p style="text-align: center; color: #6c757d; margin-bottom: 30px;">
+                        以下多為「請畫出以下立體圖：」的題目，主要為圖形/格紙練習
+                    </p>
+                </div>
+                
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="icon-container bg-green-100">
+                            <span style="font-size: 1.5em; font-weight: bold; color: #388e3c;">練習③</span>
+                        </div>
+                        <h3>立體圖練習</h3>
+                        <p>請畫出以下立體圖：</p>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; border: 2px solid #4caf50;">
+                                <p style="color: #2e7d32; font-style: italic;">練習空間</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="function-card">
+                        <div class="icon-container bg-purple-100">
+                            <span style="font-size: 1.5em; font-weight: bold; color: #7b1fa2;">練習④</span>
+                        </div>
+                        <h3>立體圖練習</h3>
+                        <p>請畫出以下立體圖：</p>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; border: 2px solid #9c27b0;">
+                                <p style="color: #6a1b9a; font-style: italic;">練習空間</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="function-card">
+                        <div class="icon-container bg-teal-100">
+                            <span style="font-size: 1.5em; font-weight: bold; color: #00796b;">練習⑤</span>
+                        </div>
+                        <h3>立體圖練習</h3>
+                        <p>請畫出以下立體圖：</p>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <div style="background: #e0f2f1; padding: 15px; border-radius: 10px; border: 2px solid #009688;">
+                                <p style="color: #00695c; font-style: italic;">練習空間</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="function-card">
+                        <div class="icon-container bg-pink-100">
+                            <span style="font-size: 1.5em; font-weight: bold; color: #c2185b;">練習⑥</span>
+                        </div>
+                        <h3>立體圖練習</h3>
+                        <p>請畫出以下立體圖：</p>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <div style="background: #fce4ec; padding: 15px; border-radius: 10px; border: 2px solid #e91e63;">
+                                <p style="color: #ad1457; font-style: italic;">練習空間</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-star"></i> 指定深度練習題
+                    </h3>
+                    
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <div class="icon-container bg-indigo-100">
+                                <span style="font-size: 1.5em; font-weight: bold; color: #3f51b5;">練習⑨</span>
+                            </div>
+                            <h3>指定深度練習</h3>
+                            <p>請畫出以下立體圖：</p>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <div style="background: #e8eaf6; padding: 15px; border-radius: 10px; border: 2px solid #3f51b5;">
+                                    <p style="color: #303f9f; font-weight: bold;">深度：2 單位</p>
+                                    <p style="color: #303f9f; font-style: italic;">練習空間</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="function-card">
+                            <div class="icon-container bg-amber-100">
+                                <span style="font-size: 1.5em; font-weight: bold; color: #ff8f00;">練習⑩</span>
+                            </div>
+                            <h3>指定深度練習</h3>
+                            <p>請畫出以下立體圖：</p>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <div style="background: #fff8e1; padding: 15px; border-radius: 10px; border: 2px solid #ff9800;">
+                                    <p style="color: #f57c00; font-weight: bold;">深度：3 單位</p>
+                                    <p style="color: #f57c00; font-style: italic;">練習空間</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #e1f5fe 0%, #f3e5f5 100%); border-radius: 15px; border: 2px solid #03a9f4;">
+                        <h4 style="color: #0277bd; margin-bottom: 15px; text-align: center;">
+                            <i class="fas fa-info-circle"></i> 練習說明
+                        </h4>
+                        <div style="text-align: center; color: #01579b;">
+                            <p>這些練習題目主要為圖形練習，文字極少，主要是圖形/格紙的實際操作。</p>
+                            <p>建議使用等角格紙（三角格紙）來進行練習，這樣可以更準確地繪製出符合要求的立體圖形。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 頁面載入完成後的動畫效果
+        window.addEventListener('load', function() {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.style.opacity = '0';
+                    section.style.transform = 'translateY(20px)';
+                    section.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
