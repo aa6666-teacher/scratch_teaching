@@ -346,6 +346,91 @@
                 margin: 5px 0;
             }
         }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
     </style>
 </head>
 <body>
@@ -362,6 +447,7 @@
             <a href="#maze-development">迷宮遊戲開發</a>
             <a href="#enhancement">功能強化</a>
             <a href="#homework">作業與評量</a>
+            <a href="#resources">相關資源</a>
         </div>
 
         <div id="intro" class="chapter">
@@ -469,6 +555,20 @@
                 </table>
             </div>
 
+            <h3>📥 資源下載</h3>
+            <div class="step">
+                <h4>迷宮背景圖下載</h4>
+                <p>請先下載以下迷宮背景圖，用於遊戲開發：</p>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1IpMgnwlYwkpNlH5cNE7YNmNFBsNMJJB1/view?usp=sharing" target="_blank" rel="noopener">迷宮 1 背景圖</a></li>
+                    <li><a href="https://drive.google.com/file/d/1PJ3BQg4u_nSHqMN8gD3oV7YwsEE2AYjc/view?usp=sharing" target="_blank" rel="noopener">迷宮 2 背景圖</a></li>
+                    <li><a href="https://drive.google.com/file/d/1G9JRcAFwbORjRGALnqg5xs84E-VjC5TD/view?usp=sharing" target="_blank" rel="noopener">迷宮 3 背景圖</a></li>
+                </ul>
+                <div class="info">
+                    <strong>💡 下載說明：</strong>點擊連結後，在 Google Drive 中點選「下載」按鈕，將圖片儲存到電腦中，然後在 Scratch 中上傳使用。
+                </div>
+            </div>
+
             <h3>🎨 角色與場景設計</h3>
             <div class="step">
                 <h4>步驟一：建立新專案</h4>
@@ -489,16 +589,15 @@
                 <ol>
                     <li>點選「選擇一個角色」</li>
                     <li>選擇喜歡的角色（建議：小貓、小狗或球）</li>
-                    <li>調整角色大小為適中</li>
+                    <li>調整角色大小為適中（50-80%）</li>
                     <li>設定角色初始位置</li>
                 </ol>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category motion">定位到 x: (-200) y: (150)</span>
-<span class="block-category looks">造型換成 (costume1)</span>
-<span class="block-category variables">設定 [關卡 v] 為 (1)</span>
-<span class="block-category variables">設定 [分數 v] 為 (0)</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block looks">切換背景到 <span class="arg">迷宮-1</span></div>
+                    <div class="block motion">定位到 x: <span class="arg">-200</span> y: <span class="arg">-140</span></div>
+                    <div class="block looks">說出 <span class="arg">請按上下左右鍵開始玩！</span> <span class="arg">2</span> 秒</div>
                 </div>
             </div>
 
@@ -507,8 +606,9 @@
                 <ol>
                     <li>點選舞台區域</li>
                     <li>點選「選擇一個背景」</li>
-                    <li>選擇或繪製迷宮背景</li>
-                    <li>確保有清楚的牆壁和通道區分</li>
+                    <li>上傳剛才下載的迷宮背景圖（依序：迷宮-1、迷宮-2、迷宮-3）</li>
+                    <li>在迷宮-1 的紅色點位置加入：班級／座號／姓名</li>
+                    <li>確保有清楚的牆壁（黑色）和通道區分</li>
                 </ol>
 
                 <div class="image-placeholder">
@@ -569,10 +669,12 @@
                 <h4>實作範例：安全移動檢測</h4>
                 <p>在迷宮遊戲中，我們需要檢查玩家是否可以安全移動：</p>
 
-                <div class="code-block">
-<span class="block-category control">如果 <</span><span class="block-category operators">< 按鍵 [右鍵 v] 被按下？ > 且 < 不是 < 碰到顏色 (#000000)？ > ></span><span class="block-category control"> 那麼</span>
-    <span class="block-category motion">x 改變 (5)</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？ 且 不是 碰到顏色 (#000000)？</span>
+                        <div class="substack">
+                            <div class="block motion">x 改變 <span class="arg">5</span></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="info">
@@ -585,20 +687,74 @@
                 </div>
             </div>
 
+            <h3>🎮 球的移動控制（多重選擇結構）</h3>
+            <div class="step">
+                <h4>完整的移動控制系統</h4>
+                <p>使用多重選擇結構來處理四個方向的移動，比單獨判斷更有效率：</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">面向 <span class="arg">0</span> 度</div>
+                                    <div class="block motion">移動 <span class="arg">10</span> 點</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">按鍵 [右鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">面向 <span class="arg">90</span> 度</div>
+                                    <div class="block motion">移動 <span class="arg">10</span> 點</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">按鍵 [下鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">面向 <span class="arg">180</span> 度</div>
+                                    <div class="block motion">移動 <span class="arg">10</span> 點</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">按鍵 [左鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">面向 <span class="arg">-90</span> 度</div>
+                                    <div class="block motion">移動 <span class="arg">10</span> 點</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <strong>💡 多重選擇的優點：</strong>
+                    <ul>
+                        <li>一次只會執行一個方向的移動</li>
+                        <li>避免同時按下多個鍵時的衝突</li>
+                        <li>程式執行效率更高</li>
+                    </ul>
+                </div>
+            </div>
+
             <h3>🏗️ 巢狀選擇結構</h3>
             <div class="step">
                 <h4>什麼是巢狀結構？</h4>
                 <p>巢狀選擇結構是指在一個條件判斷內部，再包含另一個條件判斷的結構。</p>
 
-                <div class="code-block">
-<span class="block-category control">如果 < 按鍵 [上鍵 v] 被按下？ > 那麼</span>
-    <span class="block-category control">如果 < 不是 < 碰到顏色 (#000000)？ > > 那麼</span>
-        <span class="block-category motion">y 改變 (5)</span>
-    <span class="block-category control">否則</span>
-        <span class="block-category sound">播放音效 [碰撞 v]</span>
-        <span class="block-category looks">說出 [撞到牆了！] (1) 秒</span>
-    <span class="block-category control">結束</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">不是 碰到顏色 (#000000)？</span>
+                                <div class="substack">
+                                    <div class="block motion">y 改變 <span class="arg">5</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block sound">播放音效 <span class="arg">碰撞</span></div>
+                                    <div class="block looks">說出 <span class="arg">撞到牆了！</span> <span class="arg">1</span> 秒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -606,37 +762,52 @@
                 <h4>實作：完整的移動控制系統</h4>
                 <p>結合複合條件和巢狀結構，建立完整的角色移動控制：</p>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category control">重複無限次</span>
-    <span class="block-category control">如果 < 按鍵 [上鍵 v] 被按下？ > 那麼</span>
-        <span class="block-category motion">y 改變 (3)</span>
-        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
-            <span class="block-category motion">y 改變 (-3)</span>
-        <span class="block-category control">結束</span>
-    <span class="block-category control">結束</span>
-    
-    <span class="block-category control">如果 < 按鍵 [下鍵 v] 被按下？ > 那麼</span>
-        <span class="block-category motion">y 改變 (-3)</span>
-        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
-            <span class="block-category motion">y 改變 (3)</span>
-        <span class="block-category control">結束</span>
-    <span class="block-category control">結束</span>
-    
-    <span class="block-category control">如果 < 按鍵 [左鍵 v] 被按下？ > 那麼</span>
-        <span class="block-category motion">x 改變 (-3)</span>
-        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
-            <span class="block-category motion">x 改變 (3)</span>
-        <span class="block-category control">結束</span>
-    <span class="block-category control">結束</span>
-    
-    <span class="block-category control">如果 < 按鍵 [右鍵 v] 被按下？ > 那麼</span>
-        <span class="block-category motion">x 改變 (3)</span>
-        <span class="block-category control">如果 < 碰到顏色 (#000000)？ > 那麼</span>
-            <span class="block-category motion">x 改變 (-3)</span>
-        <span class="block-category control">結束</span>
-    <span class="block-category control">結束</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">y 改變 <span class="arg">3</span></div>
+                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
+                                        <div class="substack">
+                                            <div class="block motion">y 改變 <span class="arg">-3</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block control">如果 <span class="arg">按鍵 [下鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">y 改變 <span class="arg">-3</span></div>
+                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
+                                        <div class="substack">
+                                            <div class="block motion">y 改變 <span class="arg">3</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block control">如果 <span class="arg">按鍵 [左鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">x 改變 <span class="arg">-3</span></div>
+                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
+                                        <div class="substack">
+                                            <div class="block motion">x 改變 <span class="arg">3</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？</span>
+                                <div class="substack">
+                                    <div class="block motion">x 改變 <span class="arg">3</span></div>
+                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
+                                        <div class="substack">
+                                            <div class="block motion">x 改變 <span class="arg">-3</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -653,29 +824,55 @@
         <div id="maze-development" class="chapter">
             <h2>🎮 第四章：完整迷宮遊戲開發</h2>
 
-            <h3>🎯 勝利條件檢測</h3>
+            <h3>🎯 碰撞偵測與過關條件</h3>
             <div class="step">
-                <h4>設計終點檢測系統</h4>
-                <p>當玩家到達迷宮終點時，需要檢測並觸發勝利事件：</p>
+                <h4>完整的碰撞檢測系統</h4>
+                <p>另開一組「當綠旗被點擊」專門負責碰撞檢測，先移動再播放音效：</p>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category control">重複無限次</span>
-    <span class="block-category control">如果 < 碰到顏色 (#00ff00)？ > 那麼</span>
-        <span class="block-category sound">播放音效 [勝利 v]</span>
-        <span class="block-category looks">說出 [恭喜過關！] (2) 秒</span>
-        <span class="block-category variables">分數 改變 (100)</span>
-        <span class="block-category control">如果 < (關卡) < (3) > 那麼</span>
-            <span class="block-category variables">關卡 改變 (1)</span>
-            <span class="block-category looks">背景換成 [迷宮2 v]</span>
-            <span class="block-category motion">定位到 x: (-200) y: (150)</span>
-        <span class="block-category control">否則</span>
-            <span class="block-category looks">說出 [遊戲全破！] (3) 秒</span>
-            <span class="block-category control">停止 [全部 v]</span>
-        <span class="block-category control">結束</span>
-        <span class="block-category control">等待 (1) 秒</span>
-    <span class="block-category control">結束</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
+                                <div class="substack">
+                                    <div class="block motion">反彈</div>
+                                    <div class="block sound">播放音效 <span class="arg">POP</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">碰到顏色 (#ff0000)？</span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">恭喜過關！</span> <span class="arg">0.1</span> 秒</div>
+                                    <div class="block looks">切換背景到 <span class="arg">迷宮-2</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">碰到顏色 (#0000ff)？</span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">恭喜過關！</span> <span class="arg">0.1</span> 秒</div>
+                                    <div class="block looks">切換背景到 <span class="arg">迷宮-3</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="arg">碰到顏色 (#00ff00)？</span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">恭喜過關！</span> <span class="arg">0.1</span> 秒</div>
+                                    <div class="block motion c-block">重複無限次
+                                        <div class="substack">
+                                            <div class="block motion">右轉 <span class="arg">15</span> 度</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <strong>💡 碰撞檢測說明：</strong>
+                    <ul>
+                        <li>黑色：牆壁，碰到會反彈並播放音效</li>
+                        <li>紅色：第一關過關點，切換到迷宮-2</li>
+                        <li>藍色：第二關過關點，切換到迷宮-3</li>
+                        <li>綠色：第三關終點，開始旋轉慶祝</li>
+                    </ul>
                 </div>
             </div>
 
@@ -722,16 +919,18 @@
                     <li><strong>生命</strong>：記錄剩餘生命數</li>
                 </ul>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category variables">設定 [分數 v] 為 (0)</span>
-<span class="block-category variables">設定 [關卡 v] 為 (1)</span>
-<span class="block-category variables">設定 [時間 v] 為 (0)</span>
-<span class="block-category variables">設定 [生命 v] 為 (3)</span>
-<span class="block-category control">重複無限次</span>
-    <span class="block-category control">等待 (1) 秒</span>
-    <span class="block-category variables">時間 改變 (1)</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block variables">設定 <span class="arg">分數</span> 為 <span class="arg">0</span></div>
+                    <div class="block variables">設定 <span class="arg">關卡</span> 為 <span class="arg">1</span></div>
+                    <div class="block variables">設定 <span class="arg">時間</span> 為 <span class="arg">0</span></div>
+                    <div class="block variables">設定 <span class="arg">生命</span> 為 <span class="arg">3</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">1</span> 秒</div>
+                            <div class="block variables">時間 改變 <span class="arg">1</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -740,22 +939,61 @@
                 <h4>實作生命系統</h4>
                 <p>當玩家碰到陷阱或敵人時，減少生命值：</p>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category control">重複無限次</span>
-    <span class="block-category control">如果 < 碰到顏色 (#ff0000)？ > 那麼</span>
-        <span class="block-category sound">播放音效 [受傷 v]</span>
-        <span class="block-category variables">生命 改變 (-1)</span>
-        <span class="block-category control">如果 < (生命) > (0) > 那麼</span>
-            <span class="block-category looks">說出 [小心陷阱！] (1) 秒</span>
-            <span class="block-category motion">定位到 x: (-200) y: (150)</span>
-        <span class="block-category control">否則</span>
-            <span class="block-category looks">說出 [遊戲結束！] (2) 秒</span>
-            <span class="block-category control">停止 [全部 v]</span>
-        <span class="block-category control">結束</span>
-        <span class="block-category control">等待 (1) 秒</span>
-    <span class="block-category control">結束</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">碰到顏色 (#ff0000)？</span>
+                                <div class="substack">
+                                    <div class="block sound">播放音效 <span class="arg">受傷</span></div>
+                                    <div class="block variables">生命 改變 <span class="arg">-1</span></div>
+                                    <div class="block control">如果 <span class="arg">生命 > 0</span>
+                                        <div class="substack">
+                                            <div class="block looks">說出 <span class="arg">小心陷阱！</span> <span class="arg">1</span> 秒</div>
+                                            <div class="block motion">定位到 x: <span class="arg">-200</span> y: <span class="arg">150</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則
+                                        <div class="substack">
+                                            <div class="block looks">說出 <span class="arg">遊戲結束！</span> <span class="arg">2</span> 秒</div>
+                                            <div class="block control">停止 <span class="arg">全部</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">等待 <span class="arg">1</span> 秒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🌟 高手題（加分 15%）</h3>
+            <div class="step">
+                <h4>進階功能實作</h4>
+                <ul>
+                    <li><strong>終點旋轉：</strong>在第三關綠色終點持續快速旋轉（15 度）</li>
+                    <li><strong>音效：</strong>新增 <code>XyLo1</code> 並在遊戲中循環播放至結束</li>
+                    <li><strong>阻擋角色（箭頭示例）：</strong>
+                        <ul>
+                            <li>當綠旗被點擊 → 箭頭持續順時鐘旋轉，並依序在 <b>A → B → C → D</b> 四點之間滑行，每段 2 秒</li>
+                            <li>若球碰到箭頭 → 背景切回迷宮-1，球回到起點 (-200, -140)</li>
+                            <li>四點座標：A(-200,150)、B(200,150)、C(200,-150)、D(-200,-150)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block sound">重複播放音效 <span class="arg">XyLo1</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">右轉 <span class="arg">15</span> 度</div>
+                            <div class="block motion">滑行 <span class="arg">2</span> 秒到 x: <span class="arg">-200</span> y: <span class="arg">150</span></div>
+                            <div class="block motion">滑行 <span class="arg">2</span> 秒到 x: <span class="arg">200</span> y: <span class="arg">150</span></div>
+                            <div class="block motion">滑行 <span class="arg">2</span> 秒到 x: <span class="arg">200</span> y: <span class="arg">-150</span></div>
+                            <div class="block motion">滑行 <span class="arg">2</span> 秒到 x: <span class="arg">-200</span> y: <span class="arg">-150</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -780,9 +1018,9 @@
                     <li><strong>背景音樂：</strong>循環播放的背景音</li>
                 </ul>
 
-                <div class="code-block">
-<span class="block-category events">當 🏁 被點擊</span>
-<span class="block-category sound">重複播放音效 [背景音樂 v]</span>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block sound">重複播放音效 <span class="arg">背景音樂</span></div>
                 </div>
             </div>
 
@@ -790,12 +1028,12 @@
                 <h4>視覺特效設計</h4>
                 <p>增加遊戲的視覺吸引力：</p>
 
-                <div class="code-block">
-<span class="block-category events">當收到訊息 [過關 v]</span>
-<span class="block-category looks">特效 [彩色 v] (0.5) 秒</span>
-<span class="block-category looks">大小改變 (20)</span>
-<span class="block-category control">等待 (0.2) 秒</span>
-<span class="block-category looks">大小改變 (-20)</span>
+                <div class="blocks">
+                    <div class="block events hat">當收到訊息 <span class="arg">過關</span></div>
+                    <div class="block looks">特效 <span class="arg">彩色</span> <span class="arg">0.5</span> 秒</div>
+                    <div class="block looks">大小改變 <span class="arg">20</span></div>
+                    <div class="block control">等待 <span class="arg">0.2</span> 秒</div>
+                    <div class="block looks">大小改變 <span class="arg">-20</span></div>
                 </div>
             </div>
 
@@ -804,17 +1042,23 @@
                 <h4>實作提示功能</h4>
                 <p>當玩家卡關時，提供智能提示：</p>
 
-                <div class="code-block">
-<span class="block-category events">當按鍵 [h v] 被按下</span>
-<span class="block-category control">如果 < (關卡) = (1) > 那麼</span>
-    <span class="block-category looks">說出 [試試往右走！] (2) 秒</span>
-<span class="block-category control">結束</span>
-<span class="block-category control">如果 < (關卡) = (2) > 那麼</span>
-    <span class="block-category looks">說出 [注意分岔路！] (2) 秒</span>
-<span class="block-category control">結束</span>
-<span class="block-category control">如果 < (關卡) = (3) > 那麼</span>
-    <span class="block-category looks">說出 [仔細觀察地圖！] (2) 秒</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當按鍵 <span class="arg">h</span> 被按下</div>
+                    <div class="block control">如果 <span class="arg">關卡 = 1</span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">試試往右走！</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
+                    <div class="block control">如果 <span class="arg">關卡 = 2</span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">注意分岔路！</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
+                    <div class="block control">如果 <span class="arg">關卡 = 3</span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">仔細觀察地圖！</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -823,14 +1067,16 @@
                 <h4>建立成績記錄系統</h4>
                 <p>記錄玩家的遊戲表現：</p>
 
-                <div class="code-block">
-<span class="block-category events">當收到訊息 [遊戲結束 v]</span>
-<span class="block-category variables">設定 [最終分數 v] 為 (分數)</span>
-<span class="block-category variables">設定 [完成時間 v] 為 (時間)</span>
-<span class="block-category control">如果 < (最終分數) > (最高分數) > 那麼</span>
-    <span class="block-category variables">設定 [最高分數 v] 為 (最終分數)</span>
-    <span class="block-category looks">說出 [新紀錄！] (2) 秒</span>
-<span class="block-category control">結束</span>
+                <div class="blocks">
+                    <div class="block events hat">當收到訊息 <span class="arg">遊戲結束</span></div>
+                    <div class="block variables">設定 <span class="arg">最終分數</span> 為 <span class="arg">分數</span></div>
+                    <div class="block variables">設定 <span class="arg">完成時間</span> 為 <span class="arg">時間</span></div>
+                    <div class="block control">如果 <span class="arg">最終分數 > 最高分數</span>
+                        <div class="substack">
+                            <div class="block variables">設定 <span class="arg">最高分數</span> 為 <span class="arg">最終分數</span></div>
+                            <div class="block looks">說出 <span class="arg">新紀錄！</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -944,6 +1190,44 @@
                     <td>獨特功能、視覺設計、音效運用</td>
                 </tr>
             </table>
+        </div>
+
+        <div id="resources" class="chapter">
+            <h2>📚 相關資源與下載連結</h2>
+            
+            <div class="step">
+                <h4>Scratch 相關資源</h4>
+                <ul>
+                    <li><a href="https://scratch.mit.edu/projects/editor/?tutorial=getStarted" target="_blank" rel="noopener">Scratch 線上編輯器（入門教學）</a></li>
+                    <li><a href="https://drive.google.com/file/d/1XuiyB82yIgSzsPzRrhss9I4EO8KXPOZD/view?usp=drive_web" target="_blank" rel="noopener">遊戲完成示意圖</a></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>迷宮背景圖下載</h4>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1IpMgnwlYwkpNlH5cNE7YNmNFBsNMJJB1/view?usp=sharing" target="_blank" rel="noopener">迷宮 1 背景圖</a></li>
+                    <li><a href="https://drive.google.com/file/d/1PJ3BQg4u_nSHqMN8gD3oV7YwsEE2AYjc/view?usp=sharing" target="_blank" rel="noopener">迷宮 2 背景圖</a></li>
+                    <li><a href="https://drive.google.com/file/d/1G9JRcAFwbORjRGALnqg5xs84E-VjC5TD/view?usp=sharing" target="_blank" rel="noopener">迷宮 3 背景圖</a></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>延伸練習資源</h4>
+                <ul>
+                    <li><a href="http://www.mazegenerator.net/" target="_blank" rel="noopener">Maze Generator（線上迷宮產生器）</a></li>
+                    <li><a href="https://drive.google.com/file/d/1uiL80SC-fphkof1LzVStEvpsM680OBep/view?usp=drive_web" target="_blank" rel="noopener">示例資源包</a></li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 使用說明：</strong>
+                <ul>
+                    <li>點擊連結後，在 Google Drive 中點選「下載」按鈕</li>
+                    <li>將圖片儲存到電腦中，然後在 Scratch 中上傳使用</li>
+                    <li>建議使用 Chrome 或 Safari 瀏覽器以獲得最佳下載體驗</li>
+                </ul>
+            </div>
         </div>
 
         <div class="footer">

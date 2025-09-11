@@ -349,6 +349,91 @@
         .operators { color: #59c059; }
         .variables { color: #ff8c00; }
 
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+
         /* 動畫效果 */
         @keyframes fadeInUp {
             from {
@@ -387,6 +472,7 @@
                 <li><a href="#development">完整開發</a></li>
                 <li><a href="#advanced">進階功能</a></li>
                 <li><a href="#homework">作業設計</a></li>
+                <li><a href="#resources">相關資源</a></li>
             </ul>
         </nav>
 
@@ -403,6 +489,21 @@
                     <p>建議尺寸：800x600像素</p>
                     <p>顯示：球、擋板、磚塊、分數等遊戲元素</p>
                 </div>
+            </div>
+
+            <h3>🎯 作業目標與規格</h3>
+            <div class="step">
+                <h4>遊戲功能要求</h4>
+                <ol>
+                    <li>綠旗 → 顯示 <b>遊戲說明背景（背景1）</b>；其他角色先隱藏。</li>
+                    <li>按 <kbd>空白鍵</kbd> → 切到 <b>遊戲背景（背景2）</b>。</li>
+                    <li>使用 <b>分身</b> 生成 <b>16 顆</b> 磚塊（4×4）。</li>
+                    <li><b>球拍</b> 隨滑鼠左右移動。</li>
+                    <li>球開始下落，碰到球拍 <b>反彈</b>。</li>
+                    <li>碰到 <b>紅線</b> → 播放音效並 <b>停止全部</b>。</li>
+                    <li>球打到磚塊 → <b>分數 +1</b>，該磚塊消失。</li>
+                    <li>分數 = 16 → 顯示 <b>恭喜過關</b>。</li>
+                </ol>
             </div>
 
             <h3>🎲 遊戲規則</h3>
@@ -457,10 +558,10 @@
             <div class="step">
                 <h4>步驟一：建立新專案</h4>
                 <ol>
-                    <li>開啟 Scratch 編輯器</li>
+                    <li>登入 Scratch（建議電腦瀏覽器）</li>
+                    <li>匯入老師基本檔並立即改名：<code>8xxxx-5.sb3</code>；過程中隨時存檔</li>
                     <li>刪除預設的貓咪角色</li>
                     <li>設定舞台背景為深色（建議黑色或深藍色）</li>
-                    <li>將專案命名為「打磚塊遊戲」</li>
                 </ol>
                 
                 <div class="image-placeholder">
@@ -468,6 +569,21 @@
                     <h4>Scratch 編輯器介面</h4>
                     <p>建議尺寸：900x600像素</p>
                     <p>標注：創作按鈕、角色區、程式區、舞台區</p>
+                </div>
+            </div>
+
+            <h3>📥 教學資源下載</h3>
+            <div class="step">
+                <h4>進度二教學連結</h4>
+                <p>寫打磚塊遊戲程式（分身建立與變數得分）：</p>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1-1gO0TpNm6S9tNMimv-t_3cvRbBXzJ1m/view?usp=sharing" target="_blank" rel="noopener">教學連結 1</a></li>
+                    <li><a href="https://drive.google.com/file/d/1NGcjP2TK6KWLMURDvyPqZ18eu271IC1u/view?usp=sharing" target="_blank" rel="noopener">教學連結 2</a></li>
+                    <li><a href="https://drive.google.com/file/d/1Et5MUxKLaQ9HznuEmSa4nzlyOROHg1xI/view?usp=drive_web" target="_blank" rel="noopener">教學連結 3</a></li>
+                </ul>
+                <div class="warning">
+                    <h4>💡 使用說明</h4>
+                    <p>點擊連結後，在 Google Drive 中點選「下載」按鈕，將教學影片儲存到電腦中觀看學習。</p>
                 </div>
             </div>
 
@@ -491,43 +607,92 @@
                 </div>
             </div>
 
-            <h3>🎯 角色建立步驟</h3>
+            <h3>🎯 建立變數</h3>
             <div class="step">
-                <h4>建立球角色</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-定位到 x: 0 y: 0
-設定大小為 50%
-顯示
+                <h4>建立全域變數</h4>
+                <div class="blocks">
+                    <div class="block variables">建立變數 <span class="arg">分數（所有角色）</span></div>
+                    <div class="block variables">建立變數 <span class="arg">列X（僅適用於此角色）</span></div>
+                    <div class="block variables">建立變數 <span class="arg">列Y（僅適用於此角色）</span></div>
                 </div>
-                <p>💡 <strong>提示：</strong>使用繪圖工具畫一個白色圓形，或從角色庫選擇球類角色</p>
+                <p>💡 <strong>提示：</strong>分數變數要設定為「所有角色」，這樣所有角色都能存取</p>
+            </div>
+
+            <h3>🎮 舞台與流程控制</h3>
+            <div class="step">
+                <h4>背景與切換</h4>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block looks">切換背景到 <span class="arg">背景1（說明）</span></div>
+                    <div class="block variables">將 分數 設為 <span class="arg">0</span></div>
+                    <div class="block events">廣播 <span class="arg">init</span></div>
+                </div>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">空白鍵 被按下</span></div>
+                    <div class="block looks">切換背景到 <span class="arg">背景2（遊戲）</span></div>
+                    <div class="block events">廣播 <span class="arg">start</span></div>
+                </div>
+                <p>💡 <strong>說明：</strong>背景1是遊戲說明，背景2是正式遊戲畫面</p>
+            </div>
+
+            <h3>🧱 磚塊（使用分身生成 4×4）</h3>
+            <div class="step">
+                <h4>初始化與列起點</h4>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">init</span></div>
+                    <div class="block looks">隱藏</div>
+                    <div class="block variables">將 列X 設為 <span class="arg">-150</span></div>
+                    <div class="block variables">將 列Y 設為 <span class="arg">120</span></div>
+                </div>
             </div>
 
             <div class="step">
-                <h4>建立擋板角色</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-定位到 x: 0 y: -150
-設定大小為 100%
-顯示
+                <h4>生成 4×4 分身</h4>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">start</span></div>
+                    <div class="block variables">將 分數 設為 <span class="arg">0</span></div>
+                    <div class="block control c-block">重複 <span class="arg">4</span> 次
+                        <div class="substack">
+                            <div class="block control c-block">重複 <span class="arg">4</span> 次
+                                <div class="substack">
+                                    <div class="block looks">建立分身</div>
+                                    <div class="block variables">將 列X 改變 <span class="arg">100</span></div>
+                                </div>
+                            </div>
+                            <div class="block variables">將 列X 設為 <span class="arg">-150</span></div>
+                            <div class="block variables">將 列Y 改變 <span class="arg">-30</span></div>
+                        </div>
+                    </div>
                 </div>
-                <p>💡 <strong>提示：</strong>畫一個長方形，寬度約為舞台的1/6</p>
             </div>
 
             <div class="step">
-                <h4>建立磚塊角色</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-重複 5 次
-    重複 8 次
-        複製自己
-        改變 x 座標 60
-    結束
-    改變 y 座標 -25
-    設定 x 座標為 -210
-結束
+                <h4>分身誕生：放置與碰撞</h4>
+                <div class="blocks">
+                    <div class="block control hat">當 <span class="arg">分身產生</span></div>
+                    <div class="block looks">顯示</div>
+                    <div class="block motion">定位到 x:<span class="arg">列X</span> y:<span class="arg">列Y</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">碰到 球</span>
+                                <div class="substack">
+                                    <div class="block variables">將 分數 改變 <span class="arg">1</span></div>
+                                    <div class="block control">刪除此分身</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p>💡 <strong>提示：</strong>建立一個磚塊後，用程式自動複製成網格狀</p>
+            </div>
+
+            <h3>📤 繳交規範</h3>
+            <div class="step">
+                <h4>檔案要求</h4>
+                <ol>
+                    <li>檔名：<code>8xxxx-5.sb3</code>（正確命名後立即儲存）</li>
+                    <li>錯誤檔名如 <code>81760-X(1).sb3</code> 可能酌扣分</li>
+                    <li>上傳至 Classroom 作業處並完成繳交</li>
+                </ol>
             </div>
 
             <div class="warning">
@@ -536,6 +701,7 @@
                     <li>確保所有角色的中心點都設定正確</li>
                     <li>磚塊的顏色可以用變數控制，增加視覺豐富度</li>
                     <li>角色大小要適合舞台比例</li>
+                    <li>記得在背景1中加入班級、座號、姓名</li>
                 </ul>
             </div>
         </section>
@@ -543,110 +709,85 @@
         <section id="game-elements" class="chapter">
             <h2>🎮 第三章：遊戲元素與基本控制</h2>
 
-            <h3>🕹️ 擋板控制系統</h3>
+            <h3>🏒 球拍（滑鼠左右跟隨）</h3>
             <div class="step">
-                <h4>鍵盤控制</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-重複無限次
-    <span class="control">如果</span> <按下 左箭頭 鍵？> <span class="control">那麼</span>
-        <span class="control">如果</span> <x座標 > -200> <span class="control">那麼</span>
-            改變 x 座標 -8
-        結束
-    結束
-    <span class="control">如果</span> <按下 右箭頭 鍵？> <span class="control">那麼</span>
-        <span class="control">如果</span> <x座標 < 200> <span class="control">那麼</span>
-            改變 x 座標 8
-        結束
-    結束
-結束
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>滑鼠控制（進階版）</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-重複無限次
-    設定 x 座標為 <滑鼠的 x 座標>
-    <span class="control">如果</span> <x座標 > 200> <span class="control">那麼</span>
-        設定 x 座標為 200
-    結束
-    <span class="control">如果</span> <x座標 < -200> <span class="control">那麼</span>
-        設定 x 座標為 -200
-    結束
-結束
-                </div>
-            </div>
-
-            <h3>⚽ 球的運動系統</h3>
-            <div class="physics-demo">
-                <h4>🔬 物理運動原理</h4>
-                <p>球的運動由速度向量控制，包含X方向和Y方向的分量</p>
-                
-                <div class="collision-types">
-                    <div class="collision-type">
-                        <h5>X方向速度</h5>
-                        <p>控制球的左右移動<br>正值向右，負值向左</p>
-                    </div>
-                    <div class="collision-type">
-                        <h5>Y方向速度</h5>
-                        <p>控制球的上下移動<br>正值向上，負值向下</p>
+                <h4>球拍控制程式</h4>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">start</span></div>
+                    <div class="block looks">顯示</div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">將 x 設為 <span class="arg">滑鼠 x</span></div>
+                            <div class="block motion">將 y 設為 <span class="arg">-150</span></div>
+                        </div>
                     </div>
                 </div>
+                <p>💡 <strong>說明：</strong>球拍會跟隨滑鼠左右移動，Y座標固定在-150</p>
             </div>
 
+            <h3>⚽ 球（落下、反彈、紅線終止）</h3>
             <div class="step">
-                <h4>建立速度變數</h4>
-                <div class="code-block">
-<span class="variables">建立變數</span> 球速度X
-<span class="variables">建立變數</span> 球速度Y
-<span class="variables">建立變數</span> 遊戲狀態
-<span class="variables">建立變數</span> 分數
-<span class="variables">建立變數</span> 生命
+                <h4>開始與下落</h4>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">start</span></div>
+                    <div class="block looks">顯示</div>
+                    <div class="block motion">將 x 設為 <span class="arg">0</span></div>
+                    <div class="block motion">將 y 設為 <span class="arg">0</span></div>
+                    <div class="block motion">面向 <span class="arg">向下</span></div>
                 </div>
             </div>
 
             <div class="step">
-                <h4>球的基本運動</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-<span class="variables">設定 球速度X 為</span> 5
-<span class="variables">設定 球速度Y 為</span> 5
-<span class="variables">設定 分數 為</span> 0
-<span class="variables">設定 生命 為</span> 3
-定位到 x: 0 y: 0
-
-重複無限次
-    改變 x 座標 <球速度X>
-    改變 y 座標 <球速度Y>
-    
-    <span class="comment">// 邊界碰撞檢測</span>
-    <span class="control">如果</span> <x座標 > 220 或 x座標 < -220> <span class="control">那麼</span>
-        <span class="variables">設定 球速度X 為</span> <球速度X * -1>
-    結束
-    
-    <span class="control">如果</span> <y座標 > 160> <span class="control">那麼</span>
-        <span class="variables">設定 球速度Y 為</span> <球速度Y * -1>
-    結束
-結束
+                <h4>球的運動與碰撞</h4>
+                <div class="blocks">
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">移動 <span class="arg">8</span> 點</div>
+                            <div class="block control">如果 <span class="arg">碰到 邊緣</span> 就反彈</div>
+                            <div class="block control">如果 <span class="arg">碰到 球拍</span> 就反彈</div>
+                            <div class="block control">如果 <span class="arg">碰到 紅線</span>
+                                <div class="substack">
+                                    <div class="block sound">播放 <span class="arg">音效</span></div>
+                                    <div class="block control">停止 <span class="arg">全部</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <p>💡 <strong>說明：</strong>球會持續移動，碰到邊緣和球拍會反彈，碰到紅線會停止遊戲</p>
             </div>
 
-            <h3>🎯 基本碰撞系統</h3>
+            <h3>🏆 過關判斷</h3>
             <div class="step">
-                <h4>擋板碰撞</h4>
-                <div class="code-block">
-<span class="comment">// 在球的運動迴圈中加入</span>
-<span class="control">如果</span> <碰到 擋板？> <span class="control">那麼</span>
-    <span class="variables">設定 球速度Y 為</span> <球速度Y * -1>
-    
-    <span class="comment">// 根據碰撞位置調整角度</span>
-    <span class="variables">設定 球速度X 為</span> <(x座標 - 擋板的x座標) / 10>
-    
-    <span class="sound">播放音效</span> pop
-結束
+                <h4>勝利條件檢測</h4>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">分數 = 16</span>
+                                <div class="substack">
+                                    <div class="block looks">顯示 <span class="arg">恭喜過關！</span></div>
+                                    <div class="block control">停止 <span class="arg">全部</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <p>💡 <strong>說明：</strong>當分數達到16分（所有磚塊都被擊破）時，顯示過關訊息並停止遊戲</p>
+            </div>
+
+            <h3>📝 遊戲說明背景（背景1）</h3>
+            <div class="step">
+                <h4>背景內容設計</h4>
+                <div class="code-block">
+～打磚塊遊戲說明～
+1.以滑鼠移動球拍
+2.打到磚塊可得一分
+3.球碰到紅線球停止
+4.得 16 分過關！
+～請按空白鍵開始～
+                </div>
+                <p>💡 <strong>說明：</strong>在背景1中顯示遊戲規則和操作說明，讓玩家了解如何遊戲</p>
             </div>
 
             <div class="warning">
@@ -695,63 +836,76 @@
             <h3>🎯 進階碰撞系統</h3>
             <div class="step">
                 <h4>磚塊碰撞處理</h4>
-                <div class="code-block">
-<span class="comment">// 在磚塊角色中</span>
-<span class="event">當 🏁 被點擊</span>
-重複無限次
-    <span class="control">如果</span> <碰到 球？> <span class="control">那麼</span>
-        <span class="comment">// 判斷碰撞方向</span>
-        <span class="control">如果</span> <球的y座標 > y座標 + 10 或 球的y座標 < y座標 - 10> <span class="control">那麼</span>
-            <span class="comment">// 上下碰撞，改變Y速度</span>
-            廣播 改變球Y速度
-        <span class="control">否則</span>
-            <span class="comment">// 左右碰撞，改變X速度</span>
-            廣播 改變球X速度
-        結束
-        
-        <span class="variables">改變 分數 10</span>
-        <span class="sound">播放音效</span> 爆裂聲
-        隱藏
-        停止 這個角色的程式
-    結束
-結束
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">碰到 球？</span>
+                                <div class="substack">
+                                    <div class="comment">// 判斷碰撞方向</div>
+                                    <div class="block control">如果 <span class="arg">球的y座標 > y座標 + 10 或 球的y座標 < y座標 - 10</span>
+                                        <div class="substack">
+                                            <div class="comment">// 上下碰撞，改變Y速度</div>
+                                            <div class="block events">廣播 <span class="arg">改變球Y速度</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則
+                                        <div class="substack">
+                                            <div class="comment">// 左右碰撞，改變X速度</div>
+                                            <div class="block events">廣播 <span class="arg">改變球X速度</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block variables">改變 分數 <span class="arg">10</span></div>
+                                    <div class="block sound">播放音效 <span class="arg">爆裂聲</span></div>
+                                    <div class="block looks">隱藏</div>
+                                    <div class="block control">停止 <span class="arg">這個角色的程式</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="step">
                 <h4>球的碰撞回應</h4>
-                <div class="code-block">
-<span class="comment">// 在球角色中</span>
-<span class="event">當收到 改變球Y速度</span>
-<span class="variables">設定 球速度Y 為</span> <球速度Y * -1>
-
-<span class="event">當收到 改變球X速度</span>
-<span class="variables">設定 球速度X 為</span> <球速度X * -1>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">改變球Y速度</span></div>
+                    <div class="block variables">設定 球速度Y 為 <span class="arg">球速度Y * -1</span></div>
+                </div>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">改變球X速度</span></div>
+                    <div class="block variables">設定 球速度X 為 <span class="arg">球速度X * -1</span></div>
                 </div>
             </div>
 
             <h3>📐 角度與速度計算</h3>
             <div class="step">
                 <h4>擋板反彈角度計算</h4>
-                <div class="code-block">
-<span class="comment">// 更精確的擋板碰撞</span>
-<span class="control">如果</span> <碰到 擋板？> <span class="control">那麼</span>
-    <span class="comment">// 計算碰撞位置比例 (-1 到 1)</span>
-    <span class="variables">設定 碰撞位置 為</span> <(x座標 - 擋板的x座標) / 40>
-    
-    <span class="comment">// 根據位置調整反彈角度</span>
-    <span class="variables">設定 球速度X 為</span> <碰撞位置 * 6>
-    <span class="variables">設定 球速度Y 為</span> <abs(球速度Y)>
-    
-    <span class="comment">// 限制最大速度</span>
-    <span class="control">如果</span> <abs(球速度X) > 8> <span class="control">那麼</span>
-        <span class="control">如果</span> <球速度X > 0> <span class="control">那麼</span>
-            <span class="variables">設定 球速度X 為</span> 8
-        <span class="control">否則</span>
-            <span class="variables">設定 球速度X 為</span> -8
-        結束
-    結束
-結束
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">碰到 擋板？</span>
+                        <div class="substack">
+                            <div class="comment">// 計算碰撞位置比例 (-1 到 1)</div>
+                            <div class="block variables">設定 碰撞位置 為 <span class="arg">(x座標 - 擋板的x座標) / 40</span></div>
+                            <div class="comment">// 根據位置調整反彈角度</div>
+                            <div class="block variables">設定 球速度X 為 <span class="arg">碰撞位置 * 6</span></div>
+                            <div class="block variables">設定 球速度Y 為 <span class="arg">abs(球速度Y)</span></div>
+                            <div class="comment">// 限制最大速度</div>
+                            <div class="block control">如果 <span class="arg">abs(球速度X) > 8</span>
+                                <div class="substack">
+                                    <div class="block control">如果 <span class="arg">球速度X > 0</span>
+                                        <div class="substack">
+                                            <div class="block variables">設定 球速度X 為 <span class="arg">8</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則
+                                        <div class="substack">
+                                            <div class="block variables">設定 球速度X 為 <span class="arg">-8</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -779,121 +933,147 @@
             <h3>🎮 遊戲狀態管理</h3>
             <div class="step">
                 <h4>遊戲狀態變數</h4>
-                <div class="code-block">
-<span class="variables">建立變數</span> 遊戲狀態  <span class="comment">// 0:開始畫面, 1:遊戲中, 2:遊戲結束, 3:過關</span>
-<span class="variables">建立變數</span> 關卡
-<span class="variables">建立變數</span> 磚塊數量
-<span class="variables">建立變數</span> 最高分數
+                <div class="blocks">
+                    <div class="block variables">建立變數 <span class="arg">遊戲狀態</span></div>
+                    <div class="block variables">建立變數 <span class="arg">關卡</span></div>
+                    <div class="block variables">建立變數 <span class="arg">磚塊數量</span></div>
+                    <div class="block variables">建立變數 <span class="arg">最高分數</span></div>
                 </div>
+                <p class="comment">// 遊戲狀態：0:開始畫面, 1:遊戲中, 2:遊戲結束, 3:過關</p>
             </div>
 
             <div class="step">
                 <h4>遊戲初始化</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-<span class="variables">設定 遊戲狀態 為</span> 0
-<span class="variables">設定 關卡 為</span> 1
-<span class="variables">設定 分數 為</span> 0
-<span class="variables">設定 生命 為</span> 3
-<span class="variables">設定 磚塊數量 為</span> 40
-
-廣播 顯示開始畫面
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block variables">設定 遊戲狀態 為 <span class="arg">0</span></div>
+                    <div class="block variables">設定 關卡 為 <span class="arg">1</span></div>
+                    <div class="block variables">設定 分數 為 <span class="arg">0</span></div>
+                    <div class="block variables">設定 生命 為 <span class="arg">3</span></div>
+                    <div class="block variables">設定 磚塊數量 為 <span class="arg">40</span></div>
+                    <div class="block events">廣播 <span class="arg">顯示開始畫面</span></div>
                 </div>
             </div>
 
             <h3>🎯 完整球的控制邏輯</h3>
             <div class="step">
                 <h4>球的完整程式</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-重複無限次
-    <span class="control">如果</span> <遊戲狀態 = 1> <span class="control">那麼</span>
-        <span class="comment">// 移動球</span>
-        改變 x 座標 <球速度X>
-        改變 y 座標 <球速度Y>
-        
-        <span class="comment">// 左右邊界碰撞</span>
-        <span class="control">如果</span> <x座標 > 220 或 x座標 < -220> <span class="control">那麼</span>
-            <span class="variables">設定 球速度X 為</span> <球速度X * -1>
-        結束
-        
-        <span class="comment">// 上邊界碰撞</span>
-        <span class="control">如果</span> <y座標 > 160> <span class="control">那麼</span>
-            <span class="variables">設定 球速度Y 為</span> <球速度Y * -1>
-        結束
-        
-        <span class="comment">// 底部碰撞（失去生命）</span>
-        <span class="control">如果</span> <y座標 < -170> <span class="control">那麼</span>
-            <span class="variables">改變 生命 -1</span>
-            <span class="control">如果</span> <生命 > 0> <span class="control">那麼</span>
-                廣播 重新開始球
-            <span class="control">否則</span>
-                廣播 遊戲結束
-            結束
-        結束
-        
-        <span class="comment">// 擋板碰撞</span>
-        <span class="control">如果</span> <碰到 擋板？> <span class="control">那麼</span>
-            <span class="variables">設定 碰撞位置 為</span> <(x座標 - 擋板的x座標) / 40>
-            <span class="variables">設定 球速度X 為</span> <碰撞位置 * 6>
-            <span class="variables">設定 球速度Y 為</span> <abs(球速度Y)>
-            <span class="sound">播放音效</span> 彈跳
-        結束
-    結束
-結束
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">遊戲狀態 = 1</span>
+                                <div class="substack">
+                                    <div class="comment">// 移動球</div>
+                                    <div class="block motion">改變 x 座標 <span class="arg">球速度X</span></div>
+                                    <div class="block motion">改變 y 座標 <span class="arg">球速度Y</span></div>
+                                    <div class="comment">// 左右邊界碰撞</div>
+                                    <div class="block control">如果 <span class="arg">x座標 > 220 或 x座標 < -220</span>
+                                        <div class="substack">
+                                            <div class="block variables">設定 球速度X 為 <span class="arg">球速度X * -1</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">// 上邊界碰撞</div>
+                                    <div class="block control">如果 <span class="arg">y座標 > 160</span>
+                                        <div class="substack">
+                                            <div class="block variables">設定 球速度Y 為 <span class="arg">球速度Y * -1</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">// 底部碰撞（失去生命）</div>
+                                    <div class="block control">如果 <span class="arg">y座標 < -170</span>
+                                        <div class="substack">
+                                            <div class="block variables">改變 生命 <span class="arg">-1</span></div>
+                                            <div class="block control">如果 <span class="arg">生命 > 0</span>
+                                                <div class="substack">
+                                                    <div class="block events">廣播 <span class="arg">重新開始球</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="block control">否則
+                                                <div class="substack">
+                                                    <div class="block events">廣播 <span class="arg">遊戲結束</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">// 擋板碰撞</div>
+                                    <div class="block control">如果 <span class="arg">碰到 擋板？</span>
+                                        <div class="substack">
+                                            <div class="block variables">設定 碰撞位置 為 <span class="arg">(x座標 - 擋板的x座標) / 40</span></div>
+                                            <div class="block variables">設定 球速度X 為 <span class="arg">碰撞位置 * 6</span></div>
+                                            <div class="block variables">設定 球速度Y 為 <span class="arg">abs(球速度Y)</span></div>
+                                            <div class="block sound">播放音效 <span class="arg">彈跳</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h3>🏆 分數與生命系統</h3>
             <div class="step">
                 <h4>分數顯示角色</h4>
-                <div class="code-block">
-<span class="event">當 🏁 被點擊</span>
-定位到 x: -180 y: 150
-重複無限次
-    <span class="looks">說出</span> <結合 "分數: " 和 分數> 持續 0.1 秒
-結束
-
-<span class="event">當 🏁 被點擊</span>
-定位到 x: 180 y: 150
-重複無限次
-    <span class="looks">說出</span> <結合 "生命: " 和 生命> 持續 0.1 秒
-結束
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block motion">定位到 x: <span class="arg">-180</span> y: <span class="arg">150</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">結合 "分數: " 和 分數</span> 持續 <span class="arg">0.1</span> 秒</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block motion">定位到 x: <span class="arg">180</span> y: <span class="arg">150</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">結合 "生命: " 和 生命</span> 持續 <span class="arg">0.1</span> 秒</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h3>🎊 勝利與失敗條件</h3>
             <div class="step">
                 <h4>遊戲結束檢查</h4>
-                <div class="code-block">
-<span class="comment">// 在舞台程式中</span>
-<span class="event">當 🏁 被點擊</span>
-重複無限次
-    <span class="control">如果</span> <磚塊數量 = 0> <span class="control">那麼</span>
-        <span class="variables">設定 遊戲狀態 為</span> 3
-        廣播 過關
-        停止 所有程式
-    結束
-    
-    <span class="control">如果</span> <生命 ≤ 0> <span class="control">那麼</span>
-        <span class="variables">設定 遊戲狀態 為</span> 2
-        廣播 遊戲結束
-        停止 所有程式
-    結束
-結束
-
-<span class="event">當收到 遊戲結束</span>
-<span class="looks">切換造型為</span> 遊戲結束
-<span class="control">如果</span> <分數 > 最高分數> <span class="control">那麼</span>
-    <span class="variables">設定 最高分數 為</span> <分數>
-    <span class="looks">說出</span> "新紀錄！" 持續 3 秒
-結束
-
-<span class="event">當收到 過關</span>
-<span class="looks">切換造型為</span> 過關畫面
-<span class="variables">改變 關卡 1</span>
-等待 3 秒
-廣播 下一關
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="arg">磚塊數量 = 0</span>
+                                <div class="substack">
+                                    <div class="block variables">設定 遊戲狀態 為 <span class="arg">3</span></div>
+                                    <div class="block events">廣播 <span class="arg">過關</span></div>
+                                    <div class="block control">停止 <span class="arg">所有程式</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">如果 <span class="arg">生命 ≤ 0</span>
+                                <div class="substack">
+                                    <div class="block variables">設定 遊戲狀態 為 <span class="arg">2</span></div>
+                                    <div class="block events">廣播 <span class="arg">遊戲結束</span></div>
+                                    <div class="block control">停止 <span class="arg">所有程式</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">遊戲結束</span></div>
+                    <div class="block looks">切換造型為 <span class="arg">遊戲結束</span></div>
+                    <div class="block control">如果 <span class="arg">分數 > 最高分數</span>
+                        <div class="substack">
+                            <div class="block variables">設定 最高分數 為 <span class="arg">分數</span></div>
+                            <div class="block looks">說出 <span class="arg">"新紀錄！"</span> 持續 <span class="arg">3</span> 秒</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">過關</span></div>
+                    <div class="block looks">切換造型為 <span class="arg">過關畫面</span></div>
+                    <div class="block variables">改變 關卡 <span class="arg">1</span></div>
+                    <div class="block control">等待 <span class="arg">3</span> 秒</div>
+                    <div class="block events">廣播 <span class="arg">下一關</span></div>
                 </div>
             </div>
 
@@ -914,51 +1094,64 @@
             <h3>🎨 視覺效果增強</h3>
             <div class="step">
                 <h4>磚塊消失動畫</h4>
-                <div class="code-block">
-<span class="comment">// 在磚塊角色中</span>
-<span class="control">如果</span> <碰到 球？> <span class="control">那麼</span>
-    <span class="comment">// 爆炸效果</span>
-    重複 10 次
-        <span class="looks">改變 大小</span> -10
-        <span class="looks">改變 顏色效果</span> 25
-        等待 0.02 秒
-    結束
-    
-    <span class="comment">// 粒子效果（選擇性）</span>
-    重複 5 次
-        複製自己
-        <span class="looks">設定大小為</span> 20%
-        面朝 <隨機取數 0 到 360>
-        移動 <隨機取數 20 到 50> 步
-        <span class="looks">改變 透明效果</span> 20
-        等待 0.1 秒
-    結束
-    
-    隱藏
-結束
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">碰到 球？</span>
+                        <div class="substack">
+                            <div class="comment">// 爆炸效果</div>
+                            <div class="block control c-block">重複 <span class="arg">10</span> 次
+                                <div class="substack">
+                                    <div class="block looks">改變 大小 <span class="arg">-10</span></div>
+                                    <div class="block looks">改變 顏色效果 <span class="arg">25</span></div>
+                                    <div class="block control">等待 <span class="arg">0.02</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="comment">// 粒子效果（選擇性）</div>
+                            <div class="block control c-block">重複 <span class="arg">5</span> 次
+                                <div class="substack">
+                                    <div class="block looks">複製自己</div>
+                                    <div class="block looks">設定大小為 <span class="arg">20%</span></div>
+                                    <div class="block motion">面朝 <span class="arg">隨機取數 0 到 360</span></div>
+                                    <div class="block motion">移動 <span class="arg">隨機取數 20 到 50</span> 步</div>
+                                    <div class="block looks">改變 透明效果 <span class="arg">20</span></div>
+                                    <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block looks">隱藏</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h3>🔊 音效系統</h3>
             <div class="step">
                 <h4>遊戲音效配置</h4>
-                <div class="code-block">
-<span class="comment">// 不同情況的音效</span>
-<span class="control">如果</span> <碰到 擋板？> <span class="control">那麼</span>
-    <span class="sound">播放音效</span> 彈跳 音量 0.5
-結束
-
-<span class="control">如果</span> <碰到 磚塊？> <span class="control">那麼</span>
-    <span class="sound">播放音效</span> 爆裂聲 音量 0.7
-結束
-
-<span class="control">如果</span> <生命 = 0> <span class="control">那麼</span>
-    <span class="sound">播放音效</span> 失敗音效 音量 0.8
-結束
-
-<span class="control">如果</span> <磚塊數量 = 0> <span class="control">那麼</span>
-    <span class="sound">播放音效</span> 勝利音效 音量 1.0
-結束
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">碰到 擋板？</span>
+                        <div class="substack">
+                            <div class="block sound">播放音效 <span class="arg">彈跳</span> 音量 <span class="arg">0.5</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">碰到 磚塊？</span>
+                        <div class="substack">
+                            <div class="block sound">播放音效 <span class="arg">爆裂聲</span> 音量 <span class="arg">0.7</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">生命 = 0</span>
+                        <div class="substack">
+                            <div class="block sound">播放音效 <span class="arg">失敗音效</span> 音量 <span class="arg">0.8</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">磚塊數量 = 0</span>
+                        <div class="substack">
+                            <div class="block sound">播放音效 <span class="arg">勝利音效</span> 音量 <span class="arg">1.0</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -984,44 +1177,56 @@
 
             <div class="step">
                 <h4>道具掉落系統</h4>
-                <div class="code-block">
-<span class="comment">// 在磚塊碰撞時</span>
-<span class="control">如果</span> <隨機取數 1 到 10 = 1> <span class="control">那麼</span>
-    <span class="comment">// 10% 機率掉落道具</span>
-    <span class="variables">設定 道具類型 為</span> <隨機取數 1 到 4>
-    複製 道具角色
-    定位到 x: <x座標> y: <y座標>
-    面朝 270 度
-    重複直到 <y座標 < -180>
-        移動 3 步
-        <span class="control">如果</span> <碰到 擋板？> <span class="control">那麼</span>
-            廣播 <結合 "道具" 和 道具類型>
-            隱藏
-            停止 這個角色的程式
-        結束
-    結束
-    隱藏
-結束
+                <div class="blocks">
+                    <div class="block control">如果 <span class="arg">隨機取數 1 到 10 = 1</span>
+                        <div class="substack">
+                            <div class="comment">// 10% 機率掉落道具</div>
+                            <div class="block variables">設定 道具類型 為 <span class="arg">隨機取數 1 到 4</span></div>
+                            <div class="block looks">複製 <span class="arg">道具角色</span></div>
+                            <div class="block motion">定位到 x: <span class="arg">x座標</span> y: <span class="arg">y座標</span></div>
+                            <div class="block motion">面朝 <span class="arg">270</span> 度</div>
+                            <div class="block control c-block">重複直到 <span class="arg">y座標 < -180</span>
+                                <div class="substack">
+                                    <div class="block motion">移動 <span class="arg">3</span> 步</div>
+                                    <div class="block control">如果 <span class="arg">碰到 擋板？</span>
+                                        <div class="substack">
+                                            <div class="block events">廣播 <span class="arg">結合 "道具" 和 道具類型</span></div>
+                                            <div class="block looks">隱藏</div>
+                                            <div class="block control">停止 <span class="arg">這個角色的程式</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block looks">隱藏</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h3>🏆 關卡設計系統</h3>
             <div class="step">
                 <h4>多關卡配置</h4>
-                <div class="code-block">
-<span class="event">當收到 下一關</span>
-<span class="control">如果</span> <關卡 = 1> <span class="control">那麼</span>
-    廣播 建立關卡1
-<span class="control">否則 如果</span> <關卡 = 2> <span class="control">那麼</span>
-    廣播 建立關卡2
-<span class="control">否則 如果</span> <關卡 = 3> <span class="control">那麼</span>
-    廣播 建立關卡3
-結束
-
-<span class="comment">// 增加難度</span>
-<span class="variables">設定 球速度X 為</span> <球速度X * 1.1>
-<span class="variables">設定 球速度Y 為</span> <球速度Y * 1.1>
-<span class="variables">設定 遊戲狀態 為</span> 1
+                <div class="blocks">
+                    <div class="block events hat">當收到 <span class="arg">下一關</span></div>
+                    <div class="block control">如果 <span class="arg">關卡 = 1</span>
+                        <div class="substack">
+                            <div class="block events">廣播 <span class="arg">建立關卡1</span></div>
+                        </div>
+                    </div>
+                    <div class="block control">否則 如果 <span class="arg">關卡 = 2</span>
+                        <div class="substack">
+                            <div class="block events">廣播 <span class="arg">建立關卡2</span></div>
+                        </div>
+                    </div>
+                    <div class="block control">否則 如果 <span class="arg">關卡 = 3</span>
+                        <div class="substack">
+                            <div class="block events">廣播 <span class="arg">建立關卡3</span></div>
+                        </div>
+                    </div>
+                    <div class="comment">// 增加難度</div>
+                    <div class="block variables">設定 球速度X 為 <span class="arg">球速度X * 1.1</span></div>
+                    <div class="block variables">設定 球速度Y 為 <span class="arg">球速度Y * 1.1</span></div>
+                    <div class="block variables">設定 遊戲狀態 為 <span class="arg">1</span></div>
                 </div>
             </div>
 
@@ -1140,6 +1345,45 @@
         </section>
 
         <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+        <section id="resources" class="chapter">
+            <h2>📚 相關資源與下載連結</h2>
+            
+            <div class="step">
+                <h4>進度二教學資源</h4>
+                <p>分身建立與變數得分（PDF 列出的 3 則連結）：</p>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1-1gO0TpNm6S9tNMimv-t_3cvRbBXzJ1m/view?usp=sharing" target="_blank" rel="noopener">教學連結 1</a></li>
+                    <li><a href="https://drive.google.com/file/d/1NGcjP2TK6KWLMURDvyPqZ18eu271IC1u/view?usp=sharing" target="_blank" rel="noopener">教學連結 2</a></li>
+                    <li><a href="https://drive.google.com/file/d/1Et5MUxKLaQ9HznuEmSa4nzlyOROHg1xI/view?usp=drive_web" target="_blank" rel="noopener">教學連結 3</a></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>Scratch 相關資源</h4>
+                <ul>
+                    <li><a href="https://scratch.mit.edu/projects/editor/?tutorial=getStarted" target="_blank" rel="noopener">Scratch 線上編輯器（入門教學）</a></li>
+                    <li><a href="https://scratch.mit.edu/explore/projects/all" target="_blank" rel="noopener">Scratch 專案探索</a></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>延伸學習資源</h4>
+                <ul>
+                    <li><a href="https://scratch.mit.edu/ideas" target="_blank" rel="noopener">Scratch 創意想法</a></li>
+                    <li><a href="https://scratch.mit.edu/educators" target="_blank" rel="noopener">Scratch 教育資源</a></li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h4>💡 使用說明</h4>
+                <ul>
+                    <li>點擊連結後，在 Google Drive 中點選「下載」按鈕</li>
+                    <li>將教學影片儲存到電腦中觀看學習</li>
+                    <li>建議使用 Chrome 或 Safari 瀏覽器以獲得最佳下載體驗</li>
+                </ul>
+            </div>
+        </section>
 
         <footer class="footer">
             <h3>🎓 學習資源與延伸閱讀</h3>
