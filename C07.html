@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C07 闖關與速度控制-廣播訊息與變數應用 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            margin: -20px -20px 30px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .nav-menu h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .chapter h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .chapter h3 {
+            color: #34495e;
+            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .chapter h4 {
+            color: #7f8c8d;
+            margin: 15px 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .objectives h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .objectives ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .objectives li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: #27ae60;
+        }
+
+        .copy-button.copied::after {
+            content: ' ✓';
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .info {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .success {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .level-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            text-align: center;
+        }
+
+        .level-item h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .brick-pattern {
+            font-family: monospace;
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .variable-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .variable-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff8c1a;
+        }
+
+        .variable-item h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .download-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: white;
+            color: #0984e3;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-link:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+
+            .level-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .variable-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 C07 闖關與速度控制</h1>
+            <p>學習廣播訊息、變數控制與闖關系統的完整教學</p>
+        </div>
+
+        <div class="nav-menu">
+            <h3>📚 課程導航</h3>
+            <a href="#objectives">教學目標</a>
+            <a href="#preparation">前置準備</a>
+            <a href="#initialization">遊戲初始</a>
+            <a href="#broadcast">廣播控制</a>
+            <a href="#levels">關卡設計</a>
+            <a href="#ball-control">球速控制</a>
+            <a href="#extension">延伸任務</a>
+            <a href="#homework">作業要求</a>
+            <a href="https://drive.google.com/file/d/1i6Ewqo14Ai4Azss0idVcuDfYKTspuhZS/view?usp=sharing" target="_blank">📥 下載基本檔</a>
+        </div>
+
+        <div id="objectives" class="chapter">
+            <h2>🎯 第一章：教學目標</h2>
+            
+            <div class="objectives">
+                <h3>📚 學習目標</h3>
+                <ul>
+                    <li><strong>廣播訊息控制</strong>：學會利用廣播訊息控制遊戲關卡進入</li>
+                    <li><strong>變數控制應用</strong>：理解變數控制在遊戲設計中的應用（分數、關卡、速度、基準點）</li>
+                    <li><strong>迴圈與判斷式</strong>：熟悉迴圈與判斷式的組合，讓遊戲能依序進入下一關</li>
+                    <li><strong>隨機數與反彈</strong>：學會用隨機數與反彈控制球的起始方向與得分機制</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 課程重點：</strong>
+                <ul>
+                    <li>掌握廣播訊息在遊戲流程控制中的應用</li>
+                    <li>理解變數如何影響遊戲行為和關卡進度</li>
+                    <li>學會設計漸進式難度的闖關系統</li>
+                    <li>掌握球的物理運動和碰撞檢測</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="preparation" class="chapter">
+            <h2>🛠️ 第二章：前置準備</h2>
+
+            <div class="download-section">
+                <h3>📥 基本檔案下載</h3>
+                <p>下載 C07 闖關與速度控制的基本檔案，包含所有必要的角色和初始設定</p>
+                <a href="https://drive.google.com/file/d/1i6Ewqo14Ai4Azss0idVcuDfYKTspuhZS/view?usp=sharing" 
+                   class="download-link" target="_blank">
+                    📁 下載 C07 基本檔.sb3
+                </a>
+            </div>
+
+            <div class="info">
+                <strong>💡 使用說明：</strong>
+                <ol>
+                    <li>點擊上方連結下載 .sb3 檔案</li>
+                    <li>開啟 Scratch 網站 (scratch.mit.edu)</li>
+                    <li>點選「上傳」按鈕選擇下載的檔案</li>
+                    <li>開始實作闖關與速度控制功能</li>
+                </ol>
+            </div>
+
+            <h3>📁 檔案準備</h3>
+            <div class="step">
+                <h4>基本檔案操作</h4>
+                <ol>
+                    <li><strong>下載基本檔</strong>：下載提供的基本檔，不要直接覆蓋舊作業</li>
+                    <li><strong>修改檔名</strong>：修改檔名為「班級座號-7.sb3」</li>
+                    <li><strong>隱藏停止線</strong>：隱藏紅色停止線，方便測試過關</li>
+                    <li><strong>檢查角色</strong>：確認所有必要角色都已建立</li>
+                </ol>
+            </div>
+
+            <h3>🎮 遊戲角色清單</h3>
+            <div class="step">
+                <h4>必要角色</h4>
+                <ul>
+                    <li><strong>球</strong>：主要的遊戲物件，會反彈移動</li>
+                    <li><strong>磚塊</strong>：會被球擊破的目標物件</li>
+                    <li><strong>選磚塊角色</strong>：控制磚塊生成和關卡進度</li>
+                    <li><strong>背景</strong>：遊戲場景背景</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 注意事項：</strong>
+                <ul>
+                    <li>不要覆蓋之前的作業檔案</li>
+                    <li>確保檔名格式正確</li>
+                    <li>隱藏測試用的停止線</li>
+                    <li>檢查所有角色的初始狀態</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="initialization" class="chapter">
+            <h2>⚙️ 第三章：遊戲初始設定</h2>
+
+            <h3>🎮 遊戲啟動程式</h3>
+            <div class="step">
+                <h4>綠旗啟動程式</h4>
+                <p>當遊戲開始時，設定初始狀態：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block variables">隱藏變數 <span class="arg">分數</span></div>
+                        <div class="block variables">隱藏變數 <span class="arg">關卡</span></div>
+                        <div class="block variables">隱藏變數 <span class="arg">速度</span></div>
+                        <div class="block variables">隱藏變數 <span class="arg">x軸基準點</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>📊 變數顯示與初始化</h3>
+            <div class="step">
+                <h4>接收啟動訊息的程式</h4>
+                <p>當接收到「start」訊息時，顯示變數並設定初值：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">start</span></div>
+                        <div class="block variables">顯示變數 <span class="arg">分數</span></div>
+                        <div class="block variables">顯示變數 <span class="arg">關卡</span></div>
+                        <div class="block variables">顯示變數 <span class="arg">速度</span></div>
+                        <div class="block variables">顯示變數 <span class="arg">x軸基準點</span></div>
+                        <div class="block variables">將 <span class="arg">分數</span> 設為 <span class="arg">0</span></div>
+                        <div class="block variables">將 <span class="arg">關卡</span> 設為 <span class="arg">0</span></div>
+                        <div class="block variables">將 <span class="arg">速度</span> 設為 <span class="arg">0</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">50</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>📈 變數說明</h3>
+            <div class="variable-list">
+                <div class="variable-item">
+                    <h5>🎯 分數</h5>
+                    <p>記錄玩家擊破的磚塊數量，用於判斷關卡進度</p>
+                </div>
+                <div class="variable-item">
+                    <h5>🏆 關卡</h5>
+                    <p>記錄目前所在的關卡數，從0開始計算</p>
+                </div>
+                <div class="variable-item">
+                    <h5>⚡ 速度</h5>
+                    <p>控制球的移動速度，每關增加10</p>
+                </div>
+                <div class="variable-item">
+                    <h5>📍 x軸基準點</h5>
+                    <p>磚塊排列的x座標基準，每關向左移動50點</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="broadcast" class="chapter">
+            <h2>📡 第四章：廣播控制關卡進入</h2>
+
+            <h3>🎯 關卡判斷邏輯</h3>
+            <div class="step">
+                <h4>選磚塊角色的關卡控制</h4>
+                <p>在「選磚塊角色」加入判斷式（置於「重複無限次」內）：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control">如果 <span class="arg">關卡 = 0 且 分數 = 0</span>
+                                    <div class="substack">
+                                        <div class="block events">廣播 <span class="arg">go1</span></div>
+                                        <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control">如果 <span class="arg">關卡 = 1 且 分數 = 1</span>
+                                    <div class="substack">
+                                        <div class="block events">廣播 <span class="arg">go2</span></div>
+                                        <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control">如果 <span class="arg">關卡 = 2 且 分數 = 4</span>
+                                    <div class="substack">
+                                        <div class="block events">廣播 <span class="arg">go3</span></div>
+                                        <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control">如果 <span class="arg">關卡 = 3 且 分數 = 9</span>
+                                    <div class="substack">
+                                        <div class="block events">廣播 <span class="arg">go4</span></div>
+                                        <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control">如果 <span class="arg">關卡 = 4 且 分數 = 16</span>
+                                    <div class="substack">
+                                        <div class="block events">廣播 <span class="arg">go5</span></div>
+                                        <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control">如果 <span class="arg">關卡 = 5</span>
+                                    <div class="substack">
+                                        <div class="block looks">切換背景到 <span class="arg">闖關成功</span></div>
+                                        <div class="block control">停止 <span class="arg">全部</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 關卡進度邏輯：</strong>
+                <ul>
+                    <li><strong>第1關</strong>：關卡=0，分數=0 → 需要擊破1個磚塊</li>
+                    <li><strong>第2關</strong>：關卡=1，分數=1 → 需要擊破3個磚塊（總計4個）</li>
+                    <li><strong>第3關</strong>：關卡=2，分數=4 → 需要擊破5個磚塊（總計9個）</li>
+                    <li><strong>第4關</strong>：關卡=3，分數=9 → 需要擊破7個磚塊（總計16個）</li>
+                    <li><strong>第5關</strong>：關卡=4，分數=16 → 需要擊破9個磚塊（總計25個）</li>
+                    <li><strong>完成</strong>：關卡=5 → 顯示闖關成功背景</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="levels" class="chapter">
+            <h2>🧱 第五章：關卡磚塊設計</h2>
+
+            <h3>📐 每關磚塊排列</h3>
+            <div class="level-grid">
+                <div class="level-item">
+                    <h5>第1關 (go1)</h5>
+                    <p>1×1 磚塊</p>
+                    <div class="brick-pattern">■</div>
+                    <p>需要擊破：1個</p>
+                </div>
+                <div class="level-item">
+                    <h5>第2關 (go2)</h5>
+                    <p>2×2 磚塊</p>
+                    <div class="brick-pattern">■■<br>■■</div>
+                    <p>需要擊破：3個</p>
+                </div>
+                <div class="level-item">
+                    <h5>第3關 (go3)</h5>
+                    <p>3×3 磚塊</p>
+                    <div class="brick-pattern">■■■<br>■■■<br>■■■</div>
+                    <p>需要擊破：5個</p>
+                </div>
+                <div class="level-item">
+                    <h5>第4關 (go4)</h5>
+                    <p>4×4 磚塊</p>
+                    <div class="brick-pattern">■■■■<br>■■■■<br>■■■■<br>■■■■</div>
+                    <p>需要擊破：7個</p>
+                </div>
+                <div class="level-item">
+                    <h5>第5關 (go5)</h5>
+                    <p>5×5 磚塊</p>
+                    <div class="brick-pattern">■■■■■<br>■■■■■<br>■■■■■<br>■■■■■<br>■■■■■</div>
+                    <p>需要擊破：9個</p>
+                </div>
+            </div>
+
+            <h3>📍 磚塊定位系統</h3>
+            <div class="step">
+                <h4>x軸基準點調整</h4>
+                <p>每關開始時，x軸基準點向左移動50點：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go1</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">50</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go2</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">0</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go3</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">-50</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 定位重點：</strong>
+                <ul>
+                    <li>每關的x軸基準點遞減50點</li>
+                    <li>第一塊磚塊定位到 (x軸基準點, 140)</li>
+                    <li>新排起始時，x座標設為基準點</li>
+                    <li>確保磚塊排列整齊且居中</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="ball-control" class="chapter">
+            <h2>⚽ 第六章：球的速度控制</h2>
+
+            <h3>🎯 球的基本設定</h3>
+            <div class="step">
+                <h4>球的移動速度控制</h4>
+                <p>球的移動速度使用變數「速度」來控制：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block motion">移動 <span class="arg">速度</span> 點</div>
+                                <div class="block control">如果 <span class="arg">碰到邊緣</span> 就反彈</div>
+                                <div class="block control">如果 <span class="arg">碰到 磚塊</span>
+                                    <div class="substack">
+                                        <div class="block motion">反彈</div>
+                                        <div class="block variables">將 <span class="arg">分數</span> 改變 <span class="arg">1</span></div>
+                                        <div class="block control">刪除此分身</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎲 每關開始設定</h3>
+            <div class="step">
+                <h4>球的重置程式</h4>
+                <p>每關開始時，球回到原點並設定隨機方向：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go1</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">0</span> y: <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機取數 150 到 170</span> 度</div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go2</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">0</span> y: <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機取數 150 到 170</span> 度</div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go3</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">0</span> y: <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機取數 150 到 170</span> 度</div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go4</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">0</span> y: <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機取數 150 到 170</span> 度</div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go5</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">0</span> y: <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機取數 150 到 170</span> 度</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 速度控制重點：</strong>
+                <ul>
+                    <li><strong>初始速度</strong>：第1關速度為10</li>
+                    <li><strong>速度遞增</strong>：每關速度增加10</li>
+                    <li><strong>隨機方向</strong>：150°~170°的隨機角度</li>
+                    <li><strong>碰撞計分</strong>：碰到磚塊才計分</li>
+                    <li><strong>磚塊消失</strong>：被擊中的磚塊會刪除</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="extension" class="chapter">
+            <h2>🚀 第七章：自主延伸任務</h2>
+
+            <h3>📝 基本延伸任務</h3>
+            <div class="step">
+                <h4>開場顯示資訊</h4>
+                <p>在開場顯示「班級／座號／姓名」：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block looks">說出 <span class="arg">班級：XXX 座號：XX 姓名：XXX</span> <span class="arg">3</span> 秒</div>
+                        <div class="block control">等待 <span class="arg">3</span> 秒</div>
+                        <div class="block events">廣播 <span class="arg">start</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎯 進階延伸任務</h3>
+            <div class="step">
+                <h4>新增第6關</h4>
+                <p>挑戰更困難的第6關設計：</p>
+                <ul>
+                    <li><strong>磚塊排列</strong>：設計6×6的磚塊排列</li>
+                    <li><strong>磚塊尺寸</strong>：調整磚塊的大小</li>
+                    <li><strong>間距調整</strong>：修改磚塊之間的間距</li>
+                    <li><strong>過關條件</strong>：設定第6關的過關分數</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>✅ 延伸任務檢查清單：</strong>
+                <ul>
+                    <li>開場正確顯示個人資訊</li>
+                    <li>第6關磚塊排列整齊</li>
+                    <li>磚塊尺寸和間距適當</li>
+                    <li>過關條件設定正確</li>
+                    <li>遊戲流程順暢</li>
+                    <li>沒有程式錯誤</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="homework" class="chapter">
+            <h2>📝 第八章：作業要求</h2>
+
+            <div class="step">
+                <h4>基本要求（必須完成）</h4>
+                <ul>
+                    <li>✅ 建立完整的變數系統（分數、關卡、速度、x軸基準點）</li>
+                    <li>✅ 實現廣播訊息控制關卡進入</li>
+                    <li>✅ 設計5個關卡的磚塊排列（1×1到5×5）</li>
+                    <li>✅ 實現球的速度控制和隨機方向</li>
+                    <li>✅ 建立碰撞偵測和計分系統</li>
+                    <li>✅ 實現闖關成功條件</li>
+                    <li>✅ 開場顯示班級座號姓名</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>進階挑戰（加分項目）</h4>
+                <ul>
+                    <li>🎨 設計更精美的磚塊和背景</li>
+                    <li>🎵 添加音效和背景音樂</li>
+                    <li>⏱️ 增加計時功能</li>
+                    <li>🏆 建立最高分記錄</li>
+                    <li>🔄 添加重新開始功能</li>
+                    <li>🚀 新增第6關或更多關卡</li>
+                    <li>💎 添加特殊磚塊（加分、減速等）</li>
+                    <li>🎯 設計不同形狀的磚塊排列</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 繳交規範：</strong>
+                <ul>
+                    <li>檔案名稱：C07_闖關與速度控制_班級_姓名.sb3</li>
+                    <li>確保所有功能正常運作</li>
+                    <li>在角色上註明班級和姓名</li>
+                    <li>測試所有關卡確保流程順暢</li>
+                    <li>變數顯示和隱藏功能正常</li>
+                    <li>廣播訊息系統運作正確</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>🎉 完成檢查清單：</strong>
+                <ul>
+                    <li>遊戲能正常啟動和初始化</li>
+                    <li>5個關卡都能正常進入</li>
+                    <li>球的速度隨關卡遞增</li>
+                    <li>磚塊被擊中會正確消失並計分</li>
+                    <li>過關條件判斷正確</li>
+                    <li>闖關成功時顯示成功背景</li>
+                    <li>開場顯示個人資訊</li>
+                    <li>程式沒有錯誤或卡住</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 製作提示：</strong>
+                <ul>
+                    <li>可以先完成基本功能，再考慮進階挑戰</li>
+                    <li>測試時要確保每個關卡都能正常進入</li>
+                    <li>變數的顯示和隱藏時機要正確</li>
+                    <li>磚塊的定位要精確，排列要整齊</li>
+                    <li>球的速度要適中，不要太快或太慢</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 複製程式碼功能
+        function copyCode(button, codeContainer) {
+            const codeText = extractScratchCode(codeContainer);
+            
+            // 使用 Clipboard API 複製文字
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codeText).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopy(codeText, button);
+                });
+            } else {
+                fallbackCopy(codeText, button);
+            }
+        }
+
+        // 提取 Scratch 程式碼文字
+        function extractScratchCode(container) {
+            let codeText = '';
+            const blockLines = container.querySelectorAll('.blocks');
+            
+            blockLines.forEach(blockGroup => {
+                const blocks = blockGroup.querySelectorAll('.block');
+                blocks.forEach(block => {
+                    const blockText = block.textContent.trim();
+                    if (blockText) {
+                        codeText += blockText + '\n';
+                    }
+                });
+                codeText += '\n';
+            });
+            
+            // 添加說明文字
+            const instructions = '\n=== Scratch 闖關與速度控制程式碼 ===\n';
+            const usage = '請將以上程式碼複製到 Scratch 中：\n';
+            const tips = '\n製作提示：\n';
+            const tip1 = '1. 建立必要的變數（分數、關卡、速度、x軸基準點）\n';
+            const tip2 = '2. 設定角色的初始位置和狀態\n';
+            const tip3 = '3. 為每個角色編寫對應的程式碼\n';
+            const tip4 = '4. 測試廣播訊息和關卡進度\n';
+            const tip5 = '5. 調整球的速度和磚塊排列\n';
+            
+            return instructions + usage + tips + tip1 + tip2 + tip3 + tip4 + tip5 + codeText.trim();
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            button.classList.add('copied');
+            button.textContent = '已複製';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
