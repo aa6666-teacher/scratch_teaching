@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C03 貓咪過馬路-選擇結構 - Scratch教學</title>
+    <title>C03 貓咪過馬路-選擇結構與碰撞偵測 - Scratch教學</title>
     <style>
         * {
             margin: 0;
@@ -52,250 +52,325 @@
 
         .nav-menu {
             background: #f8f9fa;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff6b6b;
         }
 
-        .nav-menu ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #495057;
-            padding: 10px 20px;
-            border-radius: 25px;
-            background: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .nav-menu a:hover {
-            background: #007bff;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-        }
-
-        .chapter {
-            margin: 40px 0;
-            background: #f8f9fa;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .chapter-header {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .chapter-content {
-            padding: 30px;
-        }
-
-        .section {
-            margin: 30px 0;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 5px solid #007bff;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .section h3 {
-            color: #007bff;
+        .nav-menu h3 {
+            color: #2c3e50;
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
 
-        .concept-box {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 5px solid #e17055;
+        .nav-menu a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        .concept-box h4 {
-            color: #2d3436;
-            margin-bottom: 10px;
+        .nav-menu a:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .chapter h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .chapter h3 {
+            color: #34495e;
+            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .chapter h4 {
+            color: #7f8c8d;
+            margin: 15px 0 10px 0;
             font-size: 1.2rem;
         }
 
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .code-block:hover {
-            transform: scale(1.02);
-        }
-
-        .code-block::before {
-            content: "點擊複製程式碼";
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: #4a5568;
-            color: #e2e8f0;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .code-block:hover::before {
-            opacity: 1;
-        }
-
-        .block-category {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
+        .download-section {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
-            font-size: 0.9rem;
-            margin: 5px 5px 5px 0;
-            font-weight: bold;
-        }
-
-        .motion { background: #4c97ff; }
-        .looks { background: #9966ff; }
-        .sound { background: #cf63cf; }
-        .events { background: #ffbf00; }
-        .control { background: #ffab19; }
-        .sensing { background: #5cb1d6; }
-        .operators { background: #59c059; }
-        .variables { background: #ff8c1a; }
-
-        .step-list {
-            counter-reset: step-counter;
-        }
-
-        .step-list li {
-            counter-increment: step-counter;
-            margin: 15px 0;
-            padding: 15px;
-            background: #e3f2fd;
-            border-radius: 8px;
-            border-left: 4px solid #2196f3;
-            position: relative;
-        }
-
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: -20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #2196f3;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .image-placeholder {
-            background: #f1f3f4;
-            border: 2px dashed #9aa0a6;
-            padding: 40px;
-            text-align: center;
+            padding: 25px;
             border-radius: 10px;
             margin: 20px 0;
-            color: #5f6368;
+            text-align: center;
         }
 
-        .image-placeholder h4 {
-            margin-bottom: 10px;
-            color: #202124;
+        .download-section h3 {
+            color: white;
+            margin-bottom: 15px;
         }
 
-        .warning {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
+        .download-link {
+            display: inline-block;
+            background: white;
+            color: #0984e3;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-link:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .game-description {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .game-description h4 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            margin: 15px 0;
-            border-left: 5px solid #ffc107;
+            border-left: 4px solid #e74c3c;
         }
 
-        .success {
+        .feature-item h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: #27ae60;
+        }
+
+        .copy-button.copied::after {
+            content: ' ✓';
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .info {
             background: #d4edda;
-            border: 1px solid #c3e6cb;
             color: #155724;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
-            border-left: 5px solid #28a745;
+            border-left: 4px solid #28a745;
         }
 
-        .exercise {
-            background: #e8f4f8;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 25px 0;
-            border-left: 5px solid #17a2b8;
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
         }
 
-        .exercise h4 {
+        .success {
+            background: #d1ecf1;
             color: #0c5460;
-            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
         }
 
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #007bff;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .car-demo {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .car {
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .back-to-top:hover {
-            background: #0056b3;
-            transform: translateY(-3px);
-        }
-
-        .footer {
-            background: #343a40;
             color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 40px;
-            border-radius: 0 0 15px 15px;
-            margin-left: -20px;
-            margin-right: -20px;
-            margin-bottom: -20px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .green-car {
+            background: #27ae60;
+        }
+
+        .purple-car {
+            background: #8e44ad;
+        }
+
+        .finish-line {
+            width: 4px;
+            height: 80px;
+            background: #e74c3c;
+            border-radius: 2px;
+            margin: 0 20px;
         }
 
         @media (max-width: 768px) {
@@ -305,519 +380,536 @@
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 2em;
             }
             
-            .nav-menu ul {
-                flex-direction: column;
-                align-items: center;
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
             }
-        }
 
-        .smooth-scroll {
-            scroll-behavior: smooth;
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+
+            .car-demo {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
-<body class="smooth-scroll">
+<body>
     <div class="container">
         <div class="header">
-            <h1>🐱 C03 貓咪過馬路-選擇結構</h1>
-            <p>學習條件判斷，製作經典遊戲！</p>
+            <h1>🐱 C03 貓咪過馬路-選擇結構與碰撞偵測</h1>
+            <p>學習選擇結構、碰撞偵測與遊戲控制的完整教學</p>
         </div>
 
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="#intro">課程介紹</a></li>
-                <li><a href="#preparation">準備工作</a></li>
-                <li><a href="#basic-concepts">選擇結構概念</a></li>
-                <li><a href="#game-development">遊戲開發</a></li>
-                <li><a href="#advanced">進階功能</a></li>
-                <li><a href="#homework">作業與練習</a></li>
-            </ul>
-        </nav>
+        <div class="nav-menu">
+            <h3>📚 課程導航</h3>
+            <a href="#intro">課程介紹</a>
+            <a href="#game-overview">遊戲概述</a>
+            <a href="#cat-control">貓咪控制</a>
+            <a href="#collision">碰撞偵測</a>
+            <a href="#messages">訊息顯示</a>
+            <a href="#practice">實作練習</a>
+            <a href="#homework">作業要求</a>
+        </div>
 
         <div id="intro" class="chapter">
-            <div class="chapter-header">
-                📚 第一章：課程介紹與目標
-            </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>🎯 學習目標</h3>
-                    <ul style="padding-left: 25px; margin: 15px 0;">
-                        <li>理解「選擇結構」的概念和應用</li>
-                        <li>學會使用條件判斷積木（如果...那麼...）</li>
-                        <li>製作經典的「貓咪過馬路」遊戲</li>
-                        <li>掌握碰撞檢測和遊戲邏輯</li>
-                        <li>培養邏輯思維和問題解決能力</li>
+            <h2>🎯 第一章：課程介紹</h2>
+            
+            <div class="game-description">
+                <h4>🐱 貓咪過馬路遊戲簡介</h4>
+                <p>本課程將帶領大家製作一個經典的貓咪過馬路遊戲！透過這個專案，我們將學習：</p>
+                <ul>
+                    <li><strong>選擇結構</strong>：條件判斷與決策邏輯</li>
+                    <li><strong>鍵盤控制</strong>：使用上下左右鍵控制角色移動</li>
+                    <li><strong>碰撞偵測</strong>：判斷碰到車輛或終點線</li>
+                    <li><strong>訊息顯示</strong>：失敗和過關訊息的顯示</li>
+                    <li><strong>遊戲邏輯</strong>：完整的遊戲流程控制</li>
                     </ul>
                 </div>
 
-                <div class="concept-box">
-                    <h4>🎮 什麼是「貓咪過馬路」遊戲？</h4>
-                    <p>這是一個經典的街機遊戲概念，玩家控制角色（貓咪）穿越繁忙的道路，避開移動的汽車。遊戲需要：</p>
-                    <ul style="margin-top: 10px; padding-left: 20px;">
-                        <li>角色控制（上下左右移動）</li>
-                        <li>障礙物（移動的汽車）</li>
-                        <li>碰撞檢測（如果碰到車子就失敗）</li>
-                        <li>勝利條件（安全到達對面）</li>
-                    </ul>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h5>🎮 鍵盤控制</h5>
+                    <p>使用上下左右按鍵精確控制貓咪移動</p>
                 </div>
-
-                <div class="image-placeholder">
-                    <h4>📷 遊戲示意圖</h4>
-                    <p>建議尺寸：800x450像素</p>
-                    <p>內容：完成的貓咪過馬路遊戲畫面</p>
-                </div>
+                <div class="feature-item">
+                    <h5>🚗 障礙物設計</h5>
+                    <p>綠車和紫車作為移動障礙，增加遊戲挑戰性</p>
             </div>
+                <div class="feature-item">
+                    <h5>🎯 目標導向</h5>
+                    <p>貓咪需要安全到達終點線才算過關</p>
+        </div>
+                <div class="feature-item">
+                    <h5>💬 即時回饋</h5>
+                    <p>碰撞車輛顯示失敗訊息，到達終點顯示過關訊息</p>
+            </div>
+                </div>
+                    </div>
+
+
+        <div id="game-overview" class="chapter">
+            <h2>🎮 第二章：遊戲概述</h2>
+            
+            <h3>🐱 遊戲角色介紹</h3>
+            <div class="car-demo">
+                <div class="car green-car">綠車</div>
+                <div style="background: #ffa500; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🐱</div>
+                <div class="finish-line"></div>
+                <div class="car purple-car">紫車</div>
         </div>
 
-        <div id="preparation" class="chapter">
-            <div class="chapter-header">
-                🛠️ 第二章：準備工作與環境設置
-            </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>💻 開始新專案</h3>
-                    <ol class="step-list">
-                        <li>開啟 Scratch 3.0 編輯器</li>
-                        <li>刪除預設的貓咪角色（我們稍後會重新加入）</li>
-                        <li>設定專案名稱為「貓咪過馬路」</li>
-                        <li>準備所需的角色和背景</li>
-                    </ol>
+            <div class="step">
+                <h4>遊戲基本設定</h4>
+                <ul>
+                    <li><strong>貓咪</strong>：玩家控制的角色，使用上下左右鍵移動</li>
+                    <li><strong>綠車</strong>：移動的障礙物，碰到會失敗</li>
+                    <li><strong>紫車</strong>：移動的障礙物，碰到會失敗</li>
+                    <li><strong>終點線</strong>：紅色的垂直線條，到達算過關</li>
+                    <li><strong>道路</strong>：貓咪需要在道路上安全移動</li>
+                </ul>
+                    </div>
+
+            <h3>🎯 遊戲流程</h3>
+            <div class="step">
+                <h4>遊戲執行步驟</h4>
+                <ol>
+                    <li><strong>開始遊戲</strong>：點擊綠旗開始</li>
+                    <li><strong>車輛移動</strong>：綠車和紫車開始移動</li>
+                    <li><strong>貓咪控制</strong>：玩家使用上下左右鍵控制貓咪</li>
+                    <li><strong>碰撞偵測</strong>：檢查貓咪是否碰到車輛或終點線</li>
+                    <li><strong>結果判定</strong>：碰到車輛顯示失敗，碰到終點顯示過關</li>
+                </ol>
+                    </div>
                 </div>
 
-                <div class="section">
-                    <h3>🎨 設計遊戲場景</h3>
-                    <div class="concept-box">
-                        <h4>背景設計要點</h4>
-                        <p>我們需要創建一個道路場景：</p>
-                        <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>上方：安全區域（目標）</li>
-                            <li>中間：道路（危險區域）</li>
-                            <li>下方：起始區域</li>
-                            <li>道路線條：幫助視覺引導</li>
+        <div id="cat-control" class="chapter">
+            <h2>💻 第三章：貓咪控制程式設計</h2>
+
+            <h3>🐱 貓咪移動控制</h3>
+            <div class="step">
+                <h4>上下左右鍵控制</h4>
+                <p>貓咪使用鍵盤控制，支援上下左右四個方向的移動：</p>
+                
+                    <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">-200</span> y: <span class="arg">0</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">y 改變 <span class="arg">10</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">按鍵 [下鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">y 改變 <span class="arg">-10</span></div>
+                    </div>
+</div>
+                                <div class="block control">如果 <span class="arg">按鍵 [左鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">x 改變 <span class="arg">-10</span></div>
+</div>
+                    </div>
+                                <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">x 改變 <span class="arg">10</span></div>
+                </div>
+                </div>
+                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+            </div>
+        </div>
+            </div>
+</div>
+                    </div>
+
+            <div class="info">
+                <strong>💡 控制設計重點：</strong>
+                <ul>
+                    <li><strong>初始位置</strong>：貓咪從左側起點開始</li>
+                    <li><strong>鍵盤響應</strong>：使用「按鍵被按下」偵測鍵盤輸入</li>
+                    <li><strong>移動距離</strong>：每次移動10點，確保控制精確</li>
+                    <li><strong>等待時間</strong>：0.1秒的等待讓移動流暢</li>
+                    <li><strong>四個方向</strong>：支援上下左右完整移動</li>
+                </ul>
+                    </div>
+                </div>
+
+        <div id="collision" class="chapter">
+            <h2>💥 第四章：碰撞偵測系統</h2>
+
+            <h3>🎯 碰撞偵測的概念</h3>
+            <div class="step">
+                <h4>什麼是碰撞偵測？</h4>
+                <p>碰撞偵測是遊戲中判斷物件是否接觸的重要機制：</p>
+                <ul>
+                    <li><strong>接觸偵測</strong>：檢查兩個角色是否重疊</li>
+                    <li><strong>條件判斷</strong>：根據碰撞結果執行不同動作</li>
+                    <li><strong>遊戲邏輯</strong>：決定遊戲的勝負條件</li>
+                </ul>
+                    </div>
+
+            <h3>🚗 車輛移動程式設計</h3>
+            <div class="step">
+                <h4>綠車移動程式</h4>
+                <p>綠車作為移動障礙物，持續左右移動：</p>
+                
+                    <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">200</span> y: <span class="arg">50</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block motion">移動 <span class="arg">5</span> 點</div>
+                                <div class="block control">如果 <span class="arg">碰到邊緣</span> 就反彈</div>
+                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+</div>
+</div>
+</div>
+                    </div>
+                </div>
+
+            <div class="step">
+                <h4>紫車移動程式</h4>
+                <p>紫車同樣作為移動障礙物：</p>
+                    
+                    <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">200</span> y: <span class="arg">-50</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block motion">移動 <span class="arg">5</span> 點</div>
+                                <div class="block control">如果 <span class="arg">碰到邊緣</span> 就反彈</div>
+                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+</div>
+</div>
+</div>
+</div>
+                    </div>
+
+            <div class="info">
+                <strong>💡 車輛設計重點：</strong>
+                <ul>
+                    <li><strong>移動速度</strong>：5點移動速度適中，有挑戰性</li>
+                    <li><strong>邊緣反彈</strong>：確保車輛在螢幕內持續移動</li>
+                    <li><strong>不同位置</strong>：綠車在上方，紫車在下方</li>
+                    <li><strong>等待時間</strong>：0.1秒讓移動流暢</li>
+                </ul>
+</div>
+                    </div>
+
+        <div id="messages" class="chapter">
+            <h2>💬 第五章：訊息顯示系統</h2>
+
+            <h3>🎯 碰撞偵測與訊息顯示</h3>
+            <div class="step">
+                <h4>貓咪碰撞偵測程式</h4>
+                <p>貓咪需要偵測是否碰到車輛（失敗）或終點線（過關）：</p>
+                
+                    <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control">如果 <span class="arg">碰到 綠車 或 碰到 紫車</span>
+                                    <div class="substack">
+                                        <div class="block looks">說出 <span class="arg">失敗！重新開始</span> <span class="arg">2</span> 秒</div>
+                                        <div class="block control">停止 <span class="arg">全部</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">碰到 終點線</span>
+                                    <div class="substack">
+                                        <div class="block looks">說出 <span class="arg">過關！恭喜你</span> <span class="arg">2</span> 秒</div>
+                                        <div class="block control">停止 <span class="arg">全部</span></div>
+</div>
+                    </div>
+</div>
+</div>
+</div>
+                    </div>
+                </div>
+
+            <h3>🏁 終點線設計</h3>
+            <div class="step">
+                <h4>終點線物件設定</h4>
+                <ul>
+                    <li><strong>外觀</strong>：紅色垂直線條或旗子</li>
+                    <li><strong>位置</strong>：道路的右側終點</li>
+                    <li><strong>大小</strong>：足夠讓貓咪碰到</li>
+                    <li><strong>功能</strong>：作為過關判定的目標</li>
                         </ul>
                     </div>
 
-                    <div class="image-placeholder">
-                        <h4>📷 背景設計圖</h4>
-                        <p>建議尺寸：480x360像素</p>
-                        <p>內容：道路背景設計，包含起始區、道路區、目標區</p>
+            <h3>🎮 完整的貓咪程式整合</h3>
+            <div class="step">
+                <h4>貓咪完整程式碼</h4>
+                <p>將移動控制和碰撞偵測整合在一起的完整程式：</p>
+                
+                    <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                        <div class="block motion">定位到 x: <span class="arg">-200</span> y: <span class="arg">0</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">y 改變 <span class="arg">10</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">按鍵 [下鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">y 改變 <span class="arg">-10</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">按鍵 [左鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">x 改變 <span class="arg">-10</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？</span>
+                                    <div class="substack">
+                                        <div class="block motion">x 改變 <span class="arg">10</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">碰到 綠車 或 碰到 紫車</span>
+                                    <div class="substack">
+                                        <div class="block looks">說出 <span class="arg">失敗！重新開始</span> <span class="arg">2</span> 秒</div>
+                                        <div class="block control">停止 <span class="arg">全部</span></div>
+</div>
+</div>
+                                <div class="block control">如果 <span class="arg">碰到 終點線</span>
+                                    <div class="substack">
+                                        <div class="block looks">說出 <span class="arg">過關！恭喜你</span> <span class="arg">2</span> 秒</div>
+                                        <div class="block control">停止 <span class="arg">全部</span></div>
+</div>
+</div>
+                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+</div>
+</div>
+</div>
+</div>
+                    </div>
+
+            <div class="warning">
+                <strong>⚠️ 程式設計重點：</strong>
+                <ul>
+                    <li><strong>碰撞優先順序</strong>：先檢查車輛碰撞（失敗），再檢查終點線（過關）</li>
+                    <li><strong>停止全部</strong>：遊戲結束時停止所有角色的程式</li>
+                    <li><strong>訊息顯示</strong>：使用「說出」積木顯示遊戲結果</li>
+                    <li><strong>等待時間</strong>：2秒讓玩家有時間看到訊息</li>
+                </ul>
                     </div>
                 </div>
 
-                <div class="section">
-                    <h3>👾 準備遊戲角色</h3>
-                    <h4>需要的角色：</h4>
-                    <ul style="padding-left: 25px; margin: 15px 0;">
-                        <li><strong>貓咪</strong>：玩家控制的角色</li>
-                        <li><strong>汽車</strong>：移動的障礙物（可以有多種顏色）</li>
-                        <li><strong>勝利旗幟</strong>：到達目標的標示</li>
-                    </ul>
+        <div id="practice" class="chapter">
+            <h2>🛠️ 第六章：實作練習</h2>
 
-                    <div class="image-placeholder">
-                        <h4>📷 角色設計圖</h4>
-                        <p>建議尺寸：600x200像素</p>
-                        <p>內容：貓咪、汽車、旗幟等角色的外觀</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="basic-concepts" class="chapter">
-            <div class="chapter-header">
-                🧠 第三章：選擇結構基礎概念
-            </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>💡 什麼是選擇結構？</h3>
-                    <div class="concept-box">
-                        <h4>選擇結構的定義</h4>
-                        <p>選擇結構是程式設計中的基本控制結構，讓程式能夠根據不同的條件做出不同的決定和動作。</p>
-                        <p><strong>基本形式：</strong>如果（條件）那麼（動作A）否則（動作B）</p>
+            <h3>📋 製作步驟</h3>
+            <div class="step">
+                <h4>步驟一：建立角色</h4>
+                <ol>
+                    <li>新增貓咪角色（可以使用貓咪圖片或繪製簡單圖形）</li>
+                    <li>新增綠車角色（綠色方塊或車輛圖片）</li>
+                    <li>新增紫車角色（紫色方塊或車輛圖片）</li>
+                    <li>新增終點線角色（紅色線條或旗子）</li>
+                    <li>設定舞台背景（道路或草地背景）</li>
+                </ol>
                     </div>
 
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 碰到顏色 
-                        那麼
-                            <span class="block-category looks">外觀</span> 說 "撞到了！" 持續 2 秒
-                            <span class="block-category motion">動作</span> 移到 x: 0 y: -150
+            <div class="step">
+                <h4>步驟二：設定初始位置</h4>
+                <ul>
+                    <li>貓咪：左側起點位置（x: -200, y: 0）</li>
+                    <li>綠車：右側上方位置（x: 200, y: 50）</li>
+                    <li>紫車：右側下方位置（x: 200, y: -50）</li>
+                    <li>終點線：右側終點位置（x: 200, y: 0）</li>
+                </ul>
                     </div>
+
+            <div class="step">
+                <h4>步驟三：編寫程式</h4>
+                <p>按照前面章節的程式碼範例，為每個角色編寫對應的程式：</p>
+                <ul>
+                    <li>貓咪：鍵盤控制和碰撞偵測</li>
+                    <li>綠車：左右移動（碰到邊緣反彈）</li>
+                    <li>紫車：左右移動（碰到邊緣反彈）</li>
+                    <li>終點線：靜態物件，作為碰撞目標</li>
+                </ul>
                 </div>
 
-                <div class="section">
-                    <h3>🔍 條件判斷的類型</h3>
-                    
-                    <h4>1. 碰撞檢測</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category sensing">感測</span> 碰到 汽車 ？
-                        <span class="block-category sensing">感測</span> 碰到顏色 紅色 ？
-                        <span class="block-category sensing">感測</span> 碰到邊緣 ？
-                    </div>
-
-                    <h4>2. 位置判斷</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category operators">運算</span> x座標 > 200
-                        <span class="block-category operators">運算</span> y座標 < -100
-                    </div>
-
-                    <h4>3. 鍵盤輸入</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category sensing">感測</span> 按下 上方向鍵 鍵？
-                        <span class="block-category sensing">感測</span> 按下 空白鍵 鍵？
-                    </div>
-                </div>
-
-                <div class="exercise">
-                    <h4>🏃‍♂️ 練習活動：簡單的條件判斷</h4>
-                    <p><strong>目標：</strong>讓貓咪根據按鍵移動</p>
-                    <ol style="padding-left: 20px;">
-                        <li>加入貓咪角色</li>
-                        <li>使用「如果...那麼」積木</li>
-                        <li>檢測方向鍵是否被按下</li>
-                        <li>對應移動貓咪位置</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <div id="game-development" class="chapter">
-            <div class="chapter-header">
-                🎮 第四章：貓咪過馬路遊戲開發
-            </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>🐱 步驟一：設置貓咪角色</h3>
-                    
-                    <h4>基本移動控制</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category events">事件</span> 當 🏁 被點擊
-                        <span class="block-category motion">動作</span> 移到 x: 0 y: -150
-                        <span class="block-category control">控制</span> 重複無限次
-                            <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 按下 上方向鍵 鍵？ 那麼
-                                <span class="block-category motion">動作</span> y座標增加 10
-                            <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 按下 下方向鍵 鍵？ 那麼
-                                <span class="block-category motion">動作</span> y座標增加 -10
-                            <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 按下 左方向鍵 鍵？ 那麼
-                                <span class="block-category motion">動作</span> x座標增加 -10
-                            <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 按下 右方向鍵 鍵？ 那麼
-                                <span class="block-category motion">動作</span> x座標增加 10
-                    </div>
-
-                    <div class="image-placeholder">
-                        <h4>📷 貓咪移動控制圖</h4>
-                        <p>建議尺寸：700x400像素</p>
-                        <p>內容：展示貓咪在場景中的移動方向</p>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>🚗 步驟二：創建移動汽車</h3>
-                    
-                    <h4>汽車的基本移動</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category events">事件</span> 當 🏁 被點擊
-                        <span class="block-category motion">動作</span> 移到 x: -240 y: 0
-                        <span class="block-category control">控制</span> 重複無限次
-                            <span class="block-category motion">動作</span> x座標增加 3
-                            <span class="block-category control">控制</span> 如果 <span class="block-category operators">運算</span> x座標 > 250 那麼
-                                <span class="block-category motion">動作</span> 移到 x: -240 y: 0
-                    </div>
-
-                    <div class="warning">
-                        <strong>⚠️ 重要提醒：</strong>汽車的移動速度不要太快，否則遊戲會太困難！建議速度在 2-5 之間。
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>💥 步驟三：碰撞檢測</h3>
-                    
-                    <h4>在貓咪的程式中加入碰撞檢測</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 碰到 汽車 ？ 那麼
-                            <span class="block-category looks">外觀</span> 說 "哎呀！被撞到了！" 持續 2 秒
-                            <span class="block-category motion">動作</span> 移到 x: 0 y: -150
-                            <span class="block-category control">控制</span> 等待 1 秒
-                    </div>
-
-                    <div class="concept-box">
-                        <h4>🎯 碰撞檢測的重要性</h4>
-                        <p>碰撞檢測是遊戲中的核心機制，它決定了：</p>
-                        <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>遊戲的挑戰性</li>
-                            <li>玩家的即時反饋</li>
-                            <li>遊戲規則的執行</li>
+            <div class="info">
+                <strong>💡 除錯技巧：</strong>
+                <ul>
+                    <li>使用「說出」積木來檢查程式是否執行</li>
+                    <li>確認碰撞偵測條件正確設定</li>
+                    <li>檢查角色的初始位置是否正確</li>
+                    <li>測試鍵盤控制是否流暢</li>
+                    <li>確認車輛移動速度適中</li>
                         </ul>
+</div>
                     </div>
-                </div>
-
-                <div class="section">
-                    <h3>🏆 步驟四：勝利條件</h3>
-                    
-                    <h4>檢測貓咪是否到達安全區域</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category operators">運算</span> y座標 > 120 那麼
-                            <span class="block-category looks">外觀</span> 說 "太棒了！成功過馬路！" 持續 3 秒
-                            <span class="block-category sound">音效</span> 播放音效 勝利
-                            <span class="block-category control">控制</span> 停止 全部
-                    </div>
-
-                    <div class="image-placeholder">
-                        <h4>📷 勝利畫面圖</h4>
-                        <p>建議尺寸：600x300像素</p>
-                        <p>內容：貓咪成功到達對面的慶祝畫面</p>
-                    </div>
-                </div>
-
-                <div class="exercise">
-                    <h4>🎯 實作練習：完整的遊戲邏輯</h4>
-                    <p>結合以上所有步驟，創建一個完整的貓咪過馬路遊戲：</p>
-                    <ol style="padding-left: 20px;">
-                        <li>設置遊戲背景</li>
-                        <li>加入貓咪和汽車角色</li>
-                        <li>實現移動控制</li>
-                        <li>加入碰撞檢測</li>
-                        <li>設置勝利條件</li>
-                        <li>測試遊戲平衡性</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <div id="advanced" class="chapter">
-            <div class="chapter-header">
-                🚀 第五章：進階功能與優化
-            </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>🎵 加入音效和視覺效果</h3>
-                    
-                    <h4>碰撞音效</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 碰到 汽車 ？ 那麼
-                            <span class="block-category sound">音效</span> 播放音效 碰撞
-                            <span class="block-category looks">外觀</span> 特效 鬼魂 設為 100
-                            <span class="block-category control">控制</span> 等待 0.5 秒
-                            <span class="block-category looks">外觀</span> 清除圖像特效
-                    </div>
-
-                    <h4>移動音效</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category sensing">感測</span> 按下 上方向鍵 鍵？ 那麼
-                            <span class="block-category motion">動作</span> y座標增加 10
-                            <span class="block-category sound">音效</span> 播放音效 腳步聲
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>📊 加入計分系統</h3>
-                    
-                    <h4>創建變數</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category variables">變數</span> 建立變數 分數
-                        <span class="block-category variables">變數</span> 建立變數 生命
-                    </div>
-
-                    <h4>初始化遊戲</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category events">事件</span> 當 🏁 被點擊
-                        <span class="block-category variables">變數</span> 變數 分數 設為 0
-                        <span class="block-category variables">變數</span> 變數 生命 設為 3
-                    </div>
-
-                    <h4>更新分數</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category control">控制</span> 如果 <span class="block-category operators">運算</span> y座標 > 120 那麼
-                            <span class="block-category variables">變數</span> 變數 分數 增加 10
-                            <span class="block-category motion">動作</span> 移到 x: 0 y: -150
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>🚗 多輛汽車和不同車道</h3>
-                    
-                    <div class="concept-box">
-                        <h4>設計多車道系統</h4>
-                        <p>為了增加遊戲的挑戰性，我們可以：</p>
-                        <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>創建多個汽車角色</li>
-                            <li>設置不同的移動速度</li>
-                            <li>讓汽車在不同高度移動</li>
-                            <li>有些汽車向左移動，有些向右移動</li>
-                        </ul>
-                    </div>
-
-                    <h4>汽車2（向左移動）</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category events">事件</span> 當 🏁 被點擊
-                        <span class="block-category motion">動作</span> 移到 x: 240 y: 50
-                        <span class="block-category control">控制</span> 重複無限次
-                            <span class="block-category motion">動作</span> x座標增加 -4
-                            <span class="block-category control">控制</span> 如果 <span class="block-category operators">運算</span> x座標 < -250 那麼
-                                <span class="block-category motion">動作</span> 移到 x: 240 y: 50
-                    </div>
-
-                    <div class="image-placeholder">
-                        <h4>📷 多車道系統圖</h4>
-                        <p>建議尺寸：800x500像素</p>
-                        <p>內容：展示多輛汽車在不同車道移動的場景</p>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>⏰ 難度漸增系統</h3>
-                    
-                    <h4>根據時間增加難度</h4>
-                    <div class="code-block" onclick="copyToClipboard(this)">
-                        <span class="block-category variables">變數</span> 建立變數 遊戲時間
-                        <span class="block-category variables">變數</span> 建立變數 汽車速度
-                        
-                        <span class="block-category events">事件</span> 當 🏁 被點擊
-                        <span class="block-category variables">變數</span> 變數 遊戲時間 設為 0
-                        <span class="block-category variables">變數</span> 變數 汽車速度 設為 2
-                        <span class="block-category control">控制</span> 重複無限次
-                            <span class="block-category control">控制</span> 等待 10 秒
-                            <span class="block-category variables">變數</span> 變數 遊戲時間 增加 10
-                            <span class="block-category variables">變數</span> 變數 汽車速度 增加 0.5
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="homework" class="chapter">
-            <div class="chapter-header">
-                📝 第六章：作業與挑戰練習
+            <h2>📝 第七章：作業要求</h2>
+
+            <div class="step">
+                <h4>基本要求（必須完成）</h4>
+                <ul>
+                    <li>✅ 建立貓咪角色並實現上下左右鍵控制</li>
+                    <li>✅ 建立綠車和紫車作為移動障礙</li>
+                    <li>✅ 設定終點線物件</li>
+                    <li>✅ 實現碰撞偵測機制</li>
+                    <li>✅ 碰到車輛顯示失敗訊息</li>
+                    <li>✅ 碰到終點線顯示過關訊息</li>
+                    <li>✅ 車輛能夠左右移動並碰到邊緣反彈</li>
+                </ul>
             </div>
-            <div class="chapter-content">
-                <div class="section">
-                    <h3>📋 基礎作業</h3>
-                    
-                    <div class="exercise">
-                        <h4>作業1：完成基本遊戲</h4>
-                        <p><strong>要求：</strong></p>
-                        <ul style="padding-left: 20px;">
-                            <li>實現貓咪的四方向移動</li>
-                            <li>至少有一輛會移動的汽車</li>
-                            <li>正確的碰撞檢測</li>
-                            <li>勝利條件判斷</li>
-                        </ul>
-                        <p><strong>評分標準：</strong>功能完整性（60%）+ 程式邏輯清晰度（40%）</p>
-                    </div>
 
-                    <div class="exercise">
-                        <h4>作業2：美化遊戲外觀</h4>
-                        <p><strong>要求：</strong></p>
-                        <ul style="padding-left: 20px;">
-                            <li>設計有趣的背景</li>
-                            <li>美化角色外觀</li>
-                            <li>加入適當的音效</li>
-                            <li>添加視覺特效</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="step">
+                <h4>進階挑戰（加分項目）</h4>
+                <ul>
+                    <li>🎨 設計更精美的角色外觀</li>
+                    <li>🎵 添加音效（移動音效、碰撞音效）</li>
+                    <li>⏱️ 增加計時功能</li>
+                    <li>🏆 建立計分系統（過關次數）</li>
+                    <li>🔄 添加重新開始功能</li>
+                    <li>🚗 增加更多車輛障礙</li>
+                    <li>🎯 設計多個關卡</li>
+                    <li>💎 添加特殊道具（無敵、加速等）</li>
+                </ul>
+            </div>
 
-                <div class="section">
-                    <h3>🏆 進階挑戰</h3>
-                    
-                    <div class="exercise">
-                        <h4>挑戰1：多車道系統</h4>
-                        <p>創建至少3輛汽車，在不同車道、不同方向移動</p>
-                    </div>
+            <div class="warning">
+                <strong>⚠️ 繳交規範：</strong>
+                <ul>
+                    <li>檔案名稱：C03_貓咪過馬路_班級_姓名.sb3</li>
+                    <li>確保所有功能正常運作</li>
+                    <li>在角色上註明班級和姓名</li>
+                    <li>測試多次確保程式穩定</li>
+                    <li>鍵盤控制必須流暢</li>
+                    <li>碰撞偵測必須準確</li>
+                </ul>
+            </div>
 
-                    <div class="exercise">
-                        <h4>挑戰2：生命系統</h4>
-                        <p>實現3條生命的系統，被撞3次才結束遊戲</p>
-                    </div>
+            <div class="success">
+                <strong>🎉 完成檢查清單：</strong>
+                <ul>
+                    <li>貓咪能使用上下左右鍵正常移動</li>
+                    <li>綠車和紫車能正常左右移動</li>
+                    <li>車輛碰到邊緣會正確反彈</li>
+                    <li>貓咪碰到車輛會顯示「失敗！重新開始」</li>
+                    <li>貓咪碰到終點線會顯示「過關！恭喜你」</li>
+                    <li>遊戲結束時會停止所有程式</li>
+                    <li>程式沒有錯誤或卡住</li>
+                    <li>遊戲可以重複進行</li>
+                </ul>
+            </div>
 
-                    <div class="exercise">
-                        <h4>挑戰3：關卡設計</h4>
-                        <p>設計多個關卡，每關有不同的難度和車輛配置</p>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>挑戰4：創意變化</h4>
-                        <p>發揮創意，可以改成：</p>
-                        <ul style="padding-left: 20px;">
-                            <li>小雞過河（避開鱷魚）</li>
-                            <li>太空船避開隕石</li>
-                            <li>忍者躲避飛鏢</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>📤 作業提交方式</h3>
-                    
-                    <div class="success">
-                        <h4>📋 提交清單</h4>
-                        <ol style="padding-left: 20px;">
-                            <li><strong>Scratch專案檔案：</strong>儲存為「學號_姓名_貓咪過馬路.sb3」</li>
-                            <li><strong>遊戲截圖：</strong>包含遊戲開始、進行中、結束畫面</li>
-                            <li><strong>程式說明文件：</strong>說明主要程式邏輯和創意點</li>
-                            <li><strong>心得報告：</strong>學習過程中的困難和收穫</li>
-                        </ol>
-                    </div>
-
-                    <div class="warning">
-                        <strong>⏰ 提交期限：</strong>課程結束後一週內<br>
-                        <strong>📧 提交方式：</strong>上傳至課程平台或Email給老師
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3>🎯 學習檢核表</h3>
-                    
-                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
-                        <h4>完成以下項目請打勾 ✓</h4>
-                        <div style="columns: 2; column-gap: 30px; margin-top: 15px;">
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 理解選擇結構概念</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 會使用「如果...那麼」積木</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 實現角色移動控制</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 創建移動障礙物</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 實現碰撞檢測</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 設置勝利條件</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 加入音效和特效</label>
-                            <label style="display: block; margin: 8px 0;"><input type="checkbox"> 完成基礎遊戲</label>
-                        </div>
-                    </div>
-                </div>
+            <div class="info">
+                <strong>💡 製作提示：</strong>
+                <ul>
+                    <li>可以先完成基本功能，再考慮進階挑戰</li>
+                    <li>測試時要確保碰撞偵測的準確性</li>
+                    <li>車輛移動速度要適中，不要太快或太慢</li>
+                    <li>鍵盤控制的響應要靈敏</li>
+                    <li>可以參考課堂上的程式碼範例</li>
+                </ul>
             </div>
         </div>
-
-        <div class="footer">
-            <h3>🎓 學習資源與延伸閱讀</h3>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px 0;">
-                <div>
-                    <h4>📚 相關概念</h4>
-                    <ul style="text-align: left; display: inline-block;">
-                        <li>條件判斷</li>
-                        <li>碰撞檢測</li>
-                        <li>遊戲迴圈</li>
-                        <li>事件驅動程式設計</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>🎮 遊戲設計原則</h4>
-                    <ul style="text-align: left; display: inline-block;">
-                        <li>挑戰與技能平衡</li>
-                        <li>即時反饋</li>
-                        <li>漸進式難度</li>
-                        <li>視覺和聽覺回饋</li>
-                    </ul>
-                </div>
-            </div>
-            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">
-                💡 記住：程式設計不只是寫程式，更是訓練邏輯思維和解決問題的能力！<br>
-                🌟 持續練習，你會發現程式設計的無窮樂趣！
-            </p>
-        </div>
-    </div>
-
-    <a href="#" class="back-to-top">↑</a>
+                    </div>
 
     <script>
-        // 平滑捲動功能
+        // 複製程式碼功能
+        function copyCode(button, codeContainer) {
+            const codeText = extractScratchCode(codeContainer);
+            
+            // 使用 Clipboard API 複製文字
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codeText).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopy(codeText, button);
+                });
+            } else {
+                fallbackCopy(codeText, button);
+            }
+        }
+
+        // 提取 Scratch 程式碼文字
+        function extractScratchCode(container) {
+            let codeText = '';
+            const blockLines = container.querySelectorAll('.blocks');
+            
+            blockLines.forEach(blockGroup => {
+                const blocks = blockGroup.querySelectorAll('.block');
+                blocks.forEach(block => {
+                    const blockText = block.textContent.trim();
+                    if (blockText) {
+                        codeText += blockText + '\n';
+                    }
+                });
+                codeText += '\n';
+            });
+            
+            // 添加說明文字
+            const instructions = '\n=== Scratch 貓咪過馬路程式碼 ===\n';
+            const usage = '請將以上程式碼複製到 Scratch 中：\n';
+            const tips = '\n製作提示：\n';
+            const tip1 = '1. 建立貓咪、綠車、紫車、終點線角色\n';
+            const tip2 = '2. 設定角色的初始位置\n';
+            const tip3 = '3. 為每個角色編寫對應的程式碼\n';
+            const tip4 = '4. 測試鍵盤控制和碰撞偵測\n';
+            
+            return instructions + usage + tips + tip1 + tip2 + tip3 + tip4 + codeText.trim();
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            button.classList.add('copied');
+            button.textContent = '已複製';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // 平滑滾動
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -830,36 +922,7 @@
                 }
             });
         });
-
-        // 程式碼複製功能
-        function copyToClipboard(element) {
-            const text = element.innerText;
-            navigator.clipboard.writeText(text).then(function() {
-                // 顯示複製成功提示
-                const originalContent = element.innerHTML;
-                element.innerHTML = '<span style="color: #4CAF50;">✓ 已複製到剪貼簿！</span>';
-                setTimeout(() => {
-                    element.innerHTML = originalContent;
-                }, 2000);
-            }).catch(function(err) {
-                console.error('複製失敗: ', err);
-            });
-        }
-
-        // 回到頂部按鈕顯示/隱藏
-        window.addEventListener('scroll', function() {
-            const backToTop = document.querySelector('.back-to-top');
-            if (window.pageYOffset > 300) {
-                backToTop.style.display = 'flex';
-            } else {
-                backToTop.style.display = 'none';
-            }
-        });
-
-        // 載入時隱藏回到頂部按鈕
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.back-to-top').style.display = 'none';
-        });
     </script>
 </body>
+</html> 
 </html> 
