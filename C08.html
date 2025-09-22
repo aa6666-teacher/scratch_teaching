@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C08 函式積木(副程式)的運用-程式碼重構與模組化 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            margin: -20px -20px 30px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .nav-menu h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .chapter h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .chapter h3 {
+            color: #34495e;
+            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .chapter h4 {
+            color: #7f8c8d;
+            margin: 15px 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .download-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: white;
+            color: #0984e3;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-link:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: #27ae60;
+        }
+
+        .copy-button.copied::after {
+            content: ' ✓';
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+        .pen { background: #0FBD8C; }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .info {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .success {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .before, .after {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .before {
+            background: #fdf2f2;
+            border-left-color: #e74c3c;
+        }
+
+        .after {
+            background: #f0f9ff;
+            border-left-color: #3b82f6;
+        }
+
+        .before h5 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .after h5 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        details {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        summary:hover {
+            color: #212529;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 C08 函式積木(副程式)的運用</h1>
+            <p>學習程式碼重構、模組化與自訂積木的完整教學</p>
+        </div>
+
+        <div class="nav-menu">
+            <h3>📚 課程導航</h3>
+            <a href="#intro">課程介紹</a>
+            <a href="#preparation">前置準備</a>
+            <a href="#concept">函式概念</a>
+            <a href="#brick-game">打磚塊重構</a>
+            <a href="#kaleidoscope">萬花筒重構</a>
+            <a href="#benefits">優點分析</a>
+            <a href="#homework">作業要求</a>
+            <a href="https://drive.google.com/file/d/1m8R6WOChr-1HsaC3quhw8rMPVpdMvePP/view?usp=sharing" target="_blank">📥 下載基本檔</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>🎯 第一章：課程介紹</h2>
+            
+            <div class="concept-box">
+                <h4>🔧 函式積木的核心概念</h4>
+                <p>把重複的程式整理成「自訂積木」，簡化打磚塊與萬花筒兩個專題。任何會<strong>重複出現</strong>的片段，都可以抽成「自訂積木」，提升可讀性、維護性與除錯效率。</p>
+            </div>
+
+            <div class="step">
+                <h4>📚 學習目標</h4>
+                <ul>
+                    <li><strong>程式碼重構</strong>：學會識別重複的程式碼片段</li>
+                    <li><strong>自訂積木</strong>：掌握建立和使用自訂積木的技巧</li>
+                    <li><strong>模組化設計</strong>：理解如何將複雜程式分解為簡單模組</li>
+                    <li><strong>程式維護</strong>：提升程式碼的可讀性和維護性</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 課程重點：</strong>
+                <ul>
+                    <li>識別程式中的重複模式</li>
+                    <li>建立參數化的自訂積木</li>
+                    <li>簡化複雜的程式邏輯</li>
+                    <li>提升程式碼的品質和效率</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="preparation" class="chapter">
+            <h2>🛠️ 第二章：前置準備</h2>
+
+            <div class="download-section">
+                <h3>📥 基本檔案下載</h3>
+                <p>下載 C08 函式積木運用的基本檔案，包含打磚塊和萬花筒的原始程式</p>
+                <a href="https://drive.google.com/file/d/1m8R6WOChr-1HsaC3quhw8rMPVpdMvePP/view?usp=sharing" 
+                   class="download-link" target="_blank">
+                    📁 下載 C08 基本檔.sb3
+                </a>
+            </div>
+
+            <div class="info">
+                <strong>💡 使用說明：</strong>
+                <ol>
+                    <li>點擊上方連結下載 .sb3 檔案</li>
+                    <li>開啟 Scratch 網站 (scratch.mit.edu)</li>
+                    <li>點選「上傳」按鈕選擇下載的檔案</li>
+                    <li>立即修改檔名為「班級座號-8.sb3」</li>
+                    <li>開始學習函式積木的重構技巧</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4>📁 檔案準備步驟</h4>
+                <ol>
+                    <li><strong>匯入基本檔</strong>：匯入老師提供的基本檔</li>
+                    <li><strong>修改檔名</strong>：立即修改檔名（例如：81760-8.sb3）</li>
+                    <li><strong>檢查角色</strong>：確認打磚塊和萬花筒專案都存在</li>
+                    <li><strong>備份原檔</strong>：建議先備份原始檔案</li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 注意事項：</strong>
+                <ul>
+                    <li>不要直接覆蓋舊作業</li>
+                    <li>確保檔名格式正確</li>
+                    <li>先理解原始程式邏輯再進行重構</li>
+                    <li>建議先備份原始檔案</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="concept" class="chapter">
+            <h2>🧩 第三章：函式積木概念</h2>
+
+            <h3>🔍 什麼是函式積木？</h3>
+            <div class="step">
+                <h4>函式積木的定義</h4>
+                <p>函式積木（自訂積木）是一種將重複的程式碼片段包裝成獨立模組的方法。就像把常用的工具放在工具箱裡，需要時就拿出來使用。</p>
+            </div>
+
+            <div class="step">
+                <h4>函式積木的優點</h4>
+                <ul>
+                    <li><strong>程式碼重用</strong>：避免重複寫相同的程式</li>
+                    <li><strong>提升可讀性</strong>：程式邏輯更清晰易懂</li>
+                    <li><strong>易於維護</strong>：修改時只需要改一個地方</li>
+                    <li><strong>模組化設計</strong>：將複雜問題分解為簡單模組</li>
+                    <li><strong>參數化</strong>：可以傳入不同參數產生不同效果</li>
+                </ul>
+            </div>
+
+            <h3>🎯 何時使用函式積木？</h3>
+            <div class="step">
+                <h4>適合使用的情況</h4>
+                <ul>
+                    <li>相同的程式碼出現3次以上</li>
+                    <li>複雜的邏輯需要重複執行</li>
+                    <li>需要參數化的重複操作</li>
+                    <li>想要提升程式可讀性</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="brick-game" class="chapter">
+            <h2>🎮 第四章：打磚塊專案重構</h2>
+
+            <h3>⚽ 球角色 - 建立「球的起點」函式</h3>
+            <div class="step">
+                <h4>步驟1：建立自訂積木</h4>
+                <p>把「每關一開始球回到原點、向下方隨機角度出發」抽出成一顆自訂積木：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block myblocks hat">定義 <span class="arg">球的起點</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block motion">將 x 設為 <span class="arg">0</span></div>
+                        <div class="block motion">將 y 設為 <span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
+                    </div>
+                    <div class="comment">說明：把「每關一開始球回到原點、向下方隨機角度出發」抽出成一顆自訂積木。</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>步驟2：應用在球的主程式</h4>
+                <div class="comparison">
+                    <div class="before">
+                        <h5>❌ 重構前（重複程式碼）</h5>
+                        <div class="code-example">
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go1</span></div>
+                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
+                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
+                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go2</span></div>
+                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
+                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
+                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go3</span></div>
+                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
+                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
+                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="after">
+                        <h5>✅ 重構後（使用函式）</h5>
+                        <div class="code-example">
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go1</span></div>
+                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go2</span></div>
+                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block events hat">當收到 <span class="arg">go3</span></div>
+                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🧱 磚塊角色 - 建立「產生磚塊分身」函式</h3>
+            <div class="step">
+                <h4>步驟1：建立參數化函式</h4>
+                <p>建立一個可以產生指定數量磚塊分身的函式：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block myblocks hat">定義 <span class="arg">產生磚塊分身（磚塊數）</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block control c-block">重複 <span class="arg">磚塊數</span> 次
+                            <div class="substack">
+                                <div class="block looks">建立分身</div>
+                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">說明：建立一個可以產生指定數量磚塊分身的函式，提高程式碼的彈性。</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>步驟2：應用在不同關卡</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go1</span></div>
+                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（1）</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go2</span></div>
+                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（4）</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">go3</span></div>
+                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（9）</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="kaleidoscope" class="chapter">
+            <h2>🎨 第五章：萬花筒專案重構</h2>
+
+            <h3>🌈 建立「畫花瓣」函式</h3>
+            <div class="step">
+                <h4>步驟1：建立花瓣繪製函式</h4>
+                <p>將重複的花瓣繪製邏輯抽取成函式：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block myblocks hat">定義 <span class="arg">畫花瓣（角度）</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block motion">面向 <span class="arg">角度</span> 度</div>
+                        <div class="block pen">下筆</div>
+                        <div class="block motion">移動 <span class="arg">100</span> 點</div>
+                        <div class="block motion">右轉 <span class="arg">30</span> 度</div>
+                        <div class="block motion">移動 <span class="arg">50</span> 點</div>
+                        <div class="block pen">停筆</div>
+                        <div class="block motion">回到原位</div>
+                    </div>
+                    <div class="comment">說明：建立一個可以畫出指定角度花瓣的函式。</div>
+                </div>
+            </div>
+
+            <h3>🎯 建立「畫萬花筒」函式</h3>
+            <div class="step">
+                <h4>步驟2：建立萬花筒主函式</h4>
+                <p>將整個萬花筒的繪製邏輯包裝成一個函式：</p>
+                
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
+                    <div class="blocks">
+                        <div class="block myblocks hat">定義 <span class="arg">畫萬花筒（花瓣數）</span></div>
+                    </div>
+                    <div class="blocks">
+                        <div class="block pen">全部清除</div>
+                        <div class="block control c-block">重複 <span class="arg">花瓣數</span> 次
+                            <div class="substack">
+                                <div class="block myblocks">執行 <span class="arg">畫花瓣（360/花瓣數 * 重複次數）</span></div>
+                                <div class="block looks">改變 顏色效果 <span class="arg">10</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">說明：建立一個可以畫出指定花瓣數萬花筒的函式。</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>步驟3：簡化主程式</h4>
+                <div class="comparison">
+                    <div class="before">
+                        <h5>❌ 重構前（複雜重複）</h5>
+                        <div class="code-example">
+                            <div class="blocks">
+                                <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                                <div class="block control c-block">重複無限次
+                                    <div class="substack">
+                                        <div class="block pen">全部清除</div>
+                                        <div class="block control c-block">重複 <span class="arg">8</span> 次
+                                            <div class="substack">
+                                                <div class="block motion">面向 <span class="arg">45 * 重複次數</span> 度</div>
+                                                <div class="block pen">下筆</div>
+                                                <div class="block motion">移動 <span class="arg">100</span> 點</div>
+                                                <div class="block motion">右轉 <span class="arg">30</span> 度</div>
+                                                <div class="block motion">移動 <span class="arg">50</span> 點</div>
+                                                <div class="block pen">停筆</div>
+                                                <div class="block motion">回到原位</div>
+                                                <div class="block looks">改變 顏色效果 <span class="arg">10</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="after">
+                        <h5>✅ 重構後（簡潔清晰）</h5>
+                        <div class="code-example">
+                            <div class="blocks">
+                                <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                                <div class="block control c-block">重複無限次
+                                    <div class="substack">
+                                        <div class="block myblocks">執行 <span class="arg">畫萬花筒（8）</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="benefits" class="chapter">
+            <h2>📈 第六章：重構優點分析</h2>
+
+            <h3>✅ 程式碼品質提升</h3>
+            <div class="step">
+                <h4>重構前後比較</h4>
+                <div class="success">
+                    <strong>🎯 重構後的優點：</strong>
+                    <ul>
+                        <li><strong>程式碼減少</strong>：重複的程式碼大幅減少</li>
+                        <li><strong>可讀性提升</strong>：主程式邏輯更清晰</li>
+                        <li><strong>維護性改善</strong>：修改時只需要改函式定義</li>
+                        <li><strong>彈性增加</strong>：可以透過參數產生不同效果</li>
+                        <li><strong>除錯容易</strong>：問題定位更精確</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔧 實際應用場景</h3>
+            <div class="step">
+                <h4>函式積木的應用</h4>
+                <ul>
+                    <li><strong>遊戲開發</strong>：角色移動、攻擊、技能等重複動作</li>
+                    <li><strong>動畫製作</strong>：重複的動畫序列</li>
+                    <li><strong>數學計算</strong>：複雜的計算公式</li>
+                    <li><strong>圖形繪製</strong>：重複的圖形模式</li>
+                    <li><strong>音效控制</strong>：重複的音效播放邏輯</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 最佳實踐：</strong>
+                <ul>
+                    <li>識別重複的程式碼模式</li>
+                    <li>為函式選擇有意義的名稱</li>
+                    <li>使用參數增加函式的彈性</li>
+                    <li>保持函式的單一職責</li>
+                    <li>適當的註解和說明</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="homework" class="chapter">
+            <h2>📝 第七章：作業要求</h2>
+
+            <div class="step">
+                <h4>基本要求（必須完成）</h4>
+                <ul>
+                    <li>✅ 完成打磚塊專案的重構</li>
+                    <li>✅ 建立「球的起點」自訂積木</li>
+                    <li>✅ 建立「產生磚塊分身（磚塊數）」自訂積木</li>
+                    <li>✅ 完成萬花筒專案的重構</li>
+                    <li>✅ 建立「畫花瓣（角度）」自訂積木</li>
+                    <li>✅ 建立「畫萬花筒（花瓣數）」自訂積木</li>
+                    <li>✅ 確保重構後功能正常運作</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>進階挑戰（加分項目）</h4>
+                <ul>
+                    <li>🎨 為其他角色建立自訂積木</li>
+                    <li>🔧 建立更多參數化的函式</li>
+                    <li>📊 分析重構前後的程式碼行數</li>
+                    <li>🎵 為音效播放建立自訂積木</li>
+                    <li>🌈 建立不同風格的萬花筒函式</li>
+                    <li>🎮 為遊戲狀態管理建立函式</li>
+                    <li>📝 撰寫函式使用說明文件</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 繳交規範：</strong>
+                <ul>
+                    <li>檔案名稱：C08_函式積木運用_班級_姓名.sb3</li>
+                    <li>確保所有自訂積木功能正常</li>
+                    <li>在角色上註明班級和姓名</li>
+                    <li>測試重構前後的功能一致性</li>
+                    <li>提供重構前後的對比說明</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>🎉 完成檢查清單：</strong>
+                <ul>
+                    <li>打磚塊遊戲功能完整且正常運作</li>
+                    <li>萬花筒繪製功能完整且正常運作</li>
+                    <li>所有自訂積木都有適當的參數</li>
+                    <li>程式碼結構清晰易懂</li>
+                    <li>重複的程式碼已成功消除</li>
+                    <li>程式執行效率沒有降低</li>
+                    <li>自訂積木名稱有意義且易理解</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 製作提示：</strong>
+                <ul>
+                    <li>先理解原始程式的邏輯再進行重構</li>
+                    <li>逐步重構，一次只改一個函式</li>
+                    <li>測試每個函式是否正常運作</li>
+                    <li>為函式選擇有意義的名稱</li>
+                    <li>考慮參數的設計和使用</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 複製程式碼功能
+        function copyCode(button, codeContainer) {
+            const codeText = extractScratchCode(codeContainer);
+            
+            // 使用 Clipboard API 複製文字
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codeText).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopy(codeText, button);
+                });
+            } else {
+                fallbackCopy(codeText, button);
+            }
+        }
+
+        // 提取 Scratch 程式碼文字
+        function extractScratchCode(container) {
+            let codeText = '';
+            const blockLines = container.querySelectorAll('.blocks');
+            
+            blockLines.forEach(blockGroup => {
+                const blocks = blockGroup.querySelectorAll('.block');
+                blocks.forEach(block => {
+                    const blockText = block.textContent.trim();
+                    if (blockText) {
+                        codeText += blockText + '\n';
+                    }
+                });
+                codeText += '\n';
+            });
+            
+            // 添加說明文字
+            const instructions = '\n=== Scratch 函式積木程式碼 ===\n';
+            const usage = '請將以上程式碼複製到 Scratch 中：\n';
+            const tips = '\n製作提示：\n';
+            const tip1 = '1. 建立自訂積木（定義函式）\n';
+            const tip2 = '2. 在主程式中呼叫自訂積木\n';
+            const tip3 = '3. 測試函式是否正常運作\n';
+            const tip4 = '4. 檢查重構前後功能一致性\n';
+            const tip5 = '5. 優化函式的參數設計\n';
+            
+            return instructions + usage + tips + tip1 + tip2 + tip3 + tip4 + tip5 + codeText.trim();
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            button.classList.add('copied');
+            button.textContent = '已複製';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
