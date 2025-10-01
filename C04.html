@@ -669,13 +669,7 @@
                 <h4>實作範例：安全移動檢測</h4>
                 <p>在迷宮遊戲中，我們需要檢查玩家是否可以安全移動：</p>
 
-                <div class="blocks">
-                    <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？ 且 不是 碰到顏色 (#000000)？</span>
-                        <div class="substack">
-                            <div class="block motion">x 改變 <span class="arg">5</span></div>
-                        </div>
-                    </div>
-                </div>
+               
 
                 <div class="info">
                     <strong>💡 程式邏輯解析：</strong>
@@ -734,82 +728,9 @@
                 </div>
             </div>
 
-            <h3>🏗️ 巢狀選擇結構</h3>
-            <div class="step">
-                <h4>什麼是巢狀結構？</h4>
-                <p>巢狀選擇結構是指在一個條件判斷內部，再包含另一個條件判斷的結構。</p>
+            
 
-                <div class="blocks">
-                    <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
-                        <div class="substack">
-                            <div class="block control">如果 <span class="arg">不是 碰到顏色 (#000000)？</span>
-                                <div class="substack">
-                                    <div class="block motion">y 改變 <span class="arg">5</span></div>
-                                </div>
-                            </div>
-                            <div class="block control">否則
-                                <div class="substack">
-                                    <div class="block sound">播放音效 <span class="arg">碰撞</span></div>
-                                    <div class="block looks">說出 <span class="arg">撞到牆了！</span> <span class="arg">1</span> 秒</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>實作：完整的移動控制系統</h4>
-                <p>結合複合條件和巢狀結構，建立完整的角色移動控制：</p>
-
-                <div class="blocks">
-                    <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
-                    <div class="block control c-block">重複無限次
-                        <div class="substack">
-                            <div class="block control">如果 <span class="arg">按鍵 [上鍵] 被按下？</span>
-                                <div class="substack">
-                                    <div class="block motion">y 改變 <span class="arg">3</span></div>
-                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
-                                        <div class="substack">
-                                            <div class="block motion">y 改變 <span class="arg">-3</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block control">如果 <span class="arg">按鍵 [下鍵] 被按下？</span>
-                                <div class="substack">
-                                    <div class="block motion">y 改變 <span class="arg">-3</span></div>
-                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
-                                        <div class="substack">
-                                            <div class="block motion">y 改變 <span class="arg">3</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block control">如果 <span class="arg">按鍵 [左鍵] 被按下？</span>
-                                <div class="substack">
-                                    <div class="block motion">x 改變 <span class="arg">-3</span></div>
-                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
-                                        <div class="substack">
-                                            <div class="block motion">x 改變 <span class="arg">3</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block control">如果 <span class="arg">按鍵 [右鍵] 被按下？</span>
-                                <div class="substack">
-                                    <div class="block motion">x 改變 <span class="arg">3</span></div>
-                                    <div class="block control">如果 <span class="arg">碰到顏色 (#000000)？</span>
-                                        <div class="substack">
-                                            <div class="block motion">x 改變 <span class="arg">-3</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="success">
                 <strong>✅ 程式設計技巧：</strong>
@@ -854,11 +775,7 @@
                             <div class="block control">否則如果 <span class="arg">碰到顏色 (#00ff00)？</span>
                                 <div class="substack">
                                     <div class="block looks">說出 <span class="arg">恭喜過關！</span> <span class="arg">0.1</span> 秒</div>
-                                    <div class="block motion c-block">重複無限次
-                                        <div class="substack">
-                                            <div class="block motion">右轉 <span class="arg">15</span> 度</div>
-                                        </div>
-                                    </div>
+                                        <div class="block control">停止 <span class="arg">全部
                                 </div>
                             </div>
                         </div>
