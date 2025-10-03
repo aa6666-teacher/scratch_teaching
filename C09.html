@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch抓魚遊戲教學講義</title>
+    <title>C09 抓魚遊戲—計時與背景多重選擇結構 - Scratch教學</title>
     <style>
         * {
             margin: 0;
@@ -12,222 +12,322 @@
         }
 
         body {
-            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
             line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ECDC4 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .header .subtitle {
+        .header p {
             font-size: 1.2em;
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
-        .content {
-            padding: 40px;
-        }
-
-        .section {
-            margin-bottom: 40px;
-            padding: 25px;
+        .nav-menu {
             background: #f8f9fa;
-            border-radius: 15px;
-            border-left: 5px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
-        .section h2 {
-            color: #ff6b6b;
+        .nav-menu a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chapter h2 {
+            color: #667eea;
             font-size: 1.8em;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
         }
 
-        .section h2::before {
-            content: "🎮";
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        .section h3 {
-            color: #4a5568;
+        .chapter h3 {
+            color: #764ba2;
             font-size: 1.4em;
-            margin: 20px 0 15px 0;
-            padding-left: 15px;
-            border-left: 3px solid #ffd93d;
+            margin-top: 25px;
+            margin-bottom: 15px;
         }
 
-        .scratch-block {
-            background: linear-gradient(135deg, #4C97FF 0%, #3373CC 100%);
+        .concept-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 20px;
-            margin: 10px 0;
+            padding: 20px;
             border-radius: 10px;
-            font-family: "Courier New", monospace;
-            font-size: 1em;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            position: relative;
-            padding-left: 40px;
+            margin: 20px 0;
         }
 
-        .scratch-block::before {
-            content: "⚙️";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2em;
+        .concept-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
         }
 
-        .scratch-block.event {
-            background: linear-gradient(135deg, #FFBF00 0%, #FF9500 100%);
-        }
-
-        .scratch-block.control {
-            background: linear-gradient(135deg, #FFAB19 0%, #FF8C00 100%);
-        }
-
-        .scratch-block.motion {
-            background: linear-gradient(135deg, #4C97FF 0%, #3373CC 100%);
-        }
-
-        .scratch-block.looks {
-            background: linear-gradient(135deg, #9966FF 0%, #774DCB 100%);
-        }
-
-        .scratch-block.variable {
-            background: linear-gradient(135deg, #FF8C1A 0%, #DB6E00 100%);
-        }
-
-        .nested {
-            margin-left: 30px;
-            border-left: 3px dashed rgba(255,255,255,0.3);
-            padding-left: 15px;
-        }
-
-        .tip {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
+        .step {
+            background: white;
+            padding: 20px;
             margin: 15px 0;
-            border-radius: 8px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .tip::before {
-            content: "💡 提示：";
-            font-weight: bold;
-            color: #856404;
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
         }
 
         .warning {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
             padding: 15px;
-            margin: 15px 0;
             border-radius: 8px;
-        }
-
-        .warning::before {
-            content: "⚠️ 注意：";
-            font-weight: bold;
-            color: #721c24;
-        }
-
-        .step-list {
-            counter-reset: step-counter;
-            list-style: none;
-        }
-
-        .step-list li {
-            counter-increment: step-counter;
             margin: 15px 0;
-            padding-left: 50px;
-            position: relative;
         }
 
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #ff6b6b;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-        }
-
-        .challenge {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .challenge h3 {
-            color: #c92a2a;
-            border-left-color: #c92a2a;
-        }
-
-        .score-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .score-table th {
-            background: #4C97FF;
-            color: white;
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
             padding: 15px;
-            text-align: center;
-            font-size: 1.1em;
+            border-radius: 8px;
+            margin: 15px 0;
         }
 
-        .score-table td {
-            padding: 12px;
+        .info {
+            background: #cce7ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .game-demo {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 2px dashed #667eea;
+        }
+
+        .game-demo h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .homework h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .homework-item {
             background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
         }
 
-        .score-table tr:nth-child(even) td {
-            background: #f8f9fa;
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
         }
 
         .footer {
             background: #2d3748;
             color: white;
-            padding: 20px;
             text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
         }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
 
         .sprite-tag {
             display: inline-block;
@@ -239,228 +339,570 @@
             margin: 5px;
             font-weight: bold;
         }
+
+        .challenge-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #ff6b6b;
+        }
+
+        .challenge-box h3 {
+            color: #c92a2a;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎣 Scratch 抓魚遊戲</h1>
-            <div class="subtitle">計時與背景多重選擇結構教學</div>
+            <h1>🎣 C09 抓魚遊戲</h1>
+            <p>計時與背景多重選擇結構教學</p>
+            
+            <div class="concept-box" style="margin-top: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                <h3>📥 下載連結（保持原檔名不改）</h3>
+                <p><strong>基本程式檔：</strong></p>
+                <p><a href="https://drive.google.com/file/d/1P0hEphN-DGl-7QA6l9-48kEW2oS-kA2f/view?usp=sharing" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">8xxxx-9.sb3（Google Drive）</a></p>
+                <p style="font-size: 0.9em; margin-top: 10px;">原檔說明：用滑鼠左鍵點選下載，檔名不要修改</p>
+            </div>
         </div>
 
-        <div class="content">
-            <!-- 準備工作 -->
-            <div class="section">
-                <h2>準備工作</h2>
-                <ul class="step-list">
-                    <li>下載老師提供的基本檔案（8xxxx-9.sb3）</li>
-                    <li>匯入檔案後，將檔名修改為：<strong>學號-9.sb3</strong>（例如：81760-9.sb3）</li>
-                    <li>確認所有角色和背景都已正確匯入</li>
+        <div class="nav-menu">
+            <a href="#intro">課程概觀</a>
+            <a href="#download">下載連結</a>
+            <a href="#design">角色設計</a>
+            <a href="#program">程式實作</a>
+            <a href="#challenges">進階挑戰</a>
+            <a href="#homework">作業評量</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>📚 第一章：課程概觀</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 核心概念</h4>
+                <ul>
+                    <li>自訂計時器（正數／倒數）</li>
+                    <li>分身（魚、鯊魚）與隨機生成</li>
+                    <li>事件驅動與碰撞偵測（蛙人 vs 魚／鯊魚）</li>
+                    <li>多重選擇結構（if…else if…）切換背景作為關卡判定</li>
+                    <li>遊戲化要素（計分、扣分、過關、時間到/停止全部）</li>
                 </ul>
             </div>
 
-            <!-- 一、遊戲計時 -->
-            <div class="section">
-                <h2>一、遊戲計時功能</h2>
-                <h3><span class="sprite-tag">舞台</span> 建立計時器</h3>
-                <p>設定30秒計時，時間到後背景切換為「時間到」，遊戲停止。</p>
+            <h3>🎮 抓魚積分遊戲介紹</h3>
+            <div class="step">
+                <h4>遊戲玩法</h4>
+                <p>玩家控制蛙人在海中抓魚獲得積分，同時要躲避鯊魚的攻擊。遊戲有時間限制，需要在30秒內達到目標分數才能過關。</p>
+            </div>
 
-                <div class="warning">計時的迴圈裡面，每一秒才會執行一次，勿擺放其他程式！</div>
+            <div class="game-demo">
+                <h4>遊戲元素展示</h4>
+                <p><strong>玩家角色：</strong>蛙人（跟隨滑鼠移動）</p>
+                <p><strong>目標：</strong>魚（大量分身，隨機出現）</p>
+                <p><strong>敵人：</strong>鯊魚（2隻，追逐玩家）</p>
+                <p><strong>計分：</strong>抓到魚 +1分，被鯊魚咬 -4分</p>
+            </div>
 
-                <ul class="step-list">
-                    <li>
-                        <strong>建立變數「秒數」</strong>
-                        <div class="scratch-block variable">建立變數：秒數</div>
-                    </li>
-                    <li>
-                        <strong>初始化設定</strong>
-                        <div class="scratch-block event">當 🏁 被點擊</div>
-                        <div class="scratch-block variable nested">隱藏變數 [秒數]</div>
-                    </li>
-                    <li>
-                        <strong>開始計時</strong>
-                        <div class="scratch-block event">當收到訊息 [go]</div>
-                        <div class="nested">
-                            <div class="scratch-block variable">顯示變數 [秒數]</div>
-                            <div class="scratch-block variable">設定 [秒數] 為 (0)</div>
-                            <div class="scratch-block control">重複無限次</div>
-                            <div class="nested">
-                                <div class="scratch-block control">等待 (1) 秒</div>
-                                <div class="scratch-block variable">改變 [秒數] (1)</div>
-                                <div class="scratch-block control">如果 [秒數] = (30) 那麼</div>
-                                <div class="nested">
-                                    <div class="scratch-block looks">背景換成 [時間到]</div>
-                                    <div class="scratch-block control">停止 [全部]</div>
+            <div class="info">
+                <strong>💡 學習重點：</strong>本課程將深入學習「計時系統」、「分身管理」、「碰撞偵測」和「多重選擇結構」等核心程式設計概念。
+            </div>
+        </div>
+
+        <div id="download" class="chapter">
+            <h2>📥 第二章：下載連結與檔名規範</h2>
+
+            <h3>📋 檔案下載</h3>
+            <div class="step">
+                <h4>基本程式檔下載</h4>
+                <p><strong>下載連結：</strong><a href="https://drive.google.com/file/d/1P0hEphN-DGl-7QA6l9-48kEW2oS-kA2f/view?usp=sharing" target="_blank">8xxxx-9.sb3（Google Drive）</a></p>
+                <p><strong>下載步驟：</strong></p>
+                <ol>
+                    <li>點擊上方連結進入Google Drive</li>
+                    <li>點選「下載」按鈕</li>
+                    <li>將檔案儲存到電腦</li>
+                    <li>檔名先不要修改，保持原檔名</li>
+                </ol>
+            </div>
+
+            <h3>📝 檔名規範</h3>
+            <div class="step">
+                <h4>繳交命名規則</h4>
+                <ul>
+                    <li><strong>匯入老師的基本檔後，改成自己的檔名</strong></li>
+                    <li><strong>格式：</strong>學號-9.sb3</li>
+                    <li><strong>範例：</strong>81760-9.sb3</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 重要提醒：</strong>檔名錯誤（如 81760-X(1).sb3）將扣5分！請務必按照正確格式命名。
+            </div>
+        </div>
+
+        <div id="design" class="chapter">
+            <h2>🎨 第三章：角色與變數設計</h2>
+
+            <h3>🎭 角色設計</h3>
+            <div class="step">
+                <h4>舞台背景</h4>
+                <ul>
+                    <li><strong>開始畫面：</strong>遊戲說明和開始按鈕</li>
+                    <li><strong>第1關：</strong>分數 ≤ 10分</li>
+                    <li><strong>第2關：</strong>分數 11~20分</li>
+                    <li><strong>第3關：</strong>分數 21~30分</li>
+                    <li><strong>闖關成功：</strong>分數 ≥ 31分</li>
+                    <li><strong>時間到：</strong>遊戲結束畫面</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>精靈角色</h4>
+                <ul>
+                    <li><strong>蛙人：</strong>玩家控制角色，跟隨滑鼠移動</li>
+                    <li><strong>魚：</strong>會大量分身，隨機位置出現</li>
+                    <li><strong>鯊魚：</strong>可用分身做2隻，追逐玩家</li>
+                </ul>
+            </div>
+
+            <h3>🔢 變數設計</h3>
+            <div class="step">
+                <h4>必要變數</h4>
+                <ul>
+                    <li><strong>秒數：</strong>計時器變數</li>
+                    <li><strong>分數：</strong>遊戲積分</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>廣播訊息</h4>
+                <ul>
+                    <li><strong>go：</strong>開始遊戲</li>
+                    <li><strong>timeup：</strong>時間到（選用）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="program" class="chapter">
+            <h2>⚙️ 第四章：Scratch 程式實作</h2>
+
+            <h3>🏠 (A) 舞台：計時器與關卡邏輯</h3>
+            <div class="step">
+                <h4>正數30秒版本（入門版）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗</span> 被點擊</div>
+                    <div class="block looks">隱藏變數 <span class="arg">秒數</span></div>
+                    <div class="block looks">隱藏變數 <span class="arg">分數</span></div>
+                    <div class="block looks">切換背景到 <span class="arg">開始畫面</span></div>
+                    <div class="block looks">顯示自己的班級座號姓名</div>
+                </div>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">空白鍵</span></div>
+                    <div class="block events">廣播 <span class="arg">go</span></div>
+                </div>
+
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">顯示變數 <span class="arg">秒數</span></div>
+                    <div class="block looks">顯示變數 <span class="arg">分數</span></div>
+                    <div class="block variables">將 <span class="arg">秒數</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">分數</span> 設為 <span class="arg">0</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">1</span> 秒</div>
+                            <div class="block variables">秒數 改變 <span class="arg">1</span></div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">秒數</span> = <span class="arg">30</span></span>
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">時間到</span></div>
+                                    <div class="block control">停止 <span class="arg">全部</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">10</span></span>
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">第1關</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">20</span></span>
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">第2關</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">30</span></span>
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">第3關</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">闖關成功</span></div>
+                                    <div class="block control">停止 <span class="arg">全部</span></div>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
-
-                <div class="tip">進階練習：將正數計時改成倒數計時（從30倒數到0），建議先用3秒測試！</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 二、建立魚的分身 -->
-            <div class="section">
-                <h2>二、建立魚的分身</h2>
-                <h3><span class="sprite-tag">魚</span> 角色程式設計</h3>
+            <div class="step">
+                <h4>倒數版本（進階，先用3秒測試）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">顯示變數 <span class="arg">秒數</span></div>
+                    <div class="block looks">顯示變數 <span class="arg">分數</span></div>
+                    <div class="block variables">將 <span class="arg">分數</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">秒數</span> 設為 <span class="arg">3</span></div> <span class="comment">// 實作確認後改30</span>
+                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">秒數</span> = <span class="arg">0</span></span>
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">1</span> 秒</div>
+                            <div class="block variables">秒數 改變 <span class="arg">-1</span></div>
+                        </div>
+                    </div>
+                    <div class="block looks">切換背景到 <span class="arg">時間到</span></div>
+                    <div class="block control">停止 <span class="arg">全部</span></div>
+                </div>
+            </div>
 
-                <ul class="step-list">
-                    <li>
-                        <strong>產生分身</strong>
-                        <div class="scratch-block event">當收到訊息 [go]</div>
-                        <div class="nested">
-                            <div class="scratch-block looks">隱藏</div>
-                            <div class="scratch-block control">重複無限次</div>
-                            <div class="nested">
-                                <div class="scratch-block control">等待 (0.1) 或 (0.2) 秒</div>
-                                <div class="tip">單號同學用0.1秒，雙號同學用0.2秒</div>
-                                <div class="scratch-block control">建立 [自己] 的分身</div>
-                                <div class="scratch-block looks">造型換成 [下一個]</div>
+            <div class="warning">
+                <strong>⚠️ 教學重點：</strong>計時迴圈內不要擺其他程式，否則會變成「每秒才執行一次」導致角色卡頓。
+            </div>
+
+            <h3>🐟 (B) 魚：大量分身、隨機位置、造型切換</h3>
+            <div class="step">
+                <h4>產生魚分身（單／雙號節律）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">隱藏</div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">0.1</span> 秒</div> <span class="comment">// 單號：每0.1秒／雙號：每0.2秒</span>
+                            <div class="block looks">下一個造型</div> <span class="comment">// 記得在「建立分身」前換造型</span>
+                            <div class="block control">建立分身</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>分身行為（顯示＋隨機位置）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當分身被建立</div>
+                    <div class="block looks">顯示</div>
+                    <div class="block motion">定位到 x: <span class="block operators">在 <span class="arg">-220</span> 到 <span class="arg">220</span> 之間取隨機數</span> y: <span class="block operators">在 <span class="arg">-160</span> 到 <span class="arg">160</span> 之間取隨機數</span></div>
+                    <div class="block control c-block">重複直到 <span class="block operators">碰到 <span class="arg">蛙人</span> 或 碰到 <span class="arg">邊緣</span></span>
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">0.02</span> 秒</div> <span class="comment">// 可加一點漂移效果</span>
+                        </div>
+                    </div>
+                    <div class="block control">如果 <span class="block sensing">碰到 <span class="arg">蛙人</span></span>
+                        <div class="substack">
+                            <div class="block variables">分數 改變 <span class="arg">1</span></div>
+                        </div>
+                    </div>
+                    <div class="block control">刪除分身</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>高分題：分身尺寸隨機（增加視覺變化）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當分身被建立</div>
+                    <div class="block looks">顯示</div>
+                    <div class="block looks">設置大小為 <span class="block operators">在 <span class="arg">20</span> 到 <span class="arg">60</span> 之間取隨機數</span> %</div>
+                    <div class="block motion">定位到 x: <span class="block operators">在 <span class="arg">-220</span> 到 <span class="arg">220</span> 之間取隨機數</span> y: <span class="block operators">在 <span class="arg">-160</span> 到 <span class="arg">160</span> 之間取隨機數</span></div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 小提醒：</strong>如果「魚一直瘋狂跑出」，多半是「沒有等間隔再建立分身」或「造型切換寫錯位置」。
+            </div>
+
+            <h3>🏊 (C) 蛙人：玩家操控，跟隨滑鼠</h3>
+            <div class="step">
+                <h4>蛙人控制程式</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">顯示</div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">面朝 <span class="arg">滑鼠</span> 方向</div>
+                            <div class="block motion">移到 <span class="arg">滑鼠指標</span></div>
+                            <div class="block control">如果 <span class="block sensing">碰到 <span class="arg">鯊魚</span></span>
+                                <div class="substack">
+                                    <div class="block looks">隱藏</div>
+                                    <div class="block control">等待 <span class="arg">0.5</span> 秒</div>
+                                    <div class="block motion">移到 <span class="arg">滑鼠指標</span></div>
+                                    <div class="block looks">下一個造型</div> <span class="comment">// 做被咬的視覺反饋</span>
+                                    <div class="block looks">顯示</div>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                    <li>
-                        <strong>分身行為</strong>
-                        <div class="scratch-block event">當分身產生</div>
-                        <div class="nested">
-                            <div class="scratch-block looks">顯示</div>
-                            <div class="scratch-block motion">定位到 x:(隨機取數-200到200) y:(隨機取數-150到150)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🦈 (D) 鯊魚：追逐蛙人、咬人特效</h3>
+            <div class="step">
+                <h4>單隻版本</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">顯示</div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">面朝 <span class="arg">蛙人</span> 方向</div>
+                            <div class="block motion">移動 <span class="arg">5</span> 步</div> <span class="comment">// 自訂速度</span>
+                            <div class="block control">等待 <span class="arg">0.01</span> 秒</div>
+                            <div class="block looks">下一個造型</div> <span class="comment">// 形成「咬人」動畫感</span>
                         </div>
-                    </li>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>高分題：用分身方式做出「2隻鯊魚、間隔3秒出現、隨機位置」</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block looks">隱藏</div>
+                    <div class="block control c-block">重複 <span class="arg">2</span> 次
+                        <div class="substack">
+                            <div class="block control">等待 <span class="arg">3</span> 秒</div>
+                            <div class="block control">建立分身</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blocks">
+                    <div class="block events hat">當分身被建立</div>
+                    <div class="block looks">顯示</div>
+                    <div class="block motion">定位到 x: <span class="block operators">在 <span class="arg">-220</span> 到 <span class="arg">220</span> 之間取隨機數</span> y: <span class="block operators">在 <span class="arg">-160</span> 到 <span class="arg">160</span> 之間取隨機數</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block motion">面朝 <span class="arg">蛙人</span> 方向</div>
+                            <div class="block motion">移動 <span class="arg">5</span> 步</div>
+                            <div class="block control">等待 <span class="arg">0.01</span> 秒</div>
+                            <div class="block looks">下一個造型</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 作業規範：</strong>必須用分身方法產生2隻鯊魚才拿滿分！
+            </div>
+
+            <h3>🏆 (E) 得分／扣分與過關</h3>
+            <div class="step">
+                <h4>扣分（蛙人碰到鯊魚 -4）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="block sensing">碰到 <span class="arg">鯊魚</span></span>
+                                <div class="substack">
+                                    <div class="block variables">分數 改變 <span class="arg">-4</span></div>
+                                    <div class="block control">等待 <span class="arg">0.2</span> 秒</div> <span class="comment">// 防止一次碰撞扣很多分</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>過關（分數 > 30即過關）</h4>
+                <div class="blocks">
+                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                    <div class="block control c-block">重複無限次
+                        <div class="substack">
+                            <div class="block control">如果 <span class="block operators"><span class="arg">分數</span> > <span class="arg">30</span></span>
+                                <div class="substack">
+                                    <div class="block looks">切換背景到 <span class="arg">闖關成功</span></div>
+                                    <div class="block control">停止 <span class="arg">全部</span></div>
+                                </div>
+                            </div>
+                            <div class="block control">等待 <span class="arg">0.05</span> 秒</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="challenges" class="chapter">
+            <h2>🚀 第五章：進階挑戰與常見錯誤</h2>
+
+            <h3>🔧 常見錯誤與排除</h3>
+            <div class="step">
+                <h4>常見問題解決</h4>
+                <ul>
+                    <li><strong>計時卡頓：</strong>把角色行為塞進「每秒等待一次」的計時迴圈 → 改為分離腳本</li>
+                    <li><strong>魚無限暴增：</strong>缺少生成間隔或把「切換造型」放錯位置</li>
+                    <li><strong>過關條件無效：</strong>關卡判斷寫在角色腳本、或沒有處理分數下降→回前關 → 建議統一由舞台管理</li>
                 </ul>
-
-                <div class="warning">若魚一直跑出來，可能是沒有設定「等待」時間，或造型切換位置錯誤！</div>
             </div>
 
-            <!-- 三、角色移動 -->
-            <div class="section">
-                <h2>三、設定角色移動方式</h2>
-                
-                <h3><span class="sprite-tag">蛙人</span> 跟隨滑鼠移動</h3>
-                <div class="scratch-block event">當收到訊息 [go]</div>
-                <div class="nested">
-                    <div class="scratch-block control">重複無限次</div>
-                    <div class="nested">
-                        <div class="scratch-block motion">面朝 [鼠標▼] 方向</div>
-                        <div class="scratch-block control">如果 碰到 [鯊魚▼] 那麼</div>
-                        <div class="nested">
-                            <div class="scratch-block looks">隱藏</div>
-                            <div class="scratch-block control">等待 (0.5) 秒</div>
-                            <div class="scratch-block motion">定位到 [鼠標▼]</div>
-                            <div class="scratch-block looks">造型換成 [下一個]</div>
-                            <div class="scratch-block looks">顯示</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3><span class="sprite-tag">鯊魚</span> 追逐蛙人</h3>
-                <div class="scratch-block event">當收到訊息 [go]</div>
-                <div class="nested">
-                    <div class="scratch-block control">重複無限次</div>
-                    <div class="nested">
-                        <div class="scratch-block motion">面朝 [蛙人▼] 方向</div>
-                        <div class="scratch-block control">等待 (0.01) 秒</div>
-                        <div class="scratch-block looks">造型換成 [下一個]</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 高分題 -->
-            <div class="section challenge">
-                <h2>🏆 高分挑戰題</h2>
-                <p>完成以下功能可獲得額外分數：</p>
-
+            <h3>🏆 進階挑戰項目</h3>
+            <div class="challenge-box">
                 <h3>1. 顯示個人資訊（基礎）</h3>
                 <p>當綠旗被按下時，背景畫面顯示班級、座號、姓名</p>
+            </div>
 
+            <div class="challenge-box">
                 <h3>2. 魚的視覺效果（基礎）</h3>
                 <p>分身產生時，尺寸設為隨機20%~60%，增加視覺豐富度</p>
-                <div class="scratch-block variable">尺寸設為 (隨機取數 20 到 60) %</div>
+            </div>
 
+            <div class="challenge-box">
                 <h3>3. 計分系統（中等）</h3>
                 <p>魚碰到蛙人時得1分，分身刪除</p>
-                <div class="scratch-block control">如果 碰到 [蛙人▼] 那麼</div>
-                <div class="nested">
-                    <div class="scratch-block variable">改變 [得分] (1)</div>
-                    <div class="scratch-block control">刪除此分身</div>
-                </div>
+            </div>
 
+            <div class="challenge-box">
                 <h3>4. 扣分系統（中等）</h3>
                 <p>蛙人碰到鯊魚時扣4分</p>
+            </div>
 
+            <div class="challenge-box">
                 <h3>5. 過關判斷（中等）</h3>
                 <p>得分超過30分（不含30），背景切換為「闖關成功」，程式全部停止</p>
+            </div>
 
+            <div class="challenge-box">
                 <h3>6. 鯊魚分身系統（進階，5%）</h3>
                 <p>使用分身方法產生2隻鯊魚，間隔3秒隨機出現</p>
                 <div class="warning">未使用分身方法只得2分！</div>
-
-                <h3>7. 背景多重切換（進階）</h3>
-                <p>根據分數切換不同關卡背景，分數減少時會回到前一關</p>
-
-                <table class="score-table">
-                    <thead>
-                        <tr>
-                            <th>關卡</th>
-                            <th>第1關</th>
-                            <th>第2關</th>
-                            <th>第3關</th>
-                            <th>恭喜過關</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>分數條件</strong></td>
-                            <td>≤ 10分</td>
-                            <td>11~20分</td>
-                            <td>21~30分</td>
-                            <td>≥ 31分</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="tip">使用「如果...否則...如果...否則」多重選擇結構可獲得較高分數！</div>
-
-                <p><strong>參考程式結構：</strong></p>
-                <div class="scratch-block control">重複無限次</div>
-                <div class="nested">
-                    <div class="scratch-block control">如果 [得分] ≥ (31) 那麼</div>
-                    <div class="nested">
-                        <div class="scratch-block looks">背景換成 [恭喜過關]</div>
-                    </div>
-                    <div class="scratch-block control">否則 如果 [得分] ≥ (21) 那麼</div>
-                    <div class="nested">
-                        <div class="scratch-block looks">背景換成 [第3關]</div>
-                    </div>
-                    <div class="scratch-block control">否則 如果 [得分] ≥ (11) 那麼</div>
-                    <div class="nested">
-                        <div class="scratch-block looks">背景換成 [第2關]</div>
-                    </div>
-                    <div class="scratch-block control">否則</div>
-                    <div class="nested">
-                        <div class="scratch-block looks">背景換成 [第1關]</div>
-                    </div>
-                </div>
             </div>
 
-            <!-- 作業繳交 -->
-            <div class="section">
-                <h2>📤 作業繳交注意事項</h2>
-                <ul class="step-list">
+            <div class="challenge-box">
+                <h3>7. 背景多重切換（進階）</h3>
+                <p>根據分數切換不同關卡背景，分數減少時會回到前一關</p>
+            </div>
+
+            <h3>📊 關卡分數對照表</h3>
+            <table>
+                <tr>
+                    <th>關卡</th>
+                    <th>第1關</th>
+                    <th>第2關</th>
+                    <th>第3關</th>
+                    <th>恭喜過關</th>
+                </tr>
+                <tr>
+                    <td><strong>分數條件</strong></td>
+                    <td>≤ 10分</td>
+                    <td>11~20分</td>
+                    <td>21~30分</td>
+                    <td>≥ 31分</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="homework" class="homework">
+            <h2>📝 第六章：作業設計與學習評量</h2>
+
+            <h3>🎯 評量標準</h3>
+            <div class="homework-item">
+                <h4>基本功能（60分）</h4>
+                <ul>
+                    <li>計時器功能正常運作</li>
+                    <li>魚分身系統建立</li>
+                    <li>蛙人跟隨滑鼠移動</li>
+                    <li>鯊魚追逐功能</li>
+                    <li>基本計分系統</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>進階功能（30分）</h4>
+                <ul>
+                    <li>鯊魚分身系統（2隻，間隔3秒）</li>
+                    <li>背景多重切換</li>
+                    <li>魚的隨機尺寸</li>
+                    <li>個人資訊顯示</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>創意表現（10分）</h4>
+                <ul>
+                    <li>視覺效果優化</li>
+                    <li>遊戲平衡調整</li>
+                    <li>額外功能設計</li>
+                </ul>
+            </div>
+
+            <h3>📤 繳交流程</h3>
+            <div class="step">
+                <h4>繳交步驟</h4>
+                <ol>
                     <li>確認檔名格式：<strong>學號-9.sb3</strong>（例如：81760-9.sb3）</li>
                     <li>存檔前再次確認檔名正確</li>
-                    <li>下載檔案並上傳至 Google Classroom 作業處</li>
+                    <li>下載檔案並上傳至Google Classroom作業處</li>
                     <li>完成「已繳交」動作</li>
-                </ul>
-                <div class="warning">檔名錯誤（如 81760-X(1).sb3）將扣 5 分！</div>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 重要提醒：</strong>檔名錯誤（如 81760-X(1).sb3）將扣5分！請務必按照正確格式命名。
             </div>
         </div>
 
         <div class="footer">
-            <p>💻 資訊課程教學講義 | Scratch 程式設計</p>
-            <p>祝各位同學學習順利！</p>
+            <p>© 2024 銘傳資科 - Scratch 程式設計課程</p>
+            <p>抓魚遊戲—計時與背景多重選擇結構</p>
         </div>
     </div>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop(); return false;">⬆️ 回到頂部</a>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                if (backToTop) backToTop.style.display = 'block';
+            } else {
+                if (backToTop) backToTop.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
