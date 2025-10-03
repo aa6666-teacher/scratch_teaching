@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📘 Scratch 變數講義整合版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chapter h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .chapter h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: #cce7ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .exercise-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .exercise-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .answer-box {
+            background: #e8f5e8;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .answer-box h5 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .variable-demo {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .variable-demo h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .variable-example {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .variable-example .name {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 50%;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .variable-example .value {
+            flex: 1;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .variable-example .type {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .formula {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        .formula .step {
+            margin: 5px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .formula .result {
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📘 Scratch 變數講義整合版</h1>
+            <p>變數概念、操作與練習完整教學</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="#intro">變數概念</a>
+            <a href="#types">變數種類</a>
+            <a href="#operations">變數操作</a>
+            <a href="#order">程式順序</a>
+            <a href="#basic">基礎練習</a>
+            <a href="#advanced">進階挑戰</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>📚 一、什麼是變數？</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 變數定義</h4>
+                <p><strong>變數 (Variable)</strong> 是電腦程式中一個用來儲存資料的位置，就像一個有名字的容器，可以記錄數字或文字，而且內容可以隨時改變。</p>
+            </div>
+
+            <div class="variable-demo">
+                <h4>📦 變數就像容器</h4>
+                <div class="variable-example">
+                    <div class="name">分數</div>
+                    <div class="value">85</div>
+                    <div class="type">數字</div>
+                </div>
+                <div class="variable-example">
+                    <div class="name">玩家名稱</div>
+                    <div class="value">小明</div>
+                    <div class="type">文字</div>
+                </div>
+                <div class="variable-example">
+                    <div class="name">生命值</div>
+                    <div class="value">3</div>
+                    <div class="type">數字</div>
+                </div>
+            </div>
+
+            <h3>🎮 變數在遊戲中的應用</h3>
+            <div class="step">
+                <h4>常見遊戲變數</h4>
+                <ul>
+                    <li><strong>分數：</strong>記錄玩家得分</li>
+                    <li><strong>生命值：</strong>記錄剩餘生命</li>
+                    <li><strong>經驗值：</strong>角色成長指標</li>
+                    <li><strong>關卡數：</strong>遊戲進度</li>
+                    <li><strong>玩家名字：</strong>個人化設定</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 實際例子：</strong>LOL 或手遊裡角色的 HP、MP、金錢，就是用變數來存放。如果沒有變數，遊戲就不可能運作！
+            </div>
+        </div>
+
+        <div id="types" class="chapter">
+            <h2>🔧 二、Scratch 中的變數種類</h2>
+
+            <div class="concept-box">
+                <h4>📋 兩種變數類型</h4>
+                <p>Scratch 提供兩種變數，選擇不同的適用範圍：</p>
+            </div>
+
+            <h3>🏠 區域變數 (Local Variable)</h3>
+            <div class="step">
+                <h4>建立方式</h4>
+                <p>建立時選「<strong>僅適用於當前角色</strong>」</p>
+                
+                <div class="blocks">
+                    <div class="block variables">建立變數 <span class="arg">速度</span> <span class="arg">僅適用於此角色</span></div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>特點說明</h4>
+                <ul>
+                    <li>僅能在這個角色中使用</li>
+                    <li>例如：角色 A 的「速度」不會影響角色 B</li>
+                    <li>適合儲存角色專屬的屬性</li>
+                </ul>
+            </div>
+
+            <h3>🌍 全域變數 (Global Variable)</h3>
+            <div class="step">
+                <h4>建立方式</h4>
+                <p>建立時選「<strong>適用所有角色</strong>」</p>
+                
+                <div class="blocks">
+                    <div class="block variables">建立變數 <span class="arg">分數</span> <span class="arg">所有角色</span></div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>特點說明</h4>
+                <ul>
+                    <li>所有角色與背景都能共用</li>
+                    <li>常見例子：遊戲總分數、遊戲時間</li>
+                    <li>適合儲存遊戲全域狀態</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 小提醒：</strong>Scratch 常用全域變數，但在正式程式開發中過度使用全域變數會讓除錯很困難，所以要小心使用。
+            </div>
+        </div>
+
+        <div id="operations" class="chapter">
+            <h2>⚙️ 三、Scratch 常見變數操作積木</h2>
+
+            <h3>🔧 基本操作積木</h3>
+            <div class="step">
+                <h4>設定變數值</h4>
+                <div class="blocks">
+                    <div class="block variables">將 <span class="arg">分數</span> 設為 <span class="arg">0</span></div>
+                </div>
+                <p><strong>功能：</strong>把分數直接重設為 0</p>
+            </div>
+
+            <div class="step">
+                <h4>改變變數值</h4>
+                <div class="blocks">
+                    <div class="block variables">將 <span class="arg">分數</span> 改變 <span class="arg">1</span></div>
+                </div>
+                <p><strong>功能：</strong>在原本的基礎上加 1</p>
+            </div>
+
+            <div class="step">
+                <h4>顯示/隱藏變數</h4>
+                <div class="blocks">
+                    <div class="block looks">顯示變數 <span class="arg">分數</span></div>
+                    <div class="block looks">隱藏變數 <span class="arg">分數</span></div>
+                </div>
+                <p><strong>功能：</strong>舞台上顯示/隱藏數值</p>
+            </div>
+
+            <div class="success">
+                <h4>💡 記憶口訣</h4>
+                <ul>
+                    <li><strong>「設為」</strong> = 直接指定（覆蓋原值）</li>
+                    <li><strong>「改變」</strong> = 在原值上加/減（累積計算）</li>
+                </ul>
+            </div>
+
+            <h3>📊 變數操作範例</h3>
+            <div class="formula">
+                <div class="step">將 分數 設為 0</div>
+                <div class="step">將 分數 改變 10</div>
+                <div class="step">將 分數 改變 -3</div>
+                <div class="step result">結果：分數 = 7</div>
+            </div>
+        </div>
+
+        <div id="order" class="chapter">
+            <h2>📋 四、程式順序的重要性</h2>
+
+            <div class="concept-box">
+                <h4>⚡ 執行順序影響結果</h4>
+                <p>Scratch 程式是由上到下依序執行的，順序不同，結果就會不同！</p>
+            </div>
+
+            <h3>🔄 順序範例對比</h3>
+            <div class="step">
+                <h4>範例一：先設為再改變</h4>
+                <div class="formula">
+                    <div class="step">將 A 設為 1</div>
+                    <div class="step">將 A 改變 2</div>
+                    <div class="step result">最後 A = 3</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>範例二：先改變再設為</h4>
+                <div class="formula">
+                    <div class="step">將 A 改變 2</div>
+                    <div class="step">將 A 設為 1</div>
+                    <div class="step result">最後 A = 1</div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 重要提醒：</strong>程式的執行順序非常重要，同樣的積木不同的順序會產生完全不同的結果！
+            </div>
+        </div>
+
+        <div id="basic" class="chapter">
+            <h2>🎯 五、基礎練習範例</h2>
+
+            <div class="concept-box">
+                <h4>📝 練習說明</h4>
+                <p>請試著推理以下程式的最終結果（與 PDF 原始題型一致）：</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>例 1：基本設定與改變</h4>
+                <div class="formula">
+                    <div class="step">將 A 設為 0</div>
+                    <div class="step">將 A 改變 1</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>結果：A = 1</strong></p>
+                    <p>步驟：0 → 0+1 = 1</p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>例 2：遊戲分數計算</h4>
+                <div class="formula">
+                    <div class="step">將 分數 設為 10</div>
+                    <div class="step">角色吃到一個蘋果 (+2)</div>
+                    <div class="step">再吃一個炸彈 (-3)</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>結果：分數 = 9</strong></p>
+                    <p>步驟：10 → 10+2 = 12 → 12-3 = 9</p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>例 3：多次設定與改變</h4>
+                <div class="formula">
+                    <div class="step">將 B 設為 2</div>
+                    <div class="step">然後 將 B 設為 5</div>
+                    <div class="step">最後 將 B 改變 -1</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>結果：B = 4</strong></p>
+                    <p>步驟：2 → 5 → 5-1 = 4</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced" class="chapter">
+            <h2>🚀 六、進階演算練習題（挑戰）</h2>
+
+            <div class="concept-box">
+                <h4>🧠 挑戰說明</h4>
+                <p>這些題目需要多步驟思考，和 Scratch 表單測驗連動：</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>挑戰 1：複雜的變數操作</h4>
+                <div class="formula">
+                    <div class="step">已知：將 X 設為 2</div>
+                    <div class="step">依序執行：</div>
+                    <div class="step">將 X 改變 3</div>
+                    <div class="step">將 X 設為 10</div>
+                    <div class="step">將 X 改變 -4</div>
+                    <div class="step">將 X 改變 X</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>最後 X = ?</strong></p>
+                    <p>步驟：2 → 2+3=5 → 10 → 10-4=6 → 6+6=12</p>
+                    <p><strong>答案：X = 12</strong></p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>挑戰 2：變數互相影響</h4>
+                <div class="formula">
+                    <div class="step">一開始：將 A 設為 5，將 B 設為 2</div>
+                    <div class="step">依序：</div>
+                    <div class="step">將 A 改變 B</div>
+                    <div class="step">將 B 改變 A</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>最後 (A,B) = ?</strong></p>
+                    <p>步驟：(5,2) → A=5+2=7 → (7,2) → B=2+7=9 → (7,9)</p>
+                    <p><strong>答案：(A,B) = (7,9)</strong></p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>挑戰 3：重複操作</h4>
+                <div class="formula">
+                    <div class="step">一開始：將 A 設為 1</div>
+                    <div class="step">重複 3 次：將 A 改變 A</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>最後 A = ?</strong></p>
+                    <p>步驟：1 → 1+1=2 → 2+2=4 → 4+4=8</p>
+                    <p><strong>答案：A = 8</strong></p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>挑戰 4：條件判斷</h4>
+                <div class="formula">
+                    <div class="step">將 X 設為 4</div>
+                    <div class="step">如果 X 是偶數就 將 X 改變 -1</div>
+                    <div class="step">然後如果 X 是奇數就 將 X 改變 2</div>
+                </div>
+                <div class="answer-box">
+                    <h5>💡 解答</h5>
+                    <p><strong>最後 X = ?</strong></p>
+                    <p>步驟：4 → 4是偶數 → 4-1=3 → 3是奇數 → 3+2=5</p>
+                    <p><strong>答案：X = 5</strong></p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h4>🎓 學習要點</h4>
+                <ul>
+                    <li><strong>仔細追蹤：</strong>一步一步追蹤變數的變化</li>
+                    <li><strong>注意順序：</strong>程式的執行順序很重要</li>
+                    <li><strong>條件判斷：</strong>注意條件是否成立</li>
+                    <li><strong>重複計算：</strong>重複操作會產生指數成長</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 銘傳資科 - Scratch 程式設計課程</p>
+            <p>變數講義整合版 - 變數概念、操作與練習</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop(); return false;">⬆️ 回到頂部</a>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                if (backToTop) backToTop.style.display = 'block';
+            } else {
+                if (backToTop) backToTop.style.display = 'none';
+            }
+        });
+
+        // 答案框點擊顯示/隱藏功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                const header = box.querySelector('h5');
+                if (header) {
+                    header.style.cursor = 'pointer';
+                    header.addEventListener('click', function() {
+                        const content = box.querySelector('p');
+                        if (content) {
+                            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
