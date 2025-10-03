@@ -157,6 +157,35 @@
             margin: 15px 0;
             overflow-x: auto;
             line-height: 2;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: #27ae60;
+        }
+
+        .copy-button.copied::after {
+            content: ' ✓';
         }
 
         .code-example .comment {
@@ -583,7 +612,7 @@
                         <p>3. 開始你的第一個Scratch專案！</p>
                         
                         <div class="image-container">
-                            <img src="登入.png" alt="Scratch官網首頁截圖" style="max-width: 100%; height: auto;">
+                            <img src="image/登入.png" alt="Scratch官網首頁截圖" style="max-width: 100%; height: auto;">
                             <div class="image-caption">Scratch官網首頁，點擊右上角的「創作」按鈕開始</div>
                         </div>
                     </div>
@@ -602,7 +631,7 @@
                     </div>
 
                     <div class="image-container">
-                        <img src="版面.png" alt="Scratch操作介面截圖" style="max-width: 100%; height: auto;">
+                        <img src="image/版面.png" alt="Scratch操作介面截圖" style="max-width: 100%; height: auto;">
                         <div class="image-caption">Scratch操作介面，標示各個區域的名稱和功能</div>
                     </div>
                 </div>
@@ -615,7 +644,7 @@
                         <p>在Scratch中，舞台是一個座標系統，用來精確定位角色和繪製圖形。了解座標系統對於程式寫字和繪圖非常重要！</p>
                         
                         <div class="image-container">
-                            <img src="座標.png" alt="Scratch座標系統圖" style="max-width: 100%; height: auto;">
+                            <img src="image/座標.png" alt="Scratch座標系統圖" style="max-width: 100%; height: auto;">
                             <div class="image-caption">Scratch舞台座標系統 - 中心點為(0,0)，X軸控制左右，Y軸控制上下</div>
                         </div>
                         
@@ -702,7 +731,7 @@
                         <p>3. 現在你可以在積木區看到綠色的畫筆積木了！</p>
                         
                         <div class="image-container">
-                            <img src="畫筆.png" alt="加入畫筆擴充功能的步驟截圖" style="max-width: 100%; height: auto;">
+                            <img src="image/畫筆.png" alt="加入畫筆擴充功能的步驟截圖" style="max-width: 100%; height: auto;">
                             <div class="image-caption">加入畫筆擴充功能的步驟</div>
                         </div>
                     </div>
@@ -730,7 +759,7 @@
                         </ol>
                         
                         <div class="image-container">
-                            <img src="存檔.png" alt="Scratch儲存專案步驟截圖" style="max-width: 100%; height: auto;">
+                            <img src="image/存檔.png" alt="Scratch儲存專案步驟截圖" style="max-width: 100%; height: auto;">
                             <div class="image-caption">Scratch儲存專案的操作步驟</div>
                         </div>
                         
@@ -750,7 +779,7 @@
                         </ul>
                         
                         <div class="image-container">
-                            <img src="舞台.png" alt="Scratch舞台區域說明圖" style="max-width: 100%; height: auto;">
+                            <img src="image/舞台.png" alt="Scratch舞台區域說明圖" style="max-width: 100%; height: auto;">
                             <div class="image-caption">Scratch舞台區域 - 繪圖和程式執行的主要區域</div>
                         </div>
                         
@@ -786,6 +815,7 @@
                             </div>
                             <div class="code-toggle-content">
                                 <div class="code-example">
+                                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -896,6 +926,7 @@
                             </div>
                             <div class="code-toggle-content">
                                 <div class="code-example">
+                                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1005,6 +1036,7 @@
                             </div>
                             <div class="code-toggle-content">
                                 <div class="code-example">
+                                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1053,6 +1085,7 @@
                             </div>
                             <div class="code-toggle-content">
                                 <div class="code-example">
+                                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
 <div class="block-line">
     <span class="scratch-block block-events">當 🏁 被點擊</span>
 </div>
@@ -1457,7 +1490,7 @@
                     </div>
 
                     <div class="image-container">
-                        <img src="米字.png" alt="十字和米字的繪製結果截圖" style="max-width: 100%; height: auto;">
+                        <img src="image/米字.png" alt="十字和米字的繪製結果截圖" style="max-width: 100%; height: auto;">
                         <div class="image-caption">十字和米字的繪製結果截圖</div>
                     </div>
                 </div>
@@ -1841,6 +1874,86 @@
                 }
             }
         });
+
+        // 複製程式碼功能
+        function copyCode(button, codeContainer) {
+            const codeText = extractScratchCode(codeContainer);
+            
+            // 使用 Clipboard API 複製文字
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codeText).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopy(codeText, button);
+                });
+            } else {
+                fallbackCopy(codeText, button);
+            }
+        }
+
+        // 提取 Scratch 程式碼文字
+        function extractScratchCode(container) {
+            let codeText = '';
+            const blockLines = container.querySelectorAll('.block-line');
+            
+            blockLines.forEach(line => {
+                const scratchBlocks = line.querySelectorAll('.scratch-block');
+                let lineText = '';
+                
+                scratchBlocks.forEach(block => {
+                    const blockText = block.textContent.trim();
+                    lineText += blockText + ' ';
+                });
+                
+                if (lineText.trim()) {
+                    codeText += lineText.trim() + '\n';
+                }
+            });
+            
+            // 添加說明文字
+            const instructions = '\n\n=== Scratch 程式碼說明 ===\n';
+            const usage = '請將以上程式碼複製到 Scratch 中，按照順序拖拽積木：\n';
+            const tips = '\n提示：\n';
+            const tip1 = '1. 點擊綠旗開始執行\n';
+            const tip2 = '2. 確保畫筆積木已啟用\n';
+            const tip3 = '3. 可以調整筆的顏色和粗細\n';
+            
+            return codeText.trim() + instructions + usage + tips + tip1 + tip2 + tip3;
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            button.classList.add('copied');
+            button.textContent = '已複製';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.textContent = originalText;
+            }, 2000);
+        }
     </script>
 </body>
 </html> 

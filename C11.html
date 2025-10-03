@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C11 認識清單（陣列） - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chapter h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .chapter h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-block::before {
+            content: "點擊複製";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .code-block:hover::before {
+            opacity: 1;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: #cce7ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .game-demo {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .game-demo h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: #6c757d;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .homework h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .homework-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .list-demo {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .list-demo h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item .index {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 50%;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .list-item .value {
+            flex: 1;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .list-item .position {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 C11 認識清單（陣列）</h1>
+            <p>Scratch 清單操作與陣列概念完整教學</p>
+            
+            <div class="concept-box" style="margin-top: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                <h3>📥 下載連結（保持原檔名不改）</h3>
+                <p><strong>基本程式檔：</strong></p>
+                <p><a href="#" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">8XXxx-11.sb3（Google Drive）</a></p>
+                <p style="font-size: 0.9em; margin-top: 10px;">原檔說明：用滑鼠左鍵點選下載，檔名不要修改</p>
+                
+                <p style="margin-top: 15px;"><strong>國文清單範例素材：</strong></p>
+                <p><a href="https://drive.google.com/file/d/1PaKwacu587SSNx8CkWgBnY5JxMRpjFD9/view?usp=sharing" target="_blank" style="color: #fff; text-decoration: underline;">連結 1</a> | 
+                <a href="https://drive.google.com/file/d/1x9m_gQ1gbPOB9GPYKnFJdsUpRFHT5R_Z/view?usp=sharing" target="_blank" style="color: #fff; text-decoration: underline;">連結 2</a></p>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <a href="#intro">課程介紹</a>
+            <a href="#concepts">清單概念</a>
+            <a href="#interactive">互動輸入</a>
+            <a href="#operations">清單操作</a>
+            <a href="#error-handling">錯誤防範</a>
+            <a href="#homework">作業與評量</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>📚 第一章：課程概觀</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 學習重點</h4>
+                <ul>
+                    <li>以互動輸入建立清單、讀寫項目</li>
+                    <li>使用「重複直到…」與條件判斷控制清單長度</li>
+                    <li>清單常用操作：新增、替換、插入、刪除（含倒數項位置）</li>
+                    <li>邏輯健全性檢查：避免重複輸入、空清單/超出範圍處理</li>
+                </ul>
+            </div>
+
+            <h3>📋 清單概念啟動</h3>
+            <div class="step">
+                <h4>什麼是清單？</h4>
+                <ul>
+                    <li>清單是<strong>可按順序儲存多筆資料</strong>的結構（類似陣列）</li>
+                    <li>視覺化監視器可顯示<strong>目前項目數</strong>（空清單＝0；例如顯示「4」代表 4 筆）</li>
+                    <li>「不必知道清單裡有幾項」也能操作倒數項（使用 Scratch 的 <strong>「第（倒數第 n）項」</strong> 這類位置語法）</li>
+                </ul>
+            </div>
+
+            <div class="list-demo">
+                <h4>清單範例：國文成績</h4>
+                <div class="list-item">
+                    <div class="index">1</div>
+                    <div class="value">85</div>
+                    <div class="position">第1項</div>
+                </div>
+                <div class="list-item">
+                    <div class="index">2</div>
+                    <div class="value">92</div>
+                    <div class="position">第2項</div>
+                </div>
+                <div class="list-item">
+                    <div class="index">3</div>
+                    <div class="value">78</div>
+                    <div class="position">第3項</div>
+                </div>
+                <div class="list-item">
+                    <div class="index">4</div>
+                    <div class="value">96</div>
+                    <div class="position">第4項（最後一項）</div>
+                </div>
+                <p style="text-align: center; margin-top: 10px; color: #667eea; font-weight: bold;">清單長度：4</p>
+            </div>
+
+            <div class="info">
+                <strong>💡 程式設計重點：</strong>本課程將深入學習「清單（陣列）」的概念，包括互動輸入、長度控制、四大基本操作，以及錯誤防範機制。
+            </div>
+        </div>
+
+        <div id="concepts" class="chapter">
+            <h2>🛠️ 第二章：清單概念與基本操作</h2>
+
+            <h3>📋 清單的基本概念</h3>
+            <div class="step">
+                <h4>清單特性</h4>
+                <ul>
+                    <li><strong>有序性：</strong>資料按順序儲存，有明確的位置</li>
+                    <li><strong>可變性：</strong>可以新增、修改、刪除項目</li>
+                    <li><strong>長度追蹤：</strong>系統自動記錄清單中有多少項目</li>
+                    <li><strong>位置索引：</strong>每個項目都有位置編號（從1開始）</li>
+                </ul>
+            </div>
+
+            <h3>🎯 清單監視器設定</h3>
+            <div class="step">
+                <h4>步驟一：建立清單</h4>
+                <ol>
+                    <li>在 Scratch 中點選「變數」區塊</li>
+                    <li>點選「建立一個清單」</li>
+                    <li>輸入清單名稱（例如：「國文」）</li>
+                    <li>選擇「適用於所有角色」或「僅適用於此角色」</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4>步驟二：顯示清單監視器</h4>
+                <ol>
+                    <li>將清單監視器拖曳到舞台左上角</li>
+                    <li>確保監視器顯示清單內容和長度</li>
+                    <li>教師上課時可直接可視化清單內容變化</li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 重要提醒：</strong>
+                <ul>
+                    <li>清單名稱要有意義，避免使用數字開頭</li>
+                    <li>建議使用中文名稱，如「國文」、「數學」等</li>
+                    <li>清單監視器位置要固定，方便觀察變化</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="interactive" class="chapter">
+            <h2>🎮 第三章：互動輸入與長度控制</h2>
+
+            <h3>📝 建立與輸入「國文清單」</h3>
+            <div class="step">
+                <h4>互動輸入（點擊精靈觸發）</h4>
+                <p><strong>邏輯：</strong>點擊精靈 → 清空清單 → 反覆詢問並加入清單，直到滿 4 筆 → 顯示清單</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當這個角色被點擊</div>
+                    <div class="block variables">刪除 <span class="arg">國文</span> 清單的所有項目</div>
+                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">國文</span> 清單的長度 = <span class="arg">4</span></span>
+                        <div class="substack">
+                            <div class="block sensing">詢問 <span class="arg">請輸入一筆成績</span> 並等待</div>
+                            <div class="block variables">將 <span class="arg">答案</span> 加入 <span class="arg">國文</span> 清單</div>
+                        </div>
+                    </div>
+                    <div class="block looks">顯示 <span class="arg">國文</span> 清單</div>
+                </div>
+
+                <div class="info">
+                    <strong>💡 教師提醒：</strong>鍵入數字時，<strong>Num Lock</strong> 需開啟，否則可能無法輸入數字。
+                </div>
+            </div>
+
+            <h3>🔄 進階：避免重複輸入</h3>
+            <div class="step">
+                <h4>防重複機制</h4>
+                <p><strong>邏輯：</strong>在「加入前」先判斷：若清單<strong>已包含</strong>該數字 → 顯示「輸入資料重複！」並<strong>不加入</strong>；否則照常加入</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當這個角色被點擊</div>
+                    <div class="block variables">刪除 <span class="arg">國文</span> 清單的所有項目</div>
+                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">國文</span> 清單的長度 = <span class="arg">4</span></span>
+                        <div class="substack">
+                            <div class="block sensing">詢問 <span class="arg">請輸入一筆成績</span> 並等待</div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">國文</span> 清單中包含 <span class="arg">答案</span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">輸入資料重複！</span> <span class="arg">2</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block variables">將 <span class="arg">答案</span> 加入 <span class="arg">國文</span> 清單</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block looks">顯示 <span class="arg">國文</span> 清單</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="operations" class="chapter">
+            <h2>🔧 第四章：清單操作的四種鍵盤任務</h2>
+
+            <h3>⌨️ 鍵盤操作任務</h3>
+            <div class="step">
+                <h4>任務1：當按鍵「1」被按下 - 刪除最後一筆</h4>
+                <p><strong>邏輯：</strong>不必預先知道清單長度，直接用「第（最後一項）」語法刪除</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">1</span> 鍵</div>
+                    <div class="block looks">說出 <span class="arg">刪除清單的最後一筆資料</span> <span class="arg">2</span> 秒</div>
+                    <div class="block variables">刪除 <span class="arg">國文</span> 清單的第 <span class="arg">最後一項</span></div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>任務2：當按鍵「2」被按下 - 替換倒數第2項</h4>
+                <p><strong>邏輯：</strong>先讓使用者輸入新成績，再用「將（清單）的第（倒數第2項）替換為（新值）」覆蓋</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">2</span> 鍵</div>
+                    <div class="block looks">說出 <span class="arg">替換清單倒數第2個位置的資料</span> <span class="arg">2</span> 秒</div>
+                    <div class="block sensing">詢問 <span class="arg">請輸入一筆成績</span> 並等待</div>
+                    <div class="block variables">將 <span class="arg">國文</span> 清單的第 <span class="arg">倒數第2項</span> 替換為 <span class="arg">答案</span></div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>任務3：當按鍵「3」被按下 - 插入到倒數第2項</h4>
+                <p><strong>邏輯：</strong>插入在特定位置會把原位置及之後的資料<strong>向後位移</strong>一格</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">3</span> 鍵</div>
+                    <div class="block looks">說出 <span class="arg">插入資料到清單的倒數第2個位置</span> <span class="arg">2</span> 秒</div>
+                    <div class="block sensing">詢問 <span class="arg">請輸入一筆成績</span> 並等待</div>
+                    <div class="block variables">在 <span class="arg">國文</span> 清單的第 <span class="arg">倒數第2項</span> 插入 <span class="arg">答案</span></div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>任務4：當按鍵「4」被按下 - 有防呆的刪除指定項（高分題）</h4>
+                <p><strong>邏輯：</strong>分3層檢查：A) 清單是否為空？B) 詢問要刪第幾項；若超出範圍 → 提示錯誤。C) 合法範圍 → 刪除該項</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">4</span> 鍵</div>
+                    <div class="block control">如果 <span class="block operators"><span class="arg">國文</span> 清單長度 = <span class="arg">0</span></span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">清單是空的</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
+                    <div class="block control">否則
+                        <div class="substack">
+                            <div class="block sensing">詢問 <span class="arg">要刪除清單第幾項資料？</span> 並等待</div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">答案</span> < <span class="arg">1</span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">無此項目</span> <span class="arg">2</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block operators"><span class="arg">答案</span> > <span class="arg">國文</span> 清單長度</span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">無此項目</span> <span class="arg">2</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block variables">刪除 <span class="arg">國文</span> 清單的第 <span class="arg">答案</span> 項</div>
+                                    <div class="block looks">說出 <span class="arg">資料已刪除</span> <span class="arg">2</span> 秒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>✅ 四大操作重點：</strong>
+                <ul>
+                    <li><strong>刪除最後一筆：</strong>使用「第（最後一項）」語法</li>
+                    <li><strong>替換倒數第二筆：</strong>使用「第（倒數第2項）替換為…」</li>
+                    <li><strong>插入倒數第二筆：</strong>使用「在第（倒數第2項）插入…」</li>
+                    <li><strong>指定刪除含防呆：</strong>檢查空清單和超範圍情況</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="error-handling" class="chapter">
+            <h2>🛡️ 第五章：錯誤防範與邏輯健全性檢查</h2>
+
+            <h3>🔍 常見錯誤情況</h3>
+            <div class="step">
+                <h4>錯誤類型分析</h4>
+                <table>
+                    <tr>
+                        <th>錯誤類型</th>
+                        <th>可能原因</th>
+                        <th>防範方法</th>
+                    </tr>
+                    <tr>
+                        <td>空清單操作</td>
+                        <td>對空清單進行刪除操作</td>
+                        <td>先檢查清單長度是否為0</td>
+                    </tr>
+                    <tr>
+                        <td>超出範圍</td>
+                        <td>指定位置超出清單範圍</td>
+                        <td>檢查位置是否在1到長度之間</td>
+                    </tr>
+                    <tr>
+                        <td>重複輸入</td>
+                        <td>使用者輸入重複資料</td>
+                        <td>加入前先檢查是否已存在</td>
+                    </tr>
+                    <tr>
+                        <td>資料類型錯誤</td>
+                        <td>輸入非數字資料</td>
+                        <td>加入資料驗證機制</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>🛠️ 防呆機制實作</h3>
+            <div class="step">
+                <h4>完整的錯誤處理範例</h4>
+                <p>以下是一個包含完整錯誤處理的清單操作範例：</p>
+
+                <div class="blocks">
+                    <div class="block events hat">當按下 <span class="arg">5</span> 鍵</div>
+                    <div class="block control">如果 <span class="block operators"><span class="arg">國文</span> 清單長度 = <span class="arg">0</span></span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">清單是空的，無法操作</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
+                    <div class="block control">否則
+                        <div class="substack">
+                            <div class="block sensing">詢問 <span class="arg">請輸入要查詢的位置（1到</span> <span class="arg">國文</span> 清單長度 <span class="arg">）</span> 並等待</div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">答案</span> >= <span class="arg">1</span></span>
+                                <div class="substack">
+                                    <div class="block control">如果 <span class="block operators"><span class="arg">答案</span> <= <span class="arg">國文</span> 清單長度</span>
+                                        <div class="substack">
+                                            <div class="block looks">說出 <span class="block operators"><span class="arg">第</span> <span class="arg">答案</span> <span class="arg">項的資料是：</span> <span class="arg">國文</span> 清單的第 <span class="arg">答案</span> 項</div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則
+                                        <div class="substack">
+                                            <div class="block looks">說出 <span class="arg">位置超出範圍！</span> <span class="arg">2</span> 秒</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">位置必須大於等於1！</span> <span class="arg">2</span> 秒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 程式設計最佳實踐：</strong>
+                <ul>
+                    <li>永遠假設使用者會輸入錯誤的資料</li>
+                    <li>提供清楚的錯誤訊息和操作指引</li>
+                    <li>在關鍵操作前進行資料驗證</li>
+                    <li>使用友善的提示訊息，避免技術術語</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="homework" class="homework">
+            <h2>📝 第六章：作業設計與學習評量</h2>
+
+            <h3>🎯 基礎作業</h3>
+            <div class="homework-item">
+                <h4>作業一：基本清單操作 (70分)</h4>
+                <p><strong>要求：</strong></p>
+                <ul>
+                    <li>建立一個「國文」清單</li>
+                    <li>實作點擊角色輸入4筆成績的功能</li>
+                    <li>完成按鍵1-3的基本操作（刪除、替換、插入）</li>
+                    <li>確保清單監視器正確顯示內容</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>作業二：進階功能實作 (85分)</h4>
+                <p><strong>在基礎作業基礎上增加：</strong></p>
+                <ul>
+                    <li>實作按鍵4的防呆刪除功能</li>
+                    <li>加入重複輸入檢查機制</li>
+                    <li>添加資料類型驗證（只接受數字）</li>
+                    <li>設計清單統計功能（最高分、最低分、平均分）</li>
+                </ul>
+            </div>
+
+            <h3>🌟 創意挑戰</h3>
+            <div class="homework-item">
+                <h4>挑戰一：多科目成績管理 (100分)</h4>
+                <p><strong>創新功能：</strong></p>
+                <ul>
+                    <li>建立多個科目清單（國文、數學、英文）</li>
+                    <li>設計科目切換功能</li>
+                    <li>實作跨科目統計分析</li>
+                    <li>加入成績排序功能</li>
+                    <li>設計成績匯出功能</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>挑戰二：互動式清單編輯器</h4>
+                <p><strong>進階挑戰：</strong></p>
+                <ul>
+                    <li>設計圖形化清單編輯介面</li>
+                    <li>實作拖拽排序功能</li>
+                    <li>加入搜尋和過濾功能</li>
+                    <li>設計清單資料備份和還原</li>
+                </ul>
+            </div>
+
+            <h3>📤 作業繳交方式</h3>
+            <div class="step">
+                <h4>繳交檔案要求</h4>
+                <ol>
+                    <li><strong>Scratch專案檔：</strong>儲存為 .sb3 格式，檔名如：81760-11.sb3</li>
+                    <li><strong>功能截圖：</strong>至少4張不同操作的截圖</li>
+                    <li><strong>設計說明：</strong>簡述清單操作特色和創意點</li>
+                    <li><strong>測試報告：</strong>列出所有測試過的功能和結果</li>
+                </ol>
+            </div>
+
+            <h3>🏆 評分標準</h3>
+            <table>
+                <tr>
+                    <th>評分項目</th>
+                    <th>配分</th>
+                    <th>評分重點</th>
+                </tr>
+                <tr>
+                    <td>基本功能</td>
+                    <td>40%</td>
+                    <td>清單建立、輸入、顯示功能完整性</td>
+                </tr>
+                <tr>
+                    <td>四大操作</td>
+                    <td>30%</td>
+                    <td>刪除、替換、插入、指定刪除操作正確性</td>
+                </tr>
+                <tr>
+                    <td>錯誤處理</td>
+                    <td>20%</td>
+                    <td>防呆機制、錯誤提示、資料驗證</td>
+                </tr>
+                <tr>
+                    <td>創意表現</td>
+                    <td>10%</td>
+                    <td>額外功能、介面設計、使用者體驗</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 銘傳資科 - Scratch 程式設計課程</p>
+            <p>清單（陣列）操作 - 認識清單（陣列）</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop(); return false;">⬆️ 回到頂部</a>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 程式碼複製功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.innerText;
+                navigator.clipboard.writeText(text).then(function() {
+                    // 暫時改變樣式表示複製成功
+                    block.style.backgroundColor = '#4CAF50';
+                    setTimeout(() => {
+                        block.style.backgroundColor = '#2d3748';
+                    }, 500);
+                });
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                if (backToTop) backToTop.style.display = 'block';
+            } else {
+                if (backToTop) backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

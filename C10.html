@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C10 擊落敵機遊戲設計 - 迴圈型結構</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4ecdc4;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid #4ecdc4;
+            padding-bottom: 10px;
+        }
+        .section h3 {
+            color: #34495e;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        .section h4 {
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .code-block::before {
+            content: "點擊複製";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .code-block:hover::before {
+            opacity: 1;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+        .scratch-block {
+            background: #4ecdc4;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+            text-align: center;
+            border: 3px solid #45b7aa;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+        }
+        .success {
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+        }
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            background: #4ecdc4;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .character-program {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #bee5eb;
+        }
+        .character-title {
+            background: #17a2b8;
+            color: white;
+            padding: 10px 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 6px 6px 0 0;
+            font-weight: bold;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #4ecdc4;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 C10 擊落敵機遊戲設計</h1>
+            <h2>迴圈型結構 (Loop Structures)</h2>
+            <p>透過 Scratch 建立射擊敵機遊戲，學習迴圈結構的應用</p>
+            
+            <div class="highlight" style="margin-top: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                <h3>📥 下載連結（保持原檔名不改）</h3>
+                <p><strong>基本程式檔：</strong></p>
+                <p><a href="https://drive.google.com/file/d/1bmmlfzhL_GyInf0LO2vp7PdRIFeGJ4HR/view?usp=sharing" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">8xxxx-10.sb3（Google Drive）</a></p>
+                <p style="font-size: 0.9em; margin-top: 10px;">原檔說明：用滑鼠左鍵點選下載，檔名不要修改</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 一、教學主題 -->
+            <div class="section">
+                <h2>一、教學主題</h2>
+                <div class="highlight">
+                    <h3>主題名稱：迴圈型結構 — 擊落敵機遊戲設計</h3>
+                    <p><strong>課程核心：</strong>透過 Scratch 建立一個「射擊敵機」的遊戲，讓學生理解並應用迴圈結構 (Loop Structures)。</p>
+                </div>
+            </div>
+
+            <!-- 二、程式概念講解 -->
+            <div class="section">
+                <h2>二、程式概念講解</h2>
+                
+                <h3>1. 課程焦點：迴圈型結構</h3>
+                <div class="highlight">
+                    <h4>定義</h4>
+                    <p>依據條件是否成立，決定是否重複執行一段程式。</p>
+                </div>
+                
+                <h3>2. 迴圈型結構的種類</h3>
+                
+                <div class="step">
+                    <h4><span class="step-number">A</span>類型 A：條件成立才迴圈（類似 while(條件){...}）</h4>
+                    <div class="code-block">
+語法範例：
+while (條件) { 
+    // 執行的程式碼
+}
+                    </div>
+                    <div class="scratch-block">
+                        Scratch 中對應方式：使用「重複執行」+「等待直到」
+                    </div>
+                    <div class="warning">
+                        <strong>重要：</strong>Scratch 沒有等價積木，以「重複執行」＋「等待直到」替代。<br>
+                        <strong>重點：</strong>當條件成立，才持續做圈內動作。
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">B</span>類型 B：先做，直到條件成立才離開（重複直到…）</h4>
+                    <div class="code-block">
+語法範例：
+repeat until (條件) {
+    // 執行的程式碼
+}
+                    </div>
+                    <div class="scratch-block">
+                        Scratch 中對應積木：重複直到…
+                    </div>
+                    <div class="highlight">
+                        <strong>重點：</strong>在條件成立前，一直重複圈內動作。
+                    </div>
+                </div>
+
+                <h3>3. 迴圈結構的應用場景</h3>
+                <ul>
+                    <li><strong>遊戲循環：</strong>持續檢查遊戲狀態、更新畫面</li>
+                    <li><strong>動畫效果：</strong>重複執行移動、旋轉等動作</li>
+                    <li><strong>條件等待：</strong>等待特定事件發生</li>
+                    <li><strong>計數器：</strong>重複執行固定次數的動作</li>
+                </ul>
+            </div>
+
+            <!-- 素材與變數 -->
+            <div class="section">
+                <h2>三、素材與變數（補充）</h2>
+                
+                <h3>1. 角色建議</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>角色類型</th>
+                            <th>建議內容</th>
+                            <th>說明</th>
+                        </tr>
+                        <tr>
+                            <td>舞台</td>
+                            <td>多張關卡背景</td>
+                            <td>「時間到」「恭喜過關」背景</td>
+                        </tr>
+                        <tr>
+                            <td>開始按鈕</td>
+                            <td>點擊啟動遊戲</td>
+                            <td>廣播 go 訊號</td>
+                        </tr>
+                        <tr>
+                            <td>發射台</td>
+                            <td>滑鼠跟隨</td>
+                            <td>砲彈發射位置</td>
+                        </tr>
+                        <tr>
+                            <td>砲彈</td>
+                            <td>空白鍵發射</td>
+                            <td>擊中敵機/客機</td>
+                        </tr>
+                        <tr>
+                            <td>敵機</td>
+                            <td>移動攻擊目標</td>
+                            <td>擊中得分 +1</td>
+                        </tr>
+                        <tr>
+                            <td>客機</td>
+                            <td>誤擊扣分目標</td>
+                            <td>擊中扣分 -4</td>
+                        </tr>
+                        <tr>
+                            <td>爆炸特效</td>
+                            <td>選擇性</td>
+                            <td>增加視覺效果</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>2. 廣播訊號</h3>
+                <div class="code-block">
+廣播訊號：
+• go（開始遊戲）
+• gameover（時間到/結束）
+• restart（重玩）
+                </div>
+
+                <h3>3. 變數設定</h3>
+                <div class="code-block">
+變數列表：
+• 分數（計分用）
+• 秒數（計時用）
+• isOdd（單/雙號判斷）
+• gameOn（遊戲狀態）
+• bulletReady（子彈冷卻）
+                </div>
+            </div>
+
+            <!-- 四、步驟化實作 -->
+            <div class="section">
+                <h2>四、步驟化實作</h2>
+
+                <div class="step">
+                    <h3><span class="step-number">A</span>開始畫面與座號姓名</h3>
+                    <div class="character-program">
+                        <div class="character-title">🎭 舞台背景設定</div>
+                        <div class="scratch-block">
+                            在開場背景上置入「班級座號姓名」
+                        </div>
+                        <div class="code-block">
+舞台 → 背景 → 在開場背景上置入文字
+範例：81760林小明
+                        </div>
+                    </div>
+                    
+                    <div class="character-program">
+                        <div class="character-title">▶️ 開始按鈕（補充）</div>
+                        <div class="scratch-block">
+                            點擊時廣播(go)並隱藏自己
+                        </div>
+                        <div class="code-block">
+當這個角色被點擊
+├── 廣播 go
+└── 隱藏
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">B</span>發射台（滑鼠跟隨）</h3>
+                    <div class="character-program">
+                        <div class="character-title">🚀 發射台程式</div>
+                        <div class="scratch-block">
+                            按綠旗 → 無限重複 → 定位到 (x: 滑鼠座標, y: -130)
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block motion">定位到 x: <span class="arg">滑鼠的x座標</span> y: <span class="arg">-130</span></div>
+                                    <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="warning">
+                            <strong>小提醒：</strong>發射台太低會導致砲彈不發射（見 PDF 備註）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">C</span>砲彈（空白鍵發射）</h3>
+                    <div class="character-program">
+                        <div class="character-title">💥 砲彈程式</div>
+                        <div class="scratch-block">
+                            按下空白鍵發射砲彈
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                            <div class="block looks">隱藏</div>
+                            
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block control">等待直到 <span class="arg">空白鍵被按下</span></div>
+                                    <div class="block motion">定位到 x: <span class="arg">發射台的x座標</span> y: <span class="arg">發射台的y座標</span></div>
+                                    <div class="block looks">顯示</div>
+                                    <div class="block control c-block">重複直到 <span class="arg">碰到邊緣</span>
+                                        <div class="substack">
+                                            <div class="block motion">將y座標增加 <span class="arg">50</span></div>
+                                            <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
+                                        </div>
+                                    </div>
+                                    <div class="block looks">隱藏</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <strong>補充建議：</strong>
+                            <ul>
+                                <li>新增 bulletReady：避免連按造成多發判定</li>
+                                <li>碰到敵/客機後，短暫等待 0.05 秒再隱藏，避免一次擊中被判多次</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">D</span>計時（單/雙號規則）</h3>
+                    <div class="character-program">
+                        <div class="character-title">⏰ 計時系統</div>
+                        <div class="scratch-block">
+                            PDF 要求：單號正數30秒，雙號倒數30秒
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block variables">設定 <span class="arg">秒數</span> 為 <span class="arg">0</span></div> <span class="comment">// 單號</span>
+                            <div class="block variables">設定 <span class="arg">gameOn</span> 為 <span class="arg">true</span></div>
+                            <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">秒數</span> > <span class="arg">30</span></span>
+                                <div class="substack">
+                                    <div class="block control">等待 <span class="arg">1</span> 秒</div>
+                                    <div class="block variables">秒數 改變 <span class="arg">1</span></div> <span class="comment">// 單號</span>
+                                </div>
+                            </div>
+                            <div class="block events">廣播 <span class="arg">gameover</span></div>
+                            <div class="block looks">切換背景到 <span class="arg">時間到</span></div>
+                            <div class="block control">停止 <span class="arg">全部</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">E</span>敵機（Clone 機制）</h3>
+                    <div class="character-program">
+                        <div class="character-title">✈️ 敵機程式</div>
+                        <div class="scratch-block">
+                            按綠旗 → 分數歸零、隱藏
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                            <div class="block variables">設定 <span class="arg">分數</span> 為 <span class="arg">0</span></div>
+                            <div class="block looks">隱藏</div>
+                            
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block control">等待 <span class="arg">0.3</span> 秒</div> <span class="comment">// 單號</span>
+                                    <div class="block control">建立分身</div>
+                                </div>
+                            </div>
+                            
+                            <div class="block events hat">當分身被建立</div>
+                            <div class="block looks">顯示</div>
+                            <div class="block motion">定位到 x: <span class="block operators">在 <span class="arg">-200</span> 到 <span class="arg">200</span> 之間取隨機數</span> y: <span class="arg">130</span></div>
+                            <div class="block motion">面向 <span class="arg">90</span> 度</div> <span class="comment">// 右</span>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block motion">移動 <span class="arg">10</span> 點</div>
+                                    <div class="block control">如果 <span class="block sensing">碰到邊緣</span>
+                                        <div class="substack">
+                                            <div class="block motion">反彈</div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">如果 <span class="block sensing">碰到 <span class="arg">砲彈</span></span>
+                                        <div class="substack">
+                                            <div class="block variables">分數 改變 <span class="arg">1</span></div>
+                                            <div class="block control">刪除分身</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <strong>補充：</strong>可加入「著火下墜」特效（換造型→多次 y -10 → 刪分身），呼應 PDF 的「避免太高不會掉下來」提醒
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">F</span>客機（誤擊扣分）</h3>
+                    <div class="character-program">
+                        <div class="character-title">🛩️ 客機程式</div>
+                        <div class="scratch-block">
+                            接收到 go：立即產生第一個分身，之後每隔 3~4 秒再生
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block control">建立分身</div> <span class="comment">// 立即產生第一個</span>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block control">等待 <span class="arg">3</span> 秒</div> <span class="comment">// 單號</span>
+                                    <div class="block control">建立分身</div>
+                                </div>
+                            </div>
+                            
+                            <div class="block events hat">當分身被建立</div>
+                            <div class="block motion">定位到 x: <span class="block operators">在 <span class="arg">-200</span> 到 <span class="arg">200</span> 之間取隨機數</span> y: <span class="arg">110</span></div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block motion">移動 <span class="arg">5</span> 點</div>
+                                    <div class="block control">如果 <span class="block sensing">碰到 <span class="arg">砲彈</span></span>
+                                        <div class="substack">
+                                            <div class="block variables">分數 改變 <span class="arg">-4</span></div>
+                                            <div class="block control">刪除分身</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">G</span>計分與時間顯示（UI）</h3>
+                    <div class="character-program">
+                        <div class="character-title">📊 顯示系統</div>
+                        <div class="scratch-block">
+                            按綠旗隱藏，接收go後顯示
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
+                            <div class="block looks">隱藏分數與秒數監視器</div>
+                            
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block looks">顯示分數與秒數</div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="block operators"><span class="arg">"得分: "</span> + <span class="arg">分數</span></span></div>
+                                    <div class="block looks">說出 <span class="block operators"><span class="arg">"時間: "</span> + <span class="arg">秒數</span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <strong>重玩：</strong>確認有重新計分、計時
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">H</span>關卡背景切換（多重判斷）</h3>
+                    <div class="character-program">
+                        <div class="character-title">🎨 背景切換系統</div>
+                        <div class="scratch-block">
+                            邏輯寫在舞台，分數下降時可回到前一關
+                        </div>
+                        <div class="blocks">
+                            <div class="block events hat">當接收到 <span class="arg">go</span></div>
+                            <div class="block control c-block">重複無限次
+                                <div class="substack">
+                                    <div class="block control">如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">10</span></span>
+                                        <div class="substack">
+                                            <div class="block looks">切換背景到 <span class="arg">第1關</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">20</span></span>
+                                        <div class="substack">
+                                            <div class="block looks">切換背景到 <span class="arg">第2關</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則如果 <span class="block operators"><span class="arg">分數</span> ≤ <span class="arg">30</span></span>
+                                        <div class="substack">
+                                            <div class="block looks">切換背景到 <span class="arg">第3關</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="block control">否則
+                                        <div class="substack">
+                                            <div class="block looks">切換背景到 <span class="arg">過關</span></div>
+                                            <div class="block looks">說出 <span class="arg">"恭喜過關！"</span></div>
+                                            <div class="block control">停止 <span class="arg">全部</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>關卡</th>
+                                    <th>分數條件</th>
+                                    <th>背景效果</th>
+                                </tr>
+                                <tr>
+                                    <td>第 1 關</td>
+                                    <td>≤ 10</td>
+                                    <td>基礎背景</td>
+                                </tr>
+                                <tr>
+                                    <td>第 2 關</td>
+                                    <td>11 – 20</td>
+                                    <td>中等難度背景</td>
+                                </tr>
+                                <tr>
+                                    <td>第 3 關</td>
+                                    <td>21 – 30</td>
+                                    <td>困難背景</td>
+                                </tr>
+                                <tr>
+                                    <td>過關</td>
+                                    <td>≥ 31</td>
+                                    <td>顯示「恭喜過關」+ 停止全部</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 五、常見問題排除 -->
+            <div class="section">
+                <h2>五、常見問題排除</h2>
+                <div class="warning">
+                    <h3>⚠️ 重要提醒</h3>
+                    <ul>
+                        <li><strong>發射台位置：</strong>不要太低，否則砲彈無法發射</li>
+                        <li><strong>飛機高度：</strong>不要太高，否則被擊中後不會掉下來</li>
+                        <li><strong>碰撞檢測：</strong>確保砲彈與飛機的碰撞範圍設定正確</li>
+                        <li><strong>移動速度：</strong>飛機移動速度要適中，不要太快或太慢</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>🔧 常見問題解決</h3>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>問題</th>
+                                <th>可能原因</th>
+                                <th>解決方法</th>
+                            </tr>
+                            <tr>
+                                <td>砲彈不發射</td>
+                                <td>發射台太低</td>
+                                <td>調高 y 值（建議 -120 ~ -130）</td>
+                            </tr>
+                            <tr>
+                                <td>飛機被擊中卻不掉落</td>
+                                <td>飛機太高</td>
+                                <td>生成 y 值調低，或加入「著火下墜」特效</td>
+                            </tr>
+                            <tr>
+                                <td>碰撞檢測失效</td>
+                                <td>角色造型碰撞範圍設定</td>
+                                <td>確認角色造型的碰撞範圍設定</td>
+                            </tr>
+                            <tr>
+                                <td>分數計算錯誤</td>
+                                <td>敵機和客機的碰撞條件</td>
+                                <td>檢查敵機和客機的碰撞條件</td>
+                            </tr>
+                            <tr>
+                                <td>計時器異常</td>
+                                <td>計時器重設和增加邏輯</td>
+                                <td>確認計時器重設和增加邏輯</td>
+                            </tr>
+                            <tr>
+                                <td>背景切換問題</td>
+                                <td>分數條件判斷的邏輯</td>
+                                <td>檢查分數條件判斷的邏輯</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 六、延伸挑戰 -->
+            <div class="section">
+                <h2>六、延伸挑戰（補充）</h2>
+                
+                <div class="success">
+                    <h3>🚀 進階功能挑戰</h3>
+                    <ul>
+                        <li><strong>爆炸音效與粒子特效：</strong>造型＋音效庫</li>
+                        <li><strong>子彈冷卻/連發限制：</strong>bulletReady 變數控制</li>
+                        <li><strong>客機誤擊連續扣分的防抖：</strong>碰到後先讓砲彈短暫隱藏</li>
+                        <li><strong>三條命或護盾道具：</strong>變數 life、shield</li>
+                        <li><strong>結束畫面提供「重玩」按鈕：</strong>廣播 restart</li>
+                        <li><strong>添加音效和背景音樂</strong></li>
+                        <li><strong>設計更多種類的敵機</strong></li>
+                        <li><strong>增加道具系統（加分、加時間等）</strong></li>
+                        <li><strong>實作關卡選擇功能</strong></li>
+                        <li><strong>添加最高分記錄功能</strong></li>
+                        <li><strong>設計更複雜的敵機移動模式</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 七、完整遊戲流程 -->
+            <div class="section">
+                <h2>七、完整遊戲流程</h2>
+                <div class="step">
+                    <h3>遊戲啟動順序</h3>
+                    <ol>
+                        <li>按綠旗啟動遊戲</li>
+                        <li>顯示開始畫面（座號姓名）</li>
+                        <li>點擊開始按鈕發送「go」訊號</li>
+                        <li>所有角色接收 go 後進入遊戲</li>
+                        <li>開始計時和得分系統</li>
+                        <li>敵機和客機開始產生</li>
+                        <li>玩家可以發射砲彈</li>
+                        <li>根據分數切換關卡背景</li>
+                        <li>時間到或達到過關分數時結束</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 八、作業繳交 -->
+            <div class="section">
+                <h2>八、作業繳交</h2>
+                <div class="highlight">
+                    <h3>📋 繳交步驟</h3>
+                    <ol>
+                        <li>完成所有程式功能</li>
+                        <li>測試遊戲運行正常</li>
+                        <li>儲存檔案（保持原檔名：C10.sb3）</li>
+                        <li>下載作品檔案</li>
+                        <li>上傳至 Classroom 作業 C10</li>
+                        <li>完成繳交</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 銘傳資科 - Scratch 程式設計課程</p>
+            <p>迴圈型結構應用 - 擊落敵機遊戲設計</p>
+        </div>
+    </div>
+
+    <script>
+        // 程式碼顯示/隱藏切換功能
+        function toggleCode(element) {
+            const content = element.querySelector('.code-toggle-content');
+            const button = element.querySelector('.toggle-button');
+            
+            if (content && content.classList.contains('show')) {
+                // 隱藏程式碼
+                content.classList.remove('show');
+                content.classList.add('hide');
+                if (button) button.textContent = '顯示程式碼';
+            } else if (content) {
+                // 顯示程式碼
+                content.classList.remove('hide');
+                content.classList.add('show');
+                if (button) button.textContent = '隱藏程式碼';
+            }
+        }
+
+        // 平滑捲動效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 程式碼區塊點擊複製功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.innerText;
+                navigator.clipboard.writeText(text).then(function() {
+                    // 暫時改變樣式表示複製成功
+                    block.style.backgroundColor = '#4CAF50';
+                    setTimeout(() => {
+                        block.style.backgroundColor = '#2d3748';
+                    }, 500);
+                });
+            });
+        });
+
+        // 複製程式碼功能
+        function copyCode(button, codeContainer) {
+            const codeText = extractScratchCode(codeContainer);
+            
+            // 使用 Clipboard API 複製文字
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codeText).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopy(codeText, button);
+                });
+            } else {
+                fallbackCopy(codeText, button);
+            }
+        }
+
+        // 提取 Scratch 程式碼文字
+        function extractScratchCode(container) {
+            let codeText = '';
+            const blocks = container.querySelectorAll('.block');
+            
+            blocks.forEach(block => {
+                const blockText = block.textContent.trim();
+                if (blockText) {
+                    codeText += blockText + '\n';
+                }
+            });
+            
+            // 添加說明文字
+            const instructions = '\n\n=== Scratch 程式碼說明 ===\n';
+            const usage = '請將以上程式碼複製到 Scratch 中，按照順序拖拽積木：\n';
+            const tips = '\n提示：\n';
+            const tip1 = '1. 點擊綠旗開始執行\n';
+            const tip2 = '2. 確保所有角色和變數已設定\n';
+            const tip3 = '3. 可以調整數值參數\n';
+            
+            return codeText.trim() + instructions + usage + tips + tip1 + tip2 + tip3;
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功
+        function showCopySuccess(button) {
+            if (button) {
+                const originalText = button.textContent;
+                button.textContent = '已複製';
+                button.style.backgroundColor = '#27ae60';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
