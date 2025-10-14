@@ -584,8 +584,7 @@
                     <div class="blocks">
                         <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
                         <div class="block looks">切換背景到 <span class="arg">背景1（說明）</span></div>
-                        <div class="block variables">將 分數 設為 <span class="arg">0</span></div>
-                        <div class="block events">廣播 <span class="arg">init</span></div>
+                        
                     </div>
                     <p><strong>說明：</strong>點擊綠旗後，顯示遊戲說明背景，分數歸零，並通知所有角色進行初始化。</p>
                 </div>
@@ -595,7 +594,7 @@
                     <div class="blocks">
                         <div class="block events hat">當 <span class="arg">空白鍵 被按下</span></div>
                         <div class="block looks">切換背景到 <span class="arg">背景2（遊戲）</span></div>
-                        <div class="block events">廣播 <span class="arg">start</span></div>
+                        
                     </div>
                     <p><strong>說明：</strong>按下空白鍵後，切換到遊戲背景，並廣播 start 訊息開始遊戲。</p>
                 </div>
@@ -650,15 +649,7 @@
                     <p style="margin-top: 15px;">4×4 磚塊排列示意圖</p>
                 </div>
 
-                <h3>磚塊程式 1：初始化</h3>
-                <div class="step-box">
-                    <h4>收到 init 訊息時</h4>
-                    <div class="blocks">
-                        <div class="block events hat">當收到 <span class="arg">init</span></div>
-                        <div class="block looks">隱藏</div>
-                    </div>
-                    <p><strong>說明：</strong>遊戲開始時先隱藏磚塊本尊，等收到 start 訊息後再建立分身。</p>
-                </div>
+                
 
                 <h3>磚塊程式 2：產生第 1 列磚塊（4 個）</h3>
                 <div class="step-box">
@@ -740,8 +731,134 @@
                 </div>
             </section>
 
-            
-            
+            <!-- 第八章：球拍控制 -->
+            <section id="paddle" class="section">
+                <h2>🏒 第八章：球拍控制</h2>
+
+                <h3>球拍程式 1：初始化</h3>
+                <div class="step-box">
+                    <h4>收到 init 訊息時</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">init</span></div>
+                        <div class="block looks">隱藏</div>
+                    </div>
+                    <p><strong>說明：</strong>遊戲說明階段隱藏球拍。</p>
+                </div>
+
+                <h3>球拍程式 2：跟隨滑鼠移動</h3>
+                <div class="step-box">
+                    <h4>收到 start 訊息後開始跟隨滑鼠</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">start</span></div>
+                        <div class="block looks">顯示</div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block motion">將 x 設為 <span class="arg">滑鼠的 x 座標</span></div>
+                                <div class="block motion">將 y 設為 <span class="arg">-150</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>說明：</strong>球拍會一直跟隨滑鼠的 X 座標（左右移動），Y 座標固定在 -150（底部）。</p>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 提示：</strong>
+                    <ul>
+                        <li>球拍只需要左右移動，不需要上下移動</li>
+                        <li>Y 座標固定在 -150，可以根據舞台調整</li>
+                        <li>確保球拍的中心點設定在正中央</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 第九章：球的運動 -->
+            <section id="ball" class="section">
+                <h2>⚽ 第九章：球的運動與碰撞</h2>
+
+                <h3>球程式 1：初始化</h3>
+                <div class="step-box">
+                    <h4>收到 init 訊息時</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">init</span></div>
+                        <div class="block looks">隱藏</div>
+                    </div>
+                </div>
+
+                <h3>球程式 2：開始運動</h3>
+                <div class="step-box">
+                    <h4>收到 start 訊息後開始運動</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">start</span></div>
+                        <div class="block looks">顯示</div>
+                        <div class="block motion">定位到 x:<span class="arg">0</span> y:<span class="arg">0</span></div>
+                        <div class="block motion">面向 <span class="arg">向下（180度）</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block motion">移動 <span class="arg">5</span> 點</div>
+                                <div class="block control c-block">如果 <span class="arg">碰到 球拍？</span> 那麼
+                                    <div class="substack">
+                                        <div class="block motion">面向 <span class="arg">向上（0度）</span></div>
+                                    </div>
+                                </div>
+                                <div class="block control c-block">如果 <span class="arg">碰到邊緣？</span> 那麼
+                                    <div class="substack">
+                                        <div class="block motion">碰到邊緣就反彈</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>球程式 3：遊戲結束判定</h3>
+                <div class="step-box">
+                    <h4>碰到紅線則遊戲結束</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">start</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control c-block">如果 <span class="arg">碰到顏色 紅色？</span> 那麼
+                                    <div class="substack">
+                                        <div class="block sound">播放音效 <span class="arg">Lose</span></div>
+                                        <div class="block control">停止 <span class="arg">全部程式</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>說明：</strong>在舞台底部畫一條紅線，球碰到紅線就表示遊戲失敗。</p>
+                </div>
+
+                <h3>球程式 4：過關判定</h3>
+                <div class="step-box">
+                    <h4>分數達到 16 分即過關</h4>
+                    <div class="blocks">
+                        <div class="block events hat">當收到 <span class="arg">start</span></div>
+                        <div class="block control c-block">重複無限次
+                            <div class="substack">
+                                <div class="block control c-block">如果 <span class="arg">分數 = 16</span> 那麼
+                                    <div class="substack">
+                                        <div class="block looks">說出 <span class="arg">恭喜過關！</span> <span class="arg">2</span> 秒</div>
+                                        <div class="block sound">播放音效 <span class="arg">Win</span></div>
+                                        <div class="block control">停止 <span class="arg">全部程式</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h4>⚠️ 常見問題</h4>
+                    <ul>
+                        <li><strong>球跑太快：</strong>減少「移動」積木的點數（例如從 5 改為 3）</li>
+                        <li><strong>球沒有反彈：</strong>檢查球拍和磚塊的碰撞偵測是否正確</li>
+                        <li><strong>球穿過球拍：</strong>確保球的速度不要太快，碰撞偵測才來得及判斷</li>
+                        <li><strong>紅線沒反應：</strong>確認紅線的顏色設定正確（使用滴管工具選取顏色）</li>
+                    </ul>
+                </div>
+            </section>
+
             <!-- 第十章：加分題 -->
             <section id="bonus" class="section">
                 <h2>⭐ 第十章：加分題挑戰</h2>
@@ -760,7 +877,7 @@
                             <div class="block motion">定位到 x:<span class="arg">-150 + (j × 100)</span> y:<span class="arg">120 - (i × 30)</span></div>
                             <div class="block looks">將顏色效果改變 <span class="arg">i × 50</span></div>
                         </div>
-                        <p><strong>提示：</strong>利用變數 i 來改變顏色效果，每一列會有不同顏色。<strong style="color: red; font-size: 1.2em;">(j是列數,i是行數)</strong></strong></p>
+                        <p><strong>提示：</strong>利用變數 i 來改變顏色效果，每一列會有不同顏色。</p>
                     </div>
 
                     <div class="step-box">
@@ -787,7 +904,30 @@
                         </ul>
                     </div>
 
-                    
+                    <div class="step-box">
+                        <h4>加分題 4：音效與特效 🎵</h4>
+                        <p><strong>難度：⭐⭐</strong></p>
+                        <p>增加遊戲的聲音和視覺效果。</p>
+                        <ul>
+                            <li>打到磚塊時播放音效</li>
+                            <li>球反彈時播放音效</li>
+                            <li>磚塊消失時加入特效（縮小、旋轉）</li>
+                            <li>過關時加入慶祝動畫</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-box">
+                        <h4>加分題 5：計時系統 ⏱️</h4>
+                        <p><strong>難度：⭐⭐⭐⭐</strong></p>
+                        <p>加入計時功能，記錄玩家過關時間。</p>
+                        <ul>
+                            <li>建立「時間」變數</li>
+                            <li>遊戲開始時重設計時器</li>
+                            <li>顯示經過的秒數</li>
+                            <li>過關時顯示「用時 XX 秒過關！」</li>
+                        </ul>
+                    </div>
+                </div>
 
                 <div class="success">
                     <h4>✨ 創意發揮</h4>
