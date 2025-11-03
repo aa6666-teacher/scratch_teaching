@@ -476,7 +476,7 @@
                 <h4>基本檔案操作</h4>
                 <ol>
                     <li><strong>下載基本檔</strong>：下載提供的基本檔，不要直接覆蓋舊作業</li>
-                    <li><strong>修改檔名</strong>：修改檔名為「班級座號-7.sb3」</li>
+                    <li><strong>修改檔名</strong>：修改檔名為「班級座號.sb3」</li>
                     <li><strong>隱藏停止線</strong>：隱藏紅色停止線，方便測試過關</li>
                     <li><strong>檢查角色</strong>：確認所有必要角色都已建立</li>
                 </ol>
@@ -587,35 +587,35 @@
                                         <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
                                     </div>
                                 </div>
-                                <div class="block control">如果 <span class="arg">關卡 = 1 且 分數 = 1</span>
+                                <div class="block control">否則如果 <span class="arg">關卡 = 1 且 分數 = 1</span>
                                     <div class="substack">
                                         <div class="block events">廣播 <span class="arg">go2</span></div>
                                         <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
                                         <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
                                     </div>
                                 </div>
-                                <div class="block control">如果 <span class="arg">關卡 = 2 且 分數 = 4</span>
+                                <div class="block control">否則如果 <span class="arg">關卡 = 2 且 分數 = 5</span>
                                     <div class="substack">
                                         <div class="block events">廣播 <span class="arg">go3</span></div>
                                         <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
                                         <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
                                     </div>
                                 </div>
-                                <div class="block control">如果 <span class="arg">關卡 = 3 且 分數 = 9</span>
+                                <div class="block control">否則如果 <span class="arg">關卡 = 3 且 分數 = 14</span>
                                     <div class="substack">
                                         <div class="block events">廣播 <span class="arg">go4</span></div>
                                         <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
                                         <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
                                     </div>
                                 </div>
-                                <div class="block control">如果 <span class="arg">關卡 = 4 且 分數 = 16</span>
+                                <div class="block control">否則如果 <span class="arg">關卡 = 4 且 分數 = 30</span>
                                     <div class="substack">
                                         <div class="block events">廣播 <span class="arg">go5</span></div>
                                         <div class="block variables">將 <span class="arg">關卡</span> 改變 <span class="arg">1</span></div>
                                         <div class="block variables">將 <span class="arg">速度</span> 改變 <span class="arg">10</span></div>
                                     </div>
                                 </div>
-                                <div class="block control">如果 <span class="arg">關卡 = 5</span>
+                                <div class="block control">如果 <span class="arg">分數 = 55</span>
                                     <div class="substack">
                                         <div class="block looks">切換背景到 <span class="arg">闖關成功</span></div>
                                         <div class="block control">停止 <span class="arg">全部</span></div>
@@ -631,10 +631,10 @@
                 <strong>💡 關卡進度邏輯：</strong>
                 <ul>
                     <li><strong>第1關</strong>：關卡=0，分數=0 → 需要擊破1個磚塊</li>
-                    <li><strong>第2關</strong>：關卡=1，分數=1 → 需要擊破3個磚塊（總計4個）</li>
-                    <li><strong>第3關</strong>：關卡=2，分數=4 → 需要擊破5個磚塊（總計9個）</li>
-                    <li><strong>第4關</strong>：關卡=3，分數=9 → 需要擊破7個磚塊（總計16個）</li>
-                    <li><strong>第5關</strong>：關卡=4，分數=16 → 需要擊破9個磚塊（總計25個）</li>
+                    <li><strong>第2關</strong>：關卡=1，分數=1 → 需要擊破4個磚塊（總計5個）</li>
+                    <li><strong>第3關</strong>：關卡=2，分數=5 → 需要擊破9個磚塊（總計14個）</li>
+                    <li><strong>第4關</strong>：關卡=3，分數=14 → 需要擊破16個磚塊（總計30個）</li>
+                    <li><strong>第5關</strong>：關卡=4，分數=30 → 需要擊破25個磚塊（總計55個）</li>
                     <li><strong>完成</strong>：關卡=5 → 顯示闖關成功背景</li>
                 </ul>
             </div>
@@ -654,26 +654,26 @@
                 <div class="level-item">
                     <h5>第2關 (go2)</h5>
                     <p>2×2 磚塊</p>
-                    <div class="brick-pattern">■■<br>■■</div>
-                    <p>需要擊破：3個</p>
+                    <div class="brick-pattern">■■ ■■<br>■■ ■■</div>
+                    <p>需要擊破：4個</p>
                 </div>
                 <div class="level-item">
                     <h5>第3關 (go3)</h5>
                     <p>3×3 磚塊</p>
-                    <div class="brick-pattern">■■■<br>■■■<br>■■■</div>
-                    <p>需要擊破：5個</p>
+                    <div class="brick-pattern">■■■ ■■■ ■■■<br>■■■ ■■■ ■■■<br>■■■ ■■■ ■■■</div>
+                    <p>需要擊破：9個</p>
                 </div>
                 <div class="level-item">
                     <h5>第4關 (go4)</h5>
                     <p>4×4 磚塊</p>
-                    <div class="brick-pattern">■■■■<br>■■■■<br>■■■■<br>■■■■</div>
-                    <p>需要擊破：7個</p>
+                    <div class="brick-pattern">■■■■ ■■■■ ■■■■ ■■■■<br>■■■■ ■■■■ ■■■■ ■■■■<br>■■■■ ■■■■ ■■■■ ■■■■<br>■■■■ ■■■■ ■■■■ ■■■■</div>
+                    <p>需要擊破：16個</p>
                 </div>
                 <div class="level-item">
                     <h5>第5關 (go5)</h5>
                     <p>5×5 磚塊</p>
-                    <div class="brick-pattern">■■■■■<br>■■■■■<br>■■■■■<br>■■■■■<br>■■■■■</div>
-                    <p>需要擊破：9個</p>
+                    <div class="brick-pattern">■■■ ■■■ ■■■ ■■■ ■■■<br>■■■ ■■■ ■■■ ■■■ ■■■<br>■■■ ■■■ ■■■ ■■■ ■■■<br>■■■ ■■■ ■■■ ■■■ ■■■<br>■■■ ■■■ ■■■ ■■■ ■■■</div>
+                    <p>需要擊破：25個</p>
                 </div>
             </div>
 
@@ -686,18 +686,14 @@
                     <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
                     <div class="blocks">
                         <div class="block events hat">當收到 <span class="arg">go1</span></div>
-                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">50</span></div>
-                        <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
                     </div>
                     <div class="blocks">
                         <div class="block events hat">當收到 <span class="arg">go2</span></div>
-                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">0</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 改變 <span class="arg">50</span></div>
                         <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
                     </div>
                     <div class="blocks">
                         <div class="block events hat">當收到 <span class="arg">go3</span></div>
-                        <div class="block variables">將 <span class="arg">x軸基準點</span> 設為 <span class="arg">-50</span></div>
-                        <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
                     </div>
                 </div>
             </div>
@@ -720,26 +716,7 @@
             <div class="step">
                 <h4>球的移動速度控制</h4>
                 <p>球的移動速度使用變數「速度」來控制：</p>
-                
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
-                        <div class="block control c-block">重複無限次
-                            <div class="substack">
-                                <div class="block motion">移動 <span class="arg">速度</span> 點</div>
-                                <div class="block control">如果 <span class="arg">碰到邊緣</span> 就反彈</div>
-                                <div class="block control">如果 <span class="arg">碰到 磚塊</span>
-                                    <div class="substack">
-                                        <div class="block motion">反彈</div>
-                                        <div class="block variables">將 <span class="arg">分數</span> 改變 <span class="arg">1</span></div>
-                                        <div class="block control">刪除此分身</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="block motion">移動 <span class="block variables">速度</span> 點</div>
             </div>
 
             <h3>🎲 每關開始設定</h3>
