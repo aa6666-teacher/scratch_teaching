@@ -683,13 +683,12 @@
                 <p>每關開始時，x軸基準點向左移動50點：</p>
                 
                 <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
                     <div class="blocks">
                         <div class="block events hat">當收到 <span class="arg">go1</span></div>
                     </div>
                     <div class="blocks">
                         <div class="block events hat">當收到 <span class="arg">go2</span></div>
-                        <div class="block variables">將 <span class="arg">x軸基準點</span> 改變 <span class="arg">50</span></div>
+                        <div class="block variables">將 <span class="arg">x軸基準點</span> 改變 <span class="arg">-50</span></div>
                         <div class="block motion">定位到 x: <span class="arg">x軸基準點</span> y: <span class="arg">140</span></div>
                     </div>
                     <div class="blocks">
@@ -701,8 +700,8 @@
             <div class="warning">
                 <strong>⚠️ 定位重點：</strong>
                 <ul>
-                    <li>每關的x軸基準點遞減50點</li>
-                    <li>第一塊磚塊定位到 (x軸基準點, 140)</li>
+                    <li>每關的x軸基準點<strong>遞減50點</strong></li>
+                    <li>第一塊磚塊定位到 <strong>(x軸基準點, 140)</strong></li>
                     <li>新排起始時，x座標設為基準點</li>
                     <li>確保磚塊排列整齊且居中</li>
                 </ul>
