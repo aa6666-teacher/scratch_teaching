@@ -258,6 +258,28 @@
             margin: 4px 0 0 6px;
         }
         
+        .description {
+            position: relative;
+            margin: 15px 0;
+            padding: 16px 22px 16px 58px;
+            background: linear-gradient(135deg, rgba(255, 243, 205, 0.9), rgba(255, 255, 240, 0.95));
+            border-radius: 12px;
+            border-left: 6px solid #f39c12;
+            color: #7a4a00;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            box-shadow: 0 8px 18px rgba(243, 156, 18, 0.18);
+        }
+
+        .description::before {
+            content: "💡";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6rem;
+        }
+        
         .events { background: #FFBF00; color: #332200; }
         .control { background: #FFAB19; color: #3a2200; }
         .motion { background: #4C97FF; }
@@ -406,7 +428,6 @@
             <a href="#kaleidoscope">萬花筒重構</a>
             <a href="#benefits">優點分析</a>
             <a href="#homework">作業要求</a>
-            <a href="https://drive.google.com/file/d/1m8R6WOChr-1HsaC3quhw8rMPVpdMvePP/view?usp=sharing" target="_blank">📥 下載基本檔</a>
         </div>
 
         <div id="intro" class="chapter">
@@ -414,7 +435,7 @@
             
             <div class="concept-box">
                 <h4>🔧 函式積木的核心概念</h4>
-                <p>把重複的程式整理成「自訂積木」，簡化打磚塊與萬花筒兩個專題。任何會<strong>重複出現</strong>的片段，都可以抽成「自訂積木」，提升可讀性、維護性與除錯效率。</p>
+                <p>把重複的程式整理成「自訂積木」，簡化打磚塊專題。任何會<strong>重複出現</strong>的片段，都可以抽成「自訂積木」，提升可讀性、維護性與除錯效率。</p>
             </div>
 
             <div class="step">
@@ -438,52 +459,8 @@
             </div>
         </div>
 
-        <div id="preparation" class="chapter">
-            <h2>🛠️ 第二章：前置準備</h2>
-
-            <div class="download-section">
-                <h3>📥 基本檔案下載</h3>
-                <p>下載 C08 函式積木運用的基本檔案，包含打磚塊和萬花筒的原始程式</p>
-                <a href="https://drive.google.com/file/d/1m8R6WOChr-1HsaC3quhw8rMPVpdMvePP/view?usp=sharing" 
-                   class="download-link" target="_blank">
-                    📁 下載 C08 基本檔.sb3
-                </a>
-            </div>
-
-            <div class="info">
-                <strong>💡 使用說明：</strong>
-                <ol>
-                    <li>點擊上方連結下載 .sb3 檔案</li>
-                    <li>開啟 Scratch 網站 (scratch.mit.edu)</li>
-                    <li>點選「上傳」按鈕選擇下載的檔案</li>
-                    <li>立即修改檔名為「班級座號-8.sb3」</li>
-                    <li>開始學習函式積木的重構技巧</li>
-                </ol>
-            </div>
-
-            <div class="step">
-                <h4>📁 檔案準備步驟</h4>
-                <ol>
-                    <li><strong>匯入基本檔</strong>：匯入老師提供的基本檔</li>
-                    <li><strong>修改檔名</strong>：立即修改檔名（例如：81760-8.sb3）</li>
-                    <li><strong>檢查角色</strong>：確認打磚塊和萬花筒專案都存在</li>
-                    <li><strong>備份原檔</strong>：建議先備份原始檔案</li>
-                </ol>
-            </div>
-
-            <div class="warning">
-                <strong>⚠️ 注意事項：</strong>
-                <ul>
-                    <li>不要直接覆蓋舊作業</li>
-                    <li>確保檔名格式正確</li>
-                    <li>先理解原始程式邏輯再進行重構</li>
-                    <li>建議先備份原始檔案</li>
-                </ul>
-            </div>
-        </div>
-
         <div id="concept" class="chapter">
-            <h2>🧩 第三章：函式積木概念</h2>
+            <h2>🧩 第二章：函式積木概念</h2>
 
             <h3>🔍 什麼是函式積木？</h3>
             <div class="step">
@@ -515,211 +492,69 @@
         </div>
 
         <div id="brick-game" class="chapter">
-            <h2>🎮 第四章：打磚塊專案重構</h2>
+            <h2>🎮 第三章：打磚塊專案重構</h2>
 
-            <h3>⚽ 球角色 - 建立「球的起點」函式</h3>
+            <h3>🧱 磚塊角色 - 建立「關卡設定」函式</h3>
             <div class="step">
-                <h4>步驟1：建立自訂積木</h4>
-                <p>把「每關一開始球回到原點、向下方隨機角度出發」抽出成一顆自訂積木：</p>
-                
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block myblocks hat">定義 <span class="arg">球的起點</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block motion">將 x 設為 <span class="arg">0</span></div>
-                        <div class="block motion">將 y 設為 <span class="arg">0</span></div>
-                        <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
-                    </div>
-                    <div class="comment">說明：把「每關一開始球回到原點、向下方隨機角度出發」抽出成一顆自訂積木。</div>
+                <h5>步驟1：定義函式積木「關卡設定」</h5>
+                <div class="function-demo">
+                    <img src="image/關卡設定-8.png" alt="關卡設定" style="max-width: 100%; height: auto;">
                 </div>
+                <p class="description">把「關卡設定」抽出成一顆自訂積木：</p>
             </div>
 
             <div class="step">
-                <h4>步驟2：應用在球的主程式</h4>
-                <div class="comparison">
-                    <div class="before">
-                        <h5>❌ 重構前（重複程式碼）</h5>
-                        <div class="code-example">
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go1</span></div>
-                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
-                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
-                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
-                            </div>
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go2</span></div>
-                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
-                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
-                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
-                            </div>
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go3</span></div>
-                                <div class="block motion">將 x 設為 <span class="arg">0</span></div>
-                                <div class="block motion">將 y 設為 <span class="arg">0</span></div>
-                                <div class="block motion">面向 <span class="arg">隨機 150 到 170</span> 度</div>
-                            </div>
+                <h5>步驟2：應用在不同關卡</h5>
+                <div class="function-demo">
+                    <h5>✅ 重構後（使用函式）</h5>
+                    <img src="image/關卡設定完成-8.png" alt="關卡設定完成" style="max-width: 100%; height: auto;">
+                </div>
+                <h5>❌ 重構前（重複程式碼）</h5>
+                        <div class="function-demo">
+                            <img src="image/比較關卡設定-8.png" alt="磚塊應用在關卡上" style="max-width: 100%; height: auto;">
                         </div>
-                    </div>
-                    <div class="after">
-                        <h5>✅ 重構後（使用函式）</h5>
-                        <div class="code-example">
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go1</span></div>
-                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
-                            </div>
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go2</span></div>
-                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
-                            </div>
-                            <div class="blocks">
-                                <div class="block events hat">當收到 <span class="arg">go3</span></div>
-                                <div class="block myblocks">執行 <span class="arg">球的起點</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <p class="description">應用在不同關卡上</p>
             </div>
-
-            <h3>🧱 磚塊角色 - 建立「產生磚塊分身」函式</h3>
             <div class="step">
-                <h4>步驟1：建立參數化函式</h4>
-                <p>建立一個可以產生指定數量磚塊分身的函式：</p>
-                
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block myblocks hat">定義 <span class="arg">產生磚塊分身（磚塊數）</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block control c-block">重複 <span class="arg">磚塊數</span> 次
-                            <div class="substack">
-                                <div class="block looks">建立分身</div>
-                                <div class="block control">等待 <span class="arg">0.1</span> 秒</div>
-                            </div>
+                <h5>步驟3:磚塊設定函式</h5>
+                <div class="function-demo">
+                    <h5>✅ 重構後（使用函式）</h5>
+                    <img src="image/磚塊設定-8.png" alt="磚塊設定" style="max-width: 100%; height: auto;">
+                </div>
+                <h5>❌ 重構前（重複程式碼）</h5>
+                        <div class="function-demo">
+                            <img src="image/比較製造磚塊-8.png" alt="磚塊應用在關卡上" style="max-width: 100%; height: auto;">
                         </div>
-                    </div>
-                    <div class="comment">說明：建立一個可以產生指定數量磚塊分身的函式，提高程式碼的彈性。</div>
-                </div>
+                <p class="description">磚塊設定函式</p>
             </div>
-
             <div class="step">
-                <h4>步驟2：應用在不同關卡</h4>
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block events hat">當收到 <span class="arg">go1</span></div>
-                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（1）</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block events hat">當收到 <span class="arg">go2</span></div>
-                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（4）</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block events hat">當收到 <span class="arg">go3</span></div>
-                        <div class="block myblocks">執行 <span class="arg">產生磚塊分身（9）</span></div>
-                    </div>
+                <h4>步驟4:磚塊應用在關卡上</h4>
+                <div class="function-demo">
+                    <img src="image/磚塊設定完成-8.png" alt="磚塊應用在關卡上" style="max-width: 100%; height: auto;">
                 </div>
+                <p class="description">磚塊應用在關卡上</p>
             </div>
+            
+            
         </div>
 
-        <div id="kaleidoscope" class="chapter">
-            <h2>🎨 第五章：萬花筒專案重構</h2>
-
-            <h3>🌈 建立「畫花瓣」函式</h3>
+        <h3>⚽ 球角色 - 建立「球的起點」函式</h3>
             <div class="step">
-                <h4>步驟1：建立花瓣繪製函式</h4>
-                <p>將重複的花瓣繪製邏輯抽取成函式：</p>
+                <h4>建立自訂積木並應用在球的主程式</h4>
+                <div class="function-demo">
+                    <img src="image/球設定-8.png" alt="設定球的函示以及應用" style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+            <div class="step">
+                <h5>❌ 重構前（重複程式碼）</h5>
+                <div class="function-demo">
+                    <img src="image/球落下比較-8.png" alt="磚塊應用在關卡上" style="max-width: 100%; height: auto;">
+                </div>
                 
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block myblocks hat">定義 <span class="arg">畫花瓣（角度）</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block motion">面向 <span class="arg">角度</span> 度</div>
-                        <div class="block pen">下筆</div>
-                        <div class="block motion">移動 <span class="arg">100</span> 點</div>
-                        <div class="block motion">右轉 <span class="arg">30</span> 度</div>
-                        <div class="block motion">移動 <span class="arg">50</span> 點</div>
-                        <div class="block pen">停筆</div>
-                        <div class="block motion">回到原位</div>
-                    </div>
-                    <div class="comment">說明：建立一個可以畫出指定角度花瓣的函式。</div>
-                </div>
             </div>
-
-            <h3>🎯 建立「畫萬花筒」函式</h3>
-            <div class="step">
-                <h4>步驟2：建立萬花筒主函式</h4>
-                <p>將整個萬花筒的繪製邏輯包裝成一個函式：</p>
-                
-                <div class="code-example">
-                    <button class="copy-button" onclick="copyCode(this, this.parentNode)">複製程式碼</button>
-                    <div class="blocks">
-                        <div class="block myblocks hat">定義 <span class="arg">畫萬花筒（花瓣數）</span></div>
-                    </div>
-                    <div class="blocks">
-                        <div class="block pen">全部清除</div>
-                        <div class="block control c-block">重複 <span class="arg">花瓣數</span> 次
-                            <div class="substack">
-                                <div class="block myblocks">執行 <span class="arg">畫花瓣（360/花瓣數 * 重複次數）</span></div>
-                                <div class="block looks">改變 顏色效果 <span class="arg">10</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment">說明：建立一個可以畫出指定花瓣數萬花筒的函式。</div>
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>步驟3：簡化主程式</h4>
-                <div class="comparison">
-                    <div class="before">
-                        <h5>❌ 重構前（複雜重複）</h5>
-                        <div class="code-example">
-                            <div class="blocks">
-                                <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
-                                <div class="block control c-block">重複無限次
-                                    <div class="substack">
-                                        <div class="block pen">全部清除</div>
-                                        <div class="block control c-block">重複 <span class="arg">8</span> 次
-                                            <div class="substack">
-                                                <div class="block motion">面向 <span class="arg">45 * 重複次數</span> 度</div>
-                                                <div class="block pen">下筆</div>
-                                                <div class="block motion">移動 <span class="arg">100</span> 點</div>
-                                                <div class="block motion">右轉 <span class="arg">30</span> 度</div>
-                                                <div class="block motion">移動 <span class="arg">50</span> 點</div>
-                                                <div class="block pen">停筆</div>
-                                                <div class="block motion">回到原位</div>
-                                                <div class="block looks">改變 顏色效果 <span class="arg">10</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="after">
-                        <h5>✅ 重構後（簡潔清晰）</h5>
-                        <div class="code-example">
-                            <div class="blocks">
-                                <div class="block events hat">當 <span class="arg">綠旗 被點擊</span></div>
-                                <div class="block control c-block">重複無限次
-                                    <div class="substack">
-                                        <div class="block myblocks">執行 <span class="arg">畫萬花筒（8）</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="benefits" class="chapter">
-            <h2>📈 第六章：重構優點分析</h2>
+            <h2>📈 第四章：重構優點分析</h2>
 
             <h3>✅ 程式碼品質提升</h3>
             <div class="step">
@@ -761,7 +596,7 @@
         </div>
 
         <div id="homework" class="chapter">
-            <h2>📝 第七章：作業要求</h2>
+            <h2>📝 第五章：作業要求</h2>
 
             <div class="step">
                 <h4>基本要求（必須完成）</h4>
@@ -769,23 +604,6 @@
                     <li>✅ 完成打磚塊專案的重構</li>
                     <li>✅ 建立「球的起點」自訂積木</li>
                     <li>✅ 建立「產生磚塊分身（磚塊數）」自訂積木</li>
-                    <li>✅ 完成萬花筒專案的重構</li>
-                    <li>✅ 建立「畫花瓣（角度）」自訂積木</li>
-                    <li>✅ 建立「畫萬花筒（花瓣數）」自訂積木</li>
-                    <li>✅ 確保重構後功能正常運作</li>
-                </ul>
-            </div>
-
-            <div class="step">
-                <h4>進階挑戰（加分項目）</h4>
-                <ul>
-                    <li>🎨 為其他角色建立自訂積木</li>
-                    <li>🔧 建立更多參數化的函式</li>
-                    <li>📊 分析重構前後的程式碼行數</li>
-                    <li>🎵 為音效播放建立自訂積木</li>
-                    <li>🌈 建立不同風格的萬花筒函式</li>
-                    <li>🎮 為遊戲狀態管理建立函式</li>
-                    <li>📝 撰寫函式使用說明文件</li>
                 </ul>
             </div>
 
@@ -797,30 +615,6 @@
                     <li>在角色上註明班級和姓名</li>
                     <li>測試重構前後的功能一致性</li>
                     <li>提供重構前後的對比說明</li>
-                </ul>
-            </div>
-
-            <div class="success">
-                <strong>🎉 完成檢查清單：</strong>
-                <ul>
-                    <li>打磚塊遊戲功能完整且正常運作</li>
-                    <li>萬花筒繪製功能完整且正常運作</li>
-                    <li>所有自訂積木都有適當的參數</li>
-                    <li>程式碼結構清晰易懂</li>
-                    <li>重複的程式碼已成功消除</li>
-                    <li>程式執行效率沒有降低</li>
-                    <li>自訂積木名稱有意義且易理解</li>
-                </ul>
-            </div>
-
-            <div class="info">
-                <strong>💡 製作提示：</strong>
-                <ul>
-                    <li>先理解原始程式的邏輯再進行重構</li>
-                    <li>逐步重構，一次只改一個函式</li>
-                    <li>測試每個函式是否正常運作</li>
-                    <li>為函式選擇有意義的名稱</li>
-                    <li>考慮參數的設計和使用</li>
                 </ul>
             </div>
         </div>
