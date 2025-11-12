@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函式積木的功用說明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #2d3436;
+        }
+
+        .card {
+            width: min(960px, 100%);
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(52, 73, 94, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            padding: 36px;
+            color: #2d3436;
+        }
+
+        .card-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card-header p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+
+        .card-body {
+            padding: 36px;
+            display: grid;
+            gap: 32px;
+        }
+
+        .highlight-box {
+            background: #f6f9fc;
+            border-radius: 18px;
+            padding: 24px 28px 24px 70px;
+            position: relative;
+            border-left: 8px solid #6c5ce7;
+            box-shadow: 0 12px 30px rgba(108, 92, 231, 0.15);
+        }
+
+        .highlight-box::before {
+            content: "💡";
+            position: absolute;
+            left: 26px;
+            top: 26px;
+            font-size: 1.8rem;
+        }
+
+        .highlight-box h2 {
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            color: #341f97;
+        }
+
+        .highlight-box p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #2d3436;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        .feature {
+            background: #fff5f6;
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid rgba(255, 118, 117, 0.25);
+            box-shadow: 0 12px 28px rgba(255, 118, 117, 0.18);
+        }
+
+        .feature h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #d63031;
+        }
+
+        .feature p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #2d3436;
+        }
+
+        .comparison {
+            background: #f0f9ff;
+            border-radius: 18px;
+            padding: 28px;
+            border: 1px solid rgba(41, 128, 185, 0.25);
+            display: grid;
+            gap: 22px;
+        }
+
+        .comparison h3 {
+            font-size: 1.4rem;
+            color: #2980b9;
+        }
+
+        .comparison-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .comparison-item {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 18px;
+            border-left: 6px solid #0984e3;
+            box-shadow: 0 10px 24px rgba(41, 128, 185, 0.12);
+        }
+
+        .comparison-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #0c2461;
+        }
+
+        .comparison-item ul {
+            list-style: none;
+        }
+
+        .comparison-item li {
+            font-size: 0.92rem;
+            padding-left: 22px;
+            position: relative;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .comparison-item li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #0984e3;
+        }
+
+        .tips {
+            background: #fef9e7;
+            border-radius: 18px;
+            padding: 24px 28px;
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            box-shadow: 0 12px 32px rgba(243, 156, 18, 0.18);
+        }
+
+        .tips h3 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: #d68910;
+        }
+
+        .tips ul {
+            list-style: none;
+        }
+
+        .tips li {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .tips li::before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .card-header, .card-body {
+                padding: 26px;
+            }
+
+            .highlight-box {
+                padding-left: 60px;
+            }
+
+            .highlight-box::before {
+                left: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h1>函式積木的功用</h1>
+            <p>透過自訂積木把複雜或重複的程式邏輯封裝成可重複使用的模組，讓專案更清楚、更好維護。</p>
+        </div>
+        <div class="card-body">
+            <section class="highlight-box">
+                <h2>什麼是函式積木？</h2>
+                <p>函式積木（自訂積木）是一種把「重複使用的指令群組」包裝成單一積木的方式。就像創建一個專屬工具箱，當需要時只要呼叫積木，就能一次執行整個流程。</p>
+            </section>
+
+            <section class="grid">
+                <div class="feature">
+                    <h3>提高程式可讀性</h3>
+                    <p>將複雜的程式碼折疊成清楚的自訂積木名稱，讓主程式邏輯簡潔明瞭，更容易向同學或老師解說。</p>
+                </div>
+                <div class="feature">
+                    <h3>減少重複程式碼</h3>
+                    <p>重複出現的流程只要寫一次，之後透過呼叫自訂積木即可，多個角色或關卡共用時特別節省時間。</p>
+                </div>
+                <div class="feature">
+                    <h3>方便維護與調整</h3>
+                    <p>當需要修改流程時只要調整自訂積木內部的程式碼，所有呼叫的地方會一起更新，避免遺漏。</p>
+                </div>
+                <div class="feature">
+                    <h3>支援參數化設計</h3>
+                    <p>自訂積木可以加入參數（變數），根據不同的輸入值產生不同的效果，讓專案更有彈性。</p>
+                </div>
+            </section>
+
+            <section class="comparison">
+                <h3>什麼時候適合使用函式積木？</h3>
+                <div class="comparison-list">
+                    <div class="comparison-item">
+                        <h4>重複情境</h4>
+                        <ul>
+                            <li>相同的指令在程式中出現多次。</li>
+                            <li>同一個角色在不同事件中做一樣的事。</li>
+                            <li>多個角色共享相同的流程。</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>複雜步驟</h4>
+                        <ul>
+                            <li>難以閱讀、包含多個步驟的指令組合。</li>
+                            <li>需要拆分為「宣告部分」與「執行部分」。</li>
+                            <li>希望保留清楚的命名與註解。</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>需要參數化</h4>
+                        <ul>
+                            <li>同一流程需依不同變數產生不同結果。</li>
+                            <li>需要調整速度、顏色等設定。</li>
+                            <li>想要快速建立多種版本的效果。</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tips">
+                <h3>最佳實務與小提醒</h3>
+                <ul>
+                    <li>先找出重複或冗長的程式段落，再設計對應的自訂積木。</li>
+                    <li>替函式積木命名時，要能清楚表達功能，例如「設定球的起點」。</li>
+                    <li>每個自訂積木只負責一件事，讓程式結構維持乾淨。</li>
+                    <li>設定參數時，確認命名與單位（例如「速度（步）」、「顏色編號」）。</li>
+                    <li>在不同情境多次測試，確定函式在任何輸入下都能正常運作。</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+
