@@ -321,6 +321,95 @@
             font-weight: bold;
         }
 
+        .highlight-red {
+            background: #ffebee;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #c62828;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .download-link {
+            display: block;
+            text-align: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+        }
+
+        .download-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .download-link a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .download-link .link-icon {
+            font-size: 1.8em;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .download-link .link-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .shortcut-box {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .shortcut-box h4 {
+            color: #f57c00;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .shortcut-key {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 100px;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -400,10 +489,23 @@
 
                 <div class="section">
                     <h3>💻 Scratch 實作邏輯</h3>
+                    <div class="step-container">
+                        <div class="step-title">步驟1：建立驗證變數</div>
+                        <p>1. 建立一個變數，命名為 <strong class="highlight">「驗證」</strong></p>
+                        <p>2. 將驗證設為 <strong class="highlight">0</strong></p>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-title">步驟2：建立驗證迴圈</div>
+                        <p>使用「重複直到」積木來確保使用者輸入正確的答案：</p>
+                    </div>
+
                     
 
-
-                    
+                    <div class="image-container">
+                        <img src="image/驗證.png" alt="驗證程式">
+                        <div class="image-caption">驗證程式：確保使用者輸入正確答案</div>
+                    </div>
 
                     <div class="teacher-note">
                         <h4></h4>
@@ -450,7 +552,7 @@
                 <div class="section">
                     <div class="problem-box">
                         <h4>🔴 遇到的問題</h4>
-                        <p>如果要出 10 題，主程式裡就要掛 10 個 <code>出題目</code> 的粉紅色積木。如果要改成 50 題，程式會變得超級長，很難閱讀也很難修改。</p>
+                        <p>如果要出 10 題，主程式裡就要掛 10 個積木。如果要改成 50 題，程式會變得超級長，很難閱讀也很難修改。</p>
                     </div>
 
                     <div class="solution-box">
@@ -463,20 +565,66 @@
                     <h3>💻 Scratch 實作邏輯</h3>
                     
                     <div class="step-container">
-                        <div class="step-title">1. 準備工作</div>
-                        <ol>
-                            <li>建立一個清單，命名為 <strong class="highlight">「題目清單」</strong>。</li>
-                            <li>把那 10 個問題手動輸入到清單裡面 (Item 1 ~ Item 10)。</li>
-                            <li>建立一個變數，命名為 <strong class="highlight">「題號」</strong> (這就是程式裡的 index)。</li>
-                        </ol>
+                        <div class="step-title">步驟1：在舞台建立題目清單</div>
+                        <p>1. 點選<strong class="highlight-red">「舞台」（不是角色）</strong></p>
+                        <p>2. 點選<strong class="highlight-red"></strong>「變數」積木分類</strong></p>
+                        <p>3. 點選<strong class="highlight-red">「建立一個清單」</strong></p>
+                        <p>4. 命名為 <strong class="highlight">「題目清單」</strong></p>
+                        <p>5. 選擇<strong class="highlight-red">「適用於所有角色」（全域清單）</strong></p>
+                        <p>6. 把題目一到十手動輸入到清單裡面 (Item 1 ~ Item 10)</p>
                     </div>
 
                     <div class="step-container">
-                        <div class="step-title">2. 程式改寫</div>
-                        <p>主程式會變得非常乾淨，只需要一段迴圈：</p>
-                        <div class="image-container">
-                            <img src="image/清單.png" alt="初始設定">
+                        <div class="step-title">步驟2：使用快捷鍵提高效率</div>
+                        <p>在建立清單時，可以使用以下快捷鍵來加快操作速度：</p>
+                    </div>
+
+                    <div class="shortcut-box">
+                        <h4>⌨️ 實用快捷鍵</h4>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + C</div>
+                            <div>複製：選取文字或項目後，按 Ctrl+C 複製</div>
                         </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + V</div>
+                            <div>貼上：在清單中按 Ctrl+V 貼上剛才複製的內容</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Z</div>
+                            <div>復原：如果不小心刪除或修改錯誤，按 Ctrl+Z 可以復原</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + A</div>
+                            <div>全選：選取所有文字或項目</div>
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-title">步驟3：認識清單功能</div>
+                        <p>清單（陣列）是程式設計中非常重要的資料結構，讓我們來深入了解它的功能：</p>
+                    </div>
+
+                    <div class="download-link">
+                        <a href="https://drive.google.com/file/d/1x9m_gQ1gbPOB9GPYKnFJdsUpRFHT5R_Z/view" target="_blank">
+                            <span class="link-icon">📚</span>
+                            <span class="link-text">點擊這裡查看清單功能詳細講義</span>
+                        </a>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4 class="highlight-red">💡 清單的基本功能</h4>
+                        <ul>
+                            <li><strong>新增項目：</strong>可以手動輸入或使用程式新增項目到清單</li>
+                            <li><strong>讀取項目：</strong>使用「清單的第 X 項」來讀取特定位置的內容</li>
+                            <li><strong>清單長度：</strong>使用「清單的項目數」來取得清單中有多少項目</li>
+                            <li><strong>刪除項目：</strong>可以刪除特定項目或全部刪除</li>
+                            <li><strong>插入項目：</strong>可以在特定位置插入新項目</li>
+                        </ul>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="image/清單.png" alt="清單應用">
+                        <div class="image-caption">清單應用：使用清單來儲存和管理題目</div>
                     </div>
 
                     <div class="teacher-note">
@@ -484,14 +632,44 @@
                         <p>「以前我們是『硬刻 (Hard-coding)』，一題一題寫。現在我們學會了『資料與邏輯分離』。題目歸題目管（在清單裡），流程歸流程管（在迴圈裡）。這才是工程師的思維！」</p>
                     </div>
                 </div>
+
+                <div class="section">
+                    <h3>💻 結合驗證與清單</h3>
+                    <div class="step-container">
+                        <div class="step-title">修正問問題函式積木</div>
+                        <p>現在我們要把驗證機制和清單結合在一起，讓程式更完整：</p>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-title">步驟1：建立變數</div>
+                        <ol>
+                            <li>建立變數 <strong class="highlight">「總題數」</strong>，把它設為<strong class="highlight-red">清單的長度</strong></li>
+                            <li>建立變數 <strong class="highlight">「題數」</strong>，設為 <strong class="highlight">1</strong>（代表當前的題數為何）</li>
+                        </ol>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="image/驗證+清單.png" alt="清單應用">
+                        <div class="image-caption">清單應用：使用清單來儲存和管理題目</div>
+                    </div>
+
+                    <div class="concept-box">
+                        <h4>💡 程式邏輯說明</h4>
+                        <p>這個函式結合了驗證機制和清單應用：</p>
+                        <ul>
+                            <li>使用「總題數」來控制要問幾題（自動從清單長度取得）</li>
+                            <li>使用「題數」來追蹤目前問到第幾題</li>
+                            <li>每題都會先顯示「第 X 題」</li>
+                            <li>使用驗證機制確保使用者輸入正確答案（1 或 2）</li>
+                            <li>只有輸入正確才會進入下一題</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- 總結 -->
         <div id="summary" class="chapter">
-            <div class="image-container">
-                        <img src="image/驗證.png" alt="初始設定">
-            </div>
             <div class="chapter-header">📚 總結：學生學到了什麼？</div>
             <div class="chapter-content">
                 <div class="section">
