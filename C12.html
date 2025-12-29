@@ -190,9 +190,11 @@
         .looks { background: #9966FF; }
         .sound { background: #D65CD6; }
         .sensing { background: #5CB1D6; }
-        .operators { background: #59C059; color: #003b00; }
+        .operators { background: #56d6d6; color: #003b00; }
         .variables { background: #FF8C1A; color: #3a1a00; }
+        .list { background: #f40808; color: #ede4dd; }
         .myblocks { background: #FF6680; }
+        .green { background: #4ad24a; color: #003b00; }
 
         .step {
             background: white;
@@ -429,7 +431,7 @@
             <div class="concept-box" style="margin-top: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
                 <h3>📥 下載連結（保持原檔名不改）</h3>
                 <p><strong>基本程式檔：</strong></p>
-                <p><a href="#" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">8XXxx-12.sb3（Google Drive）</a></p>
+                <p><a href="https://drive.google.com/file/d/1jbDGuk-bD5TojKy5KKfLbey1Eqh5Y5FO/view" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">8XXxx-12.sb3（Google Drive）</a></p>
                 <p style="font-size: 0.9em; margin-top: 10px;">原檔說明：用滑鼠左鍵點選下載，檔名不要修改</p>
             </div>
         </div>
@@ -523,12 +525,6 @@
                 <h4>📚 相關教材連結</h4>
                 <div class="link-item">
                     <div>
-                        <a href="https://drive.google.com/file/d/1jbDGuk-bD5TojKy5KKfLbey1Eqh5Y5FO/view" target="_blank">教材下載</a>
-                        <div class="description">主要教學教材下載連結</div>
-                    </div>
-                </div>
-                <div class="link-item">
-                    <div>
                         <a href="https://www.taiwanlottery.com.tw/lotto649/index.asp" target="_blank">台灣彩券大樂透介紹</a>
                         <div class="description">了解真實樂透遊戲規則</div>
                     </div>
@@ -536,13 +532,13 @@
                 <div class="link-item">
                     <div>
                         <a href="https://drive.google.com/file/d/1aDs8cQ4XfQLuhDTeRoDRpJMjDq6k1VnQ/view?usp=sharing" target="_blank">補充教材 1</a>
-                        <div class="description">額外學習資源</div>
+                        <div class="description">大樂透票卷介紹</div>
                     </div>
                 </div>
                 <div class="link-item">
                     <div>
                         <a href="https://drive.google.com/file/d/1_v1V02yu3oIzj54swy5Ki67GeGjiTr66/view?usp=sharing" target="_blank">補充教材 2</a>
-                        <div class="description">進階學習材料</div>
+                        <div class="description">大樂透選號介紹</div>
                     </div>
                 </div>
                 <div class="link-item">
@@ -634,7 +630,8 @@
                     <div class="block variables">刪除 <span class="arg">你的號碼</span> 的所有項目</div>
                     <div class="block variables">刪除 <span class="arg">對獎號碼</span> 的所有項目</div>
                     <div class="block variables">將 <span class="arg">同號個數</span> 設為 <span class="arg">0</span></div>
-                    <div class="block looks">顯示背景文字: <span class="arg">8xxxx 林小明</span></div>
+                    <div class="block variables">將 <span class="arg">項次</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">電腦取號</span> 設為 <span class="arg">0</span></div>
                 </div>
             </div>
 
@@ -643,32 +640,33 @@
                 <h4>玩家號碼輸入流程</h4>
                 <div class="blocks">
                     <div class="block events hat">當角色被點擊</div>
-                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">你的號碼</span> 的長度 = <span class="arg">6</span></span>
+                    <div class="block control c-block">重複直到 <span class="block green"><span class="list">你的號碼</span> 的長度 = <span class="arg">6</span></span>
                         <div class="substack">
-                            <div class="block sensing">詢問 <span class="arg">請輸入 1~49 的整數，不可重複</span> 並等待</div>
-                            <div class="block control">如果 <span class="block operators"><span class="arg">答案</span> < <span class="arg">1</span></span>
+                            <div class="block sensing">詢問 <span class="arg">請輸入6個號碼</span> 並等待</div><br/>
+                            <div class="block control">如果 <span class="block green"><span class="operators">詢問的答案</span> < <span class="arg">1</span></span>
                                 <div class="substack">
-                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">2</span> 秒</div>
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
                                 </div>
                             </div>
-                            <div class="block control">否則如果 <span class="block operators"><span class="arg">答案</span> > <span class="arg">49</span></span>
+                            <div class="block control">否則如果 <span class="block green"><span class="operators">詢問的答案</span> > <span class="arg">49</span></span>
                                 <div class="substack">
-                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">2</span> 秒</div>
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
                                 </div>
                             </div>
-                            <div class="block control">否則如果 <span class="block operators"><span class="arg">答案</span> 包含 <span class="arg">"."</span></span>
+                            <div class="block control">否則如果 <span class="block green"><span class="operators">詢問的答案</span> 包含 <span class="arg">"."</span></span>
                                 <div class="substack">
-                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">2</span> 秒</div>
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
                                 </div>
                             </div>
-                            <div class="block control">否則如果 <span class="block operators"><span class="arg">你的號碼</span> 包含 <span class="arg">答案</span></span>
+                            <div class="block control">否則如果 <span class="block list"><span class="arg">你的號碼</span> 包含 <span class="arg">詢問的答案</span></span></span>
                                 <div class="substack">
-                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">2</span> 秒</div>
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
                                 </div>
+
                             </div>
                             <div class="block control">否則
                                 <div class="substack">
-                                    <div class="block variables">將 <span class="arg">答案</span> 加到 <span class="arg">你的號碼</span></div>
+                                    <div class="block list">將 <span class="arg">詢問的答案</span> 加到 <span class="arg">你的號碼</span></div>
                                 </div>
                             </div>
                         </div>
@@ -680,11 +678,11 @@
             <div class="step">
                 <h4>電腦號碼生成流程</h4>
                 <div class="blocks">
-                    <div class="block events hat">當接收到 <span class="arg">go</span></div>
-                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">對獎號碼</span> 的長度 = <span class="arg">7</span></span>
+                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
+                    <div class="block control c-block">重複直到 <span class="block green"><span class="arg">對獎號碼</span> 的長度 = <span class="arg">7</span></span>
                         <div class="substack">
-                            <div class="block variables">將 <span class="arg">電腦取號</span> 設為 <span class="block operators">在 <span class="arg">1</span> 到 <span class="arg">49</span> 之間取隨機數</span></div>
-                            <div class="block control">如果 <span class="block operators">不包含 <span class="arg">對獎號碼</span>, <span class="arg">電腦取號</span></span>
+                            <div class="block variables">將 <span class="arg">電腦取號</span> 設為 <span class="block green">在 <span class="arg">1</span> 到 <span class="arg">49</span> 之間取隨機數</span></div>
+                            <div class="block control">如果 <span class="block green">不成立 <span class="block list">對獎號碼</span> 包含 <span class="variables">電腦取號</span></span>
                                 <div class="substack">
                                     <div class="block variables">將 <span class="arg">電腦取號</span> 加到 <span class="arg">對獎號碼</span></div>
                                 </div>
@@ -703,7 +701,7 @@
                     <div class="block control c-block">重複 <span class="arg">6</span> 次
                         <div class="substack">
                             <div class="block variables">項次 改變 <span class="arg">1</span></div>
-                            <div class="block control">如果 <span class="block operators"><span class="arg">對獎號碼</span> 包含 <span class="arg">你的號碼</span> 的第 <span class="arg">項次</span> 項</span>
+                            <div class="block control">如果 <span class="block list"><span class="arg">對獎號碼</span> 包含 <span class="arg">你的號碼</span> 的第 <span class="variables">項次</span> 項</span>
                                 <div class="substack">
                                     <div class="block variables">同號個數 改變 <span class="arg">1</span></div>
                                 </div>
@@ -717,14 +715,14 @@
             <div class="step">
                 <h4>中獎結果判斷流程</h4>
                 <div class="blocks">
-                    <div class="block control">如果 <span class="block operators"><span class="arg">同號個數</span> < <span class="arg">3</span></span>
+                    <div class="block control">如果 <span class="block green"><span class="arg">同號個數</span> < <span class="arg">3</span></span><span class="block green">且</span><span class="block green"><span class="arg">同號個數</span> > <span class="arg">0</span></span>
                         <div class="substack">
-                            <div class="block looks">說出 <span class="block operators"><span class="arg">摃龜！相同號碼只有</span> <span class="arg">同號個數</span> <span class="arg">個</span></span> <span class="arg">3</span> 秒</div>
+                            <div class="block looks">說出 <span class="arg">摃龜！相同號碼只有</span> <span class="arg">同號個數</span> <span class="arg">個</span> <span class="arg">3</span> 秒</div>
                         </div>
                     </div>
                     <div class="block control">否則
                         <div class="substack">
-                            <div class="block looks">說出 <span class="block operators"><span class="arg">恭喜中獎！相同號碼有</span> <span class="arg">同號個數</span> <span class="arg">個</span></span> <span class="arg">3</span> 秒</div>
+                            <div class="block looks">說出 <span class="arg">恭喜中獎！相同號碼有</span> <span class="arg">同號個數</span> <span class="arg">個</span> <span class="arg">3</span> 秒</div>
                         </div>
                     </div>
                 </div>
