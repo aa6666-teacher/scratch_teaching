@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期中測驗 - 加密畫數字 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            margin: -20px -20px 30px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .nav-menu h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .chapter h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .chapter h3 {
+            color: #34495e;
+            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .chapter h4 {
+            color: #7f8c8d;
+            margin: 15px 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .code-example {
+            background: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 2;
+            position: relative;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .description {
+            position: relative;
+            margin: 15px 0;
+            padding: 16px 22px 16px 58px;
+            background: linear-gradient(135deg, rgba(255, 243, 205, 0.9), rgba(255, 255, 240, 0.95));
+            border-radius: 12px;
+            border-left: 6px solid #f39c12;
+            color: #7a4a00;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            box-shadow: 0 8px 18px rgba(243, 156, 18, 0.18);
+        }
+
+        .description::before {
+            content: "💡";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6rem;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #59C059; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .myblocks { background: #FF6680; }
+        .pen { background: #0FBD8C; }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .info {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .success {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .encryption-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .encryption-table th,
+        .encryption-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .encryption-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        .encryption-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .encryption-table tr:hover {
+            background: #e8f6f3;
+        }
+
+        .function-demo {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #3498db;
+        }
+
+        .function-demo img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 期中測驗 - 加密畫數字</h1>
+            <p>學習加密概念與函式積木的應用</p>
+        </div>
+
+        <div class="nav-menu">
+            <h3>📚 課程導航</h3>
+            <a href="#chapter1">第一章：加密概念</a>
+            <a href="#chapter2">第二章：加密設計</a>
+            <a href="#chapter3">第三章：定義畫圖</a>
+            <a href="#chapter4">第四章：驗證功能</a>
+        </div>
+
+        <div id="chapter1" class="chapter">
+            <h2>🔐 第一章：加密概念</h2>
+            
+            <div class="concept-box">
+                <h4>🔒 什麼是加密？</h4>
+                <p>加密是一種將原始資訊（明文）轉換成另一種形式（密文）的技術，只有知道解密方法的人才能還原原始資訊。在日常生活中，加密技術無所不在，保護我們的隱私和安全。</p>
+            </div>
+
+            <div class="step">
+                <h4>📚 加密的應用場景</h4>
+                <ul>
+                    <li><strong>密碼保護</strong>：網站登入密碼經過加密後儲存，即使資料庫被竊取，攻擊者也很難還原原始密碼</li>
+                    <li><strong>通訊安全</strong>：即時通訊軟體（如LINE、WhatsApp）使用加密技術保護訊息內容</li>
+                    <li><strong>網路交易</strong>：線上購物時，信用卡資訊透過加密傳輸，確保交易安全</li>
+                    <li><strong>檔案保護</strong>：重要文件可以加密後儲存，只有擁有密鑰的人才能開啟</li>
+                    <li><strong>數位簽章</strong>：確保文件或程式的完整性與來源可信度</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 加密的基本原理：</strong>
+                <ul>
+                    <li><strong>明文（Plaintext）</strong>：原始的、可讀的資訊</li>
+                    <li><strong>密文（Ciphertext）</strong>：經過加密後的資訊，看起來像亂碼</li>
+                    <li><strong>加密演算法（Encryption Algorithm）</strong>：將明文轉換為密文的方法</li>
+                    <li><strong>解密（Decryption）</strong>：將密文還原為明文的過程</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>🎯 簡單的加密範例</h4>
+                <p>在日常生活中，我們也常使用簡單的加密方法：</p>
+                <ul>
+                    <li><strong>凱撒密碼</strong>：將字母往後移動固定位置（如A→D，B→E）</li>
+                    <li><strong>摩斯密碼</strong>：用點和線的組合代表字母</li>
+                    <li><strong>圖形密碼</strong>：用特定的圖形代表數字或文字</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>🎓 學習目標：</strong>
+                <p>在本課程中，我們將學習如何將數字（0-9）轉換成不同的幾何圖形，這是一種視覺化的加密方式。透過這種方式，我們可以：</p>
+                <ul>
+                    <li>理解加密的基本概念</li>
+                    <li>學習如何設計簡單的加密規則</li>
+                    <li>運用函式積木實現加密功能</li>
+                    <li>體驗程式設計的模組化思維</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="chapter2" class="chapter">
+            <h2>🎨 第二章：加密設計 - 數字轉圖形</h2>
+
+            <div class="concept-box">
+                <h4>🔢 我們的加密規則</h4>
+                <p>我們要設計一個將數字 0-9 轉換為不同幾何圖形的加密系統。每個數字對應一個特定的圖形，這樣我們就可以用圖形來「加密」數字資訊。</p>
+            </div>
+
+            <h3>📋 加密對照表</h3>
+            <table class="encryption-table">
+                <thead>
+                    <tr>
+                        <th>數字</th>
+                        <th>圖形</th>
+                        <th>說明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>0</strong></td>
+                        <td>⚪ 圓形</td>
+                        <td>畫一個完整的圓形</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td>● 點</td>
+                        <td>畫一個點（粗筆跡）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td>━ 直線</td>
+                        <td>畫一條直線</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td>△ 三角形</td>
+                        <td>畫一個正三角形（3邊形）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td>□ 正方形</td>
+                        <td>畫一個正方形（4邊形）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td>⬟ 五邊形</td>
+                        <td>畫一個正五邊形</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6</strong></td>
+                        <td>⬡ 六邊形</td>
+                        <td>畫一個正六邊形</td>
+                    </td>
+                    <tr>
+                        <td><strong>7</strong></td>
+                        <td>⬟ 七邊形</td>
+                        <td>畫一個正七邊形</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8</strong></td>
+                        <td>⬟ 八邊形</td>
+                        <td>畫一個正八邊形</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9</strong></td>
+                        <td>⬟ 九邊形</td>
+                        <td>畫一個正九邊形</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="step">
+                <h4>🎯 設計思路</h4>
+                <ul>
+                    <li><strong>數字 0</strong>：使用重複結構畫圓（重複36次，每次移動2步並右轉10度）</li>
+                    <li><strong>數字 1</strong>：使用粗筆跡畫一個點（筆跡寬度設為10，下筆後立即停筆）</li>
+                    <li><strong>數字 2</strong>：畫一條直線（移動30步）</li>
+                    <li><strong>數字 3-9</strong>：使用重複結構畫正n邊形（重複n次，每次移動固定距離並轉動360/n度）</li>
+                </ul>
+            </div>
+
+            <div class="description">
+                <strong>💡 為什麼這樣設計？</strong>
+                <p>這種設計方式結合了數學幾何知識（正多邊形的角度計算）和程式設計技巧（重複結構、函式積木），讓學生在學習加密概念的同時，也能複習幾何圖形的繪製方法。</p>
+            </div>
+
+            <div class="info">
+                <strong>📐 幾何知識複習：</strong>
+                <ul>
+                    <li>正n邊形的每個外角 = 360° ÷ n</li>
+                    <li>畫正n邊形時，需要重複n次：移動固定距離 → 右轉 (360÷n) 度</li>
+                    <li>圓形可以視為正36邊形（或更多邊）的近似</li>
+                </ul>
+            </div>
+
+            <h3>🔧 實作流程</h3>
+            <div class="step">
+                <h4>步驟1：建立變數</h4>
+                <ul>
+                    <li><strong>「回答」</strong>：儲存使用者輸入的班級+座號</li>
+                    <li><strong>「是否正確」</strong>：判斷輸入是否正確（0=錯誤，1=正確）</li>
+                    <li><strong>「數字的位置」</strong>：記錄目前處理到字串的第幾個位置</li>
+                    <li><strong>「每個數字」</strong>：儲存目前正在處理的數字字元</li>
+                    <li><strong>「畫圖順序」</strong>：記錄目前要畫第幾個數字</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>步驟2：設計主程式流程</h4>
+                <ol>
+                    <li>清除畫筆痕跡</li>
+                    <li>設定起始位置</li>
+                    <li>驗證使用者輸入（呼叫「驗證」函式）</li>
+                    <li>依序畫出每個數字對應的圖形（呼叫「畫圖」函式）</li>
+                    <li>每畫完一個數字，向右移動50步，準備畫下一個</li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 注意事項：</strong>
+                <ul>
+                    <li>輸入必須是純數字（0-9）</li>
+                    <li>不能為空字串</li>
+                    <li>每個數字會轉換成對應的圖形</li>
+                    <li>圖形會依序排列在畫面上</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="chapter3" class="chapter">
+            <h2>🖌️ 第三章：定義畫圖函式</h2>
+
+            <div class="concept-box">
+                <h4>🎨 「定義 畫圖 數字」函式</h4>
+                <p>這個函式接收一個數字參數，根據數值畫出對應的幾何圖形。使用函式積木可以讓程式碼更簡潔、更容易維護。</p>
+            </div>
+
+            <h3>📝 函式設計說明</h3>
+            <div class="step">
+                <h4>函式結構</h4>
+                <p>建立一個名為「<span style="color: red;">畫圖</span>」的自訂積木，接受一個「<span style="color: blue;">數字</span>」參數。</p>
+            </div>
+
+            <div class="function-demo">
+                <h2>✅ 完整的「定義 <span style="color: red;">畫圖</span></span> <span style="color: blue;">數字</span>」函式</h2>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px;">函式定義：定義 <span style="color: red;">畫圖</span> <span style="color: blue;">數字</span></h3>
+                    <ol style="line-height: 2; color: #333;">
+                        <li><strong>設定筆跡顏色</strong>：選擇一個淺藍色</li>
+                        <li><strong>設定筆跡寬度</strong>：設為 3</li>
+                        <li><strong>判斷數字並畫圖</strong>：
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li><strong>如果 數字 = 0</strong>：
+                                    <ul style="margin-left: 20px;">
+                                        <li>下筆</li>
+                                        <li>重複 36 次：
+                                            <ul>
+                                                <li>移動 2 點</li>
+                                                <li>右轉 10 度</li>
+                                            </ul>
+                                        </li>
+                                        <li>停筆</li>
+                                    </ul>
+                                </li>
+                                <li><strong>否則如果 數字 = 1</strong>：
+                                    <ul style="margin-left: 20px;">
+                                        <li>筆跡寬度設為 10</li>
+                                        <li>下筆</li>
+                                        <li>停筆（畫一個點）</li>
+                                    </ul>
+                                </li>
+                                <li><strong>否則如果 數字 = 2</strong>：
+                                    <ul style="margin-left: 20px;">
+                                        <li>下筆</li>
+                                        <li>移動 30 點</li>
+                                        <li>停筆</li>
+                                    </ul>
+                                </li>
+                                <li><strong>否則</strong>（數字 3-9）：
+                                    <ul style="margin-left: 20px;">
+                                        <li>下筆</li>
+                                        <li>重複 數字 次：
+                                            <ul>
+                                                <li>移動 20 點</li>
+                                                <li>右轉 (360 ÷ 數字) 度</li>
+                                            </ul>
+                                        </li>
+                                        <li>停筆</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>🔍 詳細說明</h3>
+            <div class="step">
+                <h4>數字 0 - 畫圓形</h4>
+                <div class="code-example">
+                    <strong>邏輯說明：</strong><br>
+                    圓形可以透過重複畫很多小線段來近似。<br>
+                    • 重複 36 次（36個小線段組成一個圓）<br>
+                    • 每次移動 2 步<br>
+                    • 每次右轉 10 度（360 ÷ 36 = 10）<br>
+                    • 總共轉 360 度，形成一個圓
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>數字 1 - 畫點</h4>
+                <div class="code-example">
+                    <strong>邏輯說明：</strong><br>
+                    點就是一個很粗的筆跡。<br>
+                    • 將筆跡寬度設為 10（很粗）<br>
+                    • 下筆後立即停筆<br>
+                    • 這樣就會在目前位置留下一個點
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>數字 2 - 畫直線</h4>
+                <div class="code-example">
+                    <strong>邏輯說明：</strong><br>
+                    直線就是移動一段距離。<br>
+                    • 下筆<br>
+                    • 移動 30 步<br>
+                    • 停筆<br>
+                    • 形成一條長度為 30 的直線
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>數字 3-9 - 畫正n邊形</h4>
+                <div class="code-example">
+                    <strong>邏輯說明：</strong><br>
+                    正n邊形的畫法：<br>
+                    • 重複 n 次（n = 數字的值）<br>
+                    • 每次移動 20 步<br>
+                    • 每次右轉 (360 ÷ n) 度<br>
+                    • 例如：正三角形（n=3）每次轉 120 度<br>
+                    • 例如：正方形（n=4）每次轉 90 度<br>
+                    • 例如：正五邊形（n=5）每次轉 72 度
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 使用函式積木的優點：</strong>
+                <ul>
+                    <li><strong>程式碼重用</strong>：不需要為每個數字重複寫畫圖的程式碼</li>
+                    <li><strong>邏輯清晰</strong>：主程式只需要呼叫「畫圖 數字」，不需要知道細節</li>
+                    <li><strong>易於維護</strong>：如果要修改畫圖方式，只需要改函式定義</li>
+                    <li><strong>參數化</strong>：同一個函式可以處理不同的數字</li>
+                </ul>
+            </div>
+
+            <div class="description">
+                <strong>🎯 實作提示：</strong>
+                <p>在 Scratch 中建立自訂積木時：</p>
+                <ol>
+                    <li>點選「我的積木」分類</li>
+                    <li>點選「建立一個積木」</li>
+                    <li>輸入積木名稱「畫圖」</li>
+                    <li>點選「加入輸入項」，命名為「數字」</li>
+                    <li>在積木定義區塊中，使用「如果...那麼...否則如果...那麼...否則」來判斷數字</li>
+                    <li>根據不同的數字值，執行對應的畫圖指令</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="chapter4" class="chapter">
+            <h2>✅ 第四章：驗證功能</h2>
+
+            <div class="concept-box">
+                <h4>🔍 「定義 <span style="color: red;">驗證</span>」函式</h4>
+                <p>這個函式負責驗證使用者輸入的資料是否正確。輸入必須是純數字（0-9），且不能為空。使用函式積木可以讓驗證邏輯獨立，主程式更簡潔。</p>
+            </div>
+
+            <h3>📝 函式設計說明</h3>
+            <div class="step">
+                <h4>函式結構</h4>
+                <p>建立一個名為「<span style="color: red;">驗證</span>」的自訂積木，不需要參數，但會設定「是否正確」變數。</p>
+            </div>
+
+            <div class="function-demo">
+                <h4>✅ 完整的「定義 <span style="color: red;">驗證</span>」函式</h4>
+                <p class="description">根據圖片，這個函式的完整結構如下：</p>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h5 style="color: #2b2929; margin-bottom: 15px;">函式定義：定義 <p style="color: #c90f0f;">驗證</p></h5>
+                    <ol style="line-height: 2; color: #333;">
+                        <li><strong>初始化變數</strong>：
+                            <ul style="margin-left: 20px;">
+                                <li>「是否正確」設為 0</li>
+                            </ul>
+                        </li>
+                        <li><strong>重複直到「是否正確」= 1</strong>：
+                            <ul style="margin-left: 20px;">
+                                <li>「數字的位置」設為 0</li>
+                                <li>「每個數字」設為 0</li>
+                                <li>詢問「請輸入你的班級+座號(ex:81001)」並等待</li>
+                                <li>「是否正確」設為 1（先假設正確）</li>
+                                <li>「回答」設為「詢問的答案」</li>
+                                <li><strong>如果「回答」的長度 = 0</strong>（空字串）：
+                                    <ul style="margin-left: 20px;">
+                                        <li>「是否正確」設為 0</li>
+                                        <li>說出「輸入錯誤,請重新輸入」0.5 秒</li>
+                                    </ul>
+                                </li>
+                                <li><strong>否則</strong>（有輸入內容）：
+                                    <ul style="margin-left: 20px;">
+                                        <li>「數字的位置」設為 1</li>
+                                        <li><strong>重複「回答」的長度 次</strong>：
+                                            <ul style="margin-left: 20px;">
+                                                <li>「每個數字」設為「回答」的第「數字的位置」字</li>
+                                                <li><strong>如果「1234567890」不包含「每個數字」</strong>（不是數字）：
+                                                    <ul style="margin-left: 20px;">
+                                                        <li>「是否正確」設為 0</li>
+                                                        <li>說出「輸入錯誤,請重新輸入」0.2 秒</li>
+                                                    </ul>
+                                                </li>
+                                                <li>「數字的位置」改變 1</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>🔍 詳細說明</h3>
+            <div class="step">
+                <h4>驗證流程</h4>
+                <div class="code-example">
+                    <strong>步驟1：初始化</strong><br>
+                    • 將「是否正確」設為 0（假設輸入錯誤）<br><br>
+                    
+                    <strong>步驟2：進入驗證迴圈</strong><br>
+                    • 使用「重複直到」迴圈，直到「是否正確」= 1 才停止<br>
+                    • 這確保使用者必須輸入正確的資料才能繼續<br><br>
+                    
+                    <strong>步驟3：取得使用者輸入</strong><br>
+                    • 詢問使用者「請輸入你的班級+座號(ex:81001)」<br>
+                    • 將「回答」設為使用者輸入的內容<br>
+                    • 先假設輸入正確（「是否正確」設為 1）<br><br>
+                    
+                    <strong>步驟4：檢查是否為空</strong><br>
+                    • 如果「回答」的長度 = 0（空字串）<br>
+                    • 將「是否正確」設為 0<br>
+                    • 顯示錯誤訊息「輸入錯誤,請重新輸入」<br><br>
+                    
+                    <strong>步驟5：檢查每個字元</strong><br>
+                    • 如果輸入不為空，檢查每個字元是否為數字<br>
+                    • 從位置 1 開始，依序檢查每個字元<br>
+                    • 如果字元不在「1234567890」中（不是數字）<br>
+                    • 將「是否正確」設為 0<br>
+                    • 顯示錯誤訊息<br>
+                    • 繼續檢查下一個字元<br><br>
+                    
+                    <strong>步驟6：驗證完成</strong><br>
+                    • 如果所有檢查都通過，「是否正確」保持為 1<br>
+                    • 迴圈結束，函式完成
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>驗證規則</h4>
+                <ul>
+                    <li><strong>不能為空</strong>：輸入長度必須大於 0</li>
+                    <li><strong>必須是數字</strong>：每個字元都必須是 0-9 的數字</li>
+                    <li><strong>錯誤處理</strong>：如果輸入錯誤，顯示錯誤訊息並要求重新輸入</li>
+                    <li><strong>持續驗證</strong>：使用「重複直到」確保輸入正確才繼續</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 字串處理技巧：</strong>
+                <ul>
+                    <li><strong>「字串的長度」</strong>：取得字串有幾個字元</li>
+                    <li><strong>「字串的第 n 字」</strong>：取得字串中第 n 個位置的字元（從 1 開始）</li>
+                    <li><strong>「字串 包含 字元」</strong>：檢查字串中是否包含某個字元</li>
+                    <li><strong>「不成立」</strong>：將布林值反轉（真變假，假變真）</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 常見錯誤：</strong>
+                <ul>
+                    <li><strong>忘記初始化變數</strong>：記得在迴圈開始前重置「數字的位置」和「每個數字」</li>
+                    <li><strong>字串位置從 1 開始</strong>：Scratch 中字串位置從 1 開始，不是 0</li>
+                    <li><strong>檢查順序</strong>：先檢查是否為空，再檢查每個字元</li>
+                    <li><strong>錯誤訊息時機</strong>：在發現錯誤時立即顯示，不要等到最後</li>
+                </ul>
+            </div>
+
+            <div class="description">
+                <strong>🎯 實作提示：</strong>
+                <p>在 Scratch 中建立「驗證」函式時：</p>
+                <ol>
+                    <li>點選「我的積木」分類</li>
+                    <li>點選「建立一個積木」</li>
+                    <li>輸入積木名稱「驗證」（不需要參數）</li>
+                    <li>使用「重複直到」迴圈包裝整個驗證流程</li>
+                    <li>使用「詢問...並等待」取得使用者輸入</li>
+                    <li>使用「如果...那麼...否則」判斷輸入是否正確</li>
+                    <li>使用「重複」迴圈檢查每個字元</li>
+                    <li>使用「字串」相關積木處理字串</li>
+                </ol>
+            </div>
+
+            <h3>🔗 主程式整合</h3>
+            <div class="step">
+                <h4>完整的主程式流程</h4>
+                <div class="code-example">
+                    <strong>當被點擊時：</strong><br>
+                    1. 筆跡全部清除<br>
+                    2. 定位到 x: -180 y: 0（起始位置）<br>
+                    3. 「畫圖順序」設為 1<br>
+                    4. 呼叫「驗證」函式（驗證使用者輸入）<br>
+                    5. 重複「回答」的長度 次：<br>
+                       &nbsp;&nbsp;&nbsp;• 呼叫「畫圖」函式，參數為「回答」的第「畫圖順序」字<br>
+                       &nbsp;&nbsp;&nbsp;• 「畫圖順序」改變 1<br>
+                       &nbsp;&nbsp;&nbsp;• x 改變 50（向右移動，準備畫下一個數字）
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>✅ 完成後的成果：</strong>
+                <p>當使用者輸入班級+座號（例如：81001）後，程式會：</p>
+                <ol>
+                    <li>驗證輸入是否正確（必須是純數字）</li>
+                    <li>依序畫出每個數字對應的圖形</li>
+                    <li>圖形會排列在畫面上，形成視覺化的「加密」結果</li>
+                    <li>只有知道規則的人才能「解密」（看出原始數字）</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <h2>📚 學習總結</h2>
+
+            <div class="concept-box">
+                <h4>🎓 本課程學習重點</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin: 10px 0;">✅ <strong>加密概念</strong>：理解加密的基本原理和應用</li>
+                    <li style="margin: 10px 0;">✅ <strong>函式積木</strong>：學會建立和使用自訂積木</li>
+                    <li style="margin: 10px 0;">✅ <strong>字串處理</strong>：掌握字串的長度、取字、包含等操作</li>
+                    <li style="margin: 10px 0;">✅ <strong>幾何繪圖</strong>：複習正多邊形和圓形的畫法</li>
+                    <li style="margin: 10px 0;">✅ <strong>程式驗證</strong>：學習輸入驗證和錯誤處理</li>
+                    <li style="margin: 10px 0;">✅ <strong>模組化設計</strong>：將複雜程式分解為簡單函式</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 延伸思考：</strong>
+                <ul>
+                    <li>如何設計更複雜的加密規則？</li>
+                    <li>如何加入顏色變化來增加加密的複雜度？</li>
+                    <li>如何設計解密功能，將圖形還原為數字？</li>
+                    <li>如何將這個概念應用到其他場景？</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 測驗注意事項：</strong>
+                <ul>
+                    <li>確保所有函式積木都能正常運作</li>
+                    <li>測試各種輸入情況（正確、錯誤、空字串）</li>
+                    <li>確認每個數字都能正確畫出對應圖形</li>
+                    <li>檢查圖形排列是否整齊</li>
+                    <li>在角色上註明班級和姓名</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
