@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C13 開獎遊戲設計進階篇 - Scratch教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            color: #f5576c;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            background: #f5576c;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #f5576c;
+        }
+
+        .chapter h2 {
+            color: #f5576c;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .chapter h3 {
+            color: #d63384;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        /* Scratch 積木樣式 */
+        .blocks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .block {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 38px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            border: 2px solid rgba(0,0,0,.15);
+            text-shadow: 0 1px 0 rgba(0,0,0,.18);
+            box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.15);
+            user-select: none;
+            color: white;
+        }
+        
+        .block span.arg {
+            background: rgba(255,255,255,.17);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+        }
+        
+        .hat {
+            border-radius: 18px 18px 12px 12px;
+            position: relative;
+        }
+        
+        .hat::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: -12px;
+            height: 12px;
+            background: inherit;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border: 2px solid rgba(0,0,0,.15);
+            border-bottom: none;
+        }
+        
+        .c-block {
+            padding-bottom: 14px;
+        }
+        
+        .c-block .substack {
+            margin-top: 10px;
+            background: rgba(0,0,0,.12);
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 280px;
+            border: 2px dashed rgba(0,0,0,.18);
+        }
+        
+        .cap {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        
+        .comment {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 4px 0 0 6px;
+        }
+        
+        .events { background: #FFBF00; color: #332200; }
+        .control { background: #FFAB19; color: #3a2200; }
+        .motion { background: #4C97FF; }
+        .looks { background: #9966FF; }
+        .sound { background: #D65CD6; }
+        .sensing { background: #5CB1D6; }
+        .operators { background: #56d6d6; color: #003b00; }
+        .variables { background: #FF8C1A; color: #3a1a00; }
+        .list { background: #f40808; color: #ede4dd; }
+        .myblocks { background: #FF6680; }
+        .green { background: #4ad24a; color: #003b00; }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step h4 {
+            color: #f5576c;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: #cce7ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .lottery-demo {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #f5576c;
+        }
+
+        .lottery-demo h4 {
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .number-ball {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto;
+        }
+
+        .player-numbers {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .winning-numbers {
+            background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+        }
+
+        .special-number {
+            background: linear-gradient(135deg, #FFD93D, #f4c430);
+            border: 3px solid #FF6B6B;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .homework h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .homework-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f5576c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #d63384;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f5576c;
+            color: white;
+            font-weight: bold;
+        }
+
+        .link-section {
+            background: #f8f9fa;
+            border: 2px solid #f5576c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .link-section h4 {
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+
+        .link-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #f5576c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .link-item a {
+            color: #f5576c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link-item a:hover {
+            text-decoration: underline;
+        }
+
+        .link-item .description {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-menu a {
+                display: block;
+                margin: 5px 0;
+            }
+
+            .number-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎰 C13 開獎遊戲設計進階篇</h1>
+            <p>Scratch 遊戲化設計與大樂透中獎規則完整教學</p>
+            
+            <div class="concept-box" style="margin-top: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                <h3>📥 下載連結（保持原檔名不改）</h3>
+                <p><strong>基本程式檔：</strong></p>
+                <p><a href="https://drive.google.com/file/d/1jbDGuk-bD5TojKy5KKfLbey1Eqh5Y5FO/view" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">大樂透.sb3（Google Drive）</a></p>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <a href="#intro">課程介紹</a>
+            <a href="#concepts">核心概念</a>
+            <a href="#variables">清單與變數</a>
+            <a href="#prize">中獎規則</a>
+            <a href="#program">程式流程</a>
+            <a href="#tax">扣稅機制</a>
+            <a href="#homework">作業與評量</a>
+        </div>
+
+        <div id="intro" class="chapter">
+            <h2>📚 第一章：課程概觀</h2>
+            
+            <div class="concept-box">
+                <h4>🎯 核心概念</h4>
+                <ul>
+                    <li>遊戲化機制設計（錢包、費用、獎金）</li>
+                    <li>大樂透完整中獎規則（含特別號判定）</li>
+                    <li>特別號檢查邏輯</li>
+                    <li>獎金計算與所得稅扣繳</li>
+                    <li>條件判斷與金額處理</li>
+                </ul>
+            </div>
+
+            <h3>🎰 進階樂透遊戲介紹</h3>
+            <div class="step">
+                <h4>什麼是進階樂透開獎遊戲？</h4>
+                <p>進階樂透開獎遊戲在 C12 的基礎上，加入了<strong>遊戲化機制</strong>和<strong>完整的大樂透中獎規則</strong>。玩家需要支付費用進行遊戲，根據中獎等級獲得獎金</p>
+            </div>
+
+            <div class="info">
+                <strong>💡 本課程新增功能：</strong>
+                <ul>
+                    <li><strong>錢包系統：</strong>起始金額 1000 元，每次遊戲需支付 50 元</li>
+                    <li><strong>費用檢查：</strong>遊戲開始前檢查錢包金額是否足夠</li>
+                    <li><strong>完整中獎規則：</strong>8 個獎項等級（頭獎、二獎、三獎、四獎、五獎、六獎、七獎、普獎）</li>
+                    <li><strong>特別號判定：</strong>區分一般號碼和特別號，影響中獎等級</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="concepts" class="chapter">
+            <h2>🛠️ 第二章：核心概念</h2>
+
+            <h3>💰 遊戲化機制</h3>
+            <div class="step">
+                <h4>錢包系統</h4>
+                <ul>
+                    <li><strong>起始金額：</strong>遊戲開始時錢包有 1000 元</li>
+                    <li><strong>遊戲費用：</strong>每次遊戲需要支付 50 元</li>
+                    <li><strong>費用檢查：</strong>開始遊戲前必須檢查錢包金額是否 > 50 元</li>
+                    <li><strong>金額扣除：</strong>遊戲開始時立即扣除 50 元</li>
+                    <li><strong>獎金發放：</strong>中獎後將獎金加入錢包</li>
+                </ul>
+            </div>
+
+            <h3>🎯 大樂透中獎規則</h3>
+            <div class="step">
+                <h4>中獎等級判定邏輯</h4>
+                <p>大樂透需要同時檢查<strong>一般號碼中獎個數</strong>和<strong>特別號是否中獎</strong>來決定中獎等級：</p>
+                <ul>
+                    <li><strong>一般號碼：</strong>比對玩家的 6 個號碼與開獎的前 6 個號碼</li>
+                    <li><strong>特別號：</strong>檢查玩家號碼是否包含開獎的第 7 個號碼（特別號）</li>
+                    <li><strong>組合判斷：</strong>根據「一般號碼中獎個數」+「特別號是否中獎」的組合來決定獎項</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 重要提醒：</strong>特別號的判定需要單獨處理，不能包含在一般號碼的比對邏輯中。特別號（第 7 個號碼）必須單獨檢查。
+            </div>
+        </div>
+
+        <div id="variables" class="chapter">
+            <h2>📊 第三章：清單與變數設計</h2>
+
+            <h3>📋 清單設計</h3>
+            <div class="step">
+                <h4>清單結構（與 C12 相同）</h4>
+                <table>
+                    <tr>
+                        <th>清單名稱</th>
+                        <th>用途</th>
+                        <th>內容說明</th>
+                        <th>長度</th>
+                    </tr>
+                    <tr>
+                        <td>你的號碼</td>
+                        <td>儲存玩家輸入的號碼</td>
+                        <td>玩家選擇的6個號碼（1-49）</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>對獎號碼</td>
+                        <td>儲存電腦開出的號碼</td>
+                        <td>電腦隨機生成的7個號碼（第7個為特別號）</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>🔢 變數設計</h3>
+            <div class="step">
+                <h4>新增變數結構</h4>
+                <table>
+                    <tr>
+                        <th>變數名稱</th>
+                        <th>用途</th>
+                        <th>初始值</th>
+                        <th>資料型態</th>
+                    </tr>
+                    <tr>
+                        <td>錢包</td>
+                        <td>儲存玩家擁有的金額</td>
+                        <td>1000</td>
+                        <td>整數</td>
+                    </tr>
+                    <tr>
+                        <td>特別號</td>
+                        <td>把特別號儲存到變數中</td>
+                        <td>隨機數（1-49）</td>
+                        <td>整數</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="prize" class="chapter">
+            <h2>🏆 第四章：大樂透中獎規則與獎金表</h2>
+
+            <h3>🎯 中獎規則表</h3>
+            <div class="step">
+                <h4>完整中獎規則說明</h4>
+                <table>
+                    <tr>
+                        <th>獎項</th>
+                        <th>一般號碼中獎個數</th>
+                        <th>特別號</th>
+                        <th>中獎金額（元）</th>
+                    </tr>
+                    <tr>
+                        <td><strong>頭獎</strong></td>
+                        <td>6 個</td>
+                        <td>無需</td>
+                        <td>100,000,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>二獎</strong></td>
+                        <td>5 個</td>
+                        <td>✓ 中獎</td>
+                        <td>1,000,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>三獎</strong></td>
+                        <td>5 個</td>
+                        <td>✗ 未中</td>
+                        <td>100,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>四獎</strong></td>
+                        <td>4 個</td>
+                        <td>✓ 中獎</td>
+                        <td>10,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>五獎</strong></td>
+                        <td>4 個</td>
+                        <td>✗ 未中</td>
+                        <td>2,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>六獎</strong></td>
+                        <td>3 個</td>
+                        <td>✓ 中獎</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>七獎</strong></td>
+                        <td>2 個</td>
+                        <td>✓ 中獎</td>
+                        <td>400</td>
+                    </tr>
+                    <tr>
+                        <td><strong>普獎</strong></td>
+                        <td>3 個</td>
+                        <td>✗ 未中</td>
+                        <td>400</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>💡 中獎判斷邏輯說明</h3>
+            <div class="step">
+                <h4>判斷流程</h4>
+                <ol>
+                    <li><strong>計算一般號碼中獎個數：</strong>比對「你的號碼」與「對獎號碼」的前 6 個號碼</li>
+                    <li><strong>檢查特別號：</strong>將特別號拉出判斷，並設定為變數</li>
+                    <li><strong>組合判斷：</strong>根據「同號個數」+「特別號中獎」的組合，對照中獎規則表</li>
+                    <li><strong>設定獎金：</strong>根據中獎等級設定「中獎金額」變數</li>
+                </ol>
+            </div>
+
+            <div class="success">
+                <strong>✅ 判斷順序很重要：</strong>必須按照頭獎 → 二獎 → 三獎 → ... → 普獎的順序判斷，因為多個條件可能同時符合（例如：6 個號碼全中時，也會符合 5 個號碼的條件），需要從最高獎項開始判斷。
+            </div>
+        </div>
+
+        <div id="program" class="chapter">
+            <h2>⚙️ 第五章：Scratch 程式流程</h2>
+
+            <h3>🚀 (0) 初始化</h3>
+            <div class="step">
+                <h4>遊戲開始前的準備工作</h4>
+                <div class="blocks">
+                    <div class="block events hat">當 <span class="arg">綠旗</span> 被點擊</div>
+                    <div class="block variables">將 <span class="arg">錢包</span> 設為 <span class="arg">1000</span></div>
+                    <div class="block variables">刪除 <span class="arg">你的號碼</span> 的所有項目</div>
+                    <div class="block variables">刪除 <span class="arg">對獎號碼</span> 的所有項目</div>
+                    <div class="block variables">將 <span class="arg">同號個數</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">項次</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">電腦取號</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">特別號</span> 設為 <span class="arg">0</span></div>
+                </div>
+            </div>
+
+            <h3>💳 (1) 檢查錢包並扣除費用</h3>
+            <div class="step">
+                <h4>費用檢查與扣除流程</h4>
+                <div class="blocks">
+                    <div class="block events hat">當角色被點擊</div>
+                    <div class="block control">如果 <span class="block green"><span class="arg">錢包</span> < <span class="arg">50</span></span>
+                        <div class="substack">
+                            <div class="block looks">說出 <span class="arg">錢包餘額不足！需要50元才能遊戲</span> <span class="arg">2</span> 秒</div>
+                        </div>
+                    </div>
+                    <div class="block control">否則
+                        <div class="substack">
+                            <div class="block variables">錢包 改變 <span class="arg">-50</span></div>
+                            <div class="block looks">說出 <span class="arg">已扣除50元，剩餘金額：</span> <span class="arg">錢包</span> <span class="arg">1</span> 秒</div>
+                            <p class="comment">（後續繼續進行遊戲流程）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎯 (2) 玩家下注（輸入 6 個號碼）</h3>
+            <div class="step">
+                <h4>玩家號碼輸入流程（與 C12 相同）</h4>
+                <div class="blocks">
+                    <div class="block control c-block">重複直到 <span class="block operators"><span class="arg">你的號碼</span> 的長度 = <span class="arg">6</span></span>
+                        <div class="substack">
+                            <div class="block sensing">詢問 <span class="arg">請輸入6個號碼</span> 並等待</div>
+                            <div class="block control">如果 <span class="block operators"><span class="arg">詢問的答案</span> < <span class="arg">1</span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block operators"><span class="arg">詢問的答案</span> > <span class="arg">49</span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block operators"><span class="arg">詢問的答案</span> 包含 <span class="arg">"."</span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則如果 <span class="block list"><span class="arg">你的號碼</span> 包含 <span class="arg">詢問的答案</span></span></span>
+                                <div class="substack">
+                                    <div class="block looks">說出 <span class="arg">輸入有誤！請重新輸入！</span> <span class="arg">0.5</span> 秒</div>
+                                </div>
+                            </div>
+                            <div class="block control">否則
+                                <div class="substack">
+                                    <div class="block list">將 <span class="arg">詢問的答案</span> 加到 <span class="arg">你的號碼</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎲 (3) 電腦開獎（隨機 7 個不重複號碼）</h3>
+            <div class="step">
+                <h4>電腦號碼生成流程（需把特別號單獨設定出來）</h4>
+                <div class="blocks">
+                    <div class="block control c-block">重複直到 <span class="block green"><span class="arg">對獎號碼</span> 的長度 = <span class="arg">7</span></span>
+                        <div class="substack">
+                            <div class="block variables">將 <span class="arg">電腦取號</span> 設為 <span class="block green">在 <span class="arg">1</span> 到 <span class="arg">49</span> 之間取隨機數</span></div>
+                            <div class="block control">如果 <span class="block green">不成立 <span class="block list">對獎號碼</span> 包含 <span class="variables">電腦取號</span></span>
+                                <div class="substack">
+                                    <div class="block variables">將 <span class="arg">電腦取號</span> 加到 <span class="arg">對獎號碼</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block variables">將 <span class="arg">特別號</span> 設為 <span class="block list">電腦取號的第7項</span></div>
+                    <div class="block list">刪除 電腦取號的第<span class="block list">7</span>項</div>
+                </div>
+            </div>
+
+            <h3>🔍 (4) 比對一般號碼（計算中獎個數）</h3>
+            <div class="step">
+                <h4>一般號碼比對計算流程</h4>
+                <div class="blocks">
+                    <div class="block variables">將 <span class="arg">項次</span> 設為 <span class="arg">0</span></div>
+                    <div class="block variables">將 <span class="arg">同號個數</span> 設為 <span class="arg">0</span></div>
+                    <div class="block control c-block">重複 <span class="arg">6</span> 次
+                        <div class="substack">
+                            <div class="block variables">項次 改變 <span class="arg">1</span></div>
+                            <div class="block control">如果 <span class="block list"><span class="arg">對獎號碼</span> 包含 <span class="arg">你的號碼</span> 的第 <span class="variables">項次</span> 項</span>
+                                <div class="substack">
+                                    <div class="block variables">同號個數 改變 <span class="arg">1</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="comment">注意：這裡只比對前 6 個號碼，不包含第 7 個特別號</p>
+            </div>
+
+            <h3>🏆 (5) 判斷中獎等級並設定獎金</h3>
+            <div class="step">
+                <h4>中獎等級判斷流程</h4>
+                <ol>
+                    <li><strong>組合判斷：</strong>根據「同號個數」+「特別號中獎」的組合，對照中獎規則表</li>
+                    <li><strong>順序：</strong>必須按照頭獎 → 二獎 → 三獎 → ... → 普獎的順序判斷，因為多個條件可能同時符合（例如：6 個號碼全中時，也會符合 5 個號碼的條件），需要從最高獎項開始判斷。</li>
+                    <img src="image/result1.png" alt="中獎等級判斷流程">
+                    <img src="image/result2.png" alt="中獎等級判斷流程">
+                    <img src="image/result3.png" alt="中獎等級判斷流程">
+                </ol>
+            </div>
+        </div>
+
+        
+
+        <div id="homework" class="homework">
+            <h2>📝 第七章：作業設計與學習評量</h2>
+
+            <h3>🎯 基礎作業</h3>
+            <div class="homework-item">
+                <h4>作業一：基本遊戲化樂透 (75分)</h4>
+                <p><strong>要求：</strong></p>
+                <ul>
+                    <li>完成錢包系統（起始 1000 元）</li>
+                    <li>實作費用檢查與扣除（每次 50 元）</li>
+                    <li>完成玩家號碼輸入和電腦開獎功能</li>
+                    <li>實作一般號碼比對和特別號檢查</li>
+                    <li>完成至少 3 個獎項的判斷（頭獎、二獎、三獎）</li>
+                    <li>加入基本的獎金計算</li>
+                </ul>
+            </div>
+
+            <div class="homework-item">
+                <h4>作業二：完整中獎規則實作 (90分)</h4>
+                <p><strong>在基礎作業基礎上增加：</strong></p>
+                <ul>
+                    <li>完成所有 8 個獎項的判斷</li>
+                    <li>實作完整的特別號判定邏輯</li>
+                    <li>美化的遊戲介面和訊息顯示</li>
+                </ul>
+            </div>
+
+            
+
+            <h3>📤 作業繳交流程</h3>
+            <div class="step">
+                <h4>繳交檔案要求</h4>
+                <ol>
+                    <li><strong>Scratch專案檔：</strong>儲存為 .sb3 格式，檔名如：81760.sb3</li>
+                    <li><strong>功能截圖：</strong>至少 5 張不同功能的截圖（包含錢包、中獎、扣稅等）</li>
+                    <li><strong>設計說明：</strong>簡述遊戲特色和創意點</li>
+                    <li><strong>測試報告：</strong>列出所有測試過的功能和結果</li>
+                </ol>
+            </div>
+
+            <h3>🏆 評分標準</h3>
+            <table>
+                <tr>
+                    <th>評分項目</th>
+                    <th>配分</th>
+                    <th>評分重點</th>
+                </tr>
+                <tr>
+                    <td>錢包系統</td>
+                    <td>20%</td>
+                    <td>錢包初始化、費用檢查、扣除功能完整性</td>
+                </tr>
+                <tr>
+                    <td>中獎規則</td>
+                    <td>35%</td>
+                    <td>8 個獎項判斷邏輯正確性、特別號判定</td>
+                </tr>
+                <tr>
+                    <td>獎金計算</td>
+                    <td>25%</td>
+                    <td>獎金設定、扣稅計算、實際獎金計算</td>
+                </tr>
+                <tr>
+                    <td>程式邏輯</td>
+                    <td>15%</td>
+                    <td>條件判斷正確性、變數使用、流程控制</td>
+                </tr>
+                <tr>
+                    <td>創意表現</td>
+                    <td>5%</td>
+                    <td>介面設計、訊息顯示、使用者體驗</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 銘傳資科 - Scratch 程式設計課程</p>
+            <p>開獎遊戲設計進階篇 - 遊戲化設計與大樂透中獎規則</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop(); return false;">⬆️ 回到頂部</a>
+
+    <script>
+        // 平滑滾動到錨點
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 回到頂部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 顯示/隱藏回到頂部按鈕
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                if (backToTop) backToTop.style.display = 'block';
+            } else {
+                if (backToTop) backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
