@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八年級資訊課：個人專屬網頁製作總複習</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            padding: 35px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .intro {
+            background: #f0fdf4;
+            padding: 20px 24px;
+            border-radius: 10px;
+            border-left: 5px solid #22c55e;
+            margin-bottom: 35px;
+            color: #166534;
+        }
+
+        .chapter {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: #fafafa;
+            border-radius: 12px;
+            border-left: 6px solid #0d9488;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .chapter h2 {
+            color: #0f766e;
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccfbf1;
+        }
+
+        .step {
+            margin-bottom: 18px;
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #0d9488;
+            color: white;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+
+        .step strong {
+            color: #0f766e;
+        }
+
+        .step ul {
+            margin: 10px 0 10px 24px;
+        }
+
+        .step li {
+            margin-bottom: 6px;
+        }
+
+        /* 圖片預留區 / 實際圖片區：固定格式、不跑版、統一美觀 */
+        .img-placeholder {
+            margin: 18px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            background: #fafbfc;
+        }
+
+        /* 區塊內只有圖片時：留白、置中 */
+        .img-placeholder:has(img) {
+            padding: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .img-placeholder-area {
+            min-height: 140px;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 2px dashed #0ea5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .img-placeholder-area .icon {
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .img-placeholder-caption {
+            background: #fff;
+            color: #0369a1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 14px 18px;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        /* 真實圖片：不撐破、圓角、陰影、多張時並排/換行 */
+        .img-placeholder img,
+        .teaching-img {
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* 多張圖片時每張最大寬度，避免並排過擠 */
+        .img-placeholder img:only-child {
+            margin: 0 auto;
+        }
+
+        .img-placeholder img:not(:only-child) {
+            max-width: calc(50% - 8px);
+            flex: 1 1 280px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .tip-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tip-box ul {
+            margin-left: 20px;
+            color: #78350f;
+        }
+
+        .tip-box li {
+            margin-bottom: 6px;
+        }
+
+        .final-reminder {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            padding: 25px 28px;
+            border-radius: 12px;
+            margin-top: 35px;
+            border-left: 6px solid #7c3aed;
+        }
+
+        .final-reminder h3 {
+            color: #5b21b6;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .final-reminder p {
+            color: #4c1d95;
+            line-height: 1.8;
+        }
+
+        .nav-menu {
+            background: #f0fdf4;
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #22c55e;
+        }
+
+        .nav-menu h3 {
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            margin: 4px 8px 4px 0;
+            padding: 6px 14px;
+            background: #22c55e;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+        }
+
+        .nav-menu a:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        code, .filename {
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .key-combo {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .container { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 八年級資訊課：個人專屬網頁製作總複習</h1>
+            <p>網頁製作破關秘笈 · 期末交件必讀</p>
+        </header>
+
+        <div class="intro">
+            各位同學，這學期我們學了如何自己做網頁！為了讓大家能順利完成作品並上傳交件，老師幫大家整理了這份「網頁製作破關秘笈」。請務必跟著步驟檢查，確保你的網頁完美上線！
+        </div>
+
+        <nav class="nav-menu">
+            <h3>📑 快速跳轉</h3>
+            <a href="#ch1">第一關 雲端基地</a>
+            <a href="#ch2">第二關 黃金三步驟</a>
+            <a href="#ch3">第三關 Nvu 基礎</a>
+            <a href="#ch4">第四關 背景與圖片</a>
+            <a href="#ch5">第五關 超連結</a>
+            <a href="#ch6">第六關 隱形表格</a>
+            <a href="#ch7">第七關 圖片處理</a>
+            <a href="#final">老師叮嚀</a>
+        </nav>
+
+        <!-- 第一關 -->
+        <section class="chapter" id="ch1">
+            <h2>🌟 第一關：建立你的「雲端網頁基地」</h2>
+            <p style="margin-bottom:16px;">要讓全世界看到你的網頁，我們必須把檔案放在正確的雲端基地。</p>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>雲端資料夾不可改名：</strong>請登入 Google 雲端硬碟，確認裡面有一個名為 <code>www</code> 的資料夾。這個資料夾絕對不可以刪除或重新命名喔！
+                <div class="img-placeholder"><img src="image/www.png" alt="Google 雲端硬碟畫面，用紅框圈出 www 資料夾"></div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>觀看網頁的專屬工具：</strong>我們使用 <code><a href="https://www.drv.tw/" target="_blank">https://www.drv.tw/</a></code> 這個網站來發布網頁。每次更新網頁後，一定要在這個網站按下鍵盤上的 <span class="key-combo">Ctrl+F5</span> 來更新畫面。
+                <div class="img-placeholder"><img src="image/dtw.png" alt="drv.tw 網站畫面，或按 Ctrl+F5 的鍵盤示意圖"></div>
+            </div>
+        </section>
+
+        <!-- 第二關 -->
+        <section class="chapter" id="ch2">
+            <h2>🌟 第二關：做網頁的「黃金三步驟」</h2>
+            <p style="margin-bottom:16px;">做網頁永遠離不開這三個循環，請默念三次！</p>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>存檔：</strong>用 Nvu 編輯完後，存檔到電腦的 D 槽。
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>傳檔：</strong>把做好的網頁檔與圖片，上傳傳回 <code>www</code> 資料夾內。遇到重複檔案請選擇「取代現有檔案」。
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>觀看：</strong>連到你的專屬網址，按下 <span class="key-combo">Ctrl+F5</span> 觀看更新內容。
+                <div class="img-placeholder"><img src="image/流程圖.png" alt="Nvu 存檔按鈕 → 雲端硬碟上傳按鈕 → 瀏覽器重新整理 的流程圖"></div>
+            </div>
+        </section>
+
+        <!-- 第三關 -->
+        <section class="chapter" id="ch3">
+            <h2>🌟 第三關：Nvu 基礎功與檔名禁忌</h2>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>設定網頁標題與內容：</strong>打開 Nvu，輸入你的標題（例如：歡迎光臨 8XXXX）與日期，你可以把文字放大、改變顏色、或是設定置中對齊。
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>存檔的魔法：</strong>
+                <ul>
+                    <li>第一步會問你「頁面標題」，這會顯示在瀏覽器分頁上。</li>
+                    <li>第二步是「檔名」，<strong>請注意！檔名一定要用英文小寫</strong>，例如 <span class="filename">2.html</span>，絕對不能用中文！</li>
+                </ul>
+                <div class="img-placeholder">
+                <div class="img-placeholder-caption"><img src="image/named.png" alt="Nvu 存檔按鈕 → 雲端硬碟上傳按鈕 → 瀏覽器重新整理 的流程圖"></div>
+            </div>
+            </div>
+        </section>
+
+        <!-- 第四關 -->
+        <section class="chapter" id="ch4">
+            <h2>🌟 第四關：讓網頁變漂亮（背景與圖片）</h2>
+            <p style="margin-bottom:16px;">沒有圖片的網頁太無聊了，我們來加點料！（注意：圖片檔一定要跟 <code>.html</code> 網頁檔放在同一個地方！）</p>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>設定背景圖：</strong>
+                <ul>
+                    <li>點選上方選單的「格式」→「頁面文字顏色及背景顏色」。</li>
+                    <li>勾選並選擇你下載好的背景圖片。</li>
+                </ul>
+                <div class="img-placeholder"><img src="image/bg.png" alt="格式選單打開，選擇背景圖片的對話框"></div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>插入圖片：</strong>
+                <ul>
+                    <li>點選「插入」→「圖片」。</li>
+                    <li>選擇你要放的照片。</li>
+                    <li><strong>⚠️ 致命陷阱警告：</strong>務必勾選「網址 URL 是相對於此網頁位址」。</li>
+                    <li><strong>替代文字：</strong>記得輸入圖片檔名（例如 <span class="filename">2-2.jpg</span>），這樣圖片萬一讀不出來，才會顯示文字。</li>
+                </ul>
+                <div class="img-placeholder"><img src="image/bg2.png" alt="圖片屬性對話框，紅框強調「相對於此網頁位址」的打勾處以及「替代文字」"></div>
+            </div>
+        </section>
+
+        <!-- 第五關 -->
+        <section class="chapter" id="ch5">
+            <h2>🌟 第五關：串聯全世界（超連結設定）</h2>
+            <p style="margin-bottom:16px;">把文字變成可以點擊的網址，以尊重著作權並標明出處。</p>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>選取文字：</strong>把你想做成連結的文字（例如：YouTube 或 圖片參考網址）反白選取。
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>點擊「連結」按鈕：</strong>
+                <ul>
+                    <li><strong>連到別人的網站（絕對網址）：</strong>輸入完整的網址（如 <code>https://www.youtube.com/</code>）。為了不讓別人網站蓋掉你的網頁，請點開「更多屬性」，將「目標」設定為「<strong>新視窗</strong>」。</li>
+                    <li><strong>連到自己的網頁（相對網址）：</strong>直接輸入檔名即可（例如 <span class="filename">cc.html</span>），不用加前面的 <code>https</code>。</li>
+                </ul>
+                <div class="img-placeholder"><img src="image/link.png" alt="超連結屬性設定框，用紅框圈出「輸入網址的地方」和目標設為「新視窗」的下拉選單"><img src="image/link2.png" alt="超連結屬性設定框，用紅框圈出「輸入網址的地方」和目標設為「新視窗」的下拉選單"></div>
+            </div>
+        </section>
+
+        <!-- 第六關 -->
+        <section class="chapter" id="ch6">
+            <h2>🌟 第六關：進階排版神器（隱形表格）</h2>
+            <p style="margin-bottom:16px;">想要把文字和圖片排得整整齊齊，我們要使用「表格」來幫忙！</p>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>插入表格：</strong>點選「插入」→「表格」，畫出你需要的格子（例如 4×2）。
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>讓表格自動縮放（RWD 響應式）：</strong>在表格上點兩下開啟「表格屬性」，把「寬度」改為 <code>100</code>，後面的單位選擇「<strong>相對於視窗的百分比</strong>」。表格對齊方式選「靠中」。
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>把框線變不見：</strong>在表格屬性中，把「框線寬度」改為 <strong>0</strong> 像素！這樣框線就會隱形，變成超完美的排版工具！
+                <div class="img-placeholder"><img src="image/table.png" alt="表格屬性對話框，紅框標示寬度 100%、百分比、對齊靠中、以及框線寬度 0"></div>
+            </div>
+        </section>
+
+
+        <!-- 老師叮嚀 -->
+        <section class="final-reminder" id="final">
+            <h3>🏆 老師的最後叮嚀</h3>
+            <p>做網頁就像蓋房子，檔案放在哪裡（路徑）、叫什麼名字（檔名）都非常重要。遇到問題不要慌，檢查你的檔名是不是英文、有沒有按 <span class="key-combo">Ctrl+F5</span> 更新，祝大家都能做出超棒的網頁！</p>
+        </section>
+    </div>
+</body>
+</html>
