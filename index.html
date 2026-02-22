@@ -228,6 +228,50 @@
             opacity: 0.8;
         }
 
+        /* 分頁按鈕 */
+        .tab-bar {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #666;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #2c3e50;
+            background: rgba(255,255,255,0.8);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            box-shadow: 0 3px 12px rgba(255, 107, 107, 0.35);
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .course-grid {
                 grid-template-columns: 1fr;
@@ -235,6 +279,11 @@
             
             .header h1 {
                 font-size: 2.2em;
+            }
+
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 1em;
             }
         }
     </style>
@@ -250,6 +299,14 @@
             </p>
         </div>
 
+        <!-- 分頁切換 -->
+        <div class="tab-bar">
+            <button type="button" class="tab-btn active" data-tab="tab1">八年級上學期</button>
+            <button type="button" class="tab-btn" data-tab="tab2">八年級下學期</button>
+        </div>
+
+        <!-- 八年級上學期 -->
+        <div id="tab1" class="tab-pane active">
         <!-- 課程導覽 -->
         <div class="section">
             <div class="section-header">📚 課程單元導覽</div>
@@ -544,8 +601,43 @@
                 </div>
             </div>
         </div>
+        </div>
+        <!-- 結束 八年級上學期 -->
 
-
+        <!-- 八年級下學期 -->
+        <div id="tab2" class="tab-pane">
+            <div class="section">
+                <div class="section-header">📚 課程單元導覽</div>
+                <div class="section-content">
+                    <p style="margin-bottom: 20px; font-size: 1.1em; color: #666;">
+                        點擊下方課程卡片，進入對應的教學內容。
+                    </p>
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <h3>八年級網頁製作</h3>
+                            <p>網頁製作總複習，雲端基地、Nvu 基礎、圖片與超連結、隱形表格等。</p>
+                            <a href="八年級網頁製作總複習.html" class="course-link">開始學習 →</a>
+                        </div>
+                        <div class="course-card">
+                            <h3>課程待補充</h3>
+                            <p>內容尚未開放，敬請期待。</p>
+                            <a href="#" class="course-link">開始學習 →</a>
+                        </div>
+                        <div class="course-card">
+                            <h3>課程待補充</h3>
+                            <p>內容尚未開放，敬請期待。</p>
+                            <a href="#" class="course-link">開始學習 →</a>
+                        </div>
+                        <div class="course-card">
+                            <h3>課程待補充</h3>
+                            <p>內容尚未開放，敬請期待。</p>
+                            <a href="#" class="course-link">開始學習 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 結束 八年級下學期 -->
 
         <!-- 頁尾 -->
         <div class="footer">
@@ -556,5 +648,22 @@
             </p>
         </div>
     </div>
+
+    <script>
+        (function() {
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var tabPanes = document.querySelectorAll('.tab-pane');
+            tabBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var targetId = this.getAttribute('data-tab');
+                    tabBtns.forEach(function(b) { b.classList.remove('active'); });
+                    tabPanes.forEach(function(p) {
+                        p.classList.toggle('active', p.id === targetId);
+                    });
+                    this.classList.add('active');
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
