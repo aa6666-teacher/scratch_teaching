@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>框架 (Frame) 網頁製作教學</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            padding: 35px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .intro {
+            background: #f0fdf4;
+            padding: 20px 24px;
+            border-radius: 10px;
+            border-left: 5px solid #22c55e;
+            margin-bottom: 35px;
+            color: #166534;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .warning-box p {
+            color: #78350f;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: #fafafa;
+            border-radius: 12px;
+            border-left: 6px solid #0d9488;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            color: #0f766e;
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccfbf1;
+        }
+
+        .section h3 {
+            color: #0f766e;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .step {
+            margin-bottom: 18px;
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #0d9488;
+            color: white;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+
+        .step strong {
+            color: #0f766e;
+        }
+
+        .example-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .example-box pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .example-box code {
+            color: #e2e8f0;
+        }
+
+        .example-title {
+            color: #0f766e;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+        }
+
+        .preview-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+        }
+
+        .preview-title {
+            text-align: center;
+            color: #495057;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* 框架預覽樣式 */
+        .frame-preview {
+            width: 100%;
+            height: 300px;
+            border: 3px solid #495057;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 樣式一：左右二分法 */
+        .preview-style1 {
+            display: flex;
+            height: 100%;
+        }
+
+        .preview-style1 .left-frame {
+            width: 15%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-right: 3px solid #495057;
+        }
+
+        .preview-style1 .right-frame {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #495057;
+            font-weight: bold;
+        }
+
+        /* 樣式二：上下二分法 */
+        .preview-style2 {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .preview-style2 .top-frame {
+            height: 18%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-bottom: 3px solid #495057;
+        }
+
+        .preview-style2 .bottom-frame {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #495057;
+            font-weight: bold;
+        }
+
+        /* 樣式三：三框架組合 */
+        .preview-style3 {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .preview-style3 .top-frame {
+            height: 18%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-bottom: 3px solid #495057;
+        }
+
+        .preview-style3 .bottom-section {
+            flex: 1;
+            display: flex;
+        }
+
+        .preview-style3 .left-frame {
+            width: 15%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-right: 3px solid #495057;
+        }
+
+        .preview-style3 .right-frame {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #495057;
+            font-weight: bold;
+        }
+
+        .key-points {
+            background: #e0f2fe;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .key-points h4 {
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #0c4a6e;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+        }
+
+        .key-points code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .homework-section {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            padding: 25px 28px;
+            border-radius: 12px;
+            margin-top: 35px;
+            border-left: 6px solid #7c3aed;
+        }
+
+        .homework-section h3 {
+            color: #5b21b6;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .homework-section ul {
+            margin-left: 20px;
+            color: #4c1d95;
+        }
+
+        .homework-section li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .homework-section code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .filename {
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .key-combo {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .container { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌐 網頁製作教學：玩轉「框架 (Frame)」結構</h1>
+            <p>學習如何將瀏覽器視窗切割成多個區塊，讓導覽列固定在側邊或上方</p>
+        </header>
+
+        <div class="intro">
+            <strong>💡 學習目標：</strong>學習如何將一個瀏覽器視窗切割成多個區塊，讓導覽列（選單）固定在側邊或上方，內容則在主視窗切換。
+        </div>
+
+        <div class="warning-box">
+            <h4>⚠️ 注意</h4>
+            <p>NVU 軟體不支援直接編輯框架網頁（會看不到效果），因此製作 index2.html 時，請直接使用「記事本」編輯。</p>
+        </div>
+
+        <section class="section">
+            <h2>🛠 準備工作：做網頁三步驟</h2>
+            
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>以記事本編輯並存檔：</strong>檔名務必正確。
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>將檔案上傳至雲端 www 資料夾：</strong>確保檔案在正確的位置。
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>開啟網頁並按 <span class="key-combo">Ctrl + F5</span> 強制更新畫面：</strong>查看結果。
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎨 常用框架樣式與範例程式碼</h2>
+            <p style="margin-bottom: 20px;">您可以選擇以下其中一種結構來製作您的主網頁 <span class="filename">index2.html</span>：</p>
+
+            <!-- 樣式一：左右二分法 -->
+            <div class="example-title">樣式一：左右二分法 (最常見的選單模式)</div>
+            <p style="margin-bottom: 15px;">左側為選單 (<span class="filename">1.html</span>)，右側為主內容區 (<span class="filename">2.html</span>)。</p>
+
+            <div class="preview-container">
+                <div class="preview-title">📐 框架預覽圖</div>
+                <div class="frame-preview">
+                    <div class="preview-style1">
+                        <div class="left-frame">選單區<br>(1.html)</div>
+                        <div class="right-frame">主內容區<br>(2.html)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
+    &lt;title&gt;我的框架首頁&lt;/title&gt;
+&lt;/head&gt;
+&lt;frameset cols="15%, *"&gt;
+    &lt;frame src="1.html"&gt;
+    &lt;frame name="main" src="2.html"&gt;
+&lt;/frameset&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <div class="key-points">
+                <p><code>cols="15%, *"</code>：代表左邊佔 15% 寬度，右邊佔剩餘空間。</p>
+            </div>
+
+            <!-- 樣式二：上下二分法 -->
+            <div class="example-title">樣式二：上下二分法</div>
+            <p style="margin-bottom: 15px;">上方為標題或選單 (<span class="filename">1.html</span>)，下方為內容區 (<span class="filename">2.html</span>)。</p>
+
+            <div class="preview-container">
+                <div class="preview-title">📐 框架預覽圖</div>
+                <div class="frame-preview">
+                    <div class="preview-style2">
+                        <div class="top-frame">標題/選單區<br>(1.html)</div>
+                        <div class="bottom-frame">內容區<br>(2.html)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
+    &lt;title&gt;我的框架首頁&lt;/title&gt;
+&lt;/head&gt;
+&lt;frameset rows="18%, *"&gt;
+    &lt;frame src="1.html"&gt;
+    &lt;frame name="main" src="2.html"&gt;
+&lt;/frameset&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <div class="key-points">
+                <p><code>rows="18%, *"</code>：代表上方佔 18% 高度，下方佔剩餘空間。</p>
+            </div>
+
+            <!-- 樣式三：三框架組合 -->
+            <div class="example-title">樣式三：三框架組合 (A型：上長、下分左右)</div>
+            <p style="margin-bottom: 15px;">最上方是長條標題 (<span class="filename">3.html</span>)，下方左側是選單 (<span class="filename">1.html</span>)，右側是內容 (<span class="filename">2.html</span>)。</p>
+
+            <div class="preview-container">
+                <div class="preview-title">📐 框架預覽圖</div>
+                <div class="frame-preview">
+                    <div class="preview-style3">
+                        <div class="top-frame">標題區<br>(3.html)</div>
+                        <div class="bottom-section">
+                            <div class="left-frame">選單區<br>(1.html)</div>
+                            <div class="right-frame">主內容區<br>(2.html)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
+    &lt;title&gt;我的框架首頁&lt;/title&gt;
+&lt;/head&gt;
+&lt;frameset rows="18%, *"&gt;
+    &lt;frame src="3.html"&gt;
+    &lt;frameset cols="15%, *"&gt;
+        &lt;frame src="1.html"&gt;
+        &lt;frame name="main" src="2.html"&gt;
+    &lt;/frameset&gt;
+&lt;/frameset&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📝 關鍵設定說明 (讓網頁更美觀)</h2>
+            <p style="margin-bottom: 15px;">在 <code>&lt;frame&gt;</code> 標籤中加入以下語法可以調整細節：</p>
+
+            <div class="key-points">
+                <h4>🔧 常用屬性設定</h4>
+                <ul>
+                    <li><strong><code>noresize</code>：</strong>防止學生或讀者亂拉動邊框，固定框架大小。</li>
+                    <li><strong><code>frameborder="0"</code>：</strong>隱藏醜醜的灰色邊框，讓網頁看起來像一體成型。</li>
+                    <li><strong><code>scrolling="no"</code>：</strong>如果不希望出現捲軸（例如選單很短時），可以設定為 no。</li>
+                    <li><strong><code>target="main"</code>：</strong>這最重要！在 <span class="filename">1.html</span> 的超連結一定要加這句，點擊後的網頁才會開在右邊的內容區，而不是整頁跳走。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="homework-section">
+            <h3>🚀 學生動手做作業要求</h3>
+            <ul>
+                <li><strong>製作 <span class="filename">1.html</span>：</strong>輸入選單文字（如：自我介紹、我的作品），並完成超連結。</li>
+                <li><strong>設定連結目標：</strong>超連結的「目標」請務必填寫 <code>main</code>，這樣內容才會顯示在正確的區塊。</li>
+                <li><strong>檔名檢核：</strong>確認資料夾內有 <span class="filename">index2.html</span> (主框架)、<span class="filename">1.html</span> (選單)、<span class="filename">2.html</span> (內容)。</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
