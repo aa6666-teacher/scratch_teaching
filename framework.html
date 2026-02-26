@@ -357,6 +357,69 @@
             font-family: monospace;
         }
 
+        .img-placeholder {
+            margin: 18px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            background: #fafbfc;
+        }
+
+        .img-placeholder img {
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 3px solid #f59e0b;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .highlight-box strong {
+            display: block;
+            color: #92400e;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .copy-text-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #f59e0b;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #78350f;
+            white-space: pre-line;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 5px solid #ef4444;
+            margin: 15px 0;
+            color: #991b1b;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+        }
+
         @media print {
             body { background: #fff; }
             .container { box-shadow: none; margin: 0; }
@@ -372,6 +435,10 @@
 
         <div class="intro">
             <strong>💡 學習目標：</strong>學習如何將一個瀏覽器視窗切割成多個區塊，讓導覽列（選單）固定在側邊或上方，內容則在主視窗切換。
+        </div>
+
+        <div class="img-placeholder">
+            <img src="image/frame.png" alt="框架結構示意圖">
         </div>
 
         <div class="warning-box">
@@ -419,7 +486,7 @@
             <div class="example-box">
                 <pre><code>&lt;html&gt;
 &lt;head&gt;
-    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
+    &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"&gt;
     &lt;title&gt;我的框架首頁&lt;/title&gt;
 &lt;/head&gt;
 &lt;frameset cols="15%, *"&gt;
@@ -450,7 +517,7 @@
             <div class="example-box">
                 <pre><code>&lt;html&gt;
 &lt;head&gt;
-    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
+    &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"&gt;
     &lt;title&gt;我的框架首頁&lt;/title&gt;
 &lt;/head&gt;
 &lt;frameset rows="18%, *"&gt;
@@ -464,52 +531,143 @@
                 <p><code>rows="18%, *"</code>：代表上方佔 18% 高度，下方佔剩餘空間。</p>
             </div>
 
-            <!-- 樣式三：三框架組合 -->
-            <div class="example-title">樣式三：三框架組合 (A型：上長、下分左右)</div>
-            <p style="margin-bottom: 15px;">最上方是長條標題 (<span class="filename">3.html</span>)，下方左側是選單 (<span class="filename">1.html</span>)，右側是內容 (<span class="filename">2.html</span>)。</p>
+        <section class="section">
+            <h2>📝 製作 1.html 網頁</h2>
+            
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>開啟 Nvu</strong>
+            </div>
 
-            <div class="preview-container">
-                <div class="preview-title">📐 框架預覽圖</div>
-                <div class="frame-preview">
-                    <div class="preview-style3">
-                        <div class="top-frame">標題區<br>(3.html)</div>
-                        <div class="bottom-section">
-                            <div class="left-frame">選單區<br>(1.html)</div>
-                            <div class="right-frame">主內容區<br>(2.html)</div>
-                        </div>
-                    </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>內容包含標題目錄然後超連結：</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>原始碼首頁 <span class="filename">aa.html</span></li>
+                    <li>自我介紹 <span class="filename">cc.html</span></li>
+                    <li>圖片縮剪 <span class="filename">dd.html</span></li>
+                    <li>操作測驗 <span class="filename">kk.html</span></li>
+                    <li>影像地圖</li>
+                </ul>
+                <div class="img-placeholder">
+                    <img src="image/step2.png" alt="步驟二示意圖">
+                </div>
+                <div class="highlight-box">
+                    <strong>📋 可複製以下文字</strong>
+                    <div class="copy-text-box">目 錄
+ 8XXxx
+ 原始碼網頁 aa.html
+ 自我介紹 cc.html
+ 圖片縮剪 dd.html
+ 操作測驗 kk.html
+ 影像地圖</div>
+                    <div class="important-note">⚠️ 文字需置中對齊，完成超連結後刪除後面的.html</div>
                 </div>
             </div>
 
-            <div class="example-box">
-                <pre><code>&lt;html&gt;
-&lt;head&gt;
-    &lt;meta content="text/html; charset=Big5" http-equiv="content-type"&gt;
-    &lt;title&gt;我的框架首頁&lt;/title&gt;
-&lt;/head&gt;
-&lt;frameset rows="18%, *"&gt;
-    &lt;frame src="3.html"&gt;
-    &lt;frameset cols="15%, *"&gt;
-        &lt;frame src="1.html"&gt;
-        &lt;frame name="main" src="2.html"&gt;
-    &lt;/frameset&gt;
-&lt;/frameset&gt;
-&lt;/html&gt;</code></pre>
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>輸入標題：</strong>8xxxx 選單網頁
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>儲存位置：</strong>D: 槽
+            </div>
+
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>檔名：</strong><span class="filename">1.html</span>
+                <div class="img-placeholder">
+                    <img src="image/step5.png" alt="步驟五示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">6</span>
+                <strong>重要提醒：</strong>須先存好檔案，否則連結會失效。超連結各網頁使用相對網址。
+                <div class="img-placeholder">
+                    <img src="image/step6.png" alt="步驟六示意圖">
+                </div>
             </div>
         </section>
 
         <section class="section">
-            <h2>📝 關鍵設定說明 (讓網頁更美觀)</h2>
-            <p style="margin-bottom: 15px;">在 <code>&lt;frame&gt;</code> 標籤中加入以下語法可以調整細節：</p>
+            <h2>📝 製作 2.html</h2>
+            <div class="warning-box">
+                <h4>📌 要求</h4>
+                <p>文字需改顏色放大3~4倍，第一行字置中對齊</p>
+            </div>
 
-            <div class="key-points">
-                <h4>🔧 常用屬性設定</h4>
-                <ul>
-                    <li><strong><code>noresize</code>：</strong>防止學生或讀者亂拉動邊框，固定框架大小。</li>
-                    <li><strong><code>frameborder="0"</code>：</strong>隱藏醜醜的灰色邊框，讓網頁看起來像一體成型。</li>
-                    <li><strong><code>scrolling="no"</code>：</strong>如果不希望出現捲軸（例如選單很短時），可以設定為 no。</li>
-                    <li><strong><code>target="main"</code>：</strong>這最重要！在 <span class="filename">1.html</span> 的超連結一定要加這句，點擊後的網頁才會開在右邊的內容區，而不是整頁跳走。</li>
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>複製以下文字：</strong>
+                <div class="highlight-box">
+                    <div class="copy-text-box">歡迎光臨8XXxx
+做網頁三步驟
+1.存檔:
+2.傳檔:傳到 www 資料匣下,選◎取代現有檔案。
+3.觀看:連到 https://drv.tw,找到該網頁,按 Ctrl+F5 觀看更新內容</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>儲存檔案</strong>
+                <div class="img-placeholder">
+                    <img src="image/step5.png" alt="步驟二示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>下載背景圖片</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>進入外部網站：<a href="https://www.toptal.com/designers/subtlepatterns/" target="_blank">https://www.toptal.com/designers/subtlepatterns/</a></li>
+                    <li>然後選取自己喜歡的圖片（注意不要太暗會看不到文字）</li>
+                    <li>記得下載時需放入相同資料夾 www 裡，圖片才可顯示出來</li>
+                    <li>下載時取名可叫做 <span class="filename">2-1</span>（注意不要有中文字出現）</li>
                 </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>放入背景圖片</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>加入圖片 <span class="filename">2-1</span></li>
+                    <li>替代文字輸入檔名</li>
+                </ul>
+                <div class="img-placeholder">
+                    <img src="image/2-1.png" alt="背景圖片設定示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>插入風景圖片</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>進入外部網站 <a href="https://www.goodfreephotos.com/" target="_blank">https://www.goodfreephotos.com/</a></li>
+                    <li>在小圖上按下右鍵另存圖片為 <span class="filename">2-2.jpg</span></li>
+                    <li>圖片替代文字輸入檔名並且置中對齊</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-num">6</span>
+                <strong>參考網址</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>參考網址放在圖片下方處，字小一些，置中對齊</li>
+                    <li>須做超連結且要彈出新視窗，以尊重著作權</li>
+                    <li>背景參考網址：</li>
+                    <li>圖片參考網址：</li>
+                </ul>
+                <div class="img-placeholder">
+                    <img src="image/2-3.png" alt="參考網址設定示意圖">
+                </div>
+            </div>
+
+            <div class="important-note" style="margin-top: 25px;">
+                ✅ 最後將所有檔案確保都有在 www 資料夾裡面，即可到 drv 觀看成果
             </div>
         </section>
 
