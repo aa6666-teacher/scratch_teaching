@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影像地圖製作教學：台灣縣市政府地圖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            padding: 35px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .intro {
+            background: #f0fdf4;
+            padding: 20px 24px;
+            border-radius: 10px;
+            border-left: 5px solid #22c55e;
+            margin-bottom: 35px;
+            color: #166534;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: #fafafa;
+            border-radius: 12px;
+            border-left: 6px solid #0d9488;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            color: #0f766e;
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccfbf1;
+        }
+
+        .section h3 {
+            color: #0f766e;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .step {
+            margin-bottom: 18px;
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #0d9488;
+            color: white;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+
+        .step strong {
+            color: #0f766e;
+        }
+
+        .step ul {
+            margin: 10px 0 10px 24px;
+        }
+
+        .step li {
+            margin-bottom: 8px;
+        }
+
+        .example-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .example-box pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .example-box code {
+            color: #e2e8f0;
+        }
+
+        .example-title {
+            color: #0f766e;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+        }
+
+        .key-points {
+            background: #e0f2fe;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .key-points h4 {
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #0c4a6e;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+        }
+
+        .key-points code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .warning-box p {
+            color: #78350f;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            padding: 20px 24px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #7c3aed;
+        }
+
+        .tip-box h4 {
+            color: #5b21b6;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tip-box ul {
+            margin-left: 20px;
+            color: #4c1d95;
+        }
+
+        .tip-box li {
+            margin-bottom: 8px;
+        }
+
+        .filename {
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .key-combo {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        .task-section {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .task-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .task-section ul {
+            margin-left: 20px;
+            color: #78350f;
+        }
+
+        .task-section li {
+            margin-bottom: 10px;
+        }
+
+        .img-placeholder {
+            margin: 18px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            background: #fafbfc;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .img-placeholder img {
+            max-width: 90%;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .container { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌏 影像地圖製作教學：台灣縣市政府地圖</h1>
+            <p>使用 Nvu 與 GIMP 製作互動式影像地圖</p>
+        </header>
+
+        <div class="intro">
+            <strong>💡 教學說明：</strong>這份講義詳細說明了如何製作一個台灣縣市政府的<strong>「影像地圖」</strong>（Image Map），透過 <strong>Nvu</strong>（網頁編輯軟體）與 <strong>GIMP</strong>（圖片編輯軟體）來完成。
+        </div>
+
+        <section class="section">
+            <h2>壹、準備工作</h2>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>環境設定：</strong>開啟 Google 雲端硬碟，進入 <span class="filename">www</span> 資料夾準備進行檔案傳輸。
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>軟體下載：</strong>需安裝 <strong>GIMP</strong> 圖片編輯軟體。
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>素材下載：</strong>下載台灣地圖圖片 <span class="filename">tw.png</span> 並儲存於電腦 D 磁碟。
+                <p style="margin-top: 10px;">
+                    <a href="https://drive.google.com/file/d/1FslxfcbK2bDYmwSEwNEEVgq1Db9O-fP1/view" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s ease;">📥 點此下載 tw.png</a>
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>貳、步驟 1：製作網頁主體 (tw.html)</h2>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>開啟 Nvu：</strong>在第一行輸入主題（如「縣市政府網頁」）、班級座號及日期。
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>文字排版：</strong>將標題文字置中、放大 3 倍並更改顏色。
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>檔案儲存：</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>標題</strong>設定為「8XXXX 影像地圖網頁」。</li>
+                    <li><strong>檔名</strong>儲存為小寫 <span class="filename">tw.html</span> 於 D 磁碟。</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>上傳預覽：</strong>將檔案傳至雲端 <span class="filename">www</span> 資料夾，連至 <code>drv.tw</code> 網站並按 <span class="key-combo">Ctrl + F5</span> 更新網頁顯示。
+            </div>
+
+            <div class="key-points" style="margin-top: 25px;">
+                <h4>💻 範例程式碼參考 (map.html)</h4>
+                <p style="margin-bottom: 15px;">以下是一個簡單的影像地圖網頁範例，您可以參考此結構：</p>
+                <div class="example-box">
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;8XXXX 影像地圖網頁&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #0d9488;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;8XXXX 台灣行政地圖&lt;/h1&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>參、步驟 2：製作座標資訊檔 (tw.map)</h2>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>開啟 GIMP：</strong>使用 GIMP 開啟下載好的 <span class="filename">tw.png</span>。
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>影像地圖編輯器：</strong>選擇「濾鏡」→「網頁」→「影像地圖編輯器」。
+                <div class="img-placeholder">
+                    <img src="image/3-1.png" alt="影像地圖編輯器示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>設定地圖資訊：</strong>在編輯器中將「圖片名稱」欄位修正為 <span class="filename">tw.png</span>。
+                <div class="img-placeholder">
+                    <img src="image/3-2.png" alt="設定地圖資訊示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>選擇圖片超鏈結區域：</strong>至少 5 個多邊形超連結
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>a. 使用多邊形選縣市圖邊緣，長方形區域選縣市文字名稱，最後快按左鍵 2 下完成選取區</strong></li>
+                    <li><strong>b. 請由北到南依序完成：</strong>基隆市、台北市、新北市、桃園、新竹縣市、宜蘭縣...</li>
+                    <li><strong>c. 網址開頭都須是：</strong><code>https://</code>...若有錯誤，再貼一次即可</li>
+                    <li><strong>d. target frame name/ID：</strong>...需填上 <code>new</code>，讓超鏈結彈出新視窗。</li>
+                </ul>
+                <div class="img-placeholder">
+                    <img src="image/3-3.png" alt="選取區域示意圖">
+                </div>
+                <div class="img-placeholder">
+                    <img src="image/3-4.png" alt="連結設定示意圖">
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>儲存檔案：</strong>存檔名為 <span class="filename">tw.map</span>。
+                <div class="warning-box" style="margin-top: 10px;">
+                    <h4>⚠️ 重要提醒</h4>
+                    <p>此檔案日後僅能用 GIMP 修改，用 Nvu 打開會損壞。</p>
+                </div>
+                <div class="img-placeholder">
+                    <img src="image/3-5.png" alt="儲存檔案示意圖">
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>肆、步驟 3：整合與發佈</h2>
+
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>複製代碼：</strong>用「記事本」開啟 <span class="filename">tw.map</span>，複製其內容中所有的 <code>&lt;map&gt;</code> 相關原始碼。
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>貼上代碼：</strong>在 Nvu 的「原始碼」模式下，將代碼貼在 <code>&lt;/body&gt;</code> 標籤的前一行。
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>最終儲存與上傳：</strong>將 <span class="filename">tw.html</span>、<span class="filename">tw.png</span>、<span class="filename">tw.map</span> 三個檔案同步傳送到雲端 <span class="filename">www</span> 資料夾內。
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>更新測試：</strong>再次連到 <code>drv.tw</code> 的 <span class="filename">tw.html</span> 網頁，按 <span class="key-combo">Ctrl + F5</span> 確認影像地圖功能正常。
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>伍、高分題與維護</h2>
+
+            <div class="tip-box">
+                <h4>🎯 進階挑戰</h4>
+                <ul>
+                    <li><strong>滿分挑戰：</strong>製作至少 10 個縣市的多邊形超連結。</li>
+                    <li><strong>目錄串聯：</strong>在個人首頁 <span class="filename">1.html</span> 的目錄中，將「影像地圖」文字連結至 <span class="filename">tw.html</span>。</li>
+                    <li><strong>內容修改：</strong>若需修改，須先以 GIMP 開啟 <span class="filename">tw.png</span>，再於影像地圖編輯器中開啟 <span class="filename">tw.map</span> 進行編修，最後再將更新後的原始碼覆蓋回 <span class="filename">tw.html</span>。</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="warning-box" style="margin-top: 30px;">
+            <h4>💡 補充說明</h4>
+            <p>我可以協助您針對 GIMP 的多邊形選取工具進行更具體的步驟示範，或者幫您測試網頁連結的正確性。</p>
+        </div>
+    </div>
+</body>
+</html>
