@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 基礎教學：入門講義</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            padding: 35px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .intro {
+            background: #f0fdf4;
+            padding: 20px 24px;
+            border-radius: 10px;
+            border-left: 5px solid #22c55e;
+            margin-bottom: 35px;
+            color: #166534;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: #fafafa;
+            border-radius: 12px;
+            border-left: 6px solid #0d9488;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            color: #0f766e;
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccfbf1;
+        }
+
+        .section h3 {
+            color: #0f766e;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-top: 8px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        code {
+            background: #e5e7eb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: #0f172a;
+            color: #e5e7eb;
+            display: block;
+            padding: 16px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 15px 0;
+        }
+
+        .tip-box {
+            background: #f0fdf4;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #22c55e;
+            margin-top: 12px;
+            color: #166534;
+        }
+
+        .tip-box strong {
+            color: #166534;
+        }
+
+        .task-list li {
+            margin-bottom: 8px;
+        }
+
+
+        .code-inline {
+            color: #0c0505;
+            font-weight: bold;
+            background: #b9313a;
+        }
+        code.css-properties {
+            background: #ed9315;
+            color: #0c0505;
+            font-weight: bold;
+            font-size: medium;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .container { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>HTML 基礎教學：給大家的入門講義</h1>
+            <p>從「看得懂」到「自己做得出來」的結構化練習</p>
+        </header>
+
+        <div class="intro">
+            對於國中的學生來說，學習 HTML 的重點不在於記憶所有的標籤，而在於建立<strong>「結構化思維」</strong>。
+            你可以將網頁想像成一棟房子：HTML 是骨架（樑柱）、CSS 是裝潢（油漆）、JavaScript 則是家具的功能（開關燈）。
+            <br><br>
+            針對國二學生的認知程度，建議教學內容可以分為以下五個階段：
+        </div>
+
+        <section class="section">
+            <h2>1. 基礎觀念：網頁是怎麼構成的？</h2>
+            <p>在動手寫程式碼之前，先讓理解網頁的運作邏輯：</p>
+            <ul>
+                <li><strong>瀏覽器與檔案：</strong>瀏覽器（Chrome, Edge）是用來「解讀」HTML 檔案的工具。</li>
+                <li><strong>標籤的概念：</strong>HTML 是由一對對的「標籤」（Tags）組成的，就像是括號一樣，告訴電腦中間的內容是什麼。
+                    <div class="tip-box" style="margin-top: 8px;">
+                        例如：<code>&lt;標籤&gt; 內容 &lt;/標籤&gt;</code>（有頭有尾，結尾多一個斜線 <code class="code-inline">/</code>）。
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>2. 認識標準結構（骨架）</h2>
+            <p>讓學生看一段最標準的 HTML 程式碼，並解釋每個部分的作用。這對他們來說就像是寫信的格式：</p>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;我的第一個網頁&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <ul>
+                <li><strong><code>&lt;html&gt;</code>：</strong>整個網頁的範圍。</li>
+                <li><strong><code>&lt;head&gt;</code>：</strong>網頁的「腦袋」，放標題、編碼等不直接顯示在畫面上的資訊。</li>
+                <li><strong><code>&lt;body&gt;</code>：</strong>網頁的「身體」，所有你在瀏覽器上看到的文字、圖片都放在這裡。</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>3. 必學的基礎標籤（常用語法）</h2>
+            <p>這部分可以讓學生實際操作，練習更改文字內容並觀察畫面變化：</p>
+
+            <h3>A. 標題與段落</h3>
+            <ul>
+                <li><strong><code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code>：</strong>標題標籤。<code>&lt;h1&gt;</code> 是最大標題，<code>&lt;h6&gt;</code> 是最小標題。</li>
+                <li><strong><code>&lt;p&gt;</code>：</strong>段落（Paragraph），用來放一般文字內容。</li>
+            </ul>
+
+            <h3>B. 條列清單</h3>
+            <ul>
+                <li><strong><code>&lt;ul&gt;</code> 與 <code>&lt;li&gt;</code>：</strong>無序清單（點點符號）。</li>
+                <li><strong><code>&lt;ol&gt;</code> 與 <code>&lt;li&gt;</code>：</strong>有序清單（1, 2, 3 數字編號）。</li>
+            </ul>
+
+            <h3>C. 多媒體與連結</h3>
+            <ul>
+                <li><strong><code>&lt;a&gt;</code>：</strong>超連結。重點在於 <code>href</code> 屬性（要去哪裡）。</li>
+                <li><strong><code>&lt;img&gt;</code>：</strong>圖片。重點在於 <code>src</code>（圖片路徑）。這是少數「單邊」不需要結尾標籤的例子。</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>4. 基礎 CSS：讓網頁變好看</h2>
+            <p>CSS 就像是幫網頁「穿衣服」，可以改顏色、字體和間距。我們先教學生用最簡單的方式：直接把 CSS 寫在 <code>&lt;style&gt;</code> 裡面，不用分成兩個檔案。</p>
+
+            <h3>A. 在同一個檔案裡寫 CSS</h3>
+            <p>請同學在 <code>&lt;head&gt;</code> 裡面加上 <code>&lt;style&gt;</code> 區塊，例如：</p>
+
+            <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;我的第一個網頁&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      background-color: #fef3c7;
+      font-family: "Microsoft JhengHei", sans-serif;
+    }
+    h1 {
+      color: #b91c1c;
+      text-align: center;
+    }
+    p {
+      line-height: 1.8;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+
+            <h3>B. 說明給學生聽</h3>
+            <ul>
+                <li><strong><code  class="css-properties">background-color</code>：</strong>設定背景顏色，例如 <code  class="css-properties">background-color: #fef3c7;</code>。</li>
+                <li><strong><code  class="css-properties">font-family</code>：</strong>設定字型，例如 <code  class="css-properties">font-family: "Microsoft JhengHei", sans-serif;</code>。</li>
+                <li><strong><code  class="css-properties">color</code>：</strong>設定文字顏色，例如 <code  class="css-properties">color: #b91c1c;</code>。</li>
+                <li><strong><code  class="css-properties">text-align</code>：</strong>設定文字對齊方式，例如 <code  class="css-properties">text-align: center;</code> 讓標題置中。</li>
+                <li><strong><code  class="css-properties">line-height</code>：</strong>設定行距，例如 <code  class="css-properties">line-height: 1.8;</code> 讓段落文字比較好讀。</li>
+            </ul>
+
+            <h3>C. 小小挑戰</h3>
+            <ul>
+                <li>請學生把自己的「自我介紹」網頁背景顏色改成自己喜歡的顏色。</li>
+                <li>把自己的名字標題改成不同顏色，並置中顯示。</li>
+                <li>調整段落行距，讓文字不要太擠。</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>5. 互動練習：做一張「自我介紹」網頁</h2>
+            <p>與其死背語法，不如讓學生直接完成一個小作品。內容可以包含：</p>
+            <ul class="task-list">
+                <li><strong>1. 大標題：</strong>我的姓名。</li>
+                <li><strong>2. 小標題：</strong>我的興趣。</li>
+                <li><strong>3. 清單：</strong>列出三個喜歡的食物。</li>
+                <li><strong>4. 圖片：</strong>放一張喜歡的偶像或動漫角色。</li>
+                <li><strong>5. 連結：</strong>連到學校官網或自己的社群帳號。</li>
+            </ul>
+
+            <div class="tip-box" style="margin-top: 10px;">
+                <strong>老師小提醒：</strong>可以請學生將這份「自我介紹網頁」命名為 <code>me.html</code>，
+                並存放在 <code>www</code> 資料夾中，後續再用主選單頁面把它串連起來。
+            </div>
+        </section>
+    </div>
+</body>
+</html>
