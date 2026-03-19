@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔬果種子大挑戰 - 互動電子白板教材</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: #f0f9eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 12px;
+        }
+        h1 { color: #2d5a27; text-shadow: 1px 1px 2px white; }
+        .instructions { margin-bottom: 12px; color: #555; font-size: 1.1rem; }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1320px;
+            gap: 14px;
+        }
+
+        .column {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        #draggables { margin-bottom: 4px; }
+
+        .draggable {
+            padding: 10px 18px;
+            background-color: #ffffff;
+            border: 3px solid #8bc34a;
+            border-radius: 15px;
+            cursor: grab;
+            font-weight: bold;
+            font-size: 1.15rem;
+            text-align: center;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .draggable:active { cursor: grabbing; transform: scale(1.05); }
+
+        .drop-zone {
+            width: 130px;
+            height: 150px;
+            background-color: #e8f5e9;
+            border: 3px dashed #4caf50;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .drop-zone img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .drop-zone span {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .success { background-color: #c8e6c9 !important; border-style: solid !important; }
+        
+        #message {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            height: 2rem;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌱 蔬果種子大挑戰</h1>
+    <p class="instructions">請將上排【種子名稱】拖曳到下排對應的【果實圖片】中！</p>
+
+    <div class="game-container">
+        <div class="column" id="draggables">
+            <div class="draggable" draggable="true" id="seed-watermelon">西瓜種子</div>
+            <div class="draggable" draggable="true" id="seed-papaya">木瓜種子</div>
+            <div class="draggable" draggable="true" id="seed-dragonfruit">火龍果種子</div>
+            <div class="draggable" draggable="true" id="seed-bittermelon">苦瓜種子</div>
+            <div class="draggable" draggable="true" id="seed-lemon">檸檬種子</div>
+            <div class="draggable" draggable="true" id="seed-orange">柳丁種子</div>
+            <div class="draggable" draggable="true" id="seed-mango">芒果種子</div>
+            <div class="draggable" draggable="true" id="seed-strawberry">草莓種子</div>
+            <div class="draggable" draggable="true" id="seed-tomato">番茄種子</div>
+        </div>
+
+        <div class="column images-row">
+            <div class="drop-zone" data-target="seed-watermelon">
+                <img src="waterme.jpeg" alt="西瓜">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-papaya">
+                <img src="mugua.jpg" alt="木瓜">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-dragonfruit">
+                <img src="fire.jpg" alt="火龍果">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-bittermelon">
+                <img src="kugua.jpg" alt="苦瓜">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-lemon">
+                <img src="lemon.jpg" alt="檸檬">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-orange">
+                <img src="liuding.jpg" alt="柳丁">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-mango">
+                <img src="mango.jpg" alt="芒果">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-strawberry">
+                <img src="straw.jpeg" alt="草莓">
+                <span>這是什麼的種子？</span>
+            </div>
+            <div class="drop-zone" data-target="seed-tomato">
+                <img src="tomato.png" alt="番茄">
+                <span>這是什麼的種子？</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="message"></div>
+    <button onclick="location.reload()">重新開始遊戲</button>
+
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        const message = document.getElementById('message');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.id);
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggableId = e.dataTransfer.getData('text/plain');
+                const targetId = zone.getAttribute('data-target');
+
+                if (draggableId === targetId) {
+                    const element = document.getElementById(draggableId);
+                    zone.innerHTML = "✅ 正確！";
+                    zone.classList.add('success');
+                    element.style.visibility = 'hidden';
+                    message.innerText = "太棒了！答對了！";
+                    message.style.color = "green";
+                } else {
+                    message.innerText = "哎呀，再試一次看看！";
+                    message.style.color = "red";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

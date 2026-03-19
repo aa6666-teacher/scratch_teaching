@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔬果一生：命運抽卡器</title>
+    <style>
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #ff9800;
+            --bg-color: #f9fbe7;
+        }
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 { color: #2e7d32; margin-bottom: 10px; font-size: 2.5rem; }
+        .subtitle { color: #555; margin-bottom: 30px; font-size: 1.2rem; }
+
+        /* 卡片容器 */
+        .card-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 400px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 20px;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            border: 8px solid white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 卡片正面 (背面蓋住的狀態) */
+        .card-front {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+        }
+        .card-front::after {
+            content: "❓";
+            font-size: 8rem;
+        }
+
+        /* 卡片背面 (顯示結果的狀態) */
+        .card-back {
+            background-color: white;
+            color: #333;
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+
+        .fate-icon { font-size: 6rem; margin-bottom: 20px; }
+        .fate-title { font-size: 2rem; font-weight: bold; margin-bottom: 15px; color: #d32f2f; }
+        .fate-desc { font-size: 1.2rem; line-height: 1.6; color: #555; }
+
+        /* 控制按鈕 */
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-draw { background-color: var(--secondary-color); color: white; }
+        .btn-reset { background-color: #90a4ae; color: white; }
+        button:active { transform: scale(0.95); }
+        
+    </style>
+</head>
+<body>
+
+    <h1>🌱 蔬果一生：命運抽卡器</h1>
+    <p class="subtitle">請各組派代表上台，抽出一張影響蔬果生長的「變數卡」！</p>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="mainCard">
+            <div class="card-face card-front">
+                <p style="margin-top: 200px; font-weight: bold;">點擊翻牌</p>
+            </div>
+            <div class="card-face card-back">
+                <div class="fate-icon" id="fateIcon">☀️</div>
+                <div class="fate-title" id="fateTitle">載入中...</div>
+                <div class="fate-desc" id="fateDesc">準備好接受命運的挑戰了嗎？</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-draw" onclick="drawFate()">抽取新命運</button>
+        <button class="btn-reset" onclick="resetCard()">覆蓋卡片</button>
+    </div>
+
+    <script>
+        const card = document.getElementById('mainCard');
+        const fateIcon = document.getElementById('fateIcon');
+        const fateTitle = document.getElementById('fateTitle');
+        const fateDesc = document.getElementById('fateDesc');
+
+        const fates = [
+            { icon: "☀️", title: "陽光充足", desc: "天氣非常好！蔬果光合作用旺盛，葉子長得又大又綠！", color: "#fbc02d" },
+            { icon: "🍂", title: "嚴重乾旱", desc: "好久沒下雨了，土壤都裂開了...蔬果變得很口渴，快撐不住了！", color: "#a1887f" },
+            { icon: "🐛", title: "遭受蟲害", desc: "有一群毛毛蟲路過，把嫩葉咬得一個洞一個洞的！", color: "#8bc34a" },
+            { icon: "🌧️", title: "連日豪雨", desc: "雨下不停，根部都快泡爛了！蔬果覺得呼吸困難。", color: "#0288d1" },
+            { icon: "🍯", title: "蜜蜂授粉", desc: "勤勞的蜜蜂幫花朵傳粉，蔬果準備結出又大又甜的果實！", color: "#ffa000" },
+            { icon: "🌪️", title: "強風襲來", desc: "颱風過境！細長的莖被吹歪了，快想辦法支撐它！", color: "#78909c" },
+            { icon: "💎", title: "養分豐富", desc: "農夫施了有機肥，土壤營養滿分，蔬果長得比別人快一倍！", color: "#6d4c41" }
+        ];
+
+        function flipCard() {
+            card.classList.toggle('is-flipped');
+        }
+
+        function resetCard() {
+            card.classList.remove('is-flipped');
+        }
+
+        function drawFate() {
+            // 先翻回正面
+            card.classList.remove('is-flipped');
+            
+            // 延遲更換內容，讓翻轉過程更自然
+            setTimeout(() => {
+                const randomFate = fates[Math.floor(Math.random() * fates.length)];
+                fateIcon.innerText = randomFate.icon;
+                fateTitle.innerText = randomFate.title;
+                fateTitle.style.color = randomFate.color;
+                fateDesc.innerText = randomFate.desc;
+                
+                // 更換內容後自動翻開
+                setTimeout(() => {
+                    card.classList.add('is-flipped');
+                }, 100);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
