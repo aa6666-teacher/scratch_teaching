@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演算法入門：線性搜尋與二元搜尋 - Scratch教學</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(45deg, #5b7cfa, #9b59b6);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 2.1em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            border-left: 5px solid #9b59b6;
+        }
+
+        .course-info h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.35em;
+        }
+
+        .course-info ul {
+            margin-left: 1.25em;
+        }
+
+        .course-info li { margin: 6px 0; }
+
+        .chapter {
+            margin-bottom: 36px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .chapter-content { padding: 22px 24px; }
+
+        .section { margin-bottom: 26px; }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .section p, .section li { margin: 10px 0; }
+
+        .section ol, .section ul { margin-left: 1.35em; }
+
+        .concept-box {
+            background: #e8f6f3;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #1abc9c;
+            margin: 18px 0;
+        }
+
+        .concept-box h4 {
+            color: #16a085;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .step-container {
+            background: #fff8e6;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .step-title {
+            background: #f39c12;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #dc3545;
+            margin: 14px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin: 14px 0;
+        }
+
+        .tips {
+            background: #fff8e1;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 14px 0;
+        }
+
+        .tips strong { color: #f57f17; }
+
+        .exercise-box {
+            background: #e7f3ff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 22px 0;
+        }
+
+        .exercise-title {
+            color: #2980b9;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.98em;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #34495e;
+            color: white;
+        }
+
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+
+        .code-example {
+            background: #f4f4f5;
+            color: #2c3e50;
+            padding: 16px 18px;
+            border-radius: 8px;
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 14px 0;
+            overflow-x: auto;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 14px; }
+            .header h1 { font-size: 1.65em; }
+            .data-table { font-size: 0.9em; }
+            .data-table th, .data-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>演算法入門：線性搜尋與二元搜尋</h1>
+            <p class="subtitle">國中八年級 · 原理說明 · 例題 · Scratch 實作引導</p>
+        </header>
+
+        <div class="course-info">
+            <h2>本課要學什麼？</h2>
+            <ul>
+                <li>理解「在一串資料裡找目標」時，<strong>線性搜尋</strong>與<strong>二元搜尋</strong>各是怎麼做的。</li>
+                <li>能說出兩者的<strong>前提條件</strong>（資料要不要先排序）與直觀的<strong>比較次數</strong>差異。</li>
+                <li>能在 Scratch 中用<strong>清單</strong>與<strong>迴圈</strong>實作兩種搜尋。</li>
+            </ul>
+        </div>
+
+        <article class="chapter">
+            <div class="chapter-header">一、問題情境：在清單裡找東西</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>電腦常要回答：成績單裡有沒有某分數？書單裡第幾本是某本書？這類問題可以想成：有一個<strong>清單（列表）</strong>，要找出<strong>目標</strong>在不在、在第幾個位置。</p>
+                    <div class="concept-box">
+                        <h4>什麼是演算法？</h4>
+                        <p>解問題時，一組<strong>清楚、可重複執行的步驟</strong>，就叫做演算法。同一個問題可以有多種演算法；我們今天學兩種「搜尋」演算法。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">二、線性搜尋法（Linear Search）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>生活比喻</h3>
+                    <p>書櫃上的書<strong>沒有</strong>照編號排好，要找其中一本，通常只能從一邊開始<strong>一本一本翻</strong>，翻到就停；若翻到最後還沒有，就知道沒有這本。</p>
+                </div>
+                <div class="section">
+                    <h3>做法（步驟）</h3>
+                    <div class="step-container">
+                        <span class="step-title">線性搜尋流程</span>
+                        <ol>
+                            <li>從清單的<strong>第 1 項</strong>開始看。</li>
+                            <li>若這一項<strong>等於</strong>目標 → <strong>找到了</strong>，記下位置，結束。</li>
+                            <li>若不是 → 往<strong>下一項</strong>繼續。</li>
+                            <li>若已經看到<strong>最後一項</strong>仍沒找到 → <strong>沒有這筆資料</strong>。</li>
+                        </ol>
+                    </div>
+                    <div class="success">
+                        <strong>優點：</strong>清單<strong>不必先排序</strong>。寫程式時邏輯單純，適合國中第一次實作搜尋。
+                    </div>
+                    <p>最倒楣時，目標在最後一個（或根本沒有），大約要把清單<strong>每一項都比過一次</strong>。若長度是 n，最壞情況大約比 n 次。</p>
+                </div>
+                <div class="section">
+                    <h3>Scratch 對應概念</h3>
+                    <p>使用<strong>清單</strong>變數存數字；用變數 <code>i</code>（目前第幾項）配合「重複執行」或「計次迴圈」，讀取「清單的第 i 項」與目標比較。</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">三、二元搜尋法（Binary Search）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>生活比喻</h3>
+                    <p>字典裡的單字<strong>已經排好順序</strong>。要找一個字時，常會先翻到<strong>中間</strong>附近，看中間的字比目標<strong>大還是小</strong>，就決定<strong>丟掉左半或右半</strong>，再在剩下那一半重複「看中間」……直到找到，或確定範圍已經空了。</p>
+                </div>
+                <div class="warning">
+                    <strong>重要前提：</strong>清單必須<strong>已經排好序</strong>（例如由小到大）。若資料亂排，不能直接做二元搜尋（除非先另外排序，那是另一個主題）。
+                </div>
+                <div class="section">
+                    <h3>做法（由小到大為例）</h3>
+                    <div class="step-container">
+                        <span class="step-title">二元搜尋流程</span>
+                        <p>用兩個變數記「還要搜尋的範圍」：<strong>L</strong>（左端）、<strong>R</strong>（右端）。一開始 L = 1，R = 清單長度。</p>
+                        <ol>
+                            <li>若 <strong>L &gt; R</strong> → 代表範圍空了，<strong>沒有</strong>目標，結束。</li>
+                            <li>計算<strong>中間位置 M</strong>（全班統一用同一種算法，例如 (L + R) 除以 2 再四捨五入，或無條件捨去，由老師規定）。</li>
+                            <li>若第 M 項<strong>等於</strong>目標 → <strong>找到了</strong>。</li>
+                            <li>若第 M 項<strong>大於</strong>目標 → 目標只可能在左半邊，令 <strong>R = M − 1</strong>，回到步驟 1。</li>
+                            <li>若第 M 項<strong>小於</strong>目標 → 目標只可能在右半邊，令 <strong>L = M + 1</strong>，回到步驟 1。</li>
+                        </ol>
+                    </div>
+                    <div class="concept-box">
+                        <h4>直觀重點</h4>
+                        <p>每一輪大約把「還要檢查的範圍」<strong>縮小一半</strong>，所以清單很長時，通常比從頭線性找到尾<strong>快很多</strong>。</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Scratch 對應概念</h3>
+                    <p>清單需<strong>先排好</strong>。用變數 L、R、M，以「重複執行直到 L &gt; R」包住中點比較與更新 L 或 R。Scratch 清單索引從 <strong>1</strong> 開始，與本講義步驟一致即可。</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">四、兩種方法比較</div>
+            <div class="chapter-content">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>線性搜尋</th>
+                            <th>二元搜尋</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>資料是否要先排序</td>
+                            <td>不必</td>
+                            <td><strong>要</strong>（已排序）</td>
+                        </tr>
+                        <tr>
+                            <td>主要想法</td>
+                            <td>一個一個依序比</td>
+                            <td>每次看<strong>中間</strong>，縮小一半範圍</td>
+                        </tr>
+                        <tr>
+                            <td>程式難度（約略）</td>
+                            <td>較簡單</td>
+                            <td>需處理 L、R、M 與迴圈條件</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">五、例題</div>
+            <div class="chapter-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">例題 1（線性搜尋）</div>
+                    <p>清單：<code>[ 12, 5, 8, 5, 20 ]</code>，要找 <strong>5</strong>。</p>
+                    <ul>
+                        <li>從第 1 項開始比，<strong>第幾項第一次</strong>找到 5？</li>
+                        <li>進階：若題目改成「找<strong>最後一個</strong> 5」，線性搜尋可以怎麼改？（提示：從頭掃到尾，每次符合就更新記錄的位置。）</li>
+                    </ul>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">例題 2（線性搜尋 · 沒找到）</div>
+                    <p>清單：<code>[ 3, 1, 4, 1, 5 ]</code>，要找 <strong>9</strong>。</p>
+                    <p>要比到第幾項才能確定「沒有」？</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">例題 3（二元搜尋 · 已排序）</div>
+                    <p>清單（由小到大）：<code>[ 2, 5, 8, 11, 17, 23, 31 ]</code>，要找 <strong>17</strong>。</p>
+                    <p>請寫出每一輪的 L、R、M 以及「第 M 項」的值，直到找到為止。</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">例題 4（二元搜尋 · 邊界與不存在）</div>
+                    <p>同上清單，分別要找：<strong>2</strong>（最小）、<strong>31</strong>（最大）、<strong>10</strong>（不存在）。</p>
+                    <p>討論：什麼時候可以說「沒有」？（當 L &gt; R 時。）</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">例題 5（觀念題）</div>
+                    <p>資料完全亂排，但很想用二元搜尋，可以嗎？為什麼？</p>
+                    <p>參考答案方向：不行，除非先排序；而排序也要花時間，所以「只找一次」時不一定划算。</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">六、Scratch 實作引導</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>共同準備</h3>
+                    <ul>
+                        <li>建立<strong>清單</strong>（例如命名為「資料」）存數字。</li>
+                        <li>準備變數：<strong>目標</strong>、<strong>結果位置</strong>（0 可表示沒找到）、線性用 <strong>i</strong>，二元用 <strong>L</strong>、<strong>R</strong>、<strong>M</strong>。</li>
+                        <li>選做：用角色或造型標示「目前正在比第幾項」，讓搜尋過程看得見。</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>專題 A：線性搜尋</h3>
+                    <ol>
+                        <li>綠旗點下後，建立清單內容（手動、程式產生，或讓使用者輸入後加入清單）。</li>
+                        <li>詢問「要找哪個數？」存入 <strong>目標</strong>。</li>
+                        <li>讓 <strong>i</strong> 從 1 到「資料長度」：若「資料的第 i 項」= 目標，設定 <strong>結果位置 = i</strong> 並停止迴圈。</li>
+                        <li>若迴圈結束仍未找到，結果位置維持 0，角色說「沒有」。</li>
+                    </ol>
+                </div>
+                <div class="section">
+                    <h3>專題 B：二元搜尋</h3>
+                    <ol>
+                        <li>清單務必由小到大排好（可先用手動排好的清單練習）。</li>
+                        <li><strong>L = 1</strong>，<strong>R = 資料長度</strong>。</li>
+                        <li>「重複執行直到 L &gt; R」：計算 M；若等於目標則記錄位置並停止；若大於目標則 R = M − 1；若小於目標則 L = M + 1。</li>
+                        <li>若因 L &gt; R 結束且尚未找到，顯示沒有。</li>
+                    </ol>
+                    <div class="tips">
+                        <strong>小提示：</strong>Scratch 清單從第 1 項開始編號；計算中點 M 的方式請全班一致，避免兩種寫法差一格造成爭議。可另做一個變數「比較次數」，每比一次就加 1，比較線性與二元誰比較少次。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>虛擬碼參考（對照用）</h3>
+                    <div class="code-example">【線性】
+結果位置 ← 0
+i 從 1 到 清單長度：
+  若 清單第 i 項 = 目標：
+    結果位置 ← i
+    停止迴圈
+
+【二元】（清單已由小到大）
+L ← 1，R ← 清單長度
+重複直到 L > R：
+  M ← 中點(L, R)
+  若 清單第 M 項 = 目標 → 找到，停止
+  若 清單第 M 項 > 目標 → R ← M - 1
+  否則 → L ← M + 1</div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">七、延伸思考（選做）</div>
+            <div class="chapter-content">
+                <ul>
+                    <li>同一組已排序資料，分別用線性與二元搜尋，記錄「比較了幾次」，討論差異。</li>
+                    <li>亂數資料若「先排序再二元搜尋」是否永遠值得？（建立「看情境」的直覺即可。）</li>
+                </ul>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>演算法入門：線性搜尋與二元搜尋（algorithm01.html）</p>
+            <p>適用：國中八年級 · 資訊科技 / Scratch</p>
+        </footer>
+    </div>
+</body>
+</html>
