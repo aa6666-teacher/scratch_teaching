@@ -216,6 +216,47 @@
             font-size: 0.95em;
         }
 
+        .scratch-download-zone {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe8cc 100%);
+            border: 3px solid #f39c12;
+            border-radius: 12px;
+            padding: 22px 24px;
+            margin-top: 8px;
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.28);
+        }
+
+        .scratch-download-title {
+            color: #c0392b;
+            font-size: 1.5em;
+            font-weight: 800;
+            margin: 0 0 16px;
+            padding-bottom: 12px;
+            border-bottom: 3px dashed #e67e22;
+            text-align: center;
+            letter-spacing: 0.06em;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+        }
+
+        .scratch-download-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: #fff;
+            padding: 16px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.12em;
+            box-shadow: 0 4px 14px rgba(192, 57, 43, 0.45);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .scratch-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(192, 57, 43, 0.55);
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
             .container { margin: 10px; padding: 14px; }
             .header h1 { font-size: 1.65em; }
@@ -417,21 +458,10 @@
                     </div>
                 </div>
                 <div class="section">
-                    <h3>虛擬碼參考（對照用）</h3>
-                    <div class="code-example">【線性】
-結果位置 ← 0
-i 從 1 到 清單長度：
-  若 清單第 i 項 = 目標：
-    結果位置 ← i
-    停止迴圈
-
-【二元】（清單已由小到大）
-L ← 1，R ← 清單長度
-重複直到 L > R：
-  M ← 中點(L, R)
-  若 清單第 M 項 = 目標 → 找到，停止
-  若 清單第 M 項 > 目標 → R ← M - 1
-  否則 → L ← M + 1</div>
+                    <div class="scratch-download-zone">
+                        <h3 class="scratch-download-title">Scratch 專案下載專區</h3>
+                        <a href="https://drive.google.com/file/d/1DEVlORhIcgVWWrOL8KN3ikcAe9aqucDz/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="scratch-download-btn">📥 下載線性搜尋教學範例（linear_search_tutorial.sb3 · Google Drive）</a>
+                    </div>
                 </div>
             </div>
         </article>
