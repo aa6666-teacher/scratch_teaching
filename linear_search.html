@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>線性搜尋法講義（Linear Search）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Microsoft JhengHei", "Segoe UI", Arial, sans-serif;
+        line-height: 1.7;
+        color: #333;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #fff;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        border-radius: 16px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .header {
+        text-align: center;
+        padding: 35px 25px;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 35px;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        margin-bottom: 12px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .header p {
+        font-size: 1.05rem;
+        opacity: 0.95;
+      }
+
+      .intro {
+        background: #f0fdf4;
+        padding: 20px 24px;
+        border-radius: 10px;
+        border-left: 5px solid #22c55e;
+        margin-bottom: 35px;
+        color: #166534;
+      }
+
+      .section {
+        margin-bottom: 40px;
+        padding: 28px;
+        background: #fafafa;
+        border-radius: 12px;
+        border-left: 6px solid #0d9488;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .section h2 {
+        color: #0f766e;
+        font-size: 1.5rem;
+        margin-bottom: 22px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #ccfbf1;
+      }
+
+      .section h3 {
+        color: #0f766e;
+        font-size: 1.3rem;
+        margin: 25px 0 15px 0;
+      }
+
+      .section p {
+        margin-top: 12px;
+      }
+
+      .step {
+        margin-bottom: 18px;
+      }
+
+      .step-num {
+        display: inline-block;
+        background: #0d9488;
+        color: white;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 8px;
+      }
+
+      .step strong {
+        color: #0f766e;
+      }
+
+      .example-box {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        overflow-x: auto;
+      }
+
+      .example-box pre {
+        margin: 0;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .key-points {
+        background: #e0f2fe;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 5px solid #0ea5e9;
+      }
+
+      .key-points h4 {
+        color: #0369a1;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .key-points ul {
+        margin-left: 20px;
+        color: #0c4a6e;
+      }
+
+      .key-points li {
+        margin-bottom: 10px;
+        line-height: 1.8;
+      }
+
+      .homework-section {
+        background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+        padding: 25px 28px;
+        border-radius: 12px;
+        margin-top: 35px;
+        border-left: 6px solid #7c3aed;
+      }
+
+      .homework-section h3 {
+        color: #5b21b6;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+
+      .homework-section ul {
+        margin-left: 20px;
+        color: #4c1d95;
+      }
+
+      .homework-section li {
+        margin-bottom: 10px;
+        line-height: 1.8;
+      }
+
+      .homework-section code {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .important-note {
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        padding: 15px 20px;
+        border-radius: 8px;
+        border-left: 5px solid #ef4444;
+        margin: 15px 0;
+        color: #991b1b;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 760px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+        .container {
+          box-shadow: none;
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🔍 主題：找出隱藏的資料——線性搜尋法 (Linear Search)</h1>
+        <p>用最直觀的方式，從資料第一筆開始依序比對目標值</p>
+      </header>
+
+      <div class="intro">
+        <strong>💡 學習目標：</strong>理解搜尋概念、掌握線性搜尋流程、能用虛擬碼表達，並能進一步用
+        <strong>Scratch</strong> 實作。
+      </div>
+
+      <section class="section">
+        <h2>一、 什麼是「搜尋」？</h2>
+        <p>
+          在日常生活中，我們經常需要從一大堆東西中找出一件特定的物品。例如：在書架上找一本特定的書。在通訊錄
+          裡找某人的電話。在抽屜裡找一雙成對的襪子。<br />
+          在電腦科學中，「搜尋」(Search) 就是在一個資料結構（如陣列、列表）中，找出特定目標值的過程。
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>二、 線性搜尋法 (Linear Search) 的原理</h2>
+        <p>
+          線性搜尋法（又稱循序搜尋法）是最直觀、最簡單的搜尋方式。核心邏輯：從資料的第一筆開始，依序與目標值進行比較，
+          直到找到目標值為止；或者如果比到了最後一筆都沒找到，就代表資料不在裡面。
+        </p>
+
+        <h3>🏫 生活模擬：點名時間</h3>
+        <p>
+          想像班上有 30 位同學排成一列，老師想找「王小明」：<br />
+          老師問第 1 個同學：「你是王小明嗎？」(不是，繼續找下一個)<br />
+          老師問第 2 個同學：「你是王小明嗎？」(不是，繼續找下一個)<br />
+          老師問第 3 個同學：「你是王小明嗎？」(喔！找到了！) → 結束搜尋
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>三、 線性搜尋的步驟（演算法流程）</h2>
+
+        <div class="step">
+          <span class="step-num">1</span>
+          <strong>設定目標（Target）</strong>：決定要找的數值。
+        </div>
+
+        <div class="step">
+          <span class="step-num">2</span>
+          <strong>從頭開始</strong>：從資料清單的第一個元素（索引值 0）開始看。
+        </div>
+
+        <div class="step">
+          <span class="step-num">3</span>
+          <strong>依序判斷</strong>：如果目前的數值等於目標值，就「找到」並結束；否則往後移一格，看下一個數值。
+        </div>
+
+        <div class="step">
+          <span class="step-num">4</span>
+          <strong>檢查結束</strong>：如果已經看到最後一個元素都沒找到，代表目標值不在這份資料中。
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>四、 線性搜尋的優缺點</h2>
+        <div class="two-col">
+          <div>
+            <p><strong>優點</strong></p>
+            <ul>
+              <li>簡單易懂：邏輯非常直覺。</li>
+              <li>不限順序：資料不需要先經過排序，亂序也可以找。</li>
+              <li>最好情況快速：第 1 筆就找到。</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>缺點</strong></p>
+            <ul>
+              <li>效率較低：資料量很大時會變慢。</li>
+              <li>最壞情況要比對 $n$ 次。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="homework-section">
+        <h3>五、 動動腦：作業：用 Scratch 實作線性搜尋</h3>
+
+        <p style="color: #4c1d95; margin-top: 6px; margin-bottom: 10px;">
+          在 Scratch 中，我們通常會使用「清單 (List)」來儲存資料，並用「變數」來記錄我們找的進度。
+        </p>
+
+        <div class="key-points">
+          <h4>1. 準備工作（變數與清單）</h4>
+          <ul>
+            <li>
+              清單 <code>資料庫</code>：存放我們要搜尋的所有數字。
+            </li>
+            <li>
+              變數 <code>目標</code>：我們要找的那個數字。
+            </li>
+            <li>
+              變數 <code>索引 (Index)</code>：記錄目前查到第幾筆（從 1 開始）。
+            </li>
+            <li>
+              變數 <code>是否找到</code>：預設為「否」。
+            </li>
+          </ul>
+        </div>
+
+        <div class="key-points">
+          <h4>2. Scratch 積木邏輯圖解</h4>
+          <ul>
+            <li>請用 Scratch 截圖/畫面：畫出「初始化」到「重複執行」到「找到/沒找到輸出」整段流程。</li>
+            <li>重點積木要包含：<code>綠旗被點擊</code>、<code>詢問並等待</code>、<code>重複執行直到</code>（或等價迴圈）、<code>如果</code> 與 <code>停止</code>/<code>說出</code>。</li>
+          </ul>
+        </div>
+
+        <div class="key-points">
+          <h4>3. 核心程式邏輯（虛擬積木描述）</h4>
+          <p style="margin-bottom: 6px; color: #4c1d95;">
+            <strong>當綠旗被點擊時：</strong>
+          </p>
+          <ul>
+            <li>詢問「你想找哪個數字？」並將結果設為 <code>目標</code>。</li>
+            <li>將 <code>索引</code> 設為 1。</li>
+            <li>將 <code>是否找到</code> 設為 false（「否」）。</li>
+          </ul>
+
+          <p style="margin: 12px 0 6px; color: #4c1d95;">
+            <strong>重複執行：</strong>直到 <code>索引 &gt; 資料庫 的長度</code> 或 <code>是否找到 = true</code>。
+          </p>
+          <ul>
+            <li>
+              如果 <code>資料庫 的第 索引 項 = 目標</code>：
+              說出「找到了！在第」 + <code>索引</code> + 「項」持續 2 秒，並將 <code>是否找到</code> 設為 true。
+            </li>
+            <li>
+              否則：將 <code>索引</code> 改變 1（往下一筆看）。
+            </li>
+          </ul>
+
+          <p style="margin: 12px 0 6px; color: #4c1d95;">
+            <strong>重複結束後：</strong>
+          </p>
+          <ul>
+            <li>
+              如果 <code>是否找到 = false</code>：說出「抱歉，資料庫裡沒有這個數字」持續 2 秒。
+            </li>
+          </ul>
+        </div>
+
+        <div class="important-note">
+          💡 Scratch 實作小撇步（學生常錯點）
+        </div>
+        <div class="key-points">
+          <ul>
+            <li>
+              索引的起始值：在 Python 中索引通常從 0 開始，但在 Scratch 清單中是從 1 開始，這點要特別提醒同學。
+            </li>
+            <li>
+              停止搜尋：找到目標後，一定要記得讓 <code>是否找到</code> 變成 true 或使用「停止這個腳本」，否則程式會繼續笨笨地把剩下的資料比對完。
+            </li>
+          </ul>
+        </div>
+
+        <div class="key-points">
+          <h4>📝 隨堂練習（Scratch 篇）</h4>
+          <ul>
+            <li>
+              Q：在 Scratch 程式中，如果我的清單裡有 10 個數字，但我找的數字剛好在第 10
+              ，請問「重複執行」裡面的判斷式總共會跑幾次？
+            </li>
+            <li>(A) 1 次</li>
+            <li>(B) 5 次</li>
+            <li>(C) 10 次</li>
+            <li>(D) 11 次</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
+
