@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演算法入門：二元搜尋 - Scratch教學</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+            color: #333;
+            background: linear-gradient(135deg, #1a6b8c 0%, #2e3a59 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(45deg, #1e88e5, #5c6bc0);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 2.1em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            border-left: 5px solid #5c6bc0;
+        }
+
+        .course-info h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.35em;
+        }
+
+        .course-info ul { margin-left: 1.25em; }
+        .course-info li { margin: 6px 0; }
+
+        .chapter {
+            margin-bottom: 36px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            background: linear-gradient(45deg, #1e88e5, #1565c0);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .chapter-content { padding: 22px 24px; }
+
+        .section { margin-bottom: 26px; }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1e88e5;
+        }
+
+        .section p, .section li { margin: 10px 0; }
+        .section ol, .section ul { margin-left: 1.35em; }
+
+        .concept-box {
+            background: #e3f2fd;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #1e88e5;
+            margin: 18px 0;
+        }
+
+        .concept-box h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .step-container {
+            background: #fff8e6;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .step-title {
+            background: #fb8c00;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #dc3545;
+            margin: 14px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin: 14px 0;
+        }
+
+        .tips {
+            background: #fff8e1;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 14px 0;
+        }
+
+        .tips strong { color: #f57f17; }
+
+        .exercise-box {
+            background: #e7f3ff;
+            border: 2px solid #1e88e5;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 22px 0;
+        }
+
+        .exercise-title {
+            color: #1565c0;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.98em;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #34495e;
+            color: white;
+        }
+
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+
+        .code-example {
+            background: #f4f4f5;
+            color: #2c3e50;
+            padding: 16px 18px;
+            border-radius: 8px;
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 14px 0;
+            overflow-x: auto;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+
+        .figure-wrap {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .figure-wrap svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .svg-caption {
+            font-size: 0.95em;
+            color: #546e7a;
+            margin-top: 10px;
+            padding: 0 8px;
+        }
+
+        .talk-box {
+            background: #ede7f6;
+            border-left: 5px solid #5e35b1;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 1.02em;
+        }
+
+        .talk-box strong { color: #4527a0; }
+
+        .nav-sibling {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #eceff1;
+            border-radius: 8px;
+            font-size: 0.98em;
+        }
+
+        .nav-sibling a {
+            color: #1565c0;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 14px; }
+            .header h1 { font-size: 1.65em; }
+            .data-table { font-size: 0.9em; }
+            .data-table th, .data-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>演算法入門：二元搜尋</h1>
+            <p class="subtitle">國中二年級 · 圖解說明 · 例題 · Scratch 實作引導</p>
+        </header>
+
+        <p class="nav-sibling">上一篇相關講義：<a href="algorithm01.html">線性搜尋（從頭找到尾）</a>。本篇假設你已經會用清單存資料；二元搜尋是<strong>另一種</strong>「找目標」的方法。</p>
+
+        <div class="course-info">
+            <h2>本課要學什麼？</h2>
+            <ul>
+                <li>用<strong>猜半邊</strong>的直覺，理解二元搜尋在做什麼。</li>
+                <li>記住<strong>大前提</strong>：數字要先<strong>由小排到大</strong>（或全班約定另一種順序，但必須「有規則」）。</li>
+                <li>能說出 <strong>L、R、M</strong> 代表什麼，以及「什麼時候代表沒找到」。</li>
+                <li>能在 Scratch 裡用<strong>清單＋迴圈</strong>做出簡單的二元搜尋。</li>
+            </ul>
+        </div>
+
+        <article class="chapter">
+            <div class="chapter-header">一、用「猜數字」來想像</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>老師心裡想一個 <strong>1 到 100</strong> 的整數，你只能問：「是比 50 大還是小？」老師回答大、小、或猜中。</p>
+                    <p>聰明的猜法是：先猜<strong>正中間</strong>附近，例如 50；若老師說「比較大」，你就知道答案在 51～100，<strong>前半段不用再猜了</strong>。接下來再在剩下那一半繼續猜中間……</p>
+                    <div class="talk-box">
+                        <strong>一句話：</strong>每次都看<strong>剩下範圍的中間</strong>，把<strong>不可能的那一半丟掉</strong>，範圍就變小，猜幾次就有機會命中。
+                    </div>
+                    <p>二元搜尋就是把這個想法，搬到<strong>排好順序的清單</strong>上：我們不是亂猜，而是<strong>用中間那一格跟目標比大小</strong>，決定要保留左半還是右半。</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">二、為什麼一定要先排好？</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="warning">
+                        <strong>超重要：</strong>清單必須<strong>已經排好序</strong>（本講義以「由小到大」為例）。若數字亂跳，就不能用「比中間、丟一半」的規則，因為你<strong>無法確定</strong>目標應該在左邊還是右邊。
+                    </div>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 520 120" width="520" height="120" role="img" aria-label="排好序的清單示意">
+                            <text x="260" y="22" text-anchor="middle" font-size="14" fill="#37474f">清單裡的數「由小到大」——像樓梯一階一階往上</text>
+                            <rect x="20" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="50" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">2</text>
+                            <rect x="90" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="120" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">5</text>
+                            <rect x="160" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="190" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">8</text>
+                            <rect x="230" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="260" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">11</text>
+                            <rect x="300" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="330" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">17</text>
+                            <rect x="370" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="400" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">23</text>
+                            <rect x="440" y="45" width="60" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="470" y="77" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d47a1">31</text>
+                            <polygon points="75,100 85,108 65,108" fill="#546e7a"/>
+                            <polygon points="145,100 155,108 135,108" fill="#546e7a"/>
+                            <polygon points="215,100 225,108 205,108" fill="#546e7a"/>
+                            <polygon points="285,100 295,108 275,108" fill="#546e7a"/>
+                            <polygon points="355,100 365,108 345,108" fill="#546e7a"/>
+                            <polygon points="425,100 435,108 415,108" fill="#546e7a"/>
+                        </svg>
+                        <p class="svg-caption">圖 1：每一格都比左邊大、比右邊小（或等於邊界），才能安全地「丟掉一半」。</p>
+                    </div>
+                    <div class="success">
+                        <strong>和線性搜尋比一下：</strong>線性搜尋像從頭翻到尾，<strong>不用排序</strong>；二元搜尋像翻字典，<strong>要快，就要先排好</strong>。兩種都是正確的演算法，只是<strong>使用時機</strong>不同。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">三、圖解：先看中間，再丟一半</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>下面用同一組數：<code>2, 5, 8, 11, 17, 23, 31</code>（共 7 個，位置編號 1～7）。假設要找 <strong>17</strong>。</p>
+                    <h3>第一步：整段都是「還在懷疑」的範圍</h3>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 520 140" width="520" height="140" role="img" aria-label="二元搜尋第一步">
+                            <text x="260" y="22" text-anchor="middle" font-size="14" fill="#37474f">L = 1，R = 7，中間 M = 4（第 4 格是 11）</text>
+                            <rect x="20" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="50" y="72" text-anchor="middle" font-size="17" font-weight="bold">2</text>
+                            <text x="50" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">1</text>
+                            <rect x="90" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="120" y="72" text-anchor="middle" font-size="17" font-weight="bold">5</text>
+                            <text x="120" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">2</text>
+                            <rect x="160" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="190" y="72" text-anchor="middle" font-size="17" font-weight="bold">8</text>
+                            <text x="190" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">3</text>
+                            <rect x="230" y="40" width="60" height="50" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="3"/>
+                            <text x="260" y="72" text-anchor="middle" font-size="17" font-weight="bold">11</text>
+                            <text x="260" y="118" text-anchor="middle" font-size="11" fill="#e65100">4 ← M</text>
+                            <rect x="300" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="330" y="72" text-anchor="middle" font-size="17" font-weight="bold">17</text>
+                            <text x="330" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">5</text>
+                            <rect x="370" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="400" y="72" text-anchor="middle" font-size="17" font-weight="bold">23</text>
+                            <text x="400" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">6</text>
+                            <rect x="440" y="40" width="60" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="470" y="72" text-anchor="middle" font-size="17" font-weight="bold">31</text>
+                            <text x="470" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">7</text>
+                        </svg>
+                        <p class="svg-caption">圖 2：橘色是中間那一格。17 比 11 大，所以目標若存在，只可能在<strong>右半邊</strong>（第 5～7 格）。</p>
+                    </div>
+                    <h3>第二步：範圍變小，再取新的中間</h3>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 520 150" width="520" height="150" role="img" aria-label="二元搜尋第二步">
+                            <text x="260" y="20" text-anchor="middle" font-size="14" fill="#37474f">左半邊「出局」用灰色表示；現在 L = 5，R = 7，M = 6</text>
+                            <rect x="20" y="42" width="60" height="48" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+                            <text x="50" y="73" text-anchor="middle" font-size="16" fill="#90a4ae">2</text>
+                            <rect x="90" y="42" width="60" height="48" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+                            <text x="120" y="73" text-anchor="middle" font-size="16" fill="#90a4ae">5</text>
+                            <rect x="160" y="42" width="60" height="48" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+                            <text x="190" y="73" text-anchor="middle" font-size="16" fill="#90a4ae">8</text>
+                            <rect x="230" y="42" width="60" height="48" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+                            <text x="260" y="73" text-anchor="middle" font-size="16" fill="#90a4ae">11</text>
+                            <rect x="300" y="42" width="60" height="48" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="330" y="73" text-anchor="middle" font-size="17" font-weight="bold">17</text>
+                            <text x="330" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">5</text>
+                            <rect x="370" y="42" width="60" height="48" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="3"/>
+                            <text x="400" y="73" text-anchor="middle" font-size="17" font-weight="bold">23</text>
+                            <text x="400" y="118" text-anchor="middle" font-size="11" fill="#e65100">6 ← M</text>
+                            <rect x="440" y="42" width="60" height="48" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="470" y="73" text-anchor="middle" font-size="17" font-weight="bold">31</text>
+                            <text x="470" y="118" text-anchor="middle" font-size="11" fill="#2e7d32">7</text>
+                        </svg>
+                        <p class="svg-caption">圖 3：中間是 23。17 比 23 小，所以接下來只要看<strong>左邊那一格</strong>（L = R = 5）。</p>
+                    </div>
+                    <h3>第三步：只剩一格</h3>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 520 130" width="520" height="130" role="img" aria-label="二元搜尋第三步">
+                            <text x="260" y="20" text-anchor="middle" font-size="14" fill="#37474f">L = R = 5，M = 5，第 5 格就是 17 → 找到了！</text>
+                            <rect x="20" y="38" width="60" height="48" rx="6" fill="#eceff1" stroke="#90a4ae"/>
+                            <text x="50" y="68" text-anchor="middle" font-size="15" fill="#90a4ae">…</text>
+                            <rect x="300" y="38" width="60" height="48" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="3"/>
+                            <text x="330" y="68" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b5e20">17 ✓</text>
+                            <text x="330" y="108" text-anchor="middle" font-size="12" fill="#1b5e20">位置 5</text>
+                        </svg>
+                        <p class="svg-caption">圖 4：範圍縮到只剩一格時，要么命中，要么確定沒有（視那一格是否等於目標）。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">四、變數 L、R、M 在做什麼？</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <ul>
+                        <li><strong>L（左邊界）</strong>：目前還在考慮的範圍「從第幾項開始」。</li>
+                        <li><strong>R（右邊界）</strong>：目前範圍「到第幾項結束」。</li>
+                        <li><strong>M（中間）</strong>：在 L 到 R 之間算出來的<strong>中間那一項的編號</strong>（算法由老師規定，全班要一致）。</li>
+                    </ul>
+                    <div class="concept-box">
+                        <h4>什麼時候算「沒找到」？</h4>
+                        <p>當範圍<strong>變得不合理</strong>，也就是 <strong>L &gt; R</strong> 時，代表「沒有格子可以看了」，就可以說清單裡<strong>沒有這個目標</strong>。</p>
+                    </div>
+                    <div class="step-container">
+                        <span class="step-title">二元搜尋流程（由小到大）</span>
+                        <p>一開始：<strong>L = 1</strong>，<strong>R = 清單長度</strong>。</p>
+                        <ol>
+                            <li>若 <strong>L &gt; R</strong> → 沒找到，結束。</li>
+                            <li>算出 <strong>M</strong>（L 到 R 的中間位置）。</li>
+                            <li>若「第 M 項」<strong>等於</strong>目標 → 找到了，記下 M，結束。</li>
+                            <li>若「第 M 項」<strong>大於</strong>目標 → 目標只可能在左邊，令 <strong>R = M − 1</strong>，回到步驟 1。</li>
+                            <li>若「第 M 項」<strong>小於</strong>目標 → 目標只可能在右邊，令 <strong>L = M + 1</strong>，回到步驟 1。</li>
+                        </ol>
+                    </div>
+                    <div class="tips">
+                        <strong>小提醒：</strong>Scratch 清單從<strong>第 1 項</strong>開始算，跟本講義一致。算 M 時用「無條件捨去」或「四捨五入」都可以，但<strong>全班要同一種</strong>，否則答案可能差一格。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="code-example">L ← 1
+R ← 清單長度
+結果位置 ← 0
+
+重複執行直到 L &gt; R：
+    M ← 在 L 到 R 之間算中點（全班同一規則）
+    若「清單第 M 項」= 目標：
+        結果位置 ← M
+        停止（跳出迴圈）
+    若「清單第 M 項」&gt; 目標：
+        R ← M − 1
+    否則：
+        L ← M + 1
+
+若結果位置仍是 0：
+    說「沒有」
+不然：
+    說「在第幾項找到」</div>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">六、小試身手</div>
+            <div class="chapter-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 1</div>
+                    <p>清單（由小到大）：<code>[ 2, 5, 8, 11, 17, 23, 31 ]</code>，找 <strong>8</strong>。請寫出每一輪的 L、R、M 與第 M 項的數字，直到找到或確定沒有。</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 2</div>
+                    <p>同一清單，找 <strong>10</strong>（不存在）。問：最後是什麼時候發現「沒有」？（提示：觀察何時變成 L &gt; R。）</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 3（想一想）</div>
+                    <p>資料完全亂排，可以直接二元搜尋嗎？為什麼？</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">七、Scratch 實作引導</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>準備</h3>
+                    <ul>
+                        <li>清單先<strong>手動排好</strong>或由程式產生<strong>已排序</strong>的數字（國二階段可先用手動排好的清單練習）。</li>
+                        <li>變數：<strong>目標</strong>、<strong>L</strong>、<strong>R</strong>、<strong>M</strong>、<strong>結果位置</strong>（0 表示還沒找到）。</li>
+                        <li>建議加一個變數「<strong>比了幾次</strong>」，每比一次就加 1，方便跟線性搜尋對照（選做）。</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>積木怎麼接（概念）</h3>
+                    <ol>
+                        <li>綠旗後，把 <strong>L 設為 1</strong>，<strong>R 設為清單長度</strong>，結果位置設為 0。</li>
+                        <li>用「<strong>重複直到</strong> <code>L &gt; R</code>」包住主邏輯（或用「重複執行」搭配「若 L &gt; R 就停止全部」——以你們課堂教學為準）。</li>
+                        <li>在迴圈內：依老師規定計算 <strong>M</strong>；讀取「清單的第 M 項」和目標比大小。</li>
+                        <li>相等 → 結果位置 = M，並用「停止這個腳本」或旗標讓迴圈不再繼續。</li>
+                        <li>大於 → <code>R = M - 1</code>；小於 → <code>L = M + 1</code>。</li>
+                        <li>迴圈結束後，若結果位置仍為 0，角色說「沒有」。</li>
+                    </ol>
+                    <div class="tips">
+                        <strong>除錯小技巧：</strong>每輪讓角色說出 L、R、M 與「第 M 項」，就像把圖 2～4 在舞臺上「播一遍」，很容易看出哪一步寫錯。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>和線性搜尋比一比（選讀）</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>線性搜尋</th>
+                                <th>二元搜尋</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>要先排序嗎？</td>
+                                <td>不必</td>
+                                <td><strong>要</strong></td>
+                            </tr>
+                            <tr>
+                                <td>主要想法</td>
+                                <td>從第 1 項往後比</td>
+                                <td>每次看<strong>中間</strong>，範圍砍半</td>
+                            </tr>
+                            <tr>
+                                <td>程式難度（約略）</td>
+                                <td>較直覺</td>
+                                <td>要顧好 L、R、M</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+
+        <article class="chapter">
+            <div class="chapter-header">八、延伸思考（選做）</div>
+            <div class="chapter-content">
+                <ul>
+                    <li>清單有 <strong>8</strong> 個數時，最多大約要「看幾次中間」才會結束？跟「從頭比到尾」比起來呢？</li>
+                    <li>若兩個數<strong>一樣大</strong>（重複值）排在一起，二元搜尋還能用嗎？找到的會是第幾個？</li>
+                </ul>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>演算法入門：二元搜尋（algorithm02.html）</p>
+            <p>適用：國中二年級 · 資訊科技 / Scratch</p>
+        </footer>
+    </div>
+</body>
+</html>
