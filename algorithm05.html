@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演算法入門：氣泡排序 - Scratch教學</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+            color: #333;
+            background: linear-gradient(135deg, #831843 0%, #e11d48 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(45deg, #e11d48, #fb7185);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 2.1em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .header .subtitle { font-size: 1.1em; opacity: 0.95; }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            border-left: 5px solid #e11d48;
+        }
+
+        .course-info h2 { color: #2c3e50; margin-bottom: 12px; font-size: 1.35em; }
+        .course-info ul { margin-left: 1.25em; }
+        .course-info li { margin: 6px 0; }
+
+        .chapter {
+            margin-bottom: 36px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            background: linear-gradient(45deg, #9f1239, #881337);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .chapter-content { padding: 22px 24px; }
+        .section { margin-bottom: 26px; }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e11d48;
+        }
+
+        .section p, .section li { margin: 10px 0; }
+        .section ol, .section ul { margin-left: 1.35em; }
+
+        .concept-box {
+            background: #fff1f2;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #e11d48;
+            margin: 18px 0;
+        }
+
+        .concept-box h4 { color: #881337; margin-bottom: 10px; font-size: 1.1em; }
+
+        .step-container {
+            background: #fff8e6;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .step-title {
+            background: #fb8c00;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #dc3545;
+            margin: 14px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin: 14px 0;
+        }
+
+        .tips {
+            background: #fff8e1;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 14px 0;
+        }
+
+        .tips strong { color: #f57f17; }
+
+        .exercise-box {
+            background: #fff1f2;
+            border: 2px solid #fb7185;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 22px 0;
+        }
+
+        .exercise-title {
+            color: #881337;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.98em;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .data-table th { background: #34495e; color: white; }
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+
+        .code-example {
+            background: #f4f4f5;
+            color: #2c3e50;
+            padding: 16px 18px;
+            border-radius: 8px;
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 14px 0;
+            overflow-x: auto;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+
+        .figure-wrap {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .figure-wrap svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .svg-caption { font-size: 0.95em; color: #546e7a; margin-top: 10px; padding: 0 8px; }
+
+        .talk-box {
+            background: #fff1f2;
+            border-left: 5px solid #e11d48;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 1.02em;
+        }
+
+        .talk-box strong { color: #881337; }
+
+        .nav-sibling {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #eceff1;
+            border-radius: 8px;
+            font-size: 0.98em;
+        }
+
+        .nav-sibling a { color: #9f1239; font-weight: bold; }
+
+        .pass-label {
+            display: inline-block;
+            background: #9f1239;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 14px; }
+            .header h1 { font-size: 1.65em; }
+            .data-table { font-size: 0.9em; }
+            .data-table th, .data-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>演算法入門：氣泡排序</h1>
+            <p class="subtitle">國中二年級 · 圖解說明 · 例題 · Scratch 實作引導</p>
+        </header>
+
+        <p class="nav-sibling">
+            相關講義：
+            <a href="algorithm01.html">線性搜尋</a>　·
+            <a href="algorithm02.html">二元搜尋</a>　·
+            <a href="algorithm03.html">選擇排序</a>　·
+            <a href="algorithm04.html">插入排序</a>。
+            本篇是第三種排序法，也是最有「畫面感」的一種——元素像氣泡一樣，一步一步往右浮到正確位置。
+        </p>
+
+        <div class="course-info">
+            <h2>本課要學什麼？</h2>
+            <ul>
+                <li>理解氣泡排序的核心：<strong>每次比較相鄰兩個元素，若左大右小就互換</strong>，反覆進行直到排好。</li>
+                <li>能說出為什麼每輪結束後，<strong>最大值一定會「浮到」最右邊</strong>。</li>
+                <li>能用<strong>表格</strong>模擬每一輪每一次的比較和交換過程。</li>
+                <li>理解「<strong>提前停止</strong>」最佳化：一輪內完全沒有交換，就代表已排好，可以立刻結束。</li>
+                <li>能在 Scratch 裡用<strong>清單＋雙層迴圈＋旗標變數</strong>實作氣泡排序。</li>
+            </ul>
+        </div>
+
+        <!-- 一 -->
+        <article class="chapter">
+            <div class="chapter-header">一、為什麼叫「氣泡」排序？</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>氣泡往上浮的比喻</h3>
+                    <p>想像一杯水裡有許多大小不一的氣泡，較大的氣泡因為浮力更大，每次都會比小氣泡先往上浮一格，最後「最大的」會先浮到水面頂端。</p>
+                    <p>氣泡排序就是這樣的概念——每輪從清單左端出發，<strong>相鄰兩個比一比</strong>，左邊比右邊大就互換，這樣最大的值會像氣泡一樣，一格一格往右「浮」，最終到達它應該在的位置。</p>
+                    <div class="talk-box">
+                        <strong>一句話記住：</strong>每輪從左到右，相鄰兩兩比較，左大右小就交換。每輪結束，<strong>目前最大的那個值一定已浮到最右邊</strong>（鎖定），下一輪不用再碰它。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>和另外兩種排序的比較</h3>
+                    <div class="concept-box">
+                        <h4>三種排序，三種策略</h4>
+                        <ul>
+                            <li><strong>選擇排序</strong>：先掃完整個未排序區，找出最小值，才做一次交換。</li>
+                            <li><strong>插入排序</strong>：拿起一個元素，往左找到正確位置後插入，已排序區在左側增長。</li>
+                            <li><strong>氣泡排序</strong>：從左到右，相鄰兩兩比較，隨時發現左大右小就立刻交換，最大值自然浮到右端，已排序區從<strong>右側</strong>增長。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 二 -->
+        <article class="chapter">
+            <div class="chapter-header">二、核心動作與提前停止</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="step-container">
+                        <span class="step-title">每輪的動作</span>
+                        <ol>
+                            <li>從清單的<strong>第 1 項</strong>開始，依序比較「第 j 項」和「第 j＋1 項」。</li>
+                            <li>若「第 j 項」<strong>大於</strong>「第 j＋1 項」→ 互換兩者（需要 <strong>temp</strong>）。</li>
+                            <li>j 往右移一格，重複，直到比完本輪最後一對。</li>
+                            <li>本輪結束，最右邊那個位置的值已確定（鎖定），下一輪不再碰它。</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>提前停止（最佳化）</h3>
+                    <p>如果某一輪從頭比到尾，<strong>一次交換都沒有發生</strong>，代表清單已經完全排好，不需要再繼續跑下去。</p>
+                    <div class="concept-box">
+                        <h4>旗標變數：「已交換」</h4>
+                        <p>每輪開始前把 <strong>已交換 設為 0</strong>（代表「這輪還沒換過」）；每次真正交換時把 <strong>已交換 設為 1</strong>。輪結束後，若 <strong>已交換 = 0</strong> → 排序完成，立刻停止外層迴圈。</p>
+                    </div>
+                    <div class="success">
+                        <strong>提前停止的威力：</strong>若資料已幾乎排好，氣泡排序可以非常快結束。例如清單只有最後兩個元素對調，第一輪修正後，第二輪偵測到 0 次交換就立刻停止，比選擇排序少跑很多輪。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 三 -->
+        <article class="chapter">
+            <div class="chapter-header">三、圖解：一輪一輪走一遍</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>以清單 <code>[3, 1, 4, 2]</code>（共 4 個元素）為例，目標排成 <code>[1, 2, 3, 4]</code>。</p>
+                    <p>顏色說明：
+                        <strong style="color:#1b5e20;">■ 綠色</strong> = 已鎖定（該輪浮到最右，確定位置）；
+                        <strong style="color:#c62828;">■ 粉紅</strong> = 本次比較後發生交換；
+                        <strong style="color:#1565c0;">■ 藍色</strong> = 尚未處理。
+                    </p>
+                </div>
+
+                <!-- Pass 1 -->
+                <div class="section">
+                    <span class="pass-label">第 1 輪</span>
+                    <p>比較範圍：第 1～4 項，共比 3 次。</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>步驟</th><th>比較位置</th><th>比較值</th><th>大小關係</th><th>動作</th><th>清單狀態</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>開始</td><td>—</td><td>—</td><td>—</td><td>—</td><td>[3, 1, 4, 2]</td></tr>
+                            <tr><td>①</td><td>第 1、2 項</td><td>3 vs 1</td><td>3 &gt; 1</td><td>交換 ✦</td><td>[<strong>1, 3</strong>, 4, 2]</td></tr>
+                            <tr><td>②</td><td>第 2、3 項</td><td>3 vs 4</td><td>3 &lt; 4</td><td>不換</td><td>[1, 3, 4, 2]</td></tr>
+                            <tr><td>③</td><td>第 3、4 項</td><td>4 vs 2</td><td>4 &gt; 2</td><td>交換 ✦</td><td>[1, 3, <strong>2, 4</strong>]</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第一輪結束，4浮到最右">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">第 1 輪結束 → [1, 3, 2, 4]，4 浮到最右（鎖定）</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#1565c0">①</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">3</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#1565c0">②</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">2</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">④ ✓ 鎖定</text>
+                            <line x1="282" y1="22" x2="282" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                        <p class="svg-caption">本輪最大值 4 已浮到最右端，下一輪不需要再比它。</p>
+                    </div>
+                </div>
+
+                <!-- Pass 2 -->
+                <div class="section">
+                    <span class="pass-label">第 2 輪</span>
+                    <p>比較範圍：第 1～3 項，共比 2 次（第 4 項已鎖定）。</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>步驟</th><th>比較位置</th><th>比較值</th><th>大小關係</th><th>動作</th><th>清單狀態</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>開始</td><td>—</td><td>—</td><td>—</td><td>—</td><td>[1, 3, 2, 4🔒]</td></tr>
+                            <tr><td>①</td><td>第 1、2 項</td><td>1 vs 3</td><td>1 &lt; 3</td><td>不換</td><td>[1, 3, 2, 4🔒]</td></tr>
+                            <tr><td>②</td><td>第 2、3 項</td><td>3 vs 2</td><td>3 &gt; 2</td><td>交換 ✦</td><td>[1, <strong>2, 3</strong>, 4🔒]</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第二輪結束，3浮到倒數第二">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">第 2 輪結束 → [1, 2, 3, 4]，3 鎖定</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#1565c0">①</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">2</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#1565c0">②</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">3</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">③ ✓ 鎖定</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">④ ✓ 鎖定</text>
+                            <line x1="190" y1="22" x2="190" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Pass 3 - early stop -->
+                <div class="section">
+                    <span class="pass-label">第 3 輪（提前停止）</span>
+                    <p>比較範圍：第 1～2 項，共比 1 次。</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>步驟</th><th>比較位置</th><th>比較值</th><th>大小關係</th><th>動作</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>①</td><td>第 1、2 項</td><td>1 vs 2</td><td>1 &lt; 2</td><td>不換</td></tr>
+                            <tr>
+                                <td colspan="5" style="text-align:center; background:#d4edda; color:#155724; font-weight:bold;">
+                                    已交換 = 0 → 這輪沒有任何交換 → 清單已排好，提前結束！
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="排序完成">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#1b5e20">提前停止 → [1, 2, 3, 4]，全部排好！</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">3</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">③ ✓</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">④ ✓</text>
+                        </svg>
+                        <p class="svg-caption">4 個元素最多跑 3 輪（n－1 輪），但第 3 輪偵測到 0 次交換，提前結束。</p>
+                    </div>
+                </div>
+
+                <!-- Summary table -->
+                <div class="section">
+                    <h3>過程摘要表</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>輪次</th><th>比較次數</th><th>交換次數</th><th>本輪浮到最右</th><th>輪後清單</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>第 1 輪</td><td>3 次</td><td>2 次</td><td>4</td><td>[1, 3, 2, <strong>4</strong>🔒]</td></tr>
+                            <tr><td>第 2 輪</td><td>2 次</td><td>1 次</td><td>3</td><td>[1, 2, <strong>3</strong>🔒, 4🔒]</td></tr>
+                            <tr><td>第 3 輪</td><td>1 次</td><td>0 次 → 提前結束</td><td>—</td><td>[1, 2, 3, 4] ✓</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+
+        <!-- 四 -->
+        <article class="chapter">
+            <div class="chapter-header">四、流程步驟與比較次數</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="step-container">
+                        <span class="step-title">氣泡排序流程（由小到大，含提前停止）</span>
+                        <p>清單長度為 n，位置編號 1 到 n。</p>
+                        <ol>
+                            <li>讓 <strong>i</strong> 從 1 到 n－1（最多跑 n－1 輪）：</li>
+                            <li>　2-1. <strong>已交換 ← 0</strong>（這輪還沒換過）。</li>
+                            <li>　2-2. 讓 <strong>j</strong> 從 1 到 n－i：<br>
+                                　　　若「清單第 j 項」<strong>大於</strong>「清單第 j＋1 項」：<br>
+                                　　　　temp ← 清單第 j 項<br>
+                                　　　　清單第 j 項 ← 清單第 j＋1 項<br>
+                                　　　　清單第 j＋1 項 ← temp<br>
+                                　　　　<strong>已交換 ← 1</strong>
+                            </li>
+                            <li>　2-3. 若 <strong>已交換 = 0</strong> → 清單已排好，<strong>停止外層迴圈</strong>。</li>
+                        </ol>
+                    </div>
+                    <div class="tips">
+                        <strong>為什麼內層迴圈到 n－i？</strong>第 i 輪結束後，最右邊的 i 個元素已鎖定，不需要再比，所以每輪比較範圍縮短一格。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>比較次數：最好 vs 最壞</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>情況</th><th>說明</th><th>輪數</th><th>比較總次數</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>最好情況</strong></td>
+                                <td>資料已由小到大排好</td>
+                                <td>1 輪（偵測到 0 次交換，立刻停）</td>
+                                <td><strong>n－1 次</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>最壞情況</strong></td>
+                                <td>資料由大到小（完全倒序）</td>
+                                <td>n－1 輪（每輪都有交換）</td>
+                                <td><strong>n×(n－1)÷2 次</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="concept-box">
+                        <h4>三種排序的提前停止能力比較</h4>
+                        <ul>
+                            <li><strong>選擇排序</strong>：<strong>不能</strong>提前停止外層迴圈，永遠要跑完 n－1 輪。</li>
+                            <li><strong>插入排序</strong>：<strong>內層迴圈</strong>可以提前停（key 找到位置就停），但外層仍要跑 n－1 輪。</li>
+                            <li><strong>氣泡排序</strong>：<strong>外層迴圈</strong>可以提前停（一整輪沒有交換就結束）——是三種中唯一能提前結束整個排序的。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 五 -->
+        <article class="chapter">
+            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="code-example">i 從 1 到 清單長度－1：
+    已交換 ← 0
+
+    j 從 1 到 清單長度－i：
+        若「清單第 j 項」 &gt; 「清單第 j+1 項」：
+            temp ← 清單第 j 項
+            清單第 j 項 ← 清單第 j+1 項
+            清單第 j+1 項 ← temp
+            已交換 ← 1
+
+    若 已交換 = 0：
+        停止（提前結束外層迴圈）</div>
+                    <div class="warning">
+                        <strong>Scratch 的內層迴圈範圍：</strong>每輪的比較上限是「清單長度－i」，需要用變數計算（例如先算出 <strong>上限 ← 清單長度－i</strong>，再讓 j 從 1 跑到上限），避免每次都比到已鎖定的位置。
+                    </div>
+                    <div name="tips" class="tips">
+                        <strong>提前停止的 Scratch 寫法：</strong>外層迴圈改用「重複直到」，條件為 <code>(i &gt; 清單長度－1) 或 (已交換 = 0)</code>；或在內層迴圈結束後用「如果…那麼停止全部」積木。兩種都可以，以課堂教學為準。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 六 -->
+        <article class="chapter">
+            <div class="chapter-header">六、小試身手</div>
+            <div class="chapter-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 1</div>
+                    <p>清單：<code>[5, 2, 8, 1, 4]</code>（共 5 個）。請模擬氣泡排序每一輪的過程，寫出：</p>
+                    <ul>
+                        <li>每一輪每一次比較的結果（換或不換）</li>
+                        <li>每一輪結束後的清單狀態</li>
+                        <li>哪一輪觸發提前停止（若有）</li>
+                    </ul>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 2</div>
+                    <p>清單 <code>[1, 2, 3, 4, 5]</code> 已由小到大排好。氣泡排序第 1 輪共比幾次？有沒有觸發提前停止？總共比了幾次？</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 3（比較三種排序）</div>
+                    <p>對 <code>[4, 3, 2, 1]</code>（完全倒序），選擇排序、插入排序、氣泡排序各需比幾次（最壞情況）？用公式算出來，看看三者是否相同。</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 七 -->
+        <article class="chapter">
+            <div class="chapter-header">七、Scratch 實作引導</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>準備</h3>
+                    <ul>
+                        <li>建立<strong>清單</strong>（例如命名為「資料」），手動輸入數字。</li>
+                        <li>準備變數：<strong>i</strong>（外層迴圈，輪次）、<strong>j</strong>（內層迴圈，比較位置）、<strong>上限</strong>（= 清單長度－i）、<strong>temp</strong>（交換暫存）、<strong>已交換</strong>（提前停止旗標）。</li>
+                        <li>選做：加「比較次數」和「交換次數」，跑「最好情況」和「最壞情況」各一次，驗算是否符合公式。</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>積木怎麼接（概念）</h3>
+                    <ol>
+                        <li>外層迴圈：讓 <strong>i</strong> 從 1 跑到「資料長度－1」。</li>
+                        <li>外層迴圈開始時：<strong>已交換 ← 0</strong>；<strong>上限 ← 資料長度－i</strong>。</li>
+                        <li>內層迴圈：讓 <strong>j</strong> 從 1 跑到「上限」。
+                            <ul>
+                                <li>若「資料第 j 項」&gt;「資料第 j＋1 項」，執行三步驟交換（temp），並把 <strong>已交換 設為 1</strong>。</li>
+                            </ul>
+                        </li>
+                        <li>內層迴圈結束後，若 <strong>已交換 = 0</strong>，停止外層迴圈。</li>
+                    </ol>
+                    <div class="tips">
+                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出「已交換」的值和當下清單，確認最大值是否正確浮到右端，以及提前停止是否在預期的輪次觸發。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>五種演算法總整理</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>演算法</th>
+                                <th>目的</th>
+                                <th>需先排序？</th>
+                                <th>最好比較次數</th>
+                                <th>最壞比較次數</th>
+                                <th>外層能提前停？</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>線性搜尋</td>
+                                <td>找目標</td>
+                                <td>不需要</td>
+                                <td>1 次</td>
+                                <td>n 次</td>
+                                <td>✓（找到就停）</td>
+                            </tr>
+                            <tr>
+                                <td>二元搜尋</td>
+                                <td>快速找目標</td>
+                                <td><strong>要</strong></td>
+                                <td>1 次</td>
+                                <td>約 log₂n 次</td>
+                                <td>✓（找到就停）</td>
+                            </tr>
+                            <tr>
+                                <td>選擇排序</td>
+                                <td>排序</td>
+                                <td>—</td>
+                                <td>n×(n－1)÷2</td>
+                                <td>n×(n－1)÷2</td>
+                                <td>✗（不能）</td>
+                            </tr>
+                            <tr>
+                                <td>插入排序</td>
+                                <td>排序</td>
+                                <td>—</td>
+                                <td>n－1 次</td>
+                                <td>n×(n－1)÷2</td>
+                                <td>△（內層可以）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>氣泡排序</strong></td>
+                                <td>排序</td>
+                                <td>—</td>
+                                <td><strong>n－1 次</strong></td>
+                                <td>n×(n－1)÷2</td>
+                                <td><strong>✓（外層可以）</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="success">
+                        <strong>學習路徑回顧：</strong>線性搜尋 → 選擇排序 → 插入排序 → 氣泡排序 → 二元搜尋。先學會用排序把資料整理好，再用二元搜尋快速查找，這就是演算法入門的完整拼圖！
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 八 -->
+        <article class="chapter">
+            <div class="chapter-header">八、延伸思考（選做）</div>
+            <div class="chapter-content">
+                <ul>
+                    <li>若改成「由大到小」排序，流程裡哪個比較符號要改？改成什麼？</li>
+                    <li>清單 <code>[1, 3, 2, 4, 5]</code> 用氣泡排序，第幾輪會觸發提前停止？總共比了幾次？</li>
+                    <li>氣泡排序和插入排序在最好情況下都只需要 n－1 次比較，但「最好情況」的含義一樣嗎？（提示：各自是什麼樣的輸入才能達到最好情況？）</li>
+                    <li>選擇排序、插入排序、氣泡排序在最壞情況下比較次數都是 n×(n－1)÷2。如果要排 100 個數字，你會選哪一種？說說你的理由。</li>
+                </ul>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>演算法入門：氣泡排序（algorithm05.html）</p>
+            <p>適用：國中二年級 · 資訊科技 / Scratch</p>
+        </footer>
+    </div>
+</body>
+</html>
