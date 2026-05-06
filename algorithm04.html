@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演算法入門：插入排序 - Scratch教學</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+            color: #333;
+            background: linear-gradient(135deg, #6b2d0e 0%, #d97706 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(45deg, #d97706, #f59e0b);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 2.1em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .header .subtitle { font-size: 1.1em; opacity: 0.95; }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            border-left: 5px solid #d97706;
+        }
+
+        .course-info h2 { color: #2c3e50; margin-bottom: 12px; font-size: 1.35em; }
+        .course-info ul { margin-left: 1.25em; }
+        .course-info li { margin: 6px 0; }
+
+        .chapter {
+            margin-bottom: 36px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            background: linear-gradient(45deg, #b45309, #92400e);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .chapter-content { padding: 22px 24px; }
+        .section { margin-bottom: 26px; }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #d97706;
+        }
+
+        .section p, .section li { margin: 10px 0; }
+        .section ol, .section ul { margin-left: 1.35em; }
+
+        .concept-box {
+            background: #fffbeb;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #d97706;
+            margin: 18px 0;
+        }
+
+        .concept-box h4 { color: #78350f; margin-bottom: 10px; font-size: 1.1em; }
+
+        .step-container {
+            background: #fff8e6;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .step-title {
+            background: #fb8c00;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #dc3545;
+            margin: 14px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin: 14px 0;
+        }
+
+        .tips {
+            background: #fff8e1;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 14px 0;
+        }
+
+        .tips strong { color: #f57f17; }
+
+        .exercise-box {
+            background: #fff7ed;
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 22px 0;
+        }
+
+        .exercise-title {
+            color: #78350f;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.98em;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .data-table th { background: #34495e; color: white; }
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+
+        .code-example {
+            background: #f4f4f5;
+            color: #2c3e50;
+            padding: 16px 18px;
+            border-radius: 8px;
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 14px 0;
+            overflow-x: auto;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+
+        .figure-wrap {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .figure-wrap svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .svg-caption { font-size: 0.95em; color: #546e7a; margin-top: 10px; padding: 0 8px; }
+
+        .talk-box {
+            background: #fffbeb;
+            border-left: 5px solid #d97706;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 1.02em;
+        }
+
+        .talk-box strong { color: #78350f; }
+
+        .nav-sibling {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #eceff1;
+            border-radius: 8px;
+            font-size: 0.98em;
+        }
+
+        .nav-sibling a { color: #92400e; font-weight: bold; }
+
+        .pass-label {
+            display: inline-block;
+            background: #b45309;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 14px; }
+            .header h1 { font-size: 1.65em; }
+            .data-table { font-size: 0.9em; }
+            .data-table th, .data-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>演算法入門：插入排序</h1>
+            <p class="subtitle">國中二年級 · 圖解說明 · 例題 · Scratch 實作引導</p>
+        </header>
+
+        <p class="nav-sibling">
+            相關講義：
+            <a href="algorithm01.html">線性搜尋</a>　·
+            <a href="algorithm02.html">二元搜尋</a>　·
+            <a href="algorithm03.html">選擇排序</a>。
+            本篇是第二種排序法，目的同樣是「把亂的清單排成由小到大」，但和選擇排序的做法完全不同。
+        </p>
+
+        <div class="course-info">
+            <h2>本課要學什麼？</h2>
+            <ul>
+                <li>理解插入排序的核心：<strong>每次拿起一個元素，往左比較、右移、再插入正確位置</strong>。</li>
+                <li>能說出「<strong>右移</strong>」和「<strong>插入</strong>」各是什麼意思，以及為什麼需要暫存 <strong>temp</strong>。</li>
+                <li>能用<strong>表格</strong>一輪一輪模擬比較和移位的過程。</li>
+                <li>能說出插入排序在「<strong>資料幾乎已排好</strong>」時，為什麼比選擇排序更快。</li>
+                <li>能在 Scratch 裡用<strong>清單＋雙層迴圈</strong>實作插入排序。</li>
+            </ul>
+        </div>
+
+        <!-- 一 -->
+        <article class="chapter">
+            <div class="chapter-header">一、靈感來源：整理手牌</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>打撲克牌時你怎麼整理？</h3>
+                    <p>玩撲克牌時，每摸到一張新牌，你不會把手上所有牌重新洗一遍——而是把新牌插入已排好的牌裡：</p>
+                    <ol>
+                        <li>把新牌和手上<strong>最右邊（最大）</strong>的牌比一比。</li>
+                        <li>如果新牌比較小，就把那張牌<strong>往右移一格</strong>，再繼續往左比。</li>
+                        <li>直到找到一張牌比新牌還小（或已到最左邊），就把新牌<strong>插進去</strong>。</li>
+                    </ol>
+                    <p>這就是<strong>插入排序（Insertion Sort）</strong>的核心——每次從「還沒整理的部分」拿起第一個，找到它在「已整理部分」的正確位置，然後插進去。</p>
+                    <div class="talk-box">
+                        <strong>一句話記住：</strong>拿起新牌 → 往左一張一張比 → 比我大就右移 → 找到位置就插入。已排好的部分每輪多一個，最後全部整理完畢。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>和選擇排序的最大差異</h3>
+                    <div class="concept-box">
+                        <h4>兩種排序，兩種策略</h4>
+                        <ul>
+                            <li><strong>選擇排序</strong>：每輪先把整個未排序區掃完，找出最小值，再和最前面交換。每輪最多一次交換，但<strong>一定要掃完整個未排序區</strong>。</li>
+                            <li><strong>插入排序</strong>：每輪直接拿起下一個元素，往左一個個比，比我大的就往右移，找到位置就立刻停。資料越接近排好，<strong>可以更早停下來</strong>，非常有效率。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 二 -->
+        <article class="chapter">
+            <div class="chapter-header">二、四個關鍵動作</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>插入排序每一輪有四個動作，依序執行：</p>
+                    <div class="step-container">
+                        <span class="step-title">每輪的四步驟</span>
+                        <ol>
+                            <li><strong>拿起（暫存）</strong>：把當前位置 i 的值存進 <strong>temp</strong>（因為等一下這格可能被右移的值蓋掉）。</li>
+                            <li><strong>設定起點</strong>：把比較指標 <strong>j</strong> 設為 i－1（從 temp 的左邊一格開始）。</li>
+                            <li><strong>往左比、右移</strong>：若「第 j 項」比 temp <strong>大</strong>，就把第 j 項複製到第 j＋1 項（右移），然後 j 往左移一格（j－1）；重複直到 j &lt; 1 或第 j 項 ≤ temp。</li>
+                            <li><strong>插入</strong>：把 <strong>temp 放入第 j＋1 項</strong>（剛空出來的位置）。</li>
+                        </ol>
+                    </div>
+                    <div class="tips">
+                        <strong>為什麼要用 temp？</strong>右移時會用「第 j 項」覆蓋「第 j＋1 項」。若不先把第 i 項的值另存，右移一展開，那個值就消失了。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>「右移」和「交換」有什麼不同？</h3>
+                    <div class="concept-box">
+                        <h4>插入排序的移位是單向覆蓋</h4>
+                        <p>執行 <code>第 j＋1 項 ← 第 j 項</code> 時，只是把第 j 項的值<strong>複製</strong>到右邊一格，不需要再用額外的 temp 來「換回去」——因為原本第 j＋1 項的值，要么已經存在 temp 裡（第一輪），要么已經在上一次右移時被往右搬走了。</p>
+                        <p>最後只要把 temp 放到空出來的第 j＋1 項，就完成了。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 三 -->
+        <article class="chapter">
+            <div class="chapter-header">三、圖解：一輪一輪走一遍</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>以清單 <code>[4, 2, 7, 1]</code>（共 4 個元素）為例，目標排成 <code>[1, 2, 4, 7]</code>。</p>
+                    <p>顏色說明：
+                        <strong style="color:#1b5e20;">■ 綠色</strong> = 已排序（確定）；
+                        <strong style="color:#e65100;">■ 橘色</strong> = 當前 key（存入 temp）；
+                        <strong style="color:#1565c0;">■ 藍色</strong> = 未排序。
+                    </p>
+                </div>
+
+                <!-- Pass 1 -->
+                <div class="section">
+                    <span class="pass-label">第 1 輪（i = 2）</span>
+                    <p>temp = <strong>2</strong>。j = 1，第 1 項 4 &gt; 2 → 4 右移；j = 0，超出左界 → 插入 2 到第 1 項。</p>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 115" width="460" height="115" role="img" aria-label="插入排序第一輪，key=2">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">第 1 項單獨成「已排序區」；拿起第 2 項（2）作為 key</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="56" y="92" text-anchor="middle" font-size="11" fill="#2e7d32">①（已排序）</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#e65100">2</text>
+                            <text x="148" y="92" text-anchor="middle" font-size="11" fill="#e65100">② ← key（temp=2）</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">7</text>
+                            <text x="240" y="92" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">1</text>
+                            <text x="332" y="92" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                        </svg>
+                    </div>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第一輪結果">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">4 右移 → 2 插入第 1 項 → [2, 4, 7, 1]，前兩項已排序</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">7</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">1</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                            <line x1="190" y1="22" x2="190" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Pass 2 -->
+                <div class="section">
+                    <span class="pass-label">第 2 輪（i = 3）</span>
+                    <p>temp = <strong>7</strong>。j = 2，第 2 項 4 &lt; 7 → <strong>立刻停止</strong>，不需要右移，7 插回原位。</p>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第二輪，7不需移動">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">4 ≤ 7，內層迴圈不執行，7 留在第 3 項 → 前三項已排序</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">7</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">③ ✓</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">1</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                            <line x1="282" y1="22" x2="282" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                        <p class="svg-caption">第 2 輪只比了一次就停——這是插入排序的優點，遇到已在正確位置的元素可以立刻結束。</p>
+                    </div>
+                </div>
+
+                <!-- Pass 3 -->
+                <div class="section">
+                    <span class="pass-label">第 3 輪（i = 4）</span>
+                    <p>temp = <strong>1</strong>。往左比：7 &gt; 1 右移、4 &gt; 1 右移、2 &gt; 1 右移，j = 0 超出左界 → 插入 1 到第 1 項。</p>
+
+                    <p>本輪內層迴圈逐步過程：</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>j</th><th>比較</th><th>動作</th><th>清單目前狀態</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>—</td><td>temp = 第 4 項 = 1</td><td>存入 temp</td><td>[2, 4, 7, <strong style="color:#e65100;">temp=1</strong>]</td></tr>
+                            <tr><td>j = 3</td><td>第 3 項 7 &gt; 1</td><td>第 4 項 ← 7（右移）</td><td>[2, 4, 7, <strong>7</strong>]</td></tr>
+                            <tr><td>j = 2</td><td>第 2 項 4 &gt; 1</td><td>第 3 項 ← 4（右移）</td><td>[2, 4, <strong>4</strong>, 7]</td></tr>
+                            <tr><td>j = 1</td><td>第 1 項 2 &gt; 1</td><td>第 2 項 ← 2（右移）</td><td>[2, <strong>2</strong>, 4, 7]</td></tr>
+                            <tr><td>j = 0</td><td>j &lt; 1，超出左界</td><td>第 1 項 ← temp = 1（插入）</td><td>[<strong style="color:#1b5e20;">1</strong>, 2, 4, 7]</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第三輪結果，排序完成">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#1b5e20">插入完成 → [1, 2, 4, 7]，全部排好！</text>
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">③ ✓</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">7</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">④ ✓</text>
+                        </svg>
+                        <p class="svg-caption">4 個元素跑了 3 輪（n－1 輪）。第 2 輪一次比較就停；第 3 輪移了 3 次。</p>
+                    </div>
+                </div>
+
+                <!-- Summary table -->
+                <div class="section">
+                    <h3>過程摘要表</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>輪次（i）</th><th>key（temp）</th><th>右移幾次</th><th>插入後完整清單</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>第 1 輪（i=2）</td><td>2</td><td>1 次（4 右移）</td><td>[<strong>2</strong>, 4, 7, 1]</td></tr>
+                            <tr><td>第 2 輪（i=3）</td><td>7</td><td>0 次（直接插入原位）</td><td>[2, 4, <strong>7</strong>, 1]</td></tr>
+                            <tr><td>第 3 輪（i=4）</td><td>1</td><td>3 次（7、4、2 右移）</td><td>[<strong>1</strong>, 2, 4, 7]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+
+        <!-- 四 -->
+        <article class="chapter">
+            <div class="chapter-header">四、流程步驟與比較次數</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="step-container">
+                        <span class="step-title">插入排序流程（由小到大）</span>
+                        <p>清單長度為 n，位置編號 1 到 n。</p>
+                        <ol>
+                            <li>讓 <strong>i</strong> 從 2 跑到 n（共 n－1 輪）：</li>
+                            <li>　2-1. <strong>temp ← 清單第 i 項</strong>（拿起 key）。</li>
+                            <li>　2-2. <strong>j ← i－1</strong>。</li>
+                            <li>　2-3. 當 <strong>j ≥ 1</strong> 且 <strong>清單第 j 項 &gt; temp</strong>：<br>
+                                　　　清單第 j＋1 項 ← 清單第 j 項（右移）；j ← j－1。
+                            </li>
+                            <li>　2-4. <strong>清單第 j＋1 項 ← temp</strong>（插入）。</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>比較次數：最好 vs 最壞</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>情況</th><th>說明</th><th>每輪比較</th><th>合計（n 個元素）</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>最好情況</strong></td>
+                                <td>資料已由小到大排好</td>
+                                <td>每輪只比 1 次（立刻停）</td>
+                                <td><strong>n－1 次</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>最壞情況</strong></td>
+                                <td>資料由大到小（完全倒序）</td>
+                                <td>第 i 輪比 i－1 次</td>
+                                <td><strong>n×(n－1)÷2 次</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="success">
+                        <strong>比選擇排序更靈活：</strong>選擇排序不管原始順序如何，比較次數永遠是 n×(n－1)÷2。插入排序在最好情況下只需 n－1 次——資料越接近排好，它越快！
+                    </div>
+                    <div class="concept-box">
+                        <h4>移動（右移）次數</h4>
+                        <p>每次比較若 key 較小就移動一次，所以移動次數和比較次數相同（或差 1）。最好情況移動 0 次；最壞情況移動次數同樣為 n×(n－1)÷2 次。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 五 -->
+        <article class="chapter">
+            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="code-example">i 從 2 到 清單長度：
+    temp ← 清單第 i 項        （拿起 key）
+    j ← i - 1
+
+    當 j ≥ 1 且 「清單第 j 項」 &gt; temp：
+        清單第 j+1 項 ← 清單第 j 項  （右移）
+        j ← j - 1
+
+    清單第 j+1 項 ← temp             （插入）</div>
+                    <div class="warning">
+                        <strong>Scratch 的「重複直到」是停止條件，要反過來寫：</strong>繼續條件是「j ≥ 1 且 第 j 項 &gt; temp」，停止條件就是相反：<code>j &lt; 1 或 NOT（第 j 項 &gt; temp）</code>。在 Scratch 裡用「或」和「not」積木組合。
+                    </div>
+                    <div class="tips">
+                        <strong>索引技巧：</strong>Scratch 清單的索引不能直接用算式，先把 j＋1 的結果存進一個 <strong>j1</strong> 變數，再用 j1 當索引，就能正確替換第 j＋1 項。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 六 -->
+        <article class="chapter">
+            <div class="chapter-header">六、小試身手</div>
+            <div class="chapter-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 1</div>
+                    <p>清單：<code>[3, 5, 1, 4, 2]</code>（共 5 個）。請模擬插入排序每一輪的過程，寫出：</p>
+                    <ul>
+                        <li>每輪的 key 值</li>
+                        <li>右移了哪些元素（幾次）</li>
+                        <li>插入後的完整清單</li>
+                    </ul>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 2</div>
+                    <p>清單 <code>[1, 2, 3, 4, 5]</code> 已由小到大排好。插入排序每輪各比幾次？總共比幾次？</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 3（比較）</div>
+                    <p>對 <code>[5, 4, 3, 2, 1]</code>（完全倒序），插入排序和選擇排序各需比幾次？試著用公式算出來，看看兩者是否相同。</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 七 -->
+        <article class="chapter">
+            <div class="chapter-header">七、Scratch 實作引導</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>準備</h3>
+                    <ul>
+                        <li>建立<strong>清單</strong>（例如命名為「資料」），手動輸入數字。</li>
+                        <li>準備變數：<strong>i</strong>（外層迴圈）、<strong>j</strong>（往左比較的指標）、<strong>j1</strong>（= j＋1，清單索引用）、<strong>temp</strong>（暫存 key）。</li>
+                        <li>選做：加「比較次數」和「移動次數」變數，驗算最好／最壞情況是否符合公式。</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>積木怎麼接（概念）</h3>
+                    <ol>
+                        <li>外層迴圈：讓 <strong>i</strong> 從 2 跑到「資料長度」。</li>
+                        <li>外層迴圈開始時：<strong>temp ← 資料第 i 項</strong>，<strong>j ← i－1</strong>。</li>
+                        <li>內層「重複直到」條件：<code>(j &lt; 1) 或 NOT (資料第 j 項 &gt; temp)</code>。
+                            <ul>
+                                <li>迴圈內：先 <strong>j1 ← j＋1</strong>，執行「替換資料第 j1 項為資料第 j 項」（右移）；再 j ← j－1。</li>
+                            </ul>
+                        </li>
+                        <li>內層迴圈結束後：<strong>j1 ← j＋1</strong>，執行「替換資料第 j1 項為 temp」（插入）。</li>
+                    </ol>
+                    <div class="tips">
+                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出 temp 和當下清單狀態，確認 key 插入了正確位置。若發現清單某項消失，通常是右移時索引算錯，檢查 j1 的值。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>四種演算法總整理</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>演算法</th>
+                                <th>目的</th>
+                                <th>需先排序？</th>
+                                <th>最好比較次數</th>
+                                <th>最壞比較次數</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>線性搜尋</td>
+                                <td>找目標</td>
+                                <td>不需要</td>
+                                <td>1 次</td>
+                                <td>n 次</td>
+                            </tr>
+                            <tr>
+                                <td>二元搜尋</td>
+                                <td>快速找目標</td>
+                                <td><strong>要</strong></td>
+                                <td>1 次</td>
+                                <td>約 log₂n 次</td>
+                            </tr>
+                            <tr>
+                                <td>選擇排序</td>
+                                <td>排序</td>
+                                <td>—</td>
+                                <td>n×(n－1)÷2</td>
+                                <td>n×(n－1)÷2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>插入排序</strong></td>
+                                <td>排序</td>
+                                <td>—</td>
+                                <td><strong>n－1 次</strong></td>
+                                <td>n×(n－1)÷2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="success">
+                        <strong>組合應用：</strong>先用插入排序或選擇排序把資料整理好，再套用二元搜尋快速查找，這是把多種演算法串在一起的完整流程！
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 八 -->
+        <article class="chapter">
+            <div class="chapter-header">八、延伸思考（選做）</div>
+            <div class="chapter-content">
+                <ul>
+                    <li>若想改成「由大到小」排序，流程裡哪一個比較符號要改？改成什麼？</li>
+                    <li>清單 <code>[1, 3, 5, 2, 4]</code> 用插入排序，總共比幾次、移動幾次？試著模擬看看。</li>
+                    <li>選擇排序和插入排序都是「n－1 輪」，最壞情況下比較次數也相同。那麼哪種更好？說說你的理由（提示：比較次數以外，還有什麼差異？）。</li>
+                </ul>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>演算法入門：插入排序（algorithm04.html）</p>
+            <p>適用：國中二年級 · 資訊科技 / Scratch</p>
+        </footer>
+    </div>
+</body>
+</html>

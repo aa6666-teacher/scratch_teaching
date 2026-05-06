@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演算法入門：選擇排序 - Scratch教學</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+            color: #333;
+            background: linear-gradient(135deg, #005c6b 0%, #00acc1 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(45deg, #00897b, #26c6da);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 2.1em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            border-left: 5px solid #00897b;
+        }
+
+        .course-info h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.35em;
+        }
+
+        .course-info ul { margin-left: 1.25em; }
+        .course-info li { margin: 6px 0; }
+
+        .chapter {
+            margin-bottom: 36px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            background: linear-gradient(45deg, #00796b, #00695c);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .chapter-content { padding: 22px 24px; }
+
+        .section { margin-bottom: 26px; }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #00897b;
+        }
+
+        .section p, .section li { margin: 10px 0; }
+        .section ol, .section ul { margin-left: 1.35em; }
+
+        .concept-box {
+            background: #e0f7fa;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #00acc1;
+            margin: 18px 0;
+        }
+
+        .concept-box h4 {
+            color: #006064;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .step-container {
+            background: #fff8e6;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .step-title {
+            background: #fb8c00;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #dc3545;
+            margin: 14px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin: 14px 0;
+        }
+
+        .tips {
+            background: #fff8e1;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 14px 0;
+        }
+
+        .tips strong { color: #f57f17; }
+
+        .exercise-box {
+            background: #e0f7fa;
+            border: 2px solid #00acc1;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 22px 0;
+        }
+
+        .exercise-title {
+            color: #006064;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.98em;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #34495e;
+            color: white;
+        }
+
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+
+        .code-example {
+            background: #f4f4f5;
+            color: #2c3e50;
+            padding: 16px 18px;
+            border-radius: 8px;
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 14px 0;
+            overflow-x: auto;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+
+        .figure-wrap {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .figure-wrap svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .svg-caption {
+            font-size: 0.95em;
+            color: #546e7a;
+            margin-top: 10px;
+            padding: 0 8px;
+        }
+
+        .talk-box {
+            background: #e0f7fa;
+            border-left: 5px solid #00acc1;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 1.02em;
+        }
+
+        .talk-box strong { color: #006064; }
+
+        .nav-sibling {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #eceff1;
+            border-radius: 8px;
+            font-size: 0.98em;
+        }
+
+        .nav-sibling a {
+            color: #00695c;
+            font-weight: bold;
+        }
+
+        .pass-label {
+            display: inline-block;
+            background: #00796b;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 14px; }
+            .header h1 { font-size: 1.65em; }
+            .data-table { font-size: 0.9em; }
+            .data-table th, .data-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>演算法入門：選擇排序</h1>
+            <p class="subtitle">國中二年級 · 圖解說明 · 例題 · Scratch 實作引導</p>
+        </header>
+
+        <p class="nav-sibling">
+            相關講義：
+            <a href="algorithm01.html">線性搜尋（從頭找到尾）</a>　·
+            <a href="algorithm02.html">二元搜尋（猜半邊）</a>。
+            本篇學的是<strong>排序</strong>——把亂的資料整理成有順序，排好之後就能套用二元搜尋快速查找。
+        </p>
+
+        <div class="course-info">
+            <h2>本課要學什麼？</h2>
+            <ul>
+                <li>理解<strong>排序</strong>的意義：讓原本「亂」的清單變成「由小到大」的順序。</li>
+                <li>記住選擇排序的核心：<strong>每輪從未排序區找最小值，和該區第一個互換</strong>。</li>
+                <li>能用<strong>表格</strong>一輪一輪模擬「找最小值」和「交換」的過程。</li>
+                <li>能說出選擇排序<strong>比較次數的規律</strong>，以及最多需要幾次交換。</li>
+                <li>能在 Scratch 裡用<strong>清單＋雙層迴圈</strong>實作選擇排序。</li>
+            </ul>
+        </div>
+
+        <!-- 一 -->
+        <article class="chapter">
+            <div class="chapter-header">一、為什麼要排序？</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>還記得二元搜尋的大前提嗎？——資料必須<strong>先排好順序</strong>，才能用「猜半邊、丟一半」快速找到目標。</p>
+                    <p>但資料通常是一筆一筆輸入的，順序往往是亂的。所以在使用二元搜尋之前，常需要先把清單<strong>整理成有序的狀態</strong>，這個過程就叫做<strong>排序（Sorting）</strong>。</p>
+                    <div class="concept-box">
+                        <h4>什麼是排序？</h4>
+                        <p>將一組資料依照<strong>某個規則重新排列</strong>的過程。最常見的是「由小到大」（升冪）或「由大到小」（降冪）。本講義以「由小到大」為例。</p>
+                    </div>
+                    <h3>生活中常見的排序</h3>
+                    <ul>
+                        <li>考試後<strong>成績單依分數高低排名</strong>。</li>
+                        <li>圖書館書架<strong>依書號順序排列</strong>，才能快速找到書。</li>
+                        <li>體育課<strong>依身高由矮到高排隊</strong>。</li>
+                    </ul>
+                    <div class="talk-box">
+                        <strong>一句話：</strong>排序 = 把亂的變整齊。排好之後，配合二元搜尋，查資料就快多了。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 二 -->
+        <article class="chapter">
+            <div class="chapter-header">二、選擇排序的核心想法</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>生活比喻</h3>
+                    <p>桌上有一疊點數大小不一的撲克牌，要把它們從小到大排好。一個直覺的做法是：</p>
+                    <ol>
+                        <li>從所有牌中<strong>找出點數最小的那張</strong>，移到最左邊。</li>
+                        <li>剩下的牌裡<strong>再找最小的</strong>，放到第二個位置。</li>
+                        <li>重複這個動作，直到所有牌都排好。</li>
+                    </ol>
+                    <p>這就是<strong>選擇排序（Selection Sort）</strong>的核心——每一輪都從「還沒排好的區域」裡<strong>選出最小值</strong>，放到正確位置。</p>
+                    <div class="talk-box">
+                        <strong>一句話記住：</strong>每輪從「<strong>未排序區</strong>」選出最小值，和該區<strong>第一個</strong>互換位置。重複直到全部排好。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>兩個區域的概念</h3>
+                    <div class="concept-box">
+                        <h4>執行時把清單分成左右兩個區域</h4>
+                        <ul>
+                            <li>🟢 <strong>已排序區</strong>（左側）：已確定的元素，不會再動。</li>
+                            <li>🔵 <strong>未排序區</strong>（右側）：還沒處理，每輪從這裡找最小值。</li>
+                        </ul>
+                        <p>每輪結束，已排序區多一個、未排序區少一個，直到未排序區只剩最後一個為止（此時整個清單已排好）。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 三 -->
+        <article class="chapter">
+            <div class="chapter-header">三、圖解：一輪一輪走一遍</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <p>以清單 <code>[3, 1, 4, 2]</code>（共 4 個元素，位置編號 1～4）為例，目標是排成 <code>[1, 2, 3, 4]</code>。</p>
+                    <p>顏色說明：
+                        <strong style="color:#1b5e20;">■ 綠色</strong> = 已排序（鎖定）；
+                        <strong style="color:#1565c0;">■ 藍色</strong> = 未排序（待處理）；
+                        <strong style="color:#e65100;">■ 橘色</strong> = 本輪最小值；
+                        <strong style="color:#c62828;">■ 粉紅</strong> = 準備被換走的位置。
+                    </p>
+                </div>
+
+                <!-- Pass 1 -->
+                <div class="section">
+                    <span class="pass-label">第 1 輪</span>
+                    <p>未排序區：全部（第 1～4 項）<code>[3, 1, 4, 2]</code>。掃描後找到最小值 <strong>1</strong>，在第 2 項。和第 1 項（3）互換。</p>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 120" width="460" height="120" role="img" aria-label="選擇排序第一輪：找到最小值 1，和第 1 項互換">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">找到最小值 1（第 2 項）⇄ 和第 1 項（3）互換</text>
+                            <!-- Box 1: pink -->
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#f8bbd0" stroke="#c62828" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#c62828">3</text>
+                            <text x="56" y="92" text-anchor="middle" font-size="11" fill="#c62828">① 準備換走</text>
+                            <!-- swap symbol -->
+                            <text x="104" y="56" text-anchor="middle" font-size="22" fill="#b71c1c">⇄</text>
+                            <!-- Box 2: orange -->
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#e65100">1</text>
+                            <text x="148" y="92" text-anchor="middle" font-size="11" fill="#e65100">② 最小值</text>
+                            <!-- Box 3: blue -->
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">4</text>
+                            <text x="240" y="92" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <!-- Box 4: blue -->
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">2</text>
+                            <text x="332" y="92" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                        </svg>
+                    </div>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第一輪交換後結果">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">交換後 → [1, 3, 4, 2]，第 1 項鎖定</text>
+                            <!-- Box 1: green -->
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <!-- Box 2: blue -->
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">3</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#1565c0">②</text>
+                            <!-- Box 3: blue -->
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">4</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <!-- Box 4: blue -->
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">2</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                            <!-- divider -->
+                            <line x1="98" y1="22" x2="98" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                        <p class="svg-caption">虛線左邊 = 已排序區（鎖定不動）；右邊 = 未排序區（下一輪的處理範圍）。</p>
+                    </div>
+                </div>
+
+                <!-- Pass 2 -->
+                <div class="section">
+                    <span class="pass-label">第 2 輪</span>
+                    <p>未排序區：第 2～4 項 <code>[3, 4, 2]</code>。找最小值 <strong>2</strong>，在第 4 項。和第 2 項（3）互換。</p>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第二輪交換後結果">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#37474f">交換後 → [1, 2, 4, 3]，前兩項鎖定</text>
+                            <!-- Box 1: green -->
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <!-- Box 2: green -->
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <!-- Box 3: blue -->
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">4</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#1565c0">③</text>
+                            <!-- Box 4: blue -->
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1565c0">3</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#1565c0">④</text>
+                            <line x1="190" y1="22" x2="190" y2="88" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4,3"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Pass 3 -->
+                <div class="section">
+                    <span class="pass-label">第 3 輪</span>
+                    <p>未排序區：第 3～4 項 <code>[4, 3]</code>。找最小值 <strong>3</strong>，在第 4 項。和第 3 項（4）互換。</p>
+                    <div class="figure-wrap">
+                        <svg viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="第三輪交換後結果，排序完成">
+                            <text x="230" y="17" text-anchor="middle" font-size="13" fill="#1b5e20">交換後 → [1, 2, 3, 4]，排序完成！</text>
+                            <!-- All green -->
+                            <rect x="20" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="56" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">1</text>
+                            <text x="56" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">① ✓</text>
+                            <rect x="112" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="148" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">2</text>
+                            <text x="148" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">② ✓</text>
+                            <rect x="204" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="240" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">3</text>
+                            <text x="240" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">③ ✓</text>
+                            <rect x="296" y="28" width="72" height="50" rx="6" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2.5"/>
+                            <text x="332" y="59" text-anchor="middle" font-size="20" font-weight="bold" fill="#1b5e20">4</text>
+                            <text x="332" y="90" text-anchor="middle" font-size="11" fill="#2e7d32">④ ✓</text>
+                        </svg>
+                        <p class="svg-caption">4 個元素共跑 3 輪（n－1 輪）。最後一個元素自動就位，不需要第 4 輪。</p>
+                    </div>
+                </div>
+
+                <!-- Summary table -->
+                <div class="section">
+                    <h3>過程摘要表</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>輪次</th>
+                                <th>未排序區內容</th>
+                                <th>找到的最小值</th>
+                                <th>在第幾項</th>
+                                <th>交換後完整清單</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>第 1 輪</td>
+                                <td>[3, 1, 4, 2]</td>
+                                <td>1</td>
+                                <td>第 2 項</td>
+                                <td>[<strong>1</strong>, 3, 4, 2]</td>
+                            </tr>
+                            <tr>
+                                <td>第 2 輪</td>
+                                <td>[3, 4, 2]</td>
+                                <td>2</td>
+                                <td>第 4 項</td>
+                                <td>[1, <strong>2</strong>, 4, 3]</td>
+                            </tr>
+                            <tr>
+                                <td>第 3 輪</td>
+                                <td>[4, 3]</td>
+                                <td>3</td>
+                                <td>第 4 項</td>
+                                <td>[1, 2, <strong>3</strong>, 4]</td>
+                            </tr>
+                            <tr>
+                                <td>結束</td>
+                                <td>[4]（只剩一個）</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>[1, 2, 3, <strong>4</strong>] ✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+
+        <!-- 四 -->
+        <article class="chapter">
+            <div class="chapter-header">四、流程步驟與變數說明</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="step-container">
+                        <span class="step-title">選擇排序流程（由小到大）</span>
+                        <p>清單長度為 n，位置編號 1 到 n。</p>
+                        <ol>
+                            <li>讓 <strong>i</strong> 從 1 跑到 n－1（共 n－1 輪）：</li>
+                            <li>　2-1. 先設 <strong>minPos = i</strong>（假設本輪最小值在第 i 項）。</li>
+                            <li>　2-2. 讓 <strong>j</strong> 從 i＋1 跑到 n：若「第 j 項」小於「第 minPos 項」，就更新 <strong>minPos = j</strong>。</li>
+                            <li>　2-3. 內層迴圈結束後，若 <strong>minPos ≠ i</strong>，把第 i 項和第 minPos 項<strong>互換</strong>。</li>
+                            <li>i 跑完後，排序結束。</li>
+                        </ol>
+                    </div>
+                    <div class="tips">
+                        <strong>關鍵：</strong>用 <strong>minPos</strong> 記住「目前找到的最小值的位置」，等整個未排序區掃完後再<strong>一次交換</strong>。每輪最多只換一次，這和每比一次就換一次的做法（氣泡排序）不同。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>用到的變數</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>變數名</th><th>用途</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>i</strong></td><td>外層迴圈，代表「本輪排到第幾個位置」（已排序區的下一格）</td></tr>
+                            <tr><td><strong>j</strong></td><td>內層迴圈，掃描未排序區用的指標</td></tr>
+                            <tr><td><strong>minPos</strong></td><td>本輪目前找到的最小值所在的位置編號</td></tr>
+                            <tr><td><strong>temp</strong></td><td>交換時暫時存值用（Scratch 必須用到）</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <h3>比較次數的規律</h3>
+                    <p>每輪都要把整個未排序區掃完，才能確認最小值在哪：</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>第幾輪（i）</th><th>未排序區大小</th><th>這輪比幾次</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>n 個</td><td>n－1 次</td></tr>
+                            <tr><td>2</td><td>n－1 個</td><td>n－2 次</td></tr>
+                            <tr><td>3</td><td>n－2 個</td><td>n－3 次</td></tr>
+                            <tr><td>…</td><td>…</td><td>…</td></tr>
+                            <tr><td>n－1</td><td>2 個</td><td>1 次</td></tr>
+                        </tbody>
+                    </table>
+                    <p>合計：<strong>(n－1) + (n－2) + … + 1 = n × (n－1) ÷ 2</strong> 次</p>
+                    <div class="success">
+                        <strong>特點：</strong>不管原始資料是已排好還是完全倒序，比較次數<strong>永遠一樣多</strong>。因為每輪都要掃完整個未排序區才能確認最小值。
+                    </div>
+                    <div class="concept-box">
+                        <h4>交換次數呢？</h4>
+                        <p>每輪<strong>最多交換一次</strong>（只有 minPos ≠ i 時才換），共 n－1 輪，所以<strong>最多 n－1 次交換</strong>。若最小值剛好已在該輪起點，就<strong>不用換</strong>（0 次）。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 五 -->
+        <article class="chapter">
+            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <div class="code-example">i 從 1 到 清單長度－1：
+    minPos ← i              （假設本輪最小在第 i 項）
+
+    j 從 i＋1 到 清單長度：
+        若「清單第 j 項」 &lt; 「清單第 minPos 項」：
+            minPos ← j     （更新最小值位置）
+
+    若 minPos ≠ i：          （真的需要換才換）
+        temp ← 清單第 i 項
+        清單第 i 項 ← 清單第 minPos 項
+        清單第 minPos 項 ← temp</div>
+                    <div class="warning">
+                        <strong>Scratch 交換兩個清單項目的方法：</strong>Scratch 沒有直接「對調兩項」的積木，一定要用 <strong>temp</strong> 暫存其中一個值再依序替換，否則其中一個值會被蓋掉消失。
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 六 -->
+        <article class="chapter">
+            <div class="chapter-header">六、小試身手</div>
+            <div class="chapter-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 1</div>
+                    <p>清單：<code>[5, 2, 8, 1, 4]</code>（共 5 個）。請模擬選擇排序每一輪的過程，寫出：</p>
+                    <ul>
+                        <li>每輪未排序區的內容</li>
+                        <li>找到的最小值及其位置</li>
+                        <li>交換後的完整清單</li>
+                    </ul>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 2</div>
+                    <p>清單 <code>[1, 2, 3, 4]</code> 已是由小到大的順序。選擇排序還是需要跑完全部輪次嗎？比較次數是幾次？交換次數呢？</p>
+                </div>
+                <div class="exercise-box">
+                    <div class="exercise-title">練習 3（計算）</div>
+                    <p>清單有 <strong>5</strong> 個數，選擇排序用公式算出總比較次數是多少？把算出來的數字和練習 1 的過程核對看看。</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 七 -->
+        <article class="chapter">
+            <div class="chapter-header">七、Scratch 實作引導</div>
+            <div class="chapter-content">
+                <div class="section">
+                    <h3>準備</h3>
+                    <ul>
+                        <li>建立<strong>清單</strong>（例如命名為「資料」），手動輸入幾個數字。</li>
+                        <li>準備變數：<strong>i</strong>（外層迴圈）、<strong>j</strong>（內層迴圈）、<strong>minPos</strong>（本輪最小值位置）、<strong>temp</strong>（交換暫存）。</li>
+                        <li>選做：加一個「比較次數」和「交換次數」變數，每次比較／交換就加 1，最後驗算結果是否符合公式。</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>積木怎麼接（概念）</h3>
+                    <ol>
+                        <li>外層迴圈：讓 <strong>i</strong> 從 1 跑到「資料長度－1」（計次迴圈）。</li>
+                        <li>外層迴圈一開始，把 <strong>minPos 設為 i</strong>。</li>
+                        <li>內層迴圈：讓 <strong>j</strong> 從 i＋1 跑到「資料長度」；每次判斷「資料第 j 項」是否小於「資料第 minPos 項」，若是就把 <strong>minPos 設為 j</strong>。</li>
+                        <li>內層迴圈結束後，若 <strong>minPos ≠ i</strong>，執行三步驟交換：
+                            <ul>
+                                <li>temp ← 資料第 i 項</li>
+                                <li>把「資料第 i 項」替換為「資料第 minPos 項」</li>
+                                <li>把「資料第 minPos 項」替換為 temp</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div class="tips">
+                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出當下清單內容，確認值有正確移動。也可以觀察「已排序區」是否從左邊一個個增長。
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>和前兩篇演算法的關係</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>演算法</th>
+                                <th>目的</th>
+                                <th>需要先排序？</th>
+                                <th>主要 Scratch 積木</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>線性搜尋</td>
+                                <td>在清單裡找目標</td>
+                                <td>不需要</td>
+                                <td>清單、迴圈、判斷</td>
+                            </tr>
+                            <tr>
+                                <td>二元搜尋</td>
+                                <td>在排好的清單快速找目標</td>
+                                <td><strong>要</strong></td>
+                                <td>清單、迴圈、判斷、L/R/M</td>
+                            </tr>
+                            <tr>
+                                <td><strong>選擇排序</strong></td>
+                                <td>讓清單由小到大排好</td>
+                                <td>—（本身就是排序）</td>
+                                <td>清單、雙層迴圈、temp 交換</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="success">
+                        <strong>組合應用：</strong>先用<strong>選擇排序</strong>把資料整理好，再用<strong>二元搜尋</strong>快速查找——這是把兩種演算法串在一起的第一步！
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- 八 -->
+        <article class="chapter">
+            <div class="chapter-header">八、延伸思考（選做）</div>
+            <div class="chapter-content">
+                <ul>
+                    <li>若想改成「由大到小」排序，只需要把哪一行判斷式改掉？改成什麼？</li>
+                    <li>清單有 <strong>8</strong> 個數時，選擇排序最多要比幾次？最多交換幾次？用公式算看看。</li>
+                    <li>選擇排序不管資料初始順序如何，比較次數永遠一樣多。你覺得這算優點還是缺點？有沒有一種排序法，資料「幾乎排好」時可以更快結束？（提示：想想氣泡排序。）</li>
+                </ul>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>演算法入門：選擇排序（algorithm03.html）</p>
+            <p>適用：國中二年級 · 資訊科技 / Scratch</p>
+        </footer>
+    </div>
+</body>
+</html>
