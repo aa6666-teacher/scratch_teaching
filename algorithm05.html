@@ -184,6 +184,72 @@
             border: 1px solid #dee2e6;
         }
 
+        /* Scratch 積木式描述（清單從第 1 項起，非一般語言的索引 0） */
+        .scratch-index-note {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 12px 16px;
+            margin: 12px 0 16px;
+            border-radius: 8px;
+            font-size: 0.98em;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack {
+            background: #faf8ff;
+            border: 2px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 16px 16px;
+            margin: 14px 0;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack .sb-hat {
+            background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 100%);
+            color: #4a3728;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 22px 22px 10px 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .scratch-block-stack .sb-c {
+            background: #ff9800;
+            color: #fff;
+            margin: 6px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #e65100;
+        }
+
+        .scratch-block-stack .sb-c.sb-control {
+            background: #ab47bc;
+            border-color: #6a1b9a;
+        }
+
+        .scratch-block-stack .sb-c.sb-inner {
+            background: #42a5f5;
+            border-color: #1565c0;
+        }
+
+        .scratch-block-stack .sb-nest {
+            margin: 4px 0 8px 16px;
+            padding: 6px 0 6px 12px;
+            border-left: 4px dashed #9575cd;
+        }
+
+        .scratch-block-stack .sb-c.sb-sensing {
+            background: #4caf50;
+            border-color: #2e7d32;
+        }
+
+        .scratch-block-stack .sb-c.sb-looks {
+            background: #00bcd4;
+            border-color: #00838f;
+        }
+
         .footer {
             text-align: center;
             padding: 24px;
@@ -475,24 +541,22 @@
             <div class="chapter-header">四、流程步驟與比較次數</div>
             <div class="chapter-content">
                 <div class="section">
+                    <div class="scratch-index-note">
+                        <strong>Scratch 讀法：</strong>下面用「將…設為」「清單的第（　）項」「重複執行直到」來說明。<strong>第（j）項</strong>與<strong>第（j）＋（1）項</strong>是相鄰兩格；內層「要比到哪一項為止」請先用變數「<strong>上限</strong>」存「（清單「資料」的項目數）－（i）」，再用「j 從 1 一路做到上限」最好接。
+                    </div>
                     <div class="step-container">
-                        <span class="step-title">氣泡排序流程（由小到大，含提前停止）</span>
-                        <p>清單長度為 n，位置編號 1 到 n。</p>
+                        <span class="step-title">氣泡排序流程（由小到大，含提前停止 · 積木口語）</span>
+                        <p>想像成「每一輪把比較大的數字像氣泡一樣往右推；若某一輪完全沒交換，代表已經排好，就可以提早結束」：</p>
                         <ol>
-                            <li>讓 <strong>i</strong> 從 1 到 n－1（最多跑 n－1 輪）：</li>
-                            <li>　2-1. <strong>已交換 ← 0</strong>（這輪還沒換過）。</li>
-                            <li>　2-2. 讓 <strong>j</strong> 從 1 到 n－i：<br>
-                                　　　若「清單第 j 項」<strong>大於</strong>「清單第 j＋1 項」：<br>
-                                　　　　temp ← 清單第 j 項<br>
-                                　　　　清單第 j 項 ← 清單第 j＋1 項<br>
-                                　　　　清單第 j＋1 項 ← temp<br>
-                                　　　　<strong>已交換 ← 1</strong>
-                            </li>
-                            <li>　2-3. 若 <strong>已交換 = 0</strong> → 清單已排好，<strong>停止外層迴圈</strong>。</li>
+                            <li><strong>外層（最多 n－1 輪）</strong>：將「<strong>i</strong>」從 <strong>1</strong> 開始；每一輪代表「最右邊已經鎖定的區塊再多固定一格」。</li>
+                            <li><strong>每一輪外層一開始</strong>：將「<strong>已交換</strong>」設為 <strong>0</strong>（先假設這輪還沒換過）。</li>
+                            <li><strong>先算出內層要比到哪裡</strong>：將「<strong>上限</strong>」設為「<strong>（清單「資料」的項目數）－（i）</strong>」（避免一直比到已經排好的最右端）。</li>
+                            <li><strong>內層（相鄰兩兩比）</strong>：將「<strong>j</strong>」設為 <strong>1</strong>，然後「<strong>重複執行直到（j）&gt;（上限）</strong>」：若「<strong>（清單「資料」的第（j）項）&gt;（清單「資料」的第（（j）＋（1））項）</strong>」，就用「<strong>temp</strong>」做三步驟交換，並把「<strong>已交換</strong>」設為 <strong>1</strong>；最後「<strong>將 j 增加 1</strong>」。</li>
+                            <li><strong>內層整輪結束後（提前停止）</strong>：如果「<strong>（已交換）= 0</strong>」，代表這一輪完全沒換過 → 清單已排好 → 可用「<strong>停止全部</strong>」或改寫外層「重複直到」條件來<strong>結束整個排序</strong>。</li>
                         </ol>
                     </div>
                     <div class="tips">
-                        <strong>為什麼內層迴圈到 n－i？</strong>第 i 輪結束後，最右邊的 i 個元素已鎖定，不需要再比，所以每輪比較範圍縮短一格。
+                        <strong>為什麼內層只到「項目數－i」？</strong>第 i 輪外層結束後，最右邊 i 個位置已經是「本輪最大的一批」排好了；下一輪就不需要再拿它們出來互相比，所以「上限」會愈來愈短。
                     </div>
                 </div>
                 <div class="section">
@@ -520,8 +584,8 @@
                         <h4>三種排序的提前停止能力比較</h4>
                         <ul>
                             <li><strong>選擇排序</strong>：<strong>不能</strong>提前停止外層迴圈，永遠要跑完 n－1 輪。</li>
-                            <li><strong>插入排序</strong>：<strong>內層迴圈</strong>可以提前停（key 找到位置就停），但外層仍要跑 n－1 輪。</li>
-                            <li><strong>氣泡排序</strong>：<strong>外層迴圈</strong>可以提前停（一整輪沒有交換就結束）——是三種中唯一能提前結束整個排序的。</li>
+                            <li><strong>插入排序</strong>：<strong>內層</strong>可以提前停（key 找到位置就停），但外層仍要跑 n－1 輪。</li>
+                            <li><strong>氣泡排序</strong>：<strong>外層</strong>可以提前停（一整輪「已交換仍為 0」就結束）——是三種中唯一能提前結束整個排序的。</li>
                         </ul>
                     </div>
                 </div>
@@ -530,26 +594,41 @@
 
         <!-- 五 -->
         <article class="chapter">
-            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-header">五、超短虛擬碼（Scratch 積木口語版）</div>
             <div class="chapter-content">
                 <div class="section">
-                    <div class="code-example">i 從 1 到 清單長度－1：
-    已交換 ← 0
-
-    j 從 1 到 清單長度－i：
-        若「清單第 j 項」 &gt; 「清單第 j+1 項」：
-            temp ← 清單第 j 項
-            清單第 j 項 ← 清單第 j+1 項
-            清單第 j+1 項 ← temp
-            已交換 ← 1
-
-    若 已交換 = 0：
-        停止（提前結束外層迴圈）</div>
-                    <div class="warning">
-                        <strong>Scratch 的內層迴圈範圍：</strong>每輪的比較上限是「清單長度－i」，需要用變數計算（例如先算出 <strong>上限 ← 清單長度－i</strong>，再讓 j 從 1 跑到上限），避免每次都比到已鎖定的位置。
+                    <p>以下用「由上往下接」濃縮成一段（清單名稱以「資料」為例；提前停止用「內層跑完後檢查已交換」較直覺）：</p>
+                    <div class="scratch-block-stack" aria-label="氣泡排序超短流程 Scratch 口語">
+                        <div class="sb-hat">當綠旗被點擊（開始排序）</div>
+                        <div class="sb-c">將「i」設為 1</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（（清單「資料」的項目數）-（1）））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「已交換」設為 0</div>
+                            <div class="sb-c">將「上限」設為（（清單「資料」的項目數）-（i））</div>
+                            <div class="sb-c">將「j」設為 1</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&gt;（上限））</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-inner">如果【（清單「資料」的第（j）項）&gt;（清單「資料」的第（（j）+（1））項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「temp」設為（清單「資料」的第（j）項）</div>
+                                    <div class="sb-c">將（清單「資料」的第（j）項）替換為（清單「資料」的第（（j）+（1））項）</div>
+                                    <div class="sb-c">將（清單「資料」的第（（j）+（1））項）替換為（temp）</div>
+                                    <div class="sb-c">將「已交換」設為 1</div>
+                                </div>
+                                <div class="sb-c">將「j」增加 1</div>
+                            </div>
+                            <div class="sb-c sb-inner">如果【（已交換）= 0】那麼</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-control">停止全部（提早結束：這輪完全沒交換）</div>
+                            </div>
+                            <div class="sb-c">將「i」增加 1</div>
+                        </div>
                     </div>
-                    <div name="tips" class="tips">
-                        <strong>提前停止的 Scratch 寫法：</strong>外層迴圈改用「重複直到」，條件為 <code>(i &gt; 清單長度－1) 或 (已交換 = 0)</code>；或在內層迴圈結束後用「如果…那麼停止全部」積木。兩種都可以，以課堂教學為準。
+                    <div class="warning">
+                        <strong>Scratch 的內層範圍：</strong>請先把「<strong>上限</strong> ←（清單「資料」的項目數）－（i）」算出來，再讓「j」從 1 做到「上限」，避免每一輪都比到已經鎖定的右端區塊。
+                    </div>
+                    <div class="tips">
+                        <strong>提前停止的接法：</strong>上面示範的是「內層整輪跑完 → 如果（已交換）= 0 → 停止全部」；你也可以改成外層用「重複直到」一次包進更多條件，以課堂教學為準。<strong>請勿</strong>把「（已交換）= 0」直接寫在外層一開始就判斷，否則內層還沒比就會誤判結束。
                     </div>
                 </div>
             </div>
@@ -592,19 +671,39 @@
                     </ul>
                 </div>
                 <div class="section">
-                    <h3>積木怎麼接（概念）</h3>
-                    <ol>
-                        <li>外層迴圈：讓 <strong>i</strong> 從 1 跑到「資料長度－1」。</li>
-                        <li>外層迴圈開始時：<strong>已交換 ← 0</strong>；<strong>上限 ← 資料長度－i</strong>。</li>
-                        <li>內層迴圈：讓 <strong>j</strong> 從 1 跑到「上限」。
-                            <ul>
-                                <li>若「資料第 j 項」&gt;「資料第 j＋1 項」，執行三步驟交換（temp），並把 <strong>已交換 設為 1</strong>。</li>
-                            </ul>
-                        </li>
-                        <li>內層迴圈結束後，若 <strong>已交換 = 0</strong>，停止外層迴圈。</li>
-                    </ol>
+                    <h3>Scratch 積木口語（氣泡排序主流程）</h3>
+                    <p>外層輪次 <strong>i</strong>、內層比較位置 <strong>j</strong>、內層上限 <strong>上限</strong>，皆表示「清單的第幾<strong>項</strong>」或「要比到第幾<strong>項</strong>為止」。</p>
+                    <div class="scratch-index-note">
+                        <strong>重要：</strong>內層比較的是<strong>第（j）項</strong>與<strong>第（j＋1）項</strong>，因此 j 最多到「上限」，且「上限」＝（項目數）－（i），避免用到不存在的「第 0 項」或越界。一般語言若用 <code>for (j=0; j&lt;n-i-1; j++)</code>，請改成「項次從 1 開始」再接到 Scratch。
+                    </div>
+                    <div class="scratch-block-stack" aria-label="Scratch 氣泡排序積木描述">
+                        <div class="sb-hat">當綠旗被點擊</div>
+                        <div class="sb-c">將「i」設為 1</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（（清單「資料」的項目數）-（1）））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「已交換」設為 0</div>
+                            <div class="sb-c">將「上限」設為（（清單「資料」的項目數）-（i））</div>
+                            <div class="sb-c">將「j」設為 1</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&gt;（上限））</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-inner">如果【（清單「資料」的第（j）項）&gt;（清單「資料」的第（（j）+（1））項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「temp」設為（清單「資料」的第（j）項）</div>
+                                    <div class="sb-c">將（清單「資料」的第（j）項）替換為（清單「資料」的第（（j）+（1））項）</div>
+                                    <div class="sb-c">將（清單「資料」的第（（j）+（1））項）替換為（temp）</div>
+                                    <div class="sb-c">將「已交換」設為 1</div>
+                                </div>
+                                <div class="sb-c">將「j」增加 1</div>
+                            </div>
+                            <div class="sb-c sb-inner">如果【（已交換）= 0】那麼</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-control">停止全部（提早結束排序：這一輪完全沒交換，代表已排好）</div>
+                            </div>
+                            <div class="sb-c">將「i」增加 1</div>
+                        </div>
+                    </div>
                     <div class="tips">
-                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出「已交換」的值和當下清單，確認最大值是否正確浮到右端，以及提前停止是否在預期的輪次觸發。
+                        <strong>除錯小技巧：</strong>每輪外層結束後讓角色說出「已交換」的值和當下清單，確認最大值是否正確浮到右端，以及提前停止是否在預期的輪次觸發。
                     </div>
                 </div>
                 <div class="section">

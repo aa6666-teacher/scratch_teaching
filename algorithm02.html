@@ -202,6 +202,72 @@
             border: 1px solid #dee2e6;
         }
 
+        /* Scratch 積木式描述（清單從第 1 項起，非一般語言的索引 0） */
+        .scratch-index-note {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 12px 16px;
+            margin: 12px 0 16px;
+            border-radius: 8px;
+            font-size: 0.98em;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack {
+            background: #faf8ff;
+            border: 2px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 16px 16px;
+            margin: 14px 0;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack .sb-hat {
+            background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 100%);
+            color: #4a3728;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 22px 22px 10px 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .scratch-block-stack .sb-c {
+            background: #ff9800;
+            color: #fff;
+            margin: 6px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #e65100;
+        }
+
+        .scratch-block-stack .sb-c.sb-control {
+            background: #ab47bc;
+            border-color: #6a1b9a;
+        }
+
+        .scratch-block-stack .sb-c.sb-inner {
+            background: #42a5f5;
+            border-color: #1565c0;
+        }
+
+        .scratch-block-stack .sb-nest {
+            margin: 4px 0 8px 16px;
+            padding: 6px 0 6px 12px;
+            border-left: 4px dashed #9575cd;
+        }
+
+        .scratch-block-stack .sb-c.sb-sensing {
+            background: #4caf50;
+            border-color: #2e7d32;
+        }
+
+        .scratch-block-stack .sb-c.sb-looks {
+            background: #00bcd4;
+            border-color: #00838f;
+        }
+
         .footer {
             text-align: center;
             padding: 24px;
@@ -500,17 +566,49 @@ R ← 清單長度
                 </div>
                 
                 <div class="section">
-                    <h3>積木怎麼接（概念）</h3>
-                    <ol>
-                        <li>綠旗後，把 <strong>L 設為 1</strong>，<strong>R 設為清單長度</strong>，結果位置設為 0。</li>
-                        <li>用「<strong>重複直到</strong> <code>L &gt; R</code>」包住主邏輯（或用「重複執行」搭配「若 L &gt; R 就停止全部」——以你們課堂教學為準）。</li>
-                        <li>在迴圈內：依老師規定計算 <strong>M</strong>；讀取「清單的第 M 項」和目標比大小。</li>
-                        <li>相等 → 結果位置 = M，並用「停止這個腳本」或旗標讓迴圈不再繼續。</li>
-                        <li>大於 → <code>R = M - 1</code>；小於 → <code>L = M + 1</code>。</li>
-                        <li>迴圈結束後，若結果位置仍為 0，角色說「沒有」。</li>
-                    </ol>
+                    <h3>Scratch 積木口語（主流程）</h3>
+                    <p>下面用「積木會怎麼講」接出二元搜尋；算 <strong>M</strong> 時請全班統一用同一種「中點」規則（無條件捨去或四捨五入），並用<strong>運算</strong>積木組出來。</p>
+                    <div class="scratch-index-note">
+                        <strong>重要：</strong>本講義的 <strong>L、R、M</strong> 都是「清單的第幾<strong>項</strong>」，從 <strong>1</strong> 開始；與 Scratch 清單積木<strong>「第（）項」</strong>一致。一般語言若習慣陣列從 0 開始，請勿直接套進 Scratch。
+                    </div>
+                    <div class="scratch-block-stack" aria-label="Scratch 二元搜尋積木描述">
+                        <div class="sb-hat">當綠旗被點擊</div>
+                        <div class="sb-c">（選）確認清單「資料」已由小到大排好</div>
+                        <div class="sb-c sb-sensing">詢問「要找哪個數？」並等待</div>
+                        <div class="sb-c">將「目標」設為（答案）<span style="opacity:.95;font-size:.92em;">（必要時轉成數字）</span></div>
+                        <div class="sb-c">將「L」設為 1</div>
+                        <div class="sb-c">將「R」設為（清單「資料」的項目數）</div>
+                        <div class="sb-c">將「結果位置」設為 0</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（L）&gt;（R），或（結果位置）≠ 0）</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「M」設為（用 L 與 R 算出中點項次，全班同一規則）</div>
+                            <div class="sb-c sb-inner">如果【（清單「資料」的第（M）項）=（目標）】那麼</div>
+                            <div class="sb-nest">
+                                <div class="sb-c">將「結果位置」設為（M）</div>
+                            </div>
+                            <div class="sb-c sb-inner">否則</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-inner">如果【（清單「資料」的第（M）項）&gt;（目標）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「R」設為（（M）-（1））</div>
+                                </div>
+                                <div class="sb-c sb-inner">否則</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「L」設為（（M）+（1））</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sb-c sb-inner">如果【（結果位置）= 0】那麼</div>
+                        <div class="sb-nest">
+                            <div class="sb-c sb-looks">說出「沒有」持續 2 秒</div>
+                        </div>
+                        <div class="sb-c sb-inner">否則</div>
+                        <div class="sb-nest">
+                            <div class="sb-c sb-looks">說出（字串「在第」和（結果位置）和「項找到」）持續 2 秒</div>
+                        </div>
+                    </div>
                     <div class="tips">
-                        <strong>除錯小技巧：</strong>每輪讓角色說出 L、R、M 與「第 M 項」，就像把圖 2～4 在舞臺上「播一遍」，很容易看出哪一步寫錯。
+                        <strong>除錯小技巧：</strong>每輪讓角色說出 L、R、M 與「清單的第（M）項」，就像把圖 2～4 在舞臺上「播一遍」，很容易看出哪一步寫錯。
                     </div>
                 </div>
                 <div class="section">

@@ -202,6 +202,72 @@
             border: 1px solid #dee2e6;
         }
 
+        /* Scratch 積木式描述（清單從第 1 項起，非一般語言的索引 0） */
+        .scratch-index-note {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 12px 16px;
+            margin: 12px 0 16px;
+            border-radius: 8px;
+            font-size: 0.98em;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack {
+            background: #faf8ff;
+            border: 2px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 16px 16px;
+            margin: 14px 0;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .scratch-block-stack .sb-hat {
+            background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 100%);
+            color: #4a3728;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 22px 22px 10px 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .scratch-block-stack .sb-c {
+            background: #ff9800;
+            color: #fff;
+            margin: 6px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #e65100;
+        }
+
+        .scratch-block-stack .sb-c.sb-control {
+            background: #ab47bc;
+            border-color: #6a1b9a;
+        }
+
+        .scratch-block-stack .sb-c.sb-inner {
+            background: #42a5f5;
+            border-color: #1565c0;
+        }
+
+        .scratch-block-stack .sb-nest {
+            margin: 4px 0 8px 16px;
+            padding: 6px 0 6px 12px;
+            border-left: 4px dashed #9575cd;
+        }
+
+        .scratch-block-stack .sb-c.sb-sensing {
+            background: #4caf50;
+            border-color: #2e7d32;
+        }
+
+        .scratch-block-stack .sb-c.sb-looks {
+            background: #00bcd4;
+            border-color: #00838f;
+        }
+
         .footer {
             text-align: center;
             padding: 24px;
@@ -530,41 +596,44 @@
             <div class="chapter-header">四、流程步驟與變數說明</div>
             <div class="chapter-content">
                 <div class="section">
+                    <div class="scratch-index-note">
+                        <strong>Scratch 讀法：</strong>下面用「將…設為」「清單的第（　）項」「清單的項目數」來說明；<strong>第 1 項就是第一個數字</strong>（沒有第 0 項）。若用 n 表示清單裡有幾個數，在 Scratch 裡就是<strong>（清單「資料」的項目數）</strong>。
+                    </div>
                     <div class="step-container">
-                        <span class="step-title">選擇排序流程（由小到大）</span>
-                        <p>清單長度為 n，位置編號 1 到 n。</p>
+                        <span class="step-title">選擇排序流程（由小到大 · 積木口語）</span>
+                        <p>想像成「外層決定這一輪要排哪一格，內層掃描右邊還沒排好的區域，最後再決定要不要交換」：</p>
                         <ol>
-                            <li>讓 <strong>i</strong> 從 1 跑到 n－1（共 n－1 輪）：</li>
-                            <li>　2-1. 先設 <strong>minPos = i</strong>（假設本輪最小值在第 i 項）。</li>
-                            <li>　2-2. 讓 <strong>j</strong> 從 i＋1 跑到 n：若「第 j 項」小於「第 minPos 項」，就更新 <strong>minPos = j</strong>。</li>
-                            <li>　2-3. 內層迴圈結束後，若 <strong>minPos ≠ i</strong>，把第 i 項和第 minPos 項<strong>互換</strong>。</li>
-                            <li>i 跑完後，排序結束。</li>
+                            <li><strong>外層（共 n－1 輪）</strong>：將變數「<strong>i</strong>」從 <strong>1</strong> 開始，做到「<strong>（清單「資料」的項目數）－（1）</strong>」為止（可用「重複執行直到」搭配「將 i 增加 1」，或「計次迴圈」——以課堂為準）。</li>
+                            <li><strong>每輪一開始</strong>：將「<strong>minPos</strong>」設為「<strong>i</strong>」（先假設：本輪最小值在<strong>清單的第（i）項</strong>）。</li>
+                            <li><strong>內層（掃描未排序區）</strong>：將「<strong>j</strong>」設為「<strong>（i）＋（1）</strong>」，然後「<strong>重複執行直到（j）&gt;（清單「資料」的項目數）</strong>」：裡面用「<strong>如果【（清單「資料」的第（j）項）&lt;（清單「資料」的第（minPos）項）】那麼</strong>」就把「<strong>minPos</strong>」設為「<strong>（j）</strong>」；最後「<strong>將 j 增加 1</strong>」。</li>
+                            <li><strong>內層結束後</strong>：用「<strong>如果【（minPos）≠（i）】那麼</strong>」才做<strong>交換</strong>——用變數「<strong>temp</strong>」先把其中一個值存起來，再依序「把第（i）項改成…」「把第（minPos）項改成…」（Scratch 沒有「對調兩項」一鍵完成）。</li>
+                            <li>外層全部跑完，清單就會由小到大排好。</li>
                         </ol>
                     </div>
                     <div class="tips">
-                        <strong>關鍵：</strong>用 <strong>minPos</strong> 記住「目前找到的最小值的位置」，等整個未排序區掃完後再<strong>一次交換</strong>。每輪最多只換一次，這和每比一次就換一次的做法（氣泡排序）不同。
+                        <strong>關鍵：</strong>「<strong>minPos</strong>」記的是<strong>第幾項</strong>（不是數值本身）；要等內層整段掃完，才<strong>最多交換一次</strong>。這和氣泡排序「常常一路比、一路換」的感覺不一樣。
                     </div>
                 </div>
                 <div class="section">
-                    <h3>用到的變數</h3>
+                    <h3>Scratch 變數在做什麼？</h3>
                     <table class="data-table">
                         <thead>
-                            <tr><th>變數名</th><th>用途</th></tr>
+                            <tr><th>變數名</th><th>用途（對應積木時怎麼想）</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><strong>i</strong></td><td>外層迴圈，代表「本輪排到第幾個位置」（已排序區的下一格）</td></tr>
-                            <tr><td><strong>j</strong></td><td>內層迴圈，掃描未排序區用的指標</td></tr>
-                            <tr><td><strong>minPos</strong></td><td>本輪目前找到的最小值所在的位置編號</td></tr>
-                            <tr><td><strong>temp</strong></td><td>交換時暫時存值用（Scratch 必須用到）</td></tr>
+                            <tr><td><strong>i</strong></td><td>外層輪次：代表「這一輪要排定<strong>清單的第（i）項</strong>」這個位置（左邊已排好的區域會一直變長）。</td></tr>
+                            <tr><td><strong>j</strong></td><td>內層掃描：代表「現在正在看<strong>清單的第（j）項</strong>」，從「第（i＋1）項」一路看到最後一項。</td></tr>
+                            <tr><td><strong>minPos</strong></td><td>本輪目前「最小值」出現在<strong>第幾項</strong>（要搭配「清單的第（minPos）項」來讀值）。</td></tr>
+                            <tr><td><strong>temp</strong></td><td>交換時的<strong>暫存盒</strong>：先把某一項的值「複製」進 temp，再用「替換清單第（　）項」兩次完成交換。</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="section">
                     <h3>比較次數的規律</h3>
-                    <p>每輪都要把整個未排序區掃完，才能確認最小值在哪：</p>
+                    <p>每一輪外層都要把「右邊未排序區」整段掃完，才能確定最小值在哪，所以內層「如果…比大小」的次數有固定規律（令 n＝清單項目數）：</p>
                     <table class="data-table">
                         <thead>
-                            <tr><th>第幾輪（i）</th><th>未排序區大小</th><th>這輪比幾次</th></tr>
+                            <tr><th>第幾輪（i）</th><th>未排序區大小</th><th>這輪大約要比幾次</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>1</td><td>n 個</td><td>n－1 次</td></tr>
@@ -576,11 +645,11 @@
                     </table>
                     <p>合計：<strong>(n－1) + (n－2) + … + 1 = n × (n－1) ÷ 2</strong> 次</p>
                     <div class="success">
-                        <strong>特點：</strong>不管原始資料是已排好還是完全倒序，比較次數<strong>永遠一樣多</strong>。因為每輪都要掃完整個未排序區才能確認最小值。
+                        <strong>特點：</strong>不管原始資料是已排好還是完全倒序，因為「每輪都要掃完整段未排序區」，所以<strong>比較次數永遠一樣多</strong>。
                     </div>
                     <div class="concept-box">
                         <h4>交換次數呢？</h4>
-                        <p>每輪<strong>最多交換一次</strong>（只有 minPos ≠ i 時才換），共 n－1 輪，所以<strong>最多 n－1 次交換</strong>。若最小值剛好已在該輪起點，就<strong>不用換</strong>（0 次）。</p>
+                        <p>每一輪外層<strong>最多只做一次交換</strong>（只有「（minPos）≠（i）」才需要換），外層共 n－1 輪，所以<strong>最多 n－1 次交換</strong>。若剛好最小值已在第（i）項，這輪就<strong>不必換</strong>（0 次）。</p>
                     </div>
                 </div>
             </div>
@@ -588,22 +657,36 @@
 
         <!-- 五 -->
         <article class="chapter">
-            <div class="chapter-header">五、超短虛擬碼（對照 Scratch）</div>
+            <div class="chapter-header">五、超短虛擬碼（Scratch 積木口語版）</div>
             <div class="chapter-content">
                 <div class="section">
-                    <div class="code-example">i 從 1 到 清單長度－1：
-    minPos ← i              （假設本輪最小在第 i 項）
-
-    j 從 i＋1 到 清單長度：
-        若「清單第 j 項」 &lt; 「清單第 minPos 項」：
-            minPos ← j     （更新最小值位置）
-
-    若 minPos ≠ i：          （真的需要換才換）
-        temp ← 清單第 i 項
-        清單第 i 項 ← 清單第 minPos 項
-        清單第 minPos 項 ← temp</div>
+                    <p>以下用「由上往下接」的方式，對應上一節的流程（清單名稱以「資料」為例）：</p>
+                    <div class="scratch-block-stack" aria-label="選擇排序超短流程 Scratch 口語">
+                        <div class="sb-hat">當綠旗被點擊（開始排序）</div>
+                        <div class="sb-c">將「i」設為 1</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（（清單「資料」的項目數）-（1）））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「minPos」設為（i）</div>
+                            <div class="sb-c">將「j」設為（（i）+（1））</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&gt;（清單「資料」的項目數））</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-inner">如果【（清單「資料」的第（j）項）&lt;（清單「資料」的第（minPos）項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「minPos」設為（j）</div>
+                                </div>
+                                <div class="sb-c">將「j」增加 1</div>
+                            </div>
+                            <div class="sb-c sb-inner">如果【（minPos）≠（i）】那麼</div>
+                            <div class="sb-nest">
+                                <div class="sb-c">將「temp」設為（清單「資料」的第（i）項）</div>
+                                <div class="sb-c">將（清單「資料」的第（i）項）替換為（清單「資料」的第（minPos）項）</div>
+                                <div class="sb-c">將（清單「資料」的第（minPos）項）替換為（temp）</div>
+                            </div>
+                            <div class="sb-c">將「i」增加 1</div>
+                        </div>
+                    </div>
                     <div class="warning">
-                        <strong>Scratch 交換兩個清單項目的方法：</strong>Scratch 沒有直接「對調兩項」的積木，一定要用 <strong>temp</strong> 暫存其中一個值再依序替換，否則其中一個值會被蓋掉消失。
+                        <strong>Scratch 交換兩個清單項目的方法：</strong>沒有「對調兩項」單一積木，一定要先用「<strong>temp</strong>」接住其中一個值，再用「替換清單第（　）項」兩次完成；否則其中一個數字會被蓋掉不見。
                     </div>
                 </div>
             </div>
@@ -646,21 +729,37 @@
                     </ul>
                 </div>
                 <div class="section">
-                    <h3>積木怎麼接（概念）</h3>
-                    <ol>
-                        <li>外層迴圈：讓 <strong>i</strong> 從 1 跑到「資料長度－1」（計次迴圈）。</li>
-                        <li>外層迴圈一開始，把 <strong>minPos 設為 i</strong>。</li>
-                        <li>內層迴圈：讓 <strong>j</strong> 從 i＋1 跑到「資料長度」；每次判斷「資料第 j 項」是否小於「資料第 minPos 項」，若是就把 <strong>minPos 設為 j</strong>。</li>
-                        <li>內層迴圈結束後，若 <strong>minPos ≠ i</strong>，執行三步驟交換：
-                            <ul>
-                                <li>temp ← 資料第 i 項</li>
-                                <li>把「資料第 i 項」替換為「資料第 minPos 項」</li>
-                                <li>把「資料第 minPos 項」替換為 temp</li>
-                            </ul>
-                        </li>
-                    </ol>
+                    <h3>Scratch 積木口語（選擇排序主流程）</h3>
+                    <p>下面用「積木會怎麼講」描述雙層迴圈與交換；變數 <strong>i、j、minPos</strong> 都表示「清單的第幾<strong>項</strong>」，請與<strong>清單「資料」的第（　）項</strong>積木對齊（從 1 開始）。</p>
+                    <div class="scratch-index-note">
+                        <strong>重要：</strong>Scratch 清單沒有「第 0 項」。外層 <strong>i</strong> 從 <strong>1</strong> 跑到「項目數－1」；內層 <strong>j</strong> 從 <strong>i＋1</strong> 跑到「項目數」。一般語言若習慣 <code>for (i=0; i&lt;n-1; i++)</code>，請改成「項次」思維再接到 Scratch。
+                    </div>
+                    <div class="scratch-block-stack" aria-label="Scratch 選擇排序積木描述">
+                        <div class="sb-hat">當綠旗被點擊</div>
+                        <div class="sb-c">將「i」設為 1</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（（清單「資料」的項目數）-（1）））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「minPos」設為（i）</div>
+                            <div class="sb-c">將「j」設為（（i）+（1））</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&gt;（清單「資料」的項目數））</div>
+                            <div class="sb-nest">
+                                <div class="sb-c sb-inner">如果【（清單「資料」的第（j）項）&lt;（清單「資料」的第（minPos）項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「minPos」設為（j）</div>
+                                </div>
+                                <div class="sb-c">將「j」增加 1</div>
+                            </div>
+                            <div class="sb-c sb-inner">如果【（minPos）≠（i）】那麼</div>
+                            <div class="sb-nest">
+                                <div class="sb-c">將「temp」設為（清單「資料」的第（i）項）</div>
+                                <div class="sb-c">將（清單「資料」的第（i）項）替換為（清單「資料」的第（minPos）項）</div>
+                                <div class="sb-c">將（清單「資料」的第（minPos）項）替換為（temp）</div>
+                            </div>
+                            <div class="sb-c">將「i」增加 1</div>
+                        </div>
+                    </div>
                     <div class="tips">
-                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出當下清單內容，確認值有正確移動。也可以觀察「已排序區」是否從左邊一個個增長。
+                        <strong>除錯小技巧：</strong>每輪外層結束後讓角色說出當下清單內容，確認值有正確移動。也可以觀察「已排序區」是否從左邊一個個增長。
                     </div>
                 </div>
                 <div class="section">
