@@ -544,18 +544,21 @@
             <div class="chapter-content">
                 <div class="section">
                     <div class="scratch-index-note">
-                        <strong>Scratch 讀法：</strong>下面用「將…設為」「清單的第（　）項」「重複執行直到」來說明。<strong>清單從第 1 項開始</strong>；Scratch 的「第（　）項」通常<strong>不能直接塞算式</strong>，所以右移時常用另一個變數「<strong>j1</strong>」先存「（j）＋（1）」，再拿去當「第（j1）項」。
+                        <strong>Scratch 讀法：</strong>下面用「將…設為」「清單的第（　）項」「重複執行直到」來說明。<strong>清單從第 1 項開始</strong>。課堂 Scratch 範例用變數「<strong>current</strong>」記住「正在往左插的那一項」目前在第幾格；若左邊鄰居比較大，就用 <strong>temp</strong> 交換兩格，再把 <strong>current</strong> 更新成 <strong>j</strong>。
                     </div>
                     <div class="step-container">
-                        <span class="step-title">插入排序流程（由小到大 · 積木口語）</span>
-                        <p>想像成「從第 2 項開始，一個一個拿起來（key），往左邊比；比不過就往右挪一格，最後把 key 塞回空隙」：</p>
+                        <span class="step-title">插入排序流程（由小到大 · 積木口語 · 與課堂範例相同）</span>
+                        <p>想像成「從第 2 項開始，每一輪把第 i 項當成要插入的元素，往左一個一個比；若左邊更大就<strong>交換</strong>，並把 current 移到左邊那一格」：</p>
                         <ol>
-                            <li><strong>外層（共 n－1 輪）</strong>：將「<strong>i</strong>」從 <strong>2</strong> 開始，一路做到「<strong>（清單「資料」的項目數）</strong>」為止（可用「重複執行直到（i）&gt;（清單「資料」的項目數）」搭配「將 i 增加 1」）。</li>
-                            <li><strong>每輪一開始（拿起 key）</strong>：將「<strong>temp</strong>」設為「<strong>（清單「資料」的第（i）項）</strong>」；再把「<strong>j</strong>」設為「<strong>（i）－（1）</strong>」（從左邊鄰居開始比）。</li>
-                            <li><strong>內層（往左找插入點、順便右移）</strong>：用「<strong>重複執行直到</strong>」做出「還能往左比、而且左邊比 key 大」的感覺——停止條件要寫成 Scratch 好接的版本：<strong>（j）&lt;（1）</strong>，或<strong>不是</strong>「（清單「資料」的第（j）項）&gt;（temp）」。</li>
-                            <li><strong>內層迴圈裡每一次</strong>：先將「<strong>j1</strong>」設為「<strong>（j）＋（1）</strong>」，再把「<strong>清單的第（j1）項</strong>」替換成「<strong>清單的第（j）項</strong>」（右移一格），最後將「<strong>j</strong>」設為「<strong>（j）－（1）</strong>」。</li>
-                            <li><strong>內層結束後（插入 key）</strong>：再把「<strong>j1</strong>」設為「<strong>（j）＋（1）</strong>」，然後把「<strong>清單的第（j1）項</strong>」替換成「<strong>（temp）</strong>」。</li>
+                            <li><strong>外層（共 n－1 輪）</strong>：將「<strong>i</strong>」從 <strong>2</strong> 開始，「<strong>重複執行直到（i）&gt;（清單「data」的項目數）</strong>」，每輪結束「<strong>將 i 增加 1</strong>」。</li>
+                            <li><strong>每輪一開始</strong>：將「<strong>current</strong>」設為「<strong>（i）</strong>」；將「<strong>j</strong>」設為「<strong>（i）－（1）</strong>」（從左邊鄰居開始比）。</li>
+                            <li><strong>內層（往左比、必要時交換）</strong>：「<strong>重複執行直到（j）&lt;（1）</strong>」——還能往左比就繼續。</li>
+                            <li><strong>內層迴圈裡</strong>：若「<strong>（清單「data」的第（current）項）&lt;（清單「data」的第（j）項）</strong>」→ 用 temp 交換第（current）項與第（j）項，並將「<strong>current</strong>」設為「<strong>（j）</strong>」；最後「<strong>將 j 增加（-1）</strong>」（往左移一格）。</li>
+                            <li>外層全部跑完，清單就由小到大排好。</li>
                         </ol>
+                    </div>
+                    <div class="tips">
+                        <strong>和第二節「右移」寫法的關係：</strong>課本圖解用「暫存 key → 右移 → 插入」幫助理解；Scratch 範例則用「<strong>交換</strong>」把元素一路換到左邊正確位置，效果相同，積木較好接（不必另算 j＋1）。
                     </div>
                 </div>
                 <div class="section">
@@ -583,8 +586,8 @@
                         <strong>比選擇排序更靈活：</strong>選擇排序不管原始順序如何，比較次數永遠是 n×(n－1)÷2。插入排序在最好情況下只需 n－1 次——資料越接近排好，內層越早停，整體越快！
                     </div>
                     <div class="concept-box">
-                        <h4>移動（右移）次數</h4>
-                        <p>內層每次「真的需要右移」時，就會做一次「把第（j1）項設成第（j）項」的替換；因此移動次數通常跟比較次數同一個量級（有時差 1 也正常）。最好情況右移 0 次；最壞情況移動次數同樣可達 n×(n－1)÷2 次。</p>
+                        <h4>交換次數（Scratch 版）</h4>
+                        <p>課堂 Scratch 每當「第（current）項 &lt; 第（j）項」就交換一次；交換次數通常跟比較次數同一個量級。最好情況（已排好）內層幾乎不交換；最壞情況交換次數同樣可達 n×(n－1)÷2 次。</p>
                     </div>
                 </div>
             </div>
@@ -595,30 +598,42 @@
             <div class="chapter-header">五、超短虛擬碼（Scratch 積木口語版）</div>
             <div class="chapter-content">
                 <div class="section">
-                    <p>以下用「由上往下接」濃縮成一段（清單名稱以「資料」為例）：</p>
-                    <div class="scratch-block-stack" aria-label="插入排序超短流程 Scratch 口語">
-                        <div class="sb-hat">當綠旗被點擊（開始排序）</div>
-                        <div class="sb-c">將「i」設為 2</div>
-                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（清單「資料」的項目數））</div>
+                    <p>以下對應課堂 Scratch 範例：綠旗先產生亂數清單，再呼叫自訂積木「<strong>insertSort</strong>」（清單名稱以「<strong>data</strong>」為例）：</p>
+                    <div class="scratch-block-stack" aria-label="綠旗與 insertSort 呼叫">
+                        <div class="sb-hat">當綠旗被點擊</div>
+                        <div class="sb-c">刪除（清單「data」）的全部</div>
+                        <div class="sb-c sb-control">重複執行 30 次</div>
                         <div class="sb-nest">
-                            <div class="sb-c">將「temp」設為（清單「資料」的第（i）項）</div>
+                            <div class="sb-c">加入（隨機取數 1 到 50）到（清單「data」）</div>
+                        </div>
+                        <div class="sb-c" style="background:#ab47bc;border-color:#6a1b9a;">insertSort</div>
+                    </div>
+                    <div class="scratch-block-stack" aria-label="定義 insertSort 積木">
+                        <div class="sb-hat" style="background:linear-gradient(180deg,#ce93d8 0%,#ab47bc 100%);color:#fff;">定義 insertSort</div>
+                        <div class="sb-c">將「i」設為 2</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（清單「data」的項目數））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「current」設為（i）</div>
                             <div class="sb-c">將「j」設為（（i）-（1））</div>
-                            <div class="sb-c sb-control">重複執行直到（條件：（j）&lt;（1），或【NOT（（清單「資料」的第（j）項）&gt;（temp））】）</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&lt;（1））</div>
                             <div class="sb-nest">
-                                <div class="sb-c">將「j1」設為（（j）+（1））</div>
-                                <div class="sb-c">將（清單「資料」的第（j1）項）替換為（清單「資料」的第（j）項）</div>
-                                <div class="sb-c">將「j」設為（（j）-（1））</div>
+                                <div class="sb-c sb-inner">如果【（清單「data」的第（current）項）&lt;（清單「data」的第（j）項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「temp」設為（清單「data」的第（current）項）</div>
+                                    <div class="sb-c">將（清單「data」的第（current）項）替換為（清單「data」的第（j）項）</div>
+                                    <div class="sb-c">將（清單「data」的第（j）項）替換為（temp）</div>
+                                    <div class="sb-c">將「current」設為（j）</div>
+                                </div>
+                                <div class="sb-c">將「j」增加（-1）</div>
                             </div>
-                            <div class="sb-c">將「j1」設為（（j）+（1））</div>
-                            <div class="sb-c">將（清單「資料」的第（j1）項）替換為（temp）</div>
                             <div class="sb-c">將「i」增加 1</div>
                         </div>
                     </div>
                     <div class="warning">
-                        <strong>Scratch「重複直到」要接「停止條件」：</strong>內層若用白話是「當 j≥1 且第（j）項&gt;temp 就繼續右移」，那麼「重複直到」就要寫成<strong>反過來</strong>：<strong>（j）&lt;（1）</strong>，或<strong>NOT（（第（j）項）&gt;（temp））</strong>；再用「或」積木把兩者接起來。
+                        <strong>Scratch 交換兩個清單項目：</strong>一定要先用「<strong>temp</strong>」接住其中一個值，再依序替換第（current）項、第（j）項；否則其中一個數字會被蓋掉。
                     </div>
                     <div class="tips">
-                        <strong>索引技巧（j1）：</strong>因為「清單的第（　）項」不好直接塞「j+1」，所以先把「（j）＋（1）」存進「<strong>j1</strong>」，後面一律用「第（j1）項」去替換，最不容易寫錯。
+                        <strong>current 在做什麼？</strong>每輪外層一開始 current＝i；內層每交換一次，就把 current 改成 j，代表「要插入的那個數」目前被換到哪一格，下一輪繼續跟更左邊比。
                     </div>
                 </div>
             </div>
@@ -655,37 +670,64 @@
                 <div class="section">
                     <h3>準備</h3>
                     <ul>
-                        <li>建立<strong>清單</strong>（例如命名為「資料」），手動輸入數字。</li>
-                        <li>準備變數：<strong>i</strong>（外層迴圈）、<strong>j</strong>（往左比較的指標）、<strong>j1</strong>（= j＋1，清單索引用）、<strong>temp</strong>（暫存 key）。</li>
-                        <li>選做：加「比較次數」和「移動次數」變數，驗算最好／最壞情況是否符合公式。</li>
+                        <li>建立<strong>清單</strong>（範例命名為「<strong>data</strong>」）。</li>
+                        <li>在「自訂積木」新增<strong>insertSort</strong>（無參數），排序邏輯寫在「定義 insertSort」裡。</li>
+                        <li>準備變數：<strong>i</strong>（外層）、<strong>j</strong>（往左比的指標）、<strong>current</strong>（正在插入的元素目前在第幾項）、<strong>temp</strong>（交換暫存）。</li>
+                        <li>綠旗腳本：先「刪除 data 的全部」，再「重複 30 次」加入 1～50 的隨機數，最後呼叫 <strong>insertSort</strong>。</li>
+                        <li>選做：加「比較次數」和「交換次數」變數，驗算最好／最壞情況是否符合公式。</li>
                     </ul>
                 </div>
                 <div class="section">
-                    <h3>Scratch 積木口語（插入排序主流程）</h3>
-                    <p>外層從第 <strong>2 項</strong>開始把 key 往左插；<strong>i、j、j1</strong> 都表示「清單的第幾<strong>項</strong>」。Scratch 的「第（　）項」不能直接塞算式，所以用 <strong>j1＝j＋1</strong> 先存好再當索引。</p>
+                    <h3>Scratch 積木口語（與課堂 insertSort 範例相同）</h3>
+                    <p>外層從第 <strong>2 項</strong>開始；內層用 <strong>current</strong> 追蹤「要插入的數」目前位置，往左比時若左邊較大就<strong>交換</strong>並把 current 移到 j。</p>
                     <div class="scratch-index-note">
-                        <strong>重要：</strong>清單從<strong>第 1 項</strong>算起；外層 <strong>i</strong> 從 <strong>2</strong> 跑到「項目數」。一般語言若寫成從索引 1 開始的 for 迴圈，請注意：Scratch 沒有第 0 項，<strong>不要</strong>把 Python 的 <code>range(0, n)</code> 直接當成「第幾項」去用。
+                        <strong>重要：</strong>清單從<strong>第 1 項</strong>算起；外層 <strong>i</strong> 從 <strong>2</strong> 開始，「重複直到（i）&gt;（清單 data 的項目數）」。內層「重複直到（j）&lt;（1）」表示 j 還能往左比（j≥1）時持續執行。
                     </div>
-                    <div class="scratch-block-stack" aria-label="Scratch 插入排序積木描述">
+                    <p><strong>① 當綠旗被點擊（產生測試資料並排序）</strong></p>
+                    <div class="scratch-block-stack" aria-label="Scratch 綠旗腳本">
                         <div class="sb-hat">當綠旗被點擊</div>
-                        <div class="sb-c">將「i」設為 2</div>
-                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（清單「資料」的項目數））</div>
+                        <div class="sb-c">刪除（清單「data」）的全部</div>
+                        <div class="sb-c sb-control">重複執行 30 次</div>
                         <div class="sb-nest">
-                            <div class="sb-c">將「temp」設為（清單「資料」的第（i）項）</div>
+                            <div class="sb-c">加入（隨機取數 1 到 50）到（清單「data」）</div>
+                        </div>
+                        <div class="sb-c" style="background:#ab47bc;border-color:#6a1b9a;">insertSort</div>
+                    </div>
+                    <p><strong>② 定義 insertSort（插入排序本體）</strong></p>
+                    <div class="scratch-block-stack" aria-label="Scratch 定義 insertSort">
+                        <div class="sb-hat" style="background:linear-gradient(180deg,#ce93d8 0%,#ab47bc 100%);color:#fff;">定義 insertSort</div>
+                        <div class="sb-c">將「i」設為 2</div>
+                        <div class="sb-c sb-control">重複執行直到（條件：（i）&gt;（清單「data」的項目數））</div>
+                        <div class="sb-nest">
+                            <div class="sb-c">將「current」設為（i）</div>
                             <div class="sb-c">將「j」設為（（i）-（1））</div>
-                            <div class="sb-c sb-control">重複執行直到（條件：（j）&lt;（1），或【NOT（（清單「資料」的第（j）項）&gt;（temp））】）</div>
+                            <div class="sb-c sb-control">重複執行直到（條件：（j）&lt;（1））</div>
                             <div class="sb-nest">
-                                <div class="sb-c">將「j1」設為（（j）+（1））</div>
-                                <div class="sb-c">將（清單「資料」的第（j1）項）替換為（清單「資料」的第（j）項）</div>
-                                <div class="sb-c">將「j」設為（（j）-（1））</div>
+                                <div class="sb-c sb-inner">如果【（清單「data」的第（current）項）&lt;（清單「data」的第（j）項）】那麼</div>
+                                <div class="sb-nest">
+                                    <div class="sb-c">將「temp」設為（清單「data」的第（current）項）</div>
+                                    <div class="sb-c">將（清單「data」的第（current）項）替換為（清單「data」的第（j）項）</div>
+                                    <div class="sb-c">將（清單「data」的第（j）項）替換為（temp）</div>
+                                    <div class="sb-c">將「current」設為（j）</div>
+                                </div>
+                                <div class="sb-c">將「j」增加（-1）</div>
                             </div>
-                            <div class="sb-c">將「j1」設為（（j）+（1））</div>
-                            <div class="sb-c">將（清單「資料」的第（j1）項）替換為（temp）</div>
                             <div class="sb-c">將「i」增加 1</div>
                         </div>
                     </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>變數</th><th>用途</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>i</strong></td><td>外層：這一輪從「清單第（i）項」開始往左插入（從 2 跑到項目數）。</td></tr>
+                            <tr><td><strong>current</strong></td><td>正在往左移動、準備插入的元素，目前位在第幾項（交換後要改成 j）。</td></tr>
+                            <tr><td><strong>j</strong></td><td>內層：目前要跟第（current）項比大小的左邊鄰居位置。</td></tr>
+                            <tr><td><strong>temp</strong></td><td>交換時暫存，避免替換時數值被蓋掉。</td></tr>
+                        </tbody>
+                    </table>
                     <div class="tips">
-                        <strong>除錯小技巧：</strong>每輪外層迴圈結束後讓角色說出 temp 和當下清單狀態，確認 key 插入了正確位置。若發現清單某項消失，通常是右移時 j1 算錯，請對照「第（j1）項」積木裡的數字。
+                        <strong>除錯小技巧：</strong>每輪外層結束後讓角色說出 i、current 與清單內容。若排序錯誤，常見原因是交換後忘記「將 current 設為 j」，或內層結束條件不是「（j）&lt;（1）」。
                     </div>
                 </div>
                 <div class="section">

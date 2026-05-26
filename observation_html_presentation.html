@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>觀課心得分享——HTML基礎與網頁製作實務</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --slide-w: 1280px;
+            --slide-h: 720px;
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --accent: #1e88e5;
+            --text: #1e293b;
+            --muted: #64748b;
+            --bg: #0f172a;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .deck {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: min(96vw, var(--slide-w));
+            height: min(calc(96vw * 9 / 16), var(--slide-h));
+            aspect-ratio: 16 / 9;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide.active { display: flex; }
+
+        .slide-header {
+            background: linear-gradient(120deg, var(--primary-dark) 0%, var(--accent) 100%);
+            color: #fff;
+            padding: 28px 48px 24px;
+            flex-shrink: 0;
+        }
+
+        .slide-header h1 {
+            font-size: clamp(1.35rem, 2.8vw, 2rem);
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            line-height: 1.3;
+        }
+
+        .slide-header .tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .slide-body {
+            flex: 1;
+            padding: 28px 48px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .slide-body.two-col {
+            flex-direction: row;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .slide-body.two-col .text-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-body.two-col .img-col {
+            flex: 0 0 42%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ul.bullets {
+            list-style: none;
+            font-size: clamp(0.95rem, 1.65vw, 1.15rem);
+            line-height: 1.65;
+        }
+
+        ul.bullets li {
+            margin: 12px 0;
+            padding-left: 1.4em;
+            position: relative;
+        }
+
+        ul.bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        ul.bullets li strong { color: var(--primary-dark); }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px 24px;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            line-height: 1.5;
+        }
+
+        .info-grid dt {
+            font-weight: 700;
+            color: var(--primary-dark);
+            white-space: nowrap;
+        }
+
+        .photo-box {
+            flex: 1;
+            min-height: 180px;
+            border: 2px dashed #94a3b8;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .photo-box.has-img { border-style: solid; border-color: #cbd5e1; padding: 0; overflow: hidden; }
+
+        .photo-box .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .photo-box .hint { font-size: 0.8rem; line-height: 1.5; max-width: 280px; }
+
+        .photo-caption {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 8px;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        /* 封面 */
+        .slide-cover {
+            background: linear-gradient(135deg, #0f766e 0%, #1e3a5f 50%, #1e88e5 100%);
+            color: #fff;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 48px;
+        }
+
+        .slide-cover .main-title {
+            font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            line-height: 1.35;
+        }
+
+        .slide-cover .sub-title {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            opacity: 0.92;
+            margin-bottom: 40px;
+        }
+
+        .slide-cover .meta {
+            font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+            opacity: 0.85;
+            line-height: 2;
+        }
+
+        .slide-cover .divider {
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.6);
+            margin: 28px auto;
+            border-radius: 2px;
+        }
+
+        /* 章節頁 */
+        .slide-chapter {
+            background: linear-gradient(160deg, #ecfdf5 0%, #eff6ff 100%);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 48px;
+        }
+
+        .slide-chapter .num {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            opacity: 0.25;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .slide-chapter h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        .slide-chapter p {
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: var(--muted);
+            max-width: 640px;
+        }
+
+        /* 重點框 */
+        .highlight-box {
+            background: #f0fdfa;
+            border-left: 5px solid var(--primary);
+            padding: 16px 20px;
+            margin-top: 16px;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        code.tag-demo {
+            background: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #0f766e;
+        }
+
+        /* 結語頁 */
+        .slide-ending .slide-body { text-align: center; }
+        .slide-ending .thanks {
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-top: 24px;
+        }
+
+        /* 導覽 */
+        .nav-hint {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .controls button {
+            font-family: inherit;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .controls button:hover { background: rgba(255,255,255,0.25); }
+
+        .progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.25s ease;
+            z-index: 100;
+        }
+
+        .page-num {
+            position: fixed;
+            bottom: 20px;
+            left: 24px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            z-index: 100;
+        }
+
+        /* 列印／匯出 PDF */
+        @media print {
+            body { background: #fff; overflow: visible; height: auto; }
+            .deck {
+                display: block;
+                height: auto;
+                width: 100%;
+            }
+            .slide {
+                display: flex !important;
+                width: 100%;
+                height: 100vh;
+                max-height: none;
+                page-break-after: always;
+                break-after: page;
+                border-radius: 0;
+                box-shadow: none;
+                margin: 0;
+            }
+            .slide:last-child { page-break-after: auto; }
+            .controls, .nav-hint, .progress, .page-num { display: none !important; }
+        }
+
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="deck" id="deck">
+
+        <!-- 投影片 1：封面 -->
+        <section class="slide slide-cover active" data-slide="1">
+            <p class="main-title">觀課心得分享</p>
+            <p class="sub-title">HTML 基礎與網頁製作實務</p>
+            <div class="divider"></div>
+            <p class="meta">公開授課觀課紀錄<br>教學者：江建志 老師</p>
+        </section>
+
+        <!-- 投影片 2：觀課基本資訊 -->
+        <section class="slide" data-slide="2">
+            <div class="slide-header">
+                <h1>公開授課觀課紀錄</h1>
+                <span class="tag">觀課基本資訊</span>
+            </div>
+            <div class="slide-body two-col">
+                <div class="text-col">
+                    <dl class="info-grid">
+                        <dt>教學者</dt>
+                        <dd>江建志 老師</dd>
+                        <dt>課程主題</dt>
+                        <dd>HTML 基本語法結合 NVU IDE 的使用</dd>
+                        <dt>學習任務</dt>
+                        <dd>進行簡單的網頁製作與實務設計</dd>
+                        <dt>觀課重點</dt>
+                        <dd>標記語言入門、工具輔助學習、學生實作歷程</dd>
+                    </dl>
+                </div>
+                <div class="img-col">
+                    <div class="photo-box has-img" id="photo1">
+                        <img src="image/photo1.jpg" alt="觀課照片 1">
+                    </div>
+                    <p class="photo-caption">江老師在講台或投影幕前講授，介紹 HTML 與 NVU 介面的開場畫面。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 投影片 3：亮點一章節頁 -->
+        <section class="slide slide-chapter" data-slide="3">
+            <p class="num">01</p>
+            <h2>教學亮點一</h2>
+            <p>從觀念到實作：解析 HTML 語法</p>
+        </section>
+
+        <!-- 投影片 4：HTML 觀念與語法結構 -->
+        <section class="slide" data-slide="4">
+            <div class="slide-header">
+                <h1>從觀念到實作：解析 HTML 語法</h1>
+                <span class="tag">釐清觀念 · 拆解語法</span>
+            </div>
+            <div class="slide-body">
+                <ul class="bullets">
+                    <li><strong>釐清觀念：</strong>HTML（超文字標記語言）用來組織架構並呈現網頁內容，並非程式語言，而是描述網頁結構的標記系統。</li>
+                    <li><strong>拆解語法：</strong>每個網頁元素由「起始標籤」<code class="tag-demo">&lt;p&gt;</code>、「內容」與「結束標籤」<code class="tag-demo">&lt;/p&gt;</code> 三部分組成，形成一對標籤包裹的結構單元。</li>
+                    <li><strong>巢狀結構：</strong>標籤可層層嵌套，如同大綱層級，培養學生先想清楚架構再動手撰寫的習慣。</li>
+                </ul>
+                <div class="highlight-box">
+                    江老師以生活化比喻說明標籤如同「容器」，讓抽象語法變得具體可理解。
+                </div>
+            </div>
+        </section>
+
+        <!-- 投影片 5：HTML 實作應用 -->
+        <section class="slide" data-slide="5">
+            <div class="slide-header">
+                <h1>實作應用：常用 HTML 標記練習</h1>
+                <span class="tag">動手做 · 即時回饋</span>
+            </div>
+            <div class="slide-body two-col">
+                <div class="text-col">
+                    <ul class="bullets">
+                        <li><strong>標題層級：</strong>運用 <code class="tag-demo">&lt;h1&gt;</code>～<code class="tag-demo">&lt;h6&gt;</code> 建立文件標題與段落層次。</li>
+                        <li><strong>嵌入圖片：</strong>使用 <code class="tag-demo">&lt;img&gt;</code> 插入圖片，認識 src、alt 等屬性意義。</li>
+                        <li><strong>超連結：</strong>以 <code class="tag-demo">&lt;a&gt;</code> 建立連結，連結網頁內外部資源。</li>
+                        <li><strong>課堂節奏：</strong>講解 → 示範 → 學生練習 → 巡視指導，確保每位學生都能跟上。</li>
+                    </ul>
+                </div>
+                <div class="img-col">
+                    <div class="photo-box has-img" id="photo2">
+                        <img src="image/photo2.jpg" alt="觀課照片 2">
+                    </div>
+                    <p class="photo-caption">學生專注理解標籤結構，並實際輸入 HTML 語法進行練習。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 投影片 6：亮點二章節頁 -->
+        <section class="slide slide-chapter" data-slide="6">
+            <p class="num">02</p>
+            <h2>教學亮點二</h2>
+            <p>工具輔助：所見即所得的網頁編輯</p>
+        </section>
+
+        <!-- 投影片 7：NVU IDE 介紹 -->
+        <section class="slide" data-slide="7">
+            <div class="slide-header">
+                <h1>工具輔助：NVU 所見即所得編輯</h1>
+                <span class="tag">降低門檻 · 視覺化學習</span>
+            </div>
+            <div class="slide-body">
+                <ul class="bullets">
+                    <li><strong>軟體介紹：</strong>導入 NVU（Nvu）全自由開放的圖形化網頁編輯器，無需付費授權，適合校園推廣。</li>
+                    <li><strong>直覺操作：</strong>利用「所見即所得」（WYSIWYG）特性，將程式碼與畫面即時對應，減少初學挫折感。</li>
+                    <li><strong>雙軌並進：</strong>學生可切換原始碼檢視，對照剛學的 HTML 語法，加深「操作—語法」的連結。</li>
+                </ul>
+                <div class="highlight-box">
+                    圖形化介面讓學生先「看得見成果」，再回頭理解標籤意義，有效承接 HTML 入門單元。
+                </div>
+            </div>
+        </section>
+
+        <!-- 投影片 8：NVU 實務與照片 -->
+        <section class="slide" data-slide="8">
+            <div class="slide-header">
+                <h1>結合應用：語法 × 工具完成網頁</h1>
+                <span class="tag">任務導向 · 合作學習</span>
+            </div>
+            <div class="slide-body two-col">
+                <div class="text-col">
+                    <ul class="bullets">
+                        <li>學生靈活結合 HTML 基本語法與 NVU 視覺化介面，快速完成簡單網頁。</li>
+                        <li>小組討論排版與內容，培養溝通與共識建立能力。</li>
+                        <li>教師桌邊巡視，即時排除操作疑問，維持學習動能。</li>
+                        <li>完成作品後的成就感，有助於後續進階網頁設計學習。</li>
+                    </ul>
+                </div>
+                <div class="img-col">
+                    <div class="photo-box has-img" id="photo3">
+                        <img src="image/photo3.jpg" alt="觀課照片 3">
+                    </div>
+                    <p class="photo-caption">展現 NVU 排版實作，或老師在桌邊協助解決軟體操作問題的互動。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 投影片 9：觀課反思 -->
+        <section class="slide" data-slide="9">
+            <div class="slide-header">
+                <h1>觀課反思與教學成長</h1>
+                <span class="tag">策略分析 · 課綱呼應</span>
+            </div>
+            <div class="slide-body">
+                <ul class="bullets">
+                    <li><strong>教學策略成功：</strong>將抽象的「文字式標記語言（HTML）」結合「圖形化介面工具（NVU）」，有效降低初學者認知負荷，提升學習動機。</li>
+                    <li><strong>呼應科技領域精神：</strong>不只熟悉工具操作，更培養運用科技解決問題與數位創作的能力，契合課綱「資訊科技應用專題」學習目標。</li>
+                    <li><strong>觀課收穫：</strong>「先理解結構、再借助工具、最後產出作品」的教學脈絡，值得納入自身備課參考。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 投影片 10：建議與結語 -->
+        <section class="slide slide-ending" data-slide="10">
+            <div class="slide-header">
+                <h1>未來建議與展望</h1>
+                <span class="tag">持續精進</span>
+            </div>
+            <div class="slide-body">
+                <ul class="bullets" style="text-align: left; max-width: 720px; margin: 0 auto;">
+                    <li>可結合<strong>學校或社區特色</strong>作為網頁設計主題，讓作品更貼近生活與在地關懷。</li>
+                    <li>進階階段可引入 CSS 基礎排版，或與其他學科（如在地文化、環保）跨域整合。</li>
+                    <li>鼓勵學生發表作品、同儕互評，深化表達與反思能力。</li>
+                </ul>
+                <p class="thanks">感謝江建志老師的公開授課與精彩示範</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="progress" id="progress"></div>
+    <span class="page-num" id="pageNum">1 / 10</span>
+    <p class="nav-hint">← → 或空白鍵切換投影片 · Ctrl+P 可列印匯出 PDF</p>
+    <div class="controls">
+        <button type="button" id="btnPrev" aria-label="上一頁">上一頁</button>
+        <button type="button" id="btnNext" aria-label="下一頁">下一頁</button>
+    </div>
+
+    <script>
+        (function () {
+            var slides = document.querySelectorAll('.slide');
+            var total = slides.length;
+            var current = 0;
+            var progress = document.getElementById('progress');
+            var pageNum = document.getElementById('pageNum');
+
+            function goTo(index) {
+                if (index < 0) index = 0;
+                if (index >= total) index = total - 1;
+                slides[current].classList.remove('active');
+                current = index;
+                slides[current].classList.add('active');
+                progress.style.width = ((current + 1) / total * 100) + '%';
+                pageNum.textContent = (current + 1) + ' / ' + total;
+            }
+
+            document.getElementById('btnPrev').addEventListener('click', function () { goTo(current - 1); });
+            document.getElementById('btnNext').addEventListener('click', function () { goTo(current + 1); });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                    e.preventDefault();
+                    goTo(current + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    goTo(current - 1);
+                } else if (e.key === 'Home') {
+                    goTo(0);
+                } else if (e.key === 'End') {
+                    goTo(total - 1);
+                }
+            });
+
+            goTo(0);
+        })();
+    </script>
+</body>
+</html>
