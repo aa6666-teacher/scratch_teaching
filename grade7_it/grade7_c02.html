@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第2堂：帳號啟用：OpenID 與因材網｜七年級資訊科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDF1F4;
+    --surface: #FFFFFF;
+    --surface-2: #F4F7F9;
+    --ink: #1B2733;
+    --ink-soft: #52626F;
+    --ink-faint: #8494A1;
+    --line: #DAE1E7;
+    --line-soft: #E8ECEF;
+    --accent: #2B5C8A;
+    --accent-strong: #1E4568;
+    --accent-soft: #E3EDF4;
+    --warn: #B5502A;
+    --warn-soft: #F7E9E0;
+    --warn-line: #E7C4AC;
+    --shadow: 0 1px 2px rgba(27,39,51,0.04), 0 8px 24px -12px rgba(27,39,51,0.12);
+    --radius: 14px;
+    --serif: 'Noto Serif TC', 'PMingLiU', serif;
+    --sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --mono: 'JetBrains Mono', 'Noto Sans TC', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131A22;
+      --surface: #1B2531;
+      --surface-2: #202B38;
+      --ink: #E6EBF0;
+      --ink-soft: #A6B4C1;
+      --ink-faint: #6E7C89;
+      --line: #303D4A;
+      --line-soft: #263240;
+      --accent: #78ACDC;
+      --accent-strong: #9FC5E8;
+      --accent-soft: #223648;
+      --warn: #E3936A;
+      --warn-soft: #362720;
+      --warn-line: #4E362A;
+      --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 8px 24px -12px rgba(0,0,0,0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #131A22;
+    --surface: #1B2531;
+    --surface-2: #202B38;
+    --ink: #E6EBF0;
+    --ink-soft: #A6B4C1;
+    --ink-faint: #6E7C89;
+    --line: #303D4A;
+    --line-soft: #263240;
+    --accent: #78ACDC;
+    --accent-strong: #9FC5E8;
+    --accent-soft: #223648;
+    --warn: #E3936A;
+    --warn-soft: #362720;
+    --warn-line: #4E362A;
+    --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 8px 24px -12px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--line-soft) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 256px;
+    min-height: 100vh;
+  }
+
+  /* ---- Main ---- */
+  main {
+    padding: 44px clamp(20px, 4vw, 56px) 80px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .lesson-head {
+    position: relative;
+    margin-bottom: 34px;
+    padding: 28px 30px 26px;
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .lesson-head::before {
+    content: attr(data-n);
+    position: absolute;
+    right: 14px;
+    top: -0.22em;
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(70px, 9vw, 128px);
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.13;
+    pointer-events: none;
+  }
+
+  .lesson-head .eyebrow {
+    position: relative;
+    z-index: 1;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent-strong);
+    text-transform: uppercase;
+  }
+
+  .lesson-head h2 {
+    position: relative;
+    z-index: 1;
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(28px, 3.8vw, 38px);
+    margin: 6px 0 10px;
+    text-wrap: balance;
+  }
+
+  .lesson-head .desc {
+    position: relative;
+    z-index: 1;
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 58ch;
+  }
+
+  section.block {
+    margin-bottom: 40px;
+  }
+
+  section.block > h3 {
+    position: relative;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent-strong);
+    margin: 0 0 4px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--line);
+  }
+
+  section.block > h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  section.block > .block-note {
+    color: var(--ink-faint);
+    font-size: 14px;
+    margin: 8px 0 18px;
+  }
+
+  /* getting-started list */
+  .setup-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .setup-list li {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    font-size: 15.5px;
+    box-shadow: var(--shadow);
+  }
+
+  .setup-list .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 2px 7px;
+    height: fit-content;
+    white-space: nowrap;
+  }
+
+  .setup-list strong {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .setup-list span.sub {
+    color: var(--ink-soft);
+    font-size: 13.5px;
+  }
+
+  /* rule groups */
+  .rule-group {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .rule-group h4 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 15.5px;
+    margin: 0 0 12px;
+    color: var(--accent-strong);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rule-group h4::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .rule-group ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .rule-group li {
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .rule-group li::before {
+    content: attr(data-n);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 18px;
+    padding-top: 2px;
+  }
+
+  .callout {
+    background: var(--warn-soft);
+    border: 1px solid var(--warn-line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 14.5px;
+    color: var(--ink);
+    display: flex;
+    gap: 10px;
+  }
+
+  .callout .mark {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--warn);
+    flex: none;
+  }
+
+  /* general prose card, e.g. concept explanations */
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+
+  .info-card p { margin: 0 0 8px; }
+  .info-card p:last-child { margin-bottom: 0; }
+  .info-card strong { color: var(--accent-strong); }
+
+  .rule-group li > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rule-group li .note {
+    display: block;
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+
+  /* grading */
+  .grade-bar {
+    display: flex;
+    height: 34px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    margin-bottom: 10px;
+  }
+
+  .grade-bar .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+
+  .grade-bar .seg.notes {
+    background: var(--accent);
+  }
+
+  .grade-bar .seg.homework {
+    background: var(--accent-strong);
+  }
+
+  .grade-legend {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .grade-legend .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  .grade-notes {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+  }
+
+  .grade-notes p { margin: 0 0 8px; }
+  .grade-notes p:last-child { margin-bottom: 0; }
+  .grade-notes strong { color: var(--accent-strong); }
+
+  /* domain grid */
+  .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .domain-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .domain-card .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .domain-card h5 {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+  }
+
+  .domain-card p {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+
+  .syllabus-list {
+    list-style: none;
+    counter-reset: syl;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .syllabus-list li {
+    counter-increment: syl;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 14px 11px 44px;
+    font-size: 15px;
+    position: relative;
+  }
+
+  .syllabus-list li::before {
+    content: counter(syl);
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 12px;
+    color: #fff;
+    background: var(--accent);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* empty state */
+  .empty-panel {
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    padding: 48px 30px;
+    text-align: center;
+    color: var(--ink-faint);
+  }
+
+  .empty-panel .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .empty-panel h2 {
+    font-family: var(--serif);
+    font-size: 24px;
+    margin: 8px 0 6px;
+    color: var(--ink-soft);
+  }
+
+  .empty-panel p {
+    font-size: 13.5px;
+    max-width: 40ch;
+    margin: 0 auto;
+  }
+
+  .empty-panel.is-planned {
+    border-style: solid;
+  }
+
+  .plan-topics {
+    list-style: none;
+    margin: 14px 0;
+    padding: 0;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+
+  .plan-topics li {
+    font-size: 13px;
+    color: var(--ink-soft);
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .plan-topics li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+  }
+
+  /* ---- Right rail ---- */
+  .rail {
+    padding: 44px 24px 60px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .rail-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+
+  .rail-card h6 {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 12px;
+  }
+
+  .rail-progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .rail-progress-label strong {
+    color: var(--accent-strong);
+  }
+
+  .rail-progress-track {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line-soft);
+    overflow: hidden;
+  }
+
+  .rail-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+
+  .rail-outline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rail-outline a {
+    display: block;
+    padding: 6px 9px;
+    border-radius: 7px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .rail-outline a:hover {
+    background: var(--line-soft);
+    color: var(--ink);
+  }
+
+  .rail-outline a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+#panel {
+    animation: rise 0.25s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #panel { animation: none; }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 1200px) {
+    .shell { grid-template-columns: 1fr; }
+    .rail { display: none; }
+  }
+
+  @media (max-width: 780px) {
+    .domain-grid { grid-template-columns: 1fr; }
+    main { padding: 30px 18px 60px; }
+  }
+
+  .pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .pager-link { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent-strong); text-decoration: none; padding: 9px 16px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+  .pager-link:hover { background: var(--line-soft); }
+
+  .img-group { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0 18px; }
+  .img-item { margin: 0; flex: 1 1 260px; max-width: 420px; }
+  .img-item img { display: block; width: 100%; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+</style>
+</head>
+<body>
+<div class="shell">
+  <main>
+    <div id="panel">
+      <div class="lesson-head" data-n="02">
+        <div class="eyebrow">第 2 堂課</div>
+        <h2>帳號啟用：OpenID 與因材網</h2>
+        <p class="desc">複查雲端硬碟空間，認識 OpenID 帳號的用途與注意事項，並完成因材網帳號的綁定與登入測試。</p>
+      </div>
+<section class="block"><h3 id="sec-0">開學前檢查</h3><ul class="setup-list"><li><span class="tag">雲端硬碟</span><span><strong>再次確認 Google 雲端硬碟空間</strong><span class="sub">請縮減至 5GB 以下。</span></span></li></ul></section><section class="block"><h3 id="sec-1">OpenID 帳號的應用</h3><div class="info-card"><p><strong>什麼是 OpenID？</strong>OpenID 是一個去中心化的網路身分認證系統。支援 OpenID 的網站不需要使用者記住各自的帳號密碼——只要先在作為 OpenID 身分提供者（identity provider, IdP）的網站註冊（例如 FB、Google、Yahoo 等皆有支援），之後就能在所有支援 OpenID 的網站上，使用同一組帳號密碼登入。</p></div><div class="img-group"><figure class="img-item"><img src="pic1.png" alt="什麼是 OpenID 示意圖"></figure></div><p class="block-note">基隆市教育網路 OpenID 提供的服務</p><div class="domain-grid"><div class="domain-card"><div class="num">教育部</div><h5>全國性服務</h5><p>校園雲端電子郵件、教育雲、PaGamO、因材網、學習吧。</p></div><div class="domain-card"><div class="num">各縣市</div><h5>地方性服務</h5><p>宜蘭縣教育資源平台 Blog、花蓮縣字音字形學習網、嘉義市 ShineCue 多媒體電子書、臺南市 XOOPS／班網輕鬆架……等。</p></div></div><div class="rule-group"><h4>基隆市教育 OpenID 資料管理</h4><ol><li data-n="1"><div>從校網「學生天地」區，連到 OpenID 網頁，點選右上角「登入」。</div></li><li data-n="2"><div>點選右上角「資料」，可以更改密碼、個人資料，或啟用各種功能。</div></li><li data-n="3"><div>你的 OID 使用教育處 Google 教育版帳號，信箱為 sxxxxx@gm.kl.edu.tw（必須完整）；密碼為 OpenID 密碼（忘記密碼需請老師修改）。</div></li></ol></div><div class="img-group"><figure class="img-item"><img src="pic2.png" alt="OpenID 資料管理畫面 1"></figure><figure class="img-item"><img src="pic3.png" alt="OpenID 資料管理畫面 2"></figure><figure class="img-item"><img src="pic4.png" alt="OpenID 資料管理畫面 3"></figure></div><div class="callout"><span class="mark">備註</span><span>帳號只能使用到國中畢業，若未就讀基隆市立高中，帳號會直接刪除無法使用；學生帳號空間僅有 10G（雲端硬碟、E-mail、Classroom 交作業檔案……總數計算）；帳號僅供學校課程使用，請勿與其他軟體帳號連動（如 Google 相簿、遊戲帳號），避免帳號停用後無法使用。</span></div></section><section class="block"><h3 id="sec-2">因材網帳號啟用</h3><p class="block-note">透過 OpenID 綁定，之後登入因材網不必再多記一組帳密。</p><div class="img-group"><figure class="img-item"><img src="pic7.png" alt="因材網登入畫面 1"></figure><figure class="img-item"><img src="pic8.png" alt="因材網登入畫面 2"></figure><figure class="img-item"><img src="pic9.png" alt="因材網登入畫面 3"></figure><figure class="img-item"><img src="pic10.png" alt="因材網登入畫面 4"></figure></div><div class="rule-group"><h4>登入因材網</h4><ol><li data-n="1"><div>校網登入因材網（或連結網址：https://adl.edu.tw/HomePage/home/）。</div></li><li data-n="2"><div>進入因材網，點選右上角「登入／帳號申請」。</div></li></ol></div><div class="rule-group"><h4>首次綁定 OpenID（已綁定過可跳過，直接看下一步）</h4><ol><li data-n="3"><div>第一次先選「因材網帳號登入」。<span class="note">帳號為學號數字六碼（見 113 學號對照表）；密碼為 Mcjh + 班級座號（M 需大寫）。</span></div></li><li data-n="4"><div>填入學校資訊與帳號密碼。</div></li><li data-n="5"><div>登入後會跳出輸入電子郵件信箱提醒，按確定，輸入 sxXXXX@gm.kl.edu.tw。</div></li><li data-n="6"><div>跳出建議綁定帳號視窗，按確定後綁定帳號。<span class="note">請點選下方「第三方綁定」→ 教育雲端帳號／縣市帳號。</span></div></li><li data-n="7"><div>綁定 OpenID 帳號。<span class="note">綁定後，之後只要用 OpenID 帳號登入即可，不必再多記一組因材網帳號。</span></div></li></ol></div><div class="rule-group"><h4>完成綁定與登入測試</h4><ol><li data-n="8"><div>若是第一次使用教育雲端，會請你填寫建立介接帳號。<span class="note">已使用過教育雲端帳號者，此步驟會自動略過。</span></div></li><li data-n="9"><div>使用 OpenID 登入，測試是否能正確登入。</div></li><li data-n="10"><div>用 OpenID 重新登入後，若出現系統錯誤，按重新整理或 F5，稍待片刻即可進入系統。</div></li><li data-n="11"><div>登入過程請按下「同意授權」、登入帳號，最後系統會請你綁定因材網帳號。</div></li></ol><div class="callout"><span class="mark">重要</span><span>綁定時請選擇正確的「班級、座號、姓名」，右下角資料選錯會被究責，請務必再三確認。</span></div></div><div class="img-group"><figure class="img-item"><img src="pic12.png" alt="操作畫面 12"></figure><figure class="img-item"><img src="pic13.png" alt="操作畫面 13"></figure><figure class="img-item"><img src="pic14.png" alt="操作畫面 14"></figure><figure class="img-item"><img src="pic15.png" alt="操作畫面 15"></figure><figure class="img-item"><img src="pic16.png" alt="操作畫面 16"></figure><figure class="img-item"><img src="pic17.png" alt="操作畫面 17"></figure><figure class="img-item"><img src="pic18.png" alt="操作畫面 18"></figure></div></section>
+      <div class="pager"><a class="pager-link prev" href="grade7_c01.html">← 第 1 堂</a><a class="pager-link next" href="grade7_c03.html">第 3 堂 →</a></div>
+    </div>
+  </main>
+  <aside class="rail"><div class="rail-card"><h6>本堂進度</h6><div class="rail-progress-label"><span>第 2 堂</span><strong>共 19 堂</strong></div><div class="rail-progress-track"><div class="rail-progress-fill" style="width:11%"></div></div></div><div class="rail-card"><h6>本堂大綱</h6><ul class="rail-outline"><li><a href="#sec-0">開學前檢查</a></li><li><a href="#sec-1">OpenID 帳號的應用</a></li><li><a href="#sec-2">因材網帳號啟用</a></li></ul></div></aside>
+</div>
+</body>
+</html>
